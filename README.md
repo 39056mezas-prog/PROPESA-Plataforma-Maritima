@@ -42,11 +42,15 @@ git push -u origin main
 
 También con la CLI: `npx vercel --prod` dentro de la carpeta.
 
-## Órdenes de empaque
+## Flujo de la plataforma
 
-Menú **Órdenes**: cada orden tiene fecha de empaque (ETD) y líneas de ciudad destino → consignatario → cliente final → cajas.
-Los consignatarios son la lista oficial (editable en el código, constante `CONS`). Las cajas se asignan desde los lotes que están en tanques y
-la orden genera su consignación en Embarque. Supuestos tomados de los documentos de ejemplo: 16 kg netos y 20 kg brutos por caja (`KGN` y `KGB`).
+**Entrada → Órdenes → Empaque → Embarque → Mortalidad final**
+
+1. **Entrada:** se captura el formato de recepción (fecha, hora, proveedor, tanque, temperaturas, lote, kg por caja, kg por talla, kg total y kg de desperdicio). Aquí no se cuentan ni se numeran cajas.
+2. **Órdenes:** ciudad destino → consignatario (lista oficial, constante `CONS`) → cliente final → cajas. Se usan 16 kg netos y 20 kg brutos por caja (`KGN` y `KGB`).
+3. **Empaque:** las langostas se cuentan al empacar cada pedido. Por cada caja se elige el lote, se escriben las piezas vivas y se toca la categoría. Cada caja se numera sola.
+4. **Embarque:** cada orden crea su consignación; se revisan peso y tallas y se cierra el empaque.
+5. **Mortalidad final:** conteo final por lote y langostas vivas al llegar; el sistema calcula la pérdida.
 
 ## Usuarios de demostración
 
@@ -64,4 +68,4 @@ la orden genera su consignación en Embarque. Supuestos tomados de los documento
 - Para uso real hace falta un servidor con base de datos, inicio de sesión seguro, almacenamiento de fotos y envío de correos.
 - El logo es una recreación en SVG. Para usar el archivo oficial, reemplaza la función `LG` en `index.html` o súbelo como imagen.
 
-La plataforma inicia **vacía** (sin lotes, cajas, órdenes ni notas); solo vienen los 3 usuarios de demostración. El botón **Administración → Restablecer demo** borra los datos locales y la deja vacía otra vez.
+La plataforma inicia **vacía** (sin entradas, cajas, órdenes ni notas); solo vienen los 3 usuarios de demostración. El botón **Administración → Restablecer demo** borra los datos locales y la deja vacía otra vez.
