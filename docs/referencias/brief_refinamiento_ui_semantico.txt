@@ -1,0 +1,339 @@
+Refine the existing PROPĒSA platform UI. This is an EXISTING, WORKING HTML platform, so do NOT redesign the application from scratch and do NOT change the information architecture, workflows, functionality, layout structure, or sidebar navigation.
+
+The goal is to improve the visual hierarchy, accessibility, contrast, and operational readability of the existing interface.
+
+## 1. PRESERVE THE SIDEBAR
+
+The current left sidebar is strong and should remain largely unchanged.
+
+KEEP:
+- PROPĒSA logo placement
+- Dark navy sidebar
+- Existing navigation structure
+- Numbered workflow steps
+- Current selected/active menu treatment
+- Existing icons
+- SYSTEM section
+- Overall proportions and spacing
+
+Do not replace the sidebar with a different navigation concept.
+
+The sidebar should continue to feel like the visual identity of the application.
+
+## 2. THE MAIN PROBLEM TO SOLVE
+
+The main workspace currently uses too much muted gray, dark blue, and red.
+
+Important information does not stand out enough.
+
+This is an industrial processing platform where an operator may be:
+- Standing
+- Moving around
+- Wearing gloves
+- Looking at the tablet quickly
+- Working in a busy processing environment
+
+The UI therefore needs to communicate operational status almost instantly.
+
+The operator should be able to glance at the screen and understand:
+
+1. Where am I?
+2. What am I doing?
+3. What needs my attention?
+4. What is complete?
+5. Is there a problem?
+
+## 3. CREATE A CONSISTENT SEMANTIC COLOR SYSTEM
+
+Use color based on meaning rather than decoration.
+
+PRIMARY ACTION / ACTIVE:
+#16C7FF
+
+Use for:
+- Current workflow step
+- Primary CTA buttons
+- Active processing states
+- Progress indicators
+- Scanner/camera active states
+- Important interactive elements
+
+SUCCESS / COMPLETE:
+#20D67A
+
+Use for:
+- Completed steps
+- Successful operations
+- Valid/accepted data
+- Healthy/normal states
+- Completion indicators
+
+ATTENTION:
+#FFB020
+
+Use for:
+- Pending items
+- Items requiring operator attention
+- Warnings
+- Incomplete but non-critical states
+
+ERROR / PROBLEM / LOSS:
+#FF3B4E
+
+Use ONLY for:
+- Errors
+- Failed operations
+- Missing data
+- Blocked workflows
+- Mortality/loss states
+- Critical problems
+
+Do NOT use red simply to highlight normal progress.
+
+INFORMATION:
+#9B7BFF
+
+Use sparingly for:
+- Secondary system information
+- Non-critical informational states
+
+NEUTRAL:
+#AAB4C3
+
+Use for:
+- Supporting information
+- Secondary labels
+- Metadata
+- Non-critical numbers
+
+Keep the existing dark navy/black foundation.
+
+## 4. IMPORTANT: REDUCE RED USAGE
+
+The current "Cajas capturadas" area uses red around "13 de 170".
+
+If 13 of 170 is simply normal progress and NOT an error, do NOT represent it as an error.
+
+Instead use the primary cyan color.
+
+Example:
+
+CAJAS CAPTURADAS
+
+13 / 170
+
+7.6% completado
+
+[cyan progress bar]
+
+157 pendientes
+
+The number 13 / 170 should be highly visible.
+
+"157 pendientes" should be secondary information unless the pending amount requires action.
+
+Reserve red for genuine problems.
+
+## 5. MAKE THE IMPORTANT NUMBERS MUCH MORE VISIBLE
+
+This is an industrial dashboard, not a conventional SaaS dashboard.
+
+Important operational numbers should be large, bright, and immediately readable.
+
+For example:
+
+CAJAS CAPTURADAS
+
+13 / 170
+
+7.6%
+
+157 pendientes
+
+The primary number should have significantly more visual weight than its supporting text.
+
+Apply this principle consistently to:
+- Cajas capturadas
+- Langostas capturadas
+- Pending items
+- Shipments
+- Mortality
+- Temperature
+- Production totals
+- Any future operational KPI
+
+Do not make everything huge. Establish a clear hierarchy:
+PRIMARY NUMBER > STATUS > SUPPORTING INFORMATION.
+
+## 6. IMPROVE THE EXISTING KPI CARDS
+
+Keep the existing card structure where possible.
+
+Do not turn the dashboard into a completely different design.
+
+Instead:
+- Increase contrast
+- Improve typography hierarchy
+- Make primary values brighter
+- Make labels slightly clearer
+- Use semantic accent colors
+- Give important status indicators stronger visual presence
+- Reduce unnecessary borders
+- Avoid excessive colored outlines
+
+Cards should feel like operational instruments.
+
+Example:
+
+CAJAS CAPTURADAS
+13 / 170
+7.6% completado
+cyan progress indicator
+157 pendientes
+
+LANGOSTAS CAPTURADAS
+356
+rojo · verde · blanco
+
+The 356 should be substantially more visually prominent than "rojo · verde · blanco".
+
+## 7. WORKFLOW SIDEBAR STATES
+
+Keep the existing numbered workflow.
+
+Enhance its semantic states:
+
+COMPLETED:
+Green
+
+CURRENT:
+Electric cyan
+
+WAITING / NOT STARTED:
+Neutral gray
+
+ATTENTION REQUIRED:
+Amber
+
+ERROR / BLOCKED:
+Red
+
+The numbers and icons should communicate these states without requiring the user to read every word.
+
+## 8. PRIMARY ACTIONS
+
+Primary buttons should use the electric cyan #16C7FF.
+
+For example:
+
+"Capturar cajas →"
+
+should clearly communicate:
+THIS IS THE NEXT ACTION.
+
+Do not make every button cyan.
+
+Use cyan selectively so that when the operator sees cyan, they understand:
+
+"THIS IS WHAT I SHOULD DO."
+
+## 9. INDUSTRIAL UI PRINCIPLE
+
+The interface should feel like a professional industrial control/production system.
+
+Think:
+
+CONTROL ROOM
+PRODUCTION FLOOR
+PROCESS MONITORING
+OPERATIONAL DASHBOARD
+
+Not:
+
+FINTECH
+MARKETING WEBSITE
+GENERIC SAAS ADMIN PANEL
+
+Keep the PROPĒSA brand feeling strong and professional.
+
+## 10. ACCESSIBILITY
+
+Improve practical readability without making the interface childish or overly bright.
+
+Prioritize:
+- High text/background contrast
+- Large touch targets
+- Clear status colors
+- Strong numerical hierarchy
+- Clear active states
+- Minimal ambiguity between warning and error
+- Readability under imperfect lighting
+
+Do not rely on color alone for critical states. Pair colors with:
+- Icons
+- Labels
+- Status text
+- Progress indicators
+
+## 11. DO NOT OVERDESIGN
+
+Do NOT:
+- Add gradients everywhere
+- Add excessive glow effects
+- Add unnecessary animations
+- Add excessive shadows
+- Add dozens of colors
+- Turn every card into a colored card
+- Redesign the sidebar
+- Change the existing workflow
+- Change existing functionality
+- Remove useful information
+- Make the interface look like a gaming dashboard
+
+The design should feel controlled, clean, industrial, and premium.
+
+## 12. COLOR HIERARCHY
+
+The final visual hierarchy should follow:
+
+NAVY / BLACK
+→ Application identity and workspace
+
+CYAN
+→ DO THIS NOW / ACTIVE
+
+GREEN
+→ GOOD / COMPLETE
+
+AMBER
+→ PAY ATTENTION
+
+RED
+→ PROBLEM / LOSS / ERROR
+
+PURPLE
+→ INFORMATION
+
+GRAY
+→ BACKGROUND / SUPPORTING INFORMATION
+
+Use fewer colors overall, but make each color carry clear meaning.
+
+## 13. FINAL OBJECTIVE
+
+When an operator looks at the tablet for two seconds, they should immediately understand:
+
+WHERE THEY ARE
+WHAT THEY ARE DOING
+WHAT IS COMPLETE
+WHAT NEEDS ATTENTION
+WHETHER THERE IS A PROBLEM
+WHAT ACTION TO TAKE NEXT
+
+Refine the existing HTML/CSS directly.
+
+Preserve all existing functionality.
+
+Do not create a static mockup.
+
+Return the improved working implementation.

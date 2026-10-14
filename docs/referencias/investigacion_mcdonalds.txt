@@ -1,0 +1,18 @@
+1. Zero-Friction UI / Task-Oriented Design
+A Zero-Friction User Interface is designed to completely remove cognitive load (thinking time) from the user.
+• The Concept: The UI is designed so that the user never has to search, scroll, or open nested dropdown menus.
+• How it applies: Every possible action (adding a burger, removing pickles, paying) is a physical, single-tap button right in front of them. The system guides the user linearly from taking the order directly to checkout without distraction.
+2. High-Density, Grid-Based Interface
+Rather than using modern, minimalist aesthetics with lots of "white space," fast-food systems use a High-Density Grid Layout.
+• The Concept: Maximizing the clickable area of the screen by dividing it into rigid, predictable blocks.
+• How it applies: Buttons are oversized so the user can easily tap them while looking away or talking to a customer. Important items are always in the exact same coordinates, allowing users to build intense muscle memory over time.
+3. Progressive Disclosure
+This is a UX design pattern used to keep complex systems looking "super simplified."
+• The Concept: You only show the user the information they need at that exact second, hiding everything else until it's relevant.
+• How it applies: When a cashier taps "Quarter McCrispy," the main menu instantly swaps out to show only the modifications for that specific chicken sandwich (e.g., "No Mayo," "Extra Pickle"). The cashier isn't overwhelmed by the whole menu at once; they only see the options required for the current step.
+4. Poka-Yoke (Mistake-Proofing)
+This is a lean manufacturing term coined in Japan, but it is heavily used in high-efficiency software design.
+• The Concept: Designing a system in a way that makes human error literally impossible.
+• How it applies: If a customer orders a meal, the system will automatically prompt the cashier to select a drink and a side before it allows them to move to the payment screen. The system "forces" the correct sequence of events so the employee cannot forget to ask a crucial question.
+5. Heads-Up / Low-Cognitive UI
+This describes a system built for users who need to keep their eyes on their environment, not buried in a screen. By using iconography, strict color-coding (e.g., beef items are red, poultry is yellow, breakfast is green), and shorthand text, the brain processes the visual cue instantly without needing to actually "read" the button text.

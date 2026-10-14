@@ -1,4 +1,4 @@
-# PROPESA · Plataforma marítima
+# PROPESA · Plataforma marítima · v1.0.0
 
 Sitio estático de una sola página (HTML + CSS + JavaScript, sin dependencias ni paso de compilación).
 Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, temperatura, y fotos y notas por sección.
@@ -8,8 +8,14 @@ Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, t
 | Archivo | Para qué sirve |
 |---|---|
 | `index.html` | Toda la aplicación |
-| `manifest.webmanifest`, `favicon.svg`, `icon-*.png`, `apple-touch-icon.png` | Ícono y opción "Agregar a pantalla de inicio" en tablet |
-| `vercel.json` | Configuración de Vercel (encabezados de seguridad y caché) |
+| `manifest.webmanifest`, `favicon.svg`, `icon-*.png`, `apple-touch-icon.png` | Ícono (langosta) y opción "Agregar a pantalla de inicio" en tablet |
+| `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; y caché) |
+| `supabase/schema.sql` | Esquema preparado para la base compartida (todavía no conectado) |
+| `pruebas/` | Pruebas automáticas (ver «Pruebas») |
+| `CHANGELOG.md` | Cambios por versión |
+| `CLAUDE.md` · `AGENTS.md` | Instrucciones para asistentes de IA (empiezan aquí) |
+| `docs/` | Contexto completo: producto, UX, marca, arquitectura, datos, decisiones, roadmap, pruebas, seguridad, Supabase, flujo de trabajo, historial y documentos de referencia |
+| `.claude/settings.json` | Activa el plugin agent-skills en Claude Code |
 
 ## Probar en tu computadora
 
@@ -19,6 +25,18 @@ Abre `index.html` en el navegador, o levanta un servidor local:
 python3 -m http.server 8080
 # abre http://localhost:8080
 ```
+
+## Primer uso
+
+En un equipo nuevo la app abre **Configuración inicial**: se crea la cuenta del **Administrador** (nombre, correo y contraseña de mínimo 6 caracteres; las contraseñas muy fáciles se rechazan). Después, en **Administración**, el Administrador da de alta a los demás usuarios con su rol:
+
+| Rol | Puede |
+|---|---|
+| Administrador | Todo, incluidos usuarios, respaldo y borrado de datos |
+| Encargado de piso | Entra directo a Modo piso: empacar, registrar entradas, cerrar embarques, conteo final |
+| Consulta | Solo ver |
+
+Si ya tienes un respaldo `.json`, en esa misma pantalla puedes **Restaurar respaldo** y entrar con los usuarios que trae.
 
 ## Subir a GitHub
 
@@ -46,26 +64,62 @@ También con la CLI: `npx vercel --prod` dentro de la carpeta.
 
 **Entrada → Órdenes → Empaque → Embarque → Mortalidad final**
 
-1. **Entrada:** se captura el formato de recepción (fecha, hora, proveedor, tanque, temperaturas, lote, kg por caja, kg por talla, kg total y kg de desperdicio). Aquí no se cuentan ni se numeran cajas.
+1. **Entrada:** se captura el formato de recepción (fecha, hora, proveedor, tanque, temperaturas, lote (se escribe en mayúsculas solo), kg por caja en tanque, kg por talla, kg total y kg de desperdicio). Aquí no se cuentan ni se numeran cajas.
 2. **Órdenes:** ciudad destino → consignatario (lista oficial, constante `CONS`) → cliente final → cajas. Se usan 16 kg netos y 20 kg brutos por caja (`KGN` y `KGB`).
-3. **Empaque:** las langostas se cuentan al empacar cada pedido. Por cada caja se elige el lote, se escriben las piezas vivas y se toca la categoría. Cada caja se numera sola.
-4. **Embarque:** cada orden crea su consignación; se revisan peso y tallas y se cierra el empaque.
+3. **Empaque:** las langostas se cuentan al empacar cada pedido. Aparece una fila por cada caja que falta (piezas vivas + categoría + lote) y se guardan todas a la vez; las filas en blanco no se guardan. Cada caja se numera sola. Aquí solo hay notas, sin fotos.
+4. **Embarque:** cada orden crea su embarque, pero varias órdenes con el mismo destino y consignatario se pueden juntar en uno solo (botón «Unir» en la orden, o «Agregar otra orden» en el embarque; «Separar» las divide). Las hieleras se suman, se revisan peso y tallas y se cierra el empaque.
 5. **Mortalidad final:** conteo final por lote y langostas vivas al llegar; el sistema calcula la pérdida.
 
-## Usuarios de demostración
+## Modo piso
 
-| Rol | Correo | Contraseña |
-|---|---|---|
-| Administrador | admin@propesa.mx | admin123 |
-| Encargado de piso | piso@propesa.mx | piso123 |
-| Consulta | consulta@propesa.mx | ver123 |
+Pantalla con botones grandes para el personal de piso (entra solo con el rol *Encargado de piso*; el Administrador lo prende y apaga con el interruptor estilo iOS «Modo piso», en el menú y en el encabezado). Tocar el logo regresa al inicio en cualquier modo. Cuatro botones: **Empacar cajas**, **Registrar entrada**, **Cerrar embarque**, **Conteo final**.
+- *Empacar:* cliente → lote (se salta si solo hay uno) → una tarjeta grande por cada caja del cliente (piezas + ROJO / VERDE / BLANCO). Cada caja **se guarda sola** al tener piezas y categoría y se queda en gris con ✔ en su lugar; se corrige ahí mismo o se quita con «Quitar». «Poner a todas las vacías» aplica una categoría de un toque.
+- En Órdenes y Empaque, el aviso rojo «X de Y cajas empacadas» es un botón que lleva directo al cliente al que le faltan cajas.
+- *Registrar entrada:* hoja con una fila por lote (proveedor, tanque, lote, kg por talla); «+ Agregar entrada» para más filas, «Más» para temperaturas, kg por caja, desperdicio, fecha y hora, y «Guardar entradas» guarda todas las filas completas (las que tienen errores se quedan marcadas en rojo).
+- Colores de talla: 491-610 Blanco · 611-850 Rojo · 851-1220 Verde · 1221-UP Amarillo.
 
-## Importante: esto es una demostración
+## Ajustes
 
-- Los datos (lotes, cajas, órdenes, notas y fotos) se guardan **en el navegador de cada dispositivo** (`localStorage`). No se comparten entre usuarios ni dispositivos, y se pierden si se borra el almacenamiento del navegador.
-- Los usuarios y contraseñas están dentro del código y **cualquiera que abra el sitio puede verlos**. No pongas contraseñas reales.
-- El "correo al cerrar empaque" se simula en pantalla; no se envía ningún correo.
-- Para uso real hace falta un servidor con base de datos, inicio de sesión seguro, almacenamiento de fotos y envío de correos.
-- El logo es una recreación en SVG. Para usar el archivo oficial, reemplaza la función `LG` en `index.html` o súbelo como imagen.
+**Barra superior:** botón **Ajustes** y círculo con la inicial (también en Modo piso). El círculo abre **Administración** (solo admin) y **Cerrar sesión**. En Ajustes: tema **Oscuro / Claro** y **Tamaño del texto** con deslizador de 3 tamaños: Normal, Grande y Muy grande (se guardan en este equipo; `propesa-theme`, `propesa-fs`). Especificación en `SPEC.md`; pruebas en `pruebas/` (`python3 -m http.server 8765` y luego `python3 -I pruebas/ajustes_t.py`, `python3 -I pruebas/menu_t.py` y `python3 -I pruebas/e2e.py`).
 
-La plataforma inicia **vacía** (sin entradas, cajas, órdenes ni notas); solo vienen los 3 usuarios de demostración. El botón **Administración → Restablecer demo** borra los datos locales y la deja vacía otra vez.
+## Colores
+
+Los colores están en variables CSS al inicio de `index.html` (`:root`). Marca: `--brand-navy #0B1D59` (barra lateral), `--brand-blue #087DBA` (acciones principales, botón activo), `--brand-cyan #16A6D1` (acentos pequeños: indicador del menú activo, barras de avance, foco). Tema oscuro: fondo `#111827`, tarjetas `#1C2638`, bordes `#2D3B50`, texto `#F1F5F9` / `#A9B7CA`. Estados: verde (completo), ámbar (precaución), rojo (error o pendiente real). El logo no se tocó.
+
+## PDF de cada paso
+
+En Entrada, Órdenes, Empaque, Embarque y Mortalidad final hay una barra con **Descargar PDF** y **Enviar por correo**. El PDF se genera dentro de la app (sin librerías ni internet) con el logo de PROPESA; es el mismo archivo que se descarga y el que se manda por correo. En tablet y celular, *Enviar por correo* abre el menú de compartir con el PDF adjunto; en computadora descarga el PDF y abre el correo para adjuntarlo. Cada cierre de empaque queda en **Administración → Informes de cierre**, con su PDF para descargar o enviar por correo.
+
+## Temperatura
+
+Bitácora real de lecturas por tanque (agua, superficie y producto en °F, 20–110). Guarda fecha, hora y quién capturó; muestra los últimos 7 días con opción de ver todo. El Administrador puede eliminar una lectura equivocada.
+
+## Datos y respaldo
+
+- Los datos se guardan **en el navegador de cada equipo** (`localStorage`, clave `propesa-v4`) y la app funciona sin internet. No se comparten solos entre equipos.
+- Administración → *Datos y respaldo*: **descarga un respaldo `.json` cada día** y restáuralo en otro equipo cuando haga falta. Al restaurar, el archivo se revisa y limpia antes de usarse.
+- Administración → *Borrar los datos de este equipo*: pide escribir BORRAR y regresa a la Configuración inicial.
+- `supabase/schema.sql` es el esquema **preparado, no aplicado**, para la base compartida en la web. Ninguna cuenta está conectada todavía (ver `PROYECTO_PROPESA.md`, sección «Sincronización»).
+
+## Pruebas
+
+Requieren Python 3 con Playwright y Chromium.
+
+```bash
+sh pruebas/correr_todo.sh      # 18 grupos, 904 verificaciones; termina con «TODO BIEN»
+```
+
+Extras: `python3 -I pruebas/rendimiento_t.py` (un año de datos, tiempos de pantalla) y `node pruebas/accesibilidad.mjs pruebas/datos/backup.json` (Lighthouse en 14 pantallas; requiere `npm i lighthouse puppeteer-core`).
+
+## Actualizar y volver atrás
+
+1. Antes de publicar una versión nueva, descarga un respaldo desde Administración.
+2. `git push` a `main` → Vercel despliega solo. `index.html` se sirve con `Cache-Control: no-cache`, así que los equipos toman la versión nueva al recargar.
+3. Si algo sale mal: en Vercel → *Deployments* → la versión anterior → **Promote to Production** (vuelta atrás inmediata). Los datos de cada equipo no se tocan porque viven en su navegador.
+
+## Límites conocidos de la versión 1.0
+
+- El inicio de sesión se valida **en el mismo equipo** (contraseñas cifradas con SHA-256); protege el uso diario, no contra alguien con acceso técnico al navegador. El inicio de sesión de servidor llega con Supabase.
+- Cada equipo tiene sus propios datos hasta conectar Supabase; el respaldo `.json` es la forma de pasarlos.
+- «Enviar por correo» usa el menú de compartir del equipo o abre tu programa de correo; no hay servidor de correo.
+- El logo es una recreación en SVG; para el archivo oficial, reemplaza la función `LG` en `index.html`.

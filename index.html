@@ -3,9 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="PROPESA · Plataforma marítima: entrada, órdenes, empaque, embarques y mortalidad final.">
 <meta name="theme-color" content="#0B1D59">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+<link rel="manifest" href="/manifest.webmanifest?v=2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>PROPESA · Plataforma marítima</title>
@@ -20,7 +20,7 @@ html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:bo
 body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:1rem/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
 #app{height:100%}
 .hd{background:#fff;color:#0a2147;display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap;border-bottom:3px solid #087DBA}.hd b{color:#0a2147}.hd .lnk.w{color:#0B1D59;border-color:#0B1D5955}.hd input{flex:1;min-width:150px;max-width:520px}
-.usr{display:flex;align-items:center;gap:10px;margin-left:auto}.usr .chip{background:var(--in);color:var(--ink)}
+.usr{display:flex;align-items:center;gap:10px;margin-left:auto}.hdt{display:none;align-items:center;gap:10px;min-width:0;flex:1 1 auto;color:var(--ink)}.hdti{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand-navy);color:#fff}.hdti svg{width:20px;height:20px}.hdtt{display:grid;min-width:0;line-height:1.2}.hdtt b{font-size:1.0667rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.usr .chip{background:var(--in);color:var(--ink)}
 .shell{display:flex;height:100%}.ct{flex:1;min-width:0;display:flex;flex-direction:column}
 .sb{width:248px;flex:none;background:linear-gradient(180deg,#0B1D59,#07123a);color:#fff;display:flex;flex-direction:column;overflow-y:auto;z-index:20}
 .sb .lt{margin:18px 16px 10px;padding-bottom:14px;border-bottom:1px solid #ffffff33}.lg{display:block;width:100%;height:auto}.lg.o path{fill:#fff!important}.lg.o .wm{stroke:#fff!important}
@@ -30,7 +30,7 @@ body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:1rem/1.5 sy
 .fs:hover{background:#ffffff14}.fs i{font-style:normal;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#ffffff22;font-weight:800;flex:none}
 .fs small{display:block;color:#9db0d8;font-size:.7333rem}.fs.on{background:#1B3680;border-left-color:#16A6D1}.fs.on i{background:#16A6D1;color:#03153d}.sp{flex:1}.sm{min-height:44px}
 .mb{display:none;background:none;border:1px solid #0B1D5955;color:#0B1D59;border-radius:10px;font-size:1.3333rem;min-height:44px;min-width:44px;cursor:pointer}.scr{display:none}
-@media(max-width:700px){.sb{position:fixed;inset:0 auto 0 0;transform:translateX(-100%);transition:transform .2s;box-shadow:4px 0 20px #0006}#app.sbo .sb{transform:none}#app.sbo .scr{display:block;position:fixed;inset:0;background:#0007;z-index:15}.mb{display:block}.hd .usr b{display:none}}
+@media(max-width:700px){.sb{position:fixed;inset:0 auto 0 0;transform:translateX(-100%);transition:transform .2s;box-shadow:4px 0 20px #0006}#app.sbo .sb{transform:none}#app.sbo .scr{display:block;position:fixed;inset:0;background:#0007;z-index:15}.mb{display:block}.hdt{display:flex;flex:1 1 0}.hd .usr{margin-left:0}.hd .usr b{display:none}}
 main{flex:1;overflow:auto}.wrap{max-width:1180px;margin:auto;padding:18px 16px 40px}
 .gd{display:flex;gap:16px;align-items:center;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='40'%3E%3Cpath d='M0 20Q75 0 150 20T300 20T450 20T600 20V40H0Z' fill='%23fff' fill-opacity='.07'/%3E%3C/svg%3E") repeat-x bottom/600px 40px,linear-gradient(100deg,#0B1D59,#087DBA);color:#fff;border-radius:16px;padding:16px 20px;margin-bottom:16px;flex-wrap:wrap}
 .gd .bd{background:#e6d3a3;color:#2a2108;font-weight:800;border-radius:999px;padding:4px 12px;font-size:.8rem;white-space:nowrap}.gt{flex:1;min-width:220px}.gt b{display:block;font-size:1.1333rem}.gt span{color:#cfe3ec}
@@ -48,7 +48,20 @@ main{flex:1;overflow:auto}.wrap{max-width:1180px;margin:auto;padding:18px 16px 4
 .lnk{background:none;border:1px solid var(--ln);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer;font:inherit;min-height:32px}.lnk.w{color:#fff;border-color:#ffffff66}
 .back{background:none;border:0;color:var(--mut);font:inherit;font-weight:600;cursor:pointer;padding:6px 0 10px;min-height:36px}
 .tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:460px}th{color:var(--mut);font-weight:600;border-bottom:1px solid var(--ln);text-align:right;padding:8px 10px}td{padding:9px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--in)}
-th:first-child,td:first-child{text-align:left}table.lf th,table.lf td{text-align:left}tfoot td{font-weight:700;border-top:1px solid var(--ln)}
+th:first-child,td:first-child{text-align:left}table.lf th,table.lf td{text-align:left}
+/* Tabla de Entrada: columnas con ancho propio; si no cabe, se desliza dentro de la tarjeta */
+table.ent{width:100%;min-width:max-content}
+table.ent th{white-space:nowrap;vertical-align:bottom;padding:10px}
+table.ent td{padding:10px;vertical-align:middle}
+table.ent th.num,table.ent td.num{text-align:right}
+table.ent .c-prov{min-width:8rem}table.ent .c-etp{min-width:7.5rem}
+table.ent th.szh,table.ent td.szv{text-align:center;min-width:6rem}
+table.ent th.szh,table.ent td.szv{padding-left:14px;padding-right:14px}
+table.ent th.szh{position:relative}
+.szh-in{display:inline-grid;grid-template-columns:auto auto;column-gap:6px;row-gap:2px;align-items:center;justify-items:center;line-height:1.25}
+.szh-in .szd{grid-row:1/3}
+.szh1{color:var(--ink);font-weight:700;white-space:nowrap}
+.szh2{color:var(--mut);font-weight:500;font-size:.9333rem;white-space:nowrap}tfoot td{font-weight:700;border-top:1px solid var(--ln)}
 input,select{font:inherit;color:#0a2147;background:#fff;border:1px solid #b8c2cc;border-radius:10px;padding:10px;min-height:44px}td input{width:84px;text-align:right;min-height:36px;padding:4px 8px}
 .f{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.f label{display:flex;flex-direction:column;gap:4px;color:var(--mut);font-size:.8rem}.panel{background:var(--in);border-radius:14px;padding:14px;margin:10px 0}
 .bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
@@ -141,8 +154,112 @@ button.chip.pk[aria-pressed=true]{background:var(--ac);color:var(--acf);border-c
 .zin{display:inline-flex;align-items:center;gap:6px;font-size:.8667rem;color:var(--mut)}.zin input{width:76px}
 .tbl td .bar{flex-wrap:wrap}
 .pkt th,.pkt td{text-align:left}.pkt td{padding:6px 10px}.pkt input.pkc{width:120px;min-height:48px;font-size:1.3333rem;font-weight:700}.pkt .seg{display:flex;gap:6px;flex-wrap:wrap}.pkt select{min-height:48px}.pkt tr:nth-child(even) td{background:rgba(127,127,127,.06)}.pkb{position:sticky;bottom:0;background:var(--cd);padding:10px 0 2px;margin-top:8px;border-top:1px solid var(--ln);align-items:center}.pkb .btn{min-height:50px}.pdfb{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;padding:12px 16px}.pdfb .btn{display:inline-flex;align-items:center;gap:8px}.shp{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:flex-end;margin:6px 0 10px}.shp label{font-size:.8667rem;display:flex;flex-direction:column;gap:4px}
+.pkx{--pkac:#087DBA;--pkat:#0a6797;--pksel:#fff;--pkok:#1f7a4d;--pkin:9rem;--pkfl:#fff;--pkfs:0 10px 30px rgba(15,23,42,.16),0 2px 6px rgba(15,23,42,.08);--pkln:color-mix(in srgb,var(--ink) 10%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pkx{--pkac:#16A6D1;--pkat:#5cc8e8;--pksel:#34445e;--pkok:#4ade80;--pkfl:#26344d;--pkfs:0 12px 32px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3)}}
+:root[data-theme="dark"] .pkx{--pkac:#16A6D1;--pkat:#5cc8e8;--pksel:#34445e;--pkok:#4ade80;--pkfl:#26344d;--pkfs:0 12px 32px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3)}
+.pkx h2.h3{font-weight:600;margin-bottom:4px}
+.pkhelp{color:var(--mut);font-size:.9333rem;margin:0 0 14px;max-width:78ch}
+.pklh{font-size:.8667rem;font-weight:500;color:var(--mut);margin:0 0 6px}
+.pklots{display:flex;gap:8px;overflow-x:auto;padding:1px 1px 4px;margin:0 0 6px;scrollbar-width:thin}
+.pklb{flex:0 0 auto;display:grid;gap:1px;text-align:left;min-height:48px;padding:6px 14px;border:1px solid var(--ln);border-radius:10px;background:var(--cd);color:var(--ink);font:inherit;cursor:pointer;transition:border-color .15s,background-color .15s}
+.pklb b{font-weight:600;font-size:.9333rem}
+.pklb span{font-size:.8rem;color:var(--mut);font-variant-numeric:tabular-nums}
+.pklb[aria-pressed=true]{border-color:var(--pkac);background:color-mix(in srgb,var(--pkac) 7%,var(--cd));box-shadow:inset 0 -2px 0 var(--pkac)}
+.pkx .pktw{margin-top:8px}
+.pkx .pkt{border-collapse:collapse;width:100%}
+.pkx .pkt th{font-size:.8rem;font-weight:500;color:var(--mut);white-space:nowrap;padding:6px 10px;border-bottom:1px solid var(--ln);background:none;text-align:left}
+.pkx .pkt td{padding:8px 10px;border-bottom:1px solid var(--pkln);vertical-align:middle;background:none}
+.pkx .pkt tr:nth-child(even) td{background:none}
+.pkx .pkno{white-space:nowrap}
+.pkcj{display:block;font-weight:600;font-size:1rem;line-height:1.25;color:var(--ink)}
+.pkst{display:inline-flex;align-items:center;gap:5px;margin-top:3px;font-size:.8rem;font-weight:500;line-height:1.2;color:var(--mut);white-space:nowrap}
+.pkst::before{content:"";width:7px;height:7px;border-radius:50%;box-sizing:border-box;border:1.5px solid currentColor;flex:none}
+.pkst .gi{width:.95em;height:.95em;margin-right:0;stroke-width:2.6}
+.pkst.s-prog{color:var(--ink)}.pkst.s-prog::before{border-color:var(--pkac);background:linear-gradient(90deg,var(--pkac) 50%,transparent 50%)}
+.pkst.s-done{color:var(--pkok)}.pkst.s-done::before,.pkst.s-bad::before{display:none}
+.pkst.s-edit{color:var(--pkat)}.pkst.s-edit::before{background:var(--pkac);border-color:var(--pkac)}
+.pkst.s-bad{color:var(--alt);font-weight:600}
+.pkf{display:inline-flex;align-items:center;gap:6px;box-sizing:border-box;width:var(--pkin);min-height:44px;padding:0 12px 0 6px;background:#fff;border:1.5px solid #8497b0;border-radius:10px;cursor:text}
+.pkx .pkt .pkf input:is(.pkc,.pke):not(.vh):not([type=range]):not([type=file]){flex:1;min-width:0;width:100%;min-height:42px;padding:0;border:0;outline:0;background:transparent;box-shadow:none;text-align:right;font-size:max(16px,1.0667rem);font-weight:600;color:#0a2147}
+.pkf .pku{color:#55606c;font-size:.9333rem;font-weight:500}
+.pkf:focus-within{outline:2px solid var(--pkac);outline-offset:1px}
+.pkf:has(input[aria-invalid=true]){border-color:var(--alr);box-shadow:0 0 0 1px var(--alr)}
+.pkx .pkt select{min-height:44px;border-radius:8px;width:auto;max-width:15rem}
+.pkx .pkt select:focus{outline:2px solid var(--pkac);outline-offset:1px}.pkx .pkt .pkf input:is(.pkc,.pke):not(.vh):not([type=range]):not([type=file]):focus{outline:0;box-shadow:none}
+.pkx .seg{display:inline-grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;padding:2px;min-width:16.5rem;border:1px solid var(--ln);border-radius:10px;background:var(--in);flex-wrap:nowrap}
+.pkx .seg .chip.pk{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;margin:0;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--mut);font-size:.9333rem;font-weight:500;white-space:nowrap;box-shadow:none;transition:background-color .15s,color .15s,box-shadow .15s}
+.pkx .seg .chip.pk[aria-pressed=true]{background:var(--pksel);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.14),inset 0 0 0 1.5px var(--pkac)}
+.pkx .seg .dot,.pkcv .dot{width:8px;height:8px;margin:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.28)}
+.pkcv{display:inline-flex;align-items:center;gap:7px;font-weight:500}
+.pklv{font-size:.9333rem}
+.pkvb{display:flex;align-items:center;justify-content:flex-end;gap:5px;width:var(--pkin);min-height:44px;padding:0 12px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--ink);font:inherit;cursor:pointer;text-align:right}
+.pkvb .pku{color:var(--mut);font-size:.9333rem;font-weight:500}.pkvb .pkch{align-self:center;margin-left:6px;color:var(--mut);font-size:1.4rem;line-height:1}
+.pkvb .pkv{font-size:max(16px,1.0667rem);font-weight:600}
+.pkvb:hover{background:color-mix(in srgb,var(--ink) 5%,transparent);border-color:var(--ln)}
+.pkx .pkt tr.is-done td{background:color-mix(in srgb,var(--pkok) 6%,transparent)}
+.pkx .pkt tr.is-done{cursor:pointer}
+.pkx .pkt tr.is-prog td{background:none}
+.pkx .pkt tr.is-edit td{background:color-mix(in srgb,var(--pkac) 4%,transparent);box-shadow:inset 0 1.5px 0 var(--pkac)}
+.pkx .pkt tr.is-edit td:first-child{box-shadow:inset 0 1.5px 0 var(--pkac),inset 1.5px 0 0 var(--pkac)}
+.pkx .pkt tr.is-edit td:last-child{box-shadow:inset 0 1.5px 0 var(--pkac),inset -1.5px 0 0 var(--pkac)}
+.pkx .pkt tr.pkear td{box-shadow:inset 0 -1.5px 0 var(--pkac),inset 1.5px 0 0 var(--pkac),inset -1.5px 0 0 var(--pkac)!important;padding-top:2px}
+.pkea{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pkea .btn{min-height:44px;padding:8px 16px;font-weight:600}
+.pkx .btn.s{background:transparent;box-shadow:inset 0 0 0 1px var(--ln)}
+.pkesp{flex:1}
+.pkx .pkrm{border:0;color:var(--mut);font-weight:500}
+.pkcf{display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pktot{color:var(--mut);font-size:.8667rem;margin:10px 0 0}
+.pkx .pkb{position:sticky;bottom:12px;z-index:2;display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin:14px 0 2px;padding:10px 10px 10px 18px;background:var(--pkfl);border:1px solid var(--ln);border-radius:22px;box-shadow:var(--pkfs)}
+.pkprog{flex:1 1 15rem;min-width:0}
+.pksum{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 8px;margin:0 0 7px;font-size:.9333rem}
+.pkc1{color:var(--pkok);font-weight:600}
+.pksep{color:var(--mut)}
+.pkpen{color:var(--ink);font-weight:500}
+.pkpc{margin-left:auto;color:var(--mut);font-size:.8667rem;font-variant-numeric:tabular-nums}
+.pkbar{height:4px;border-radius:2px;background:var(--in);overflow:hidden}
+.pkbar i{display:block;height:100%;width:calc(var(--p,0) * 100%);border-radius:2px;background:var(--pkac);transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.pkx .pkgo{flex:0 0 auto;min-width:11rem;min-height:48px;justify-content:center;font-weight:600;border-radius:16px}
+.pkall{flex:0 0 auto;padding-right:8px;color:var(--pkok);font-weight:600;font-size:.9333rem}
+.pkok{color:var(--ok);font-weight:600;margin:0 8px 0 0}
+body:has(#pkb) #toast{top:calc(var(--pkmt,80px) + 10px);bottom:auto}
+main:has(#pkb){scroll-padding-bottom:calc(var(--pkbh,90px) + 12px)}
+
+.pktw{container-type:inline-size}
+@container (max-width:47.9375rem){
+ .pkx .pkt,.pkx .pkt tbody{display:block;width:100%;min-width:0}
+ .pkx .pkt tbody{border:1px solid var(--ln);border-radius:12px;overflow:hidden}
+ .pkx .pkt thead{display:none}
+ .pkx .pkt tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 12px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--pkln)}
+ .pkx .pkt tr:last-child{border-bottom:0}
+ .pkx .pkt td{display:block;padding:0;border:0;background:none!important;box-shadow:none!important}
+ .pkx .pkt td.pkno{grid-column:1;grid-row:1}
+ .pkx .pkt td.pkpz{grid-column:2;grid-row:1}
+ .pkx .pkt td.pkcat,.pkx .pkt td.pklot{grid-column:1/-1}
+ .pkx .pkt tr.is-done{grid-template-columns:minmax(0,1fr) auto auto;background:color-mix(in srgb,var(--pkok) 6%,transparent)}
+ .pkx .pkt tr.is-done td.pkcat{grid-column:2;grid-row:1}
+ .pkx .pkt tr.is-done td.pkpz{grid-column:3;grid-row:1}
+ .pkx .pkt tr.is-done td.pklot{grid-column:1/-1;grid-row:2}
+ .pkx .pkt tr.is-done .pklv{font-size:.8rem;color:var(--mut)}
+ .pkx .pkvb{width:auto}
+ .pkx .seg{display:grid;min-width:0;width:100%}
+ .pkx .pkt select{max-width:100%;width:100%}
+ .pkx .pkt tr.is-edit{background:color-mix(in srgb,var(--pkac) 4%,transparent);box-shadow:inset 1.5px 0 0 var(--pkac),inset -1.5px 0 0 var(--pkac),inset 0 1.5px 0 var(--pkac);border-bottom:0}
+ .pkx .pkt tr.pkear td{box-shadow:none!important}
+ .pkx .pkt tr.pkear{display:block;padding:2px 14px 12px;box-shadow:inset 1.5px 0 0 var(--pkac),inset -1.5px 0 0 var(--pkac),inset 0 -1.5px 0 var(--pkac);border-bottom:1px solid var(--pkln)}
+}
+@container (max-width:23.9375rem){
+ .pkx .pkt tr{padding:12px}
+ .pkx .pkt tr.is-done{row-gap:4px}
+ .pkx .pkt tr.is-done{grid-template-columns:minmax(0,1fr) auto}
+ .pkx .pkt tr.is-done td.pkcat{grid-column:1;grid-row:2}
+ .pkx .pkt tr.is-done td.pkpz{grid-column:2;grid-row:1/span 2}
+ .pkx .pkt tr.is-done td.pklot{grid-row:3}
+ .pkx .seg .chip.pk{padding:0 4px;gap:5px}
+}
+@media(max-width:640px){.pkx .pkgo{flex:1 1 100%}}
 select,input{max-width:100%}.shp select{max-width:100%}
-@media(max-width:640px){.f>label{min-width:0;max-width:100%;flex:1 1 100%}.f select{width:100%}.pkt{min-width:0}.pkt thead{display:none}.pkt,.pkt tbody,.pkt tr,.pkt td{display:block;width:100%}.pkt tr{border:1px solid var(--ln);border-radius:12px;padding:10px;margin-bottom:10px}.pkt td{padding:4px 0;border:0;background:none!important}.pkt td:first-child{font-size:1.0667rem}.pkt td:first-child::before{content:'Caja n.º ';font-weight:600}.pkt td:nth-child(2)::before{content:'Piezas vivas';display:block;font-size:.8rem;color:var(--mut)}.pkt td:nth-child(3)::before{content:'Categoría';display:block;font-size:.8rem;color:var(--mut);margin-bottom:4px}.pkt td:nth-child(4)::before{content:'Lote';display:block;font-size:.8rem;color:var(--mut)}.pkt input.pkc{width:100%}.pkt select{width:100%}.pkt .seg .chip{flex:1;justify-content:center}}
+@media(max-width:640px){.f>label{min-width:0;max-width:100%;flex:1 1 100%}.f select{width:100%}}
 
 input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=range]):not(.vh),select,textarea{min-height:48px;padding:10px 14px;border:1.5px solid #8497b0;border-radius:12px;background-color:#fff;color:#0a2147;font-size:max(16px,1.0667rem);line-height:1.3;transition:border-color .15s}
 select{-webkit-appearance:none;appearance:none;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a2147' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:18px;cursor:pointer;text-overflow:ellipsis}
@@ -162,8 +279,8 @@ input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{b
 
 .tot{display:flex;align-items:center;min-height:48px;font-size:1.3333rem;font-weight:800}
 
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hd{background:var(--cd);color:var(--ink);border-bottom-color:var(--brand-blue)}:root:not([data-theme="light"]) .hd b{color:var(--ink)}:root:not([data-theme="light"]) .hd .lnk.w,:root:not([data-theme="light"]) .hd .mb{color:var(--ink);border-color:var(--ln)}:root:not([data-theme="light"]) .zs [aria-pressed=true]{background:var(--brand-blue);color:#fff;border-color:var(--brand-blue)}}
-:root[data-theme="dark"] .hd{background:var(--cd);color:var(--ink);border-bottom-color:var(--brand-blue)}:root[data-theme="dark"] .hd b{color:var(--ink)}:root[data-theme="dark"] .hd .lnk.w,:root[data-theme="dark"] .hd .mb{color:var(--ink);border-color:var(--ln)}:root[data-theme="dark"] .zs [aria-pressed=true]{background:var(--brand-blue);color:#fff;border-color:var(--brand-blue)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hdti{background:var(--brand-blue)}:root:not([data-theme="light"]) .hd{background:var(--cd);color:var(--ink);border-bottom-color:var(--brand-blue)}:root:not([data-theme="light"]) .hd b{color:var(--ink)}:root:not([data-theme="light"]) .hd .lnk.w,:root:not([data-theme="light"]) .hd .mb{color:var(--ink);border-color:var(--ln)}:root:not([data-theme="light"]) .zs [aria-pressed=true]{background:var(--brand-blue);color:#fff;border-color:var(--brand-blue)}}
+:root[data-theme="dark"] .hdti{background:var(--brand-blue)}:root[data-theme="dark"] .hd{background:var(--cd);color:var(--ink);border-bottom-color:var(--brand-blue)}:root[data-theme="dark"] .hd b{color:var(--ink)}:root[data-theme="dark"] .hd .lnk.w,:root[data-theme="dark"] .hd .mb{color:var(--ink);border-color:var(--ln)}:root[data-theme="dark"] .zs [aria-pressed=true]{background:var(--brand-blue);color:#fff;border-color:var(--brand-blue)}
 .szd{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;box-shadow:0 0 0 1.5px #64748b;flex:none}
 .sz input{border-width:4px!important;border-style:solid!important}.sz0 input{border-color:#b8c4d0!important;box-shadow:inset 0 0 0 1px #fff}.sz1 input{border-color:#E5484D!important}.sz2 input{border-color:#30A46C!important}.sz3 input{border-color:#F5C518!important}
 .pshell{display:flex;flex-direction:column;height:100%;background:var(--bg)}.phd{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--brand-navy);color:#fff;flex-wrap:wrap}.plg{width:120px}.ptit{font-size:1.3333rem}.pus{color:#c9d6f0;font-size:.9333rem}
@@ -189,7 +306,7 @@ input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{b
 .pcR::before,.pcV::before,.pcB::before{content:"";width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1.5px #64748b}.pcR::before{background:#E5484D}.pcV::before{background:#2a9a63}.pcB::before{background:#fff}
 button.chip.pk.pcR[aria-pressed=true]{background:#E5484D;border-color:#E5484D;color:#fff}button.chip.pk.pcV[aria-pressed=true]{background:#2a9a63;border-color:#2a9a63;color:#fff}button.chip.pk.pcB[aria-pressed=true]{background:#fff;border-color:#1c2733;color:#1c2733}
 .pbx.sv{background:var(--in);border-color:var(--ln);position:relative;opacity:.62;transition:opacity .15s}.pbx.sv:focus-within,.pbx.sv:hover{opacity:1}.pbx.sv input.psc{background:#eef2f5;color:#334155}.pok{position:absolute;top:-10px;right:-10px;width:34px;height:34px;border-radius:50%;background:var(--okb);color:var(--okf);display:grid;place-items:center;font-weight:900;font-size:1.2rem;box-shadow:0 0 0 3px var(--bg)}
-.pbx input.psc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pbx input.ppc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pft{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-size:.9333rem;font-weight:700;color:var(--ok)}.pft .lnk{font-size:.9333rem}
+.pbx input.psc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pbx input.ppc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pft{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-size:.9333rem;font-weight:700;color:var(--ok)}.pft .lnk{font-size:.9333rem}.pbx.sv{border-color:color-mix(in srgb,var(--okb) 60%,var(--ln))}.pbx.sv:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 30%,transparent)}.pbx.ip{border-color:var(--brand-cyan);background:color-mix(in srgb,var(--brand-cyan) 8%,var(--cd))}.pde{display:none;color:var(--fr)}.pbx.sv:focus-within .pde{display:inline}.pbx.sv:focus-within .pdc{display:none}.pkn2 .pks2{display:block;margin-top:6px}
 .pdone{display:flex;flex-direction:column;gap:6px;padding:16px 20px;border-radius:18px;background:var(--cd);border:2px solid var(--okb);margin-bottom:14px}.pdone b{font-size:1.6rem;color:var(--ok)}.pdone span{color:var(--mut)}.pdone .pbar{justify-content:flex-start}
 .pall{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
 .shk{animation:shk .35s}@keyframes shk{0%,100%{transform:none}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
@@ -228,6 +345,55 @@ button.chip.pk.pcR[aria-pressed=true]{background:#E5484D;border-color:#E5484D;co
 .pbtn{border-radius:14px;letter-spacing:-.01em;transition:transform .12s ease,filter .15s}.pbtn:active{transform:scale(.97)}
 @media(prefers-reduced-motion:reduce){.iossw,.iossw i,.pt,.pbtn{transition:none}}
 @media(max-width:760px){.ptit{display:none}.phd{gap:8px;padding:8px 12px}.phd .pbtn.s{padding:8px 12px}.phd .iosrow small{display:none}.phd .iosrow{padding:6px}.phd .iostx b{font-size:.8667rem}}
+/* --- Registrar entradas: hoja de captura de varias entradas (Modo piso) --- */
+.pw.pent{max-width:1440px;padding-top:12px;container:pent/inline-size}
+.penh{display:flex;align-items:baseline;gap:4px 16px;flex-wrap:wrap;margin-bottom:10px}.penh .ph{margin:0;font-size:1.6rem}.penh .mut2{display:inline}
+.penal{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;padding:8px 12px;border-radius:14px;border:2px solid var(--alr);background:var(--cd);color:var(--cor);margin-bottom:10px}
+.pesv{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;padding:8px 12px;border-radius:14px;background:var(--cd);border:2px solid var(--okb);margin-bottom:10px}.pesv b{color:var(--ok)}.pesv .sp{flex:1}
+.pnt-t{width:100%;min-width:0;border-collapse:separate;border-spacing:0}.penal .chipb{min-height:44px}.pnt-t [hidden]{display:none!important}
+.pnt-t thead th{position:sticky;top:0;z-index:2;background:var(--bg);text-align:left;font-size:.8667rem;font-weight:700;color:var(--mut);padding:8px 6px;border-bottom:2px solid var(--ln);white-space:nowrap;vertical-align:bottom}
+.pnt-t th span{display:flex;align-items:center;gap:6px;color:var(--ink)}.pnt-t th small{display:block;font-weight:600;font-size:.7333rem}
+.pnt-t td{padding:6px;vertical-align:top;border-bottom:1px solid var(--ln);background:var(--cd)}
+.pnt-t input,.pnt-t select{width:100%;min-width:0;min-height:48px;padding:8px 10px;font-size:max(16px,1.0667rem);box-sizing:border-box}
+.pnt-t .c-no{width:5.8rem}.pnt-t .c-tk{width:5rem}.pnt-t .c-k{width:6.4rem}.pnt-t .c-tot{width:5.8rem;text-align:right}.pnt-t .c-ac{width:7.6rem;white-space:nowrap;text-align:right}
+.pnt-t .c-k input{text-align:right;font-weight:700}.pnt-t .c-lo input{text-transform:uppercase;font-weight:700}
+.c-no b{display:block;font-size:1.2rem;line-height:1.2}.pst .chip{font-size:.7333rem;padding:2px 8px;margin-top:4px}
+.c-tot>b{display:block;padding-top:12px;font-size:1.1333rem}
+.chip.pnd{background:#fde9c8;color:#6b4200;font-weight:700}.chip.pnw{color:var(--mut)}
+.perr{display:block;color:var(--cor);font-weight:700;font-size:.8rem;line-height:1.25;margin-top:4px;white-space:normal;text-align:left}
+.pmore,.prm{min-height:48px;min-width:48px;border-radius:12px;border:1px solid var(--ln);background:var(--in);color:var(--ink);font:inherit;font-weight:700;cursor:pointer;padding:6px 10px;vertical-align:top}.prm{margin-left:6px}.prm svg{width:18px;height:18px}
+.pmore[aria-expanded=true]{background:var(--brand-blue);color:#fff;border-color:transparent}.pmc{font-weight:600}
+.pecf{display:inline-flex;gap:6px}.pecf .btn{min-height:48px;padding:8px 12px}
+tr.cur>td{background:color-mix(in srgb,var(--brand-cyan) 10%,var(--cd))}
+.per.op>td{border-bottom-color:transparent}
+.per.sv>td,.pdet.sv>td{background:var(--in)}
+.pnt-t input:disabled,.pnt-t select:disabled{background:transparent!important;color:var(--ink);-webkit-text-fill-color:var(--ink);border-color:transparent!important;border-style:solid;box-shadow:none;opacity:1;cursor:default;appearance:none;-webkit-appearance:none}
+.pnt-t .c-or input,.pnt-t .c-lo input{text-align:left}
+.pdet>td{padding:4px 10px 12px}.pdg{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:10px}
+.pnt-t .pdg input{text-align:left}.pdg label{display:flex;flex-direction:column;gap:4px;font-size:.8667rem;font-weight:700;color:var(--mut)}
+.pel{display:none}
+.pebar{align-items:center;margin-top:12px;z-index:3;border-top:1px solid var(--ln)}.pecnt{flex:1;text-align:center;color:var(--mut);font-weight:700}
+.pebar .pbtn:disabled{cursor:not-allowed}
+@container pent (max-width:64rem){
+ .pnt-t,.pnt-t tbody{display:block}.pnt-t thead{display:none}
+ .pnt-t tr.per{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"no no tot ac" "or or tk lo" "k0 k1 k2 k3";gap:8px 10px;padding:12px;margin-top:12px;border:1px solid var(--ln);border-radius:16px;background:var(--cd)}
+ .pnt-t tr.per.op{border-radius:16px 16px 0 0;border-bottom:0}
+ .pnt-t tr.per>td,.pnt-t tr.pdet>td{display:block;padding:0;border:0;background:none;width:auto}
+ .pnt-t tr.pdet{display:block;border:1px solid var(--ln);border-top:1px dashed var(--ln);border-radius:0 0 16px 16px;background:var(--cd);padding:0 12px 12px}
+ .pnt-t tr.cur{background:color-mix(in srgb,var(--brand-cyan) 10%,var(--cd));border-color:var(--brand-cyan)}
+ .pnt-t tr.per.sv,.pnt-t tr.pdet.sv{background:var(--in)}
+ .pel{display:flex;align-items:center;gap:6px;font-size:.8667rem;font-weight:700;color:var(--mut);margin-bottom:3px}
+ .pnt-t input:disabled,.pnt-t select:disabled{text-align:left!important;padding-left:2px}
+ .pnt-t tr.per>.c-no{grid-area:no;display:flex;align-items:center;gap:10px}.pnt-t .c-no .chip{margin:0}.pnt-t .c-or{grid-area:or}.pnt-t .c-tk{grid-area:tk}.pnt-t .c-lo{grid-area:lo}
+ .pnt-t .sz0{grid-area:k0}.pnt-t .sz1{grid-area:k1}.pnt-t .sz2{grid-area:k2}.pnt-t .sz3{grid-area:k3}
+ .pnt-t tr.per>.c-tot{grid-area:tot;display:flex;flex-direction:column;align-items:flex-end}.pnt-t .c-tot .pel{margin:0}.c-tot>b{padding:0}.pnt-t .c-ac{grid-area:ac}
+}
+@container pent (max-width:34rem){
+ .pnt-t tr.per{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"no ac" "or or" "tk lo" "k0 k1" "k2 k3" "tot tot"}
+ .pnt-t tr.per>.c-tot{flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap}
+ .pdg{grid-template-columns:1fr 1fr}
+ .pebar{flex-wrap:wrap;gap:8px;padding:8px 0}.pebar .pbtn{flex:1 1 0;min-width:0;padding:10px 12px;font-size:1.0667rem}.pecnt{order:-1;flex-basis:100%;font-size:.9333rem}
+}
 
 .alk{display:inline;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-underline-offset:3px}.alk span{display:inline-block;margin-left:6px;padding:2px 10px;border-radius:999px;background:var(--alr,#d50f1f);color:#fff;font-size:.8rem;font-weight:800;text-decoration:none}.alb li{margin:6px 0}
 .kpl{cursor:pointer;transition:transform .12s ease}.kpl:hover{filter:brightness(1.05)}.kpl:active{transform:scale(.98)}.kgo{margin-top:6px;font-size:.8667rem;font-weight:800;color:var(--alt,#c8001a)}
@@ -290,6 +456,87 @@ button.chip.chipb{white-space:normal!important;text-align:left;line-height:1.3;m
 @media(prefers-reduced-motion:reduce){.pmbox{animation:none}}
 
 .pmver{margin:6px 10px 2px;font-size:.8rem;color:var(--mut)}
+/* ===== Teclado fijo de Empaque (v1.3.0) ===== */
+body:has(#kpad) #toast{top:calc(var(--pkmt,80px) + 10px);bottom:auto}
+.kpwrap{container:kpw/inline-size}
+.kpw{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+.kpmain{min-width:0}
+.kpad{--kpk:3.6rem;display:grid;gap:10px;background:var(--cd);border:1px solid var(--ln);border-radius:22px;padding:14px;box-shadow:0 10px 30px rgba(15,23,42,.10);position:sticky;bottom:10px;z-index:3;
+ grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);grid-template-areas:"h h" "d k" "l k" "c k" "n n";align-items:start}
+.kph{grid-area:h;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.kph b{font-size:1.2rem;color:var(--ink)}.kph span{color:var(--mut);font-weight:600;font-size:.9333rem}
+.kpd{grid-area:d;position:relative;display:flex;align-items:center;justify-content:center;min-height:4.4rem;border:3px solid var(--brand-cyan);border-radius:16px;background:#fff;padding:0 14px}
+.kpv{font-size:2.8rem;font-weight:800;color:#0f172a;line-height:1;letter-spacing:.02em}
+.kpd.e .kpv{color:#94a3b8}
+.kpd.fr .kpv{background:color-mix(in srgb,var(--brand-cyan) 22%,transparent);border-radius:8px;padding:2px 8px}
+.kpu{position:absolute;right:12px;bottom:6px;color:#64748b;font-weight:700;font-size:.8rem}
+.kpk{grid-area:k;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kpk button{display:flex;align-items:center;justify-content:center;height:var(--kpk);min-height:48px;padding:0;border-radius:14px;border:2px solid var(--ln);background:var(--in);font:inherit;font-size:1.75rem;font-weight:800;color:var(--ink);box-shadow:0 2px 0 var(--ln);cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.kpk button.f{font-size:1rem;color:var(--mut)}
+.kpk button:active:not(:disabled){transform:translateY(2px);box-shadow:none;background:color-mix(in srgb,var(--brand-cyan) 18%,var(--in))}
+.kpcl{grid-area:l;margin:2px 0 -4px;font-size:.8667rem;font-weight:700;color:var(--mut)}
+.kpc{grid-area:c;display:grid;grid-template-columns:1fr;gap:8px}
+.kpc button{display:flex;align-items:center;justify-content:center;gap:8px;height:var(--kpk);min-height:48px;padding:0 8px;border-radius:14px;border:2px solid transparent;font:inherit;font-size:1.1rem;font-weight:800;cursor:pointer;touch-action:manipulation;white-space:nowrap}
+.kpc button::before{content:"";width:14px;height:14px;border-radius:50%;flex:none;background:#fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.25)}
+.kpc .kcR{background:#E5484D;color:#fff}.kpc .kcV{background:#2a9a63;color:#fff}.kpc .kcB{background:#fff;color:#0f172a;border-color:#94a3b8}
+.kpc button[aria-pressed=true]{box-shadow:0 0 0 3px var(--cd),0 0 0 6px var(--ink)}
+.kpc button[aria-pressed=true]::after{content:"✓";font-weight:900}
+.kpad button:disabled{opacity:.4;cursor:default}
+.kpn{grid-area:n;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.kpn>button{background:none;border:0;font:inherit;font-weight:700;color:var(--ac);font-size:.9333rem;padding:10px 4px;min-height:44px;cursor:pointer}
+.kpn #kpx{display:flex;gap:6px;align-items:center}.kpcf{display:inline-flex;gap:10px;align-items:center}
+.kprm{color:var(--alr)!important}
+@container kpw (min-width:56rem){
+ .kpw{grid-template-columns:minmax(0,1fr) minmax(20rem,26rem)}
+ .kpad,.kpdock{position:sticky;top:12px;bottom:auto}
+ .kpad{grid-template-columns:1fr;grid-template-areas:"h" "d" "k" "l" "c" "n";--kpk:max(48px,min(4.3rem,calc((100vh - 26rem) / 5)))}
+ .kpc{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .kpd{min-height:5.2rem}.kpv{font-size:3.2rem}
+}
+/* Vista completa: el teclado y «Guardar cajas» van juntos (a la derecha en pantallas anchas, abajo en las angostas) */
+.kpdock{position:sticky;bottom:10px;z-index:3;display:flex;flex-direction:column;gap:10px}
+.kpdock .kpad{position:static}
+.pkx .kpdock .pkb{position:static;margin:0}
+@container kpw (min-width:56rem){.kpf .kpad{--kpk:max(48px,min(3.9rem,calc((100vh - 35rem) / 5)))}.kpf .kpd{min-height:4.4rem}.kpf .kpv{font-size:2.8rem}.pkx .kpdock .pkb{padding:8px 10px 8px 14px;gap:6px 12px}}
+/* Modo piso con teclado: tarjetas compactas */
+.kpp .pbxs{grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:10px}
+.kpp .pbx{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;gap:4px;min-height:8.2rem;padding:10px 12px;cursor:pointer;position:relative}
+.kpp .pbx .pbn{font-size:1rem;color:var(--mut);font-weight:700}
+.kpp .pbx input:is(.ppc,.psc):not(.vh):not([type=range]):not([type=file]):not([type=checkbox]):not([type=radio]){width:100%;min-height:3.2rem;border-radius:0;border:0;background:transparent!important;box-shadow:none;outline:0;padding:0;font-size:2.2rem;font-weight:800;color:var(--ink);text-align:center;caret-color:transparent;cursor:pointer}
+.kpp .pbx input::placeholder{color:#b6c0cc;opacity:1}
+.kpp .pcv{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:700;font-size:.9333rem;min-height:1.4rem}
+.kpp .pcv .dot,.kpad .dot{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.pcx2{color:var(--mut);font-weight:600}
+.kpp .pbx .pft{justify-content:center;gap:6px;font-size:.8rem;flex-wrap:wrap}
+.kpp .pbx .plt{color:var(--mut);font-weight:600}
+.kpp .pok{top:-8px;right:-8px;width:28px;height:28px;font-size:1rem}
+.kpp .pbx.kpon{border-color:var(--brand-cyan);background:color-mix(in srgb,var(--brand-cyan) 9%,var(--cd));box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-cyan) 28%,transparent);opacity:1}
+.kpp .pbx.kpon .pbn{color:var(--brand-cyan)}
+.kpon2.pw{max-width:1280px}
+.kpon2 .pkh{padding:10px 18px;gap:12px;margin-bottom:12px}
+.kpon2 .pkh .cli{font-size:2rem!important}.kpon2 .pkn2 b{font-size:1.8rem}.kpon2 .pkn2 small{font-size:1rem}.kpon2 .plot{min-height:52px;padding:8px 14px}
+/* Vista completa: fila activa */
+.pkx .pkt tr.kpon td{background:color-mix(in srgb,var(--brand-cyan) 10%,transparent)}
+.pkx .pkt tr.kpon .pkf{box-shadow:0 0 0 3px color-mix(in srgb,var(--brand-cyan) 45%,transparent);border-radius:10px}
+.pkx .pkt .pkf input{caret-color:transparent}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .kpad{box-shadow:0 10px 30px rgba(0,0,0,.45)}}
+:root[data-theme=dark] .kpad{box-shadow:0 10px 30px rgba(0,0,0,.45)}
+@media (prefers-reduced-motion:reduce){.kpk button:active:not(:disabled){transform:none}}
+
+.kpdt{display:none}
+/* Pantallas angostas (celular, vista completa en tablet vertical): categorías al lado de los números, título dentro del recuadro */
+@container kpw (max-width:39.99rem){
+ .kpad{--kpk:3.1rem;padding:10px;gap:6px;border-radius:18px;grid-template-columns:minmax(0,3fr) minmax(0,1.3fr);grid-template-areas:"d d" "k c" "n n"}
+ .kph,.kpcl,.kpu{display:none}
+ .kpdt{display:block;position:absolute;left:12px;top:50%;transform:translateY(-50%);font-weight:700;color:#475569;font-size:.9333rem}
+ .kpd{min-height:3.3rem;border-width:2px}.kpv{font-size:2.2rem}
+ .kpk{gap:6px}.kpk button{font-size:1.5rem;border-radius:12px}
+ .kpc{grid-template-rows:repeat(3,minmax(0,1fr));gap:6px;align-self:stretch}
+ .kpc button{height:auto;font-size:1rem;flex-direction:column;gap:4px;border-radius:12px;white-space:normal;line-height:1.1}
+ .kpc button[aria-pressed=true]::after{position:absolute;top:4px;right:6px;font-size:.9rem}
+ .kpc button{position:relative}
+ .kpn>button{padding:6px 4px;font-size:.8667rem}
+}
 </style></head>
 <body><div id="app"></div><div id="setp" hidden></div><div id="pmenu" hidden></div><div id="toast" role="status"></div>
 <script>
@@ -419,7 +666,10 @@ document.addEventListener('change',e=>{const t=e.target;if(t.id=='ol_city'){OD.c
  else if(t.dataset&&t.dataset.zs){const[i,k]=t.dataset.zs.split(':').map(Number);ST.P[i].z[k]=Math.max(0,Math.round(+t.value||0));save();render()}});
 
 /* Campos numéricos: teclado numérico en la tablet y texto seleccionado al tocar, para escribir encima sin borrar. */
-document.addEventListener('focusin',e=>{const t=e.target;if(t.type=='number'&&!t.disabled)setTimeout(()=>{try{t.select()}catch(x){}},0)});
+/* Seleccionar el número al enfocar (el siguiente número lo reemplaza). En las cajas del teclado fijo, en pantallas táctiles no se selecciona:
+   el teclado ya reemplaza el primer número y la selección de iPad mostraría «Copiar/Pegar». Solo si el campo sigue enfocado (select() roba el foco). */
+const selOk=t=>!(t.inputMode=='none'&&matchMedia('(pointer: coarse)').matches);
+document.addEventListener('focusin',e=>{const t=e.target;if(t.type=='number'&&!t.disabled&&selOk(t))setTimeout(()=>{try{if(document.activeElement===t)t.select()}catch(x){}},0)});
 new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType==1)(n.matches&&n.matches('input[type=number]')?[n]:[...n.querySelectorAll('input[type=number]')]).forEach(i=>{if(!i.inputMode)i.inputMode=(i.step||'').includes('.')?'decimal':'numeric'})}).observe(document.body,{childList:true,subtree:true});
 /* Si un formulario trae un error, se vuelve a dibujar pero se conserva todo lo que la persona escribió. */
 function renderKeep(focusId){const snap={};document.querySelectorAll('#app input[id],#app select[id],#app textarea[id]').forEach(el=>{if(el.id!='sq')snap[el.id]=el.value});
@@ -457,40 +707,81 @@ function empaque(){return `<div class="wrap">${guide(3,'Empaque de cajas','Las l
 function empacar(key){const[oid,lid]=String(key).split('.').map(Number),o=ST.OR.find(x=>x.id===oid),l=o&&o.lines.find(x=>x.id===lid);
  if(!l)return `<div class="wrap"><button class="back" data-go="empaque">‹ Volver a Empaque</button><div class="cd"><p>Esa línea ya no existe.</p></div></div>`;
  const bs=ordAssigned(o,l),n=bs.length,room=Math.max(0,l.boxes-n),si=(o.sh||{})[l.city+'|'+l.cons],sc=si!=null&&ST.P[si]&&ST.P[si].closed,ab=can('box')&&!sc,open=lots().filter(x=>!R_(x).closed),
- d=PKD.key==key?PKD:(PKD={key,lot:open.length==1?open[0]:null,rows:{}}),all=ordBoxes(o),next=all.length+1,c=CONS[l.cons];
+ d=PKD.key==key?PKD:(PKD={key,lot:open.length==1?open[0]:null,rows:{},ed:null,ew:null}),all=ordBoxes(o),next=all.length+1,c=CONS[l.cons];
+ if(d.ed!=null&&!bs.some(x=>x.b.seq===d.ed)){d.ed=null;d.ew=null}
  return `<div class="wrap"><button class="back" data-go="empaque">‹ Volver a Empaque</button>
  <div class="cd head"><div><h1>Empacando: ${E(l.cli)}</h1><p class="mut" style="margin:4px 0 0">${l.city} · ${E(c.n)} · Empaque ${fd(o.etd)}</p></div><div style="min-width:220px;flex:1;max-width:340px"><b>${n} de ${l.boxes}</b> cajas empacadas${room?` <span class="mut">· faltan ${room}</span>`:' <span class="ok">· ✔ completa</span>'}<div class="pb"><i style="width:${Math.min(100,n/l.boxes*100)}%"></i></div></div></div>
  ${pdfBar('emp',oid,'Packing list de esta orden')}${sc?'<div class="cd"><span class="chip ok">Empaque cerrado</span> <span class="mut">Ya no se pueden agregar ni quitar cajas de este destino.</span></div>':''}
- ${ab&&room?pkGrid(d,room,next,open):''}
- ${room==0&&!sc?`<div class="cd"><span class="chip ok">✔ Esta línea ya tiene todas sus cajas</span> ${pendKey(o,key)&&pendKey(o,key)!==key?`<button class="btn" data-go="empacar:${pendKey(o,key)}">Siguiente cliente que falta ›</button>`:''} <button class="btn s" data-go="empaque">Volver a Empaque</button></div>`:''}
- <div class="cd"><h2 class="h3">Cajas de ${E(l.cli)}</h2>${n?`<div class="tbl"><table><thead><tr><th>No.</th><th>Lote</th><th>Piezas vivas</th><th>Categoría</th><th aria-label="Acciones"></th></tr></thead><tbody>${bs.map(x=>{const no=all.findIndex(y=>y.b===x.b)+1;return `<tr><td><b>${no}</b></td><td>${E(x.l)}</td><td>${x.b.c}</td><td><span class="chip" data-k="${x.b.k}">${RC[x.b.k][0]}</span></td><td>${ab?(PKD.cf==x.b.seq?`<b class="er">¿Quitar?</b> <button class="btn d" data-pk="rm:${x.b.seq}">Sí</button> <button class="btn s" data-pk="no">No</button>`:`<button class="lnk" data-pk="del:${x.b.seq}">Quitar</button>`):''}</td></tr>`}).join('')}</tbody></table></div><p class="mut">Total: ${bs.reduce((a,x)=>a+x.b.c,0)} piezas vivas en ${n} ${n==1?'caja':'cajas'}.</p>`:'<p class="mut">Todavía no hay cajas. Agrega la primera arriba.</p>'}</div>
+ ${room==0&&!sc?`<div class="cd"><span class="pkok">✔ Esta línea ya tiene todas sus cajas</span> ${pendKey(o,key)&&pendKey(o,key)!==key?`<button class="btn" data-go="empacar:${pendKey(o,key)}">Siguiente cliente que falta ›</button>`:''} <button class="btn s" data-go="empaque">Volver a Empaque</button></div>`:''}
+ ${ab?pkGrid(d,o,l,key,bs,all,room,next,open):`<div class="cd"><h2 class="h3">Cajas de ${E(l.cli)}</h2>${n?`<div class="tbl"><table><thead><tr><th>No.</th><th>Lote</th><th>Piezas vivas</th><th>Categoría</th></tr></thead><tbody>${bs.map(x=>{const no=all.findIndex(y=>y.b===x.b)+1;return `<tr><td><b>${no}</b></td><td>${E(x.l)}</td><td>${x.b.c}</td><td><span class="chip" data-k="${x.b.k}">${RC[x.b.k][0]}</span></td></tr>`}).join('')}</tbody></table></div><p class="mut">Total: ${bs.reduce((a,x)=>a+x.b.c,0)} piezas vivas en ${n} ${n==1?'caja':'cajas'}.</p>`:'<p class="mut">Todavía no hay cajas.</p>'}</div>`}
  ${evid('emp:'+key,'Notas de este empaque',1)}</div>`}
-function pkGrid(d,room,next,open){const multi=open.length>1,rows=[];d.rows=d.rows||{};
- for(let r=0;r<room;r++){const w=d.rows[r]||{},lot=w.lot||d.lot||'',k=w.k||'',no=next+r;
-  rows.push(`<tr class="pkrow" id="pkr${r}"><td><b>${no}</b></td><td><input class="pkc" id="pk_c${r}" data-row="${r}" type="number" min="1" inputmode="numeric" enterkeyhint="next" value="${E(w.c==null?'':w.c)}" aria-label="Piezas vivas de la caja ${no}"></td><td><div class="seg" role="group" aria-label="Categoría de la caja ${no}">${['R','V','B'].map(q=>`<button type="button" class="chip pk" aria-pressed="${k==q}" data-pk="k:${r}:${q}"><span class="dot" style="background:var(--${q})"></span>${RC[q][0]}</button>`).join('')}</div></td>${multi?`<td><select class="pkl" data-row="${r}" aria-label="Lote de la caja ${no}"><option value="" ${lot?'':'selected'}>Elige lote</option>${open.map(x=>`<option value="${E(x)}" ${lot==x?'selected':''}>${E(x)}</option>`).join('')}</select></td>`:''}</tr>`)}
- return `<div class="cd"><h3>Agregar cajas · n.º ${next}${room>1?' a '+(next+room-1):''}</h3>
- <p class="mut" style="margin:0 0 10px">Aparece una fila por cada caja que falta. Escribe las piezas vivas y toca la categoría de las cajas que ya empacaste; las filas que dejes en blanco no se guardan.</p>
- <p class="mut" style="margin:0 0 6px"><b>Lote del que sacas las langostas</b>${multi?' (se aplica a todas las filas; puedes cambiarlo en cada una)':''}</p><div class="chain">${open.length?open.map(x=>`<button class="chip pk" aria-pressed="${d.lot==x}" data-pk="lot:${E(x)}">${E(x)} · Tanque ${E(String(tk(x)).replace(/^T/,''))} · ${f(bal(x))} kg</button>`).join(''):'<span class="mut">No hay lotes en tanques. Registra una entrada primero.</span>'}</div>
- <div class="tbl" style="margin-top:12px"><table class="pkt"><thead><tr><th>Caja n.º</th><th>Piezas vivas</th><th>Categoría</th>${multi?'<th>Lote</th>':''}</tr></thead><tbody>${rows.join('')}</tbody></table></div>
- <div class="bar pkb"><button class="btn" data-pk="addall">Guardar cajas <span class="pkn"></span></button><span class="mut">Faltan ${room} por empacar</span></div></div>`}
-function pkCnt(){const d=PKD,n=Object.values(d.rows||{}).filter(w=>+w.c>=1&&w.k).length;document.querySelectorAll('.pkn').forEach(e=>e.textContent=n?'('+n+')':'')}
-document.addEventListener('input',e=>{const t=e.target;if(t.classList&&t.classList.contains('pkc')){const r=+t.dataset.row;(PKD.rows[r]=PKD.rows[r]||{}).c=t.value;pkCnt()}});
-document.addEventListener('change',e=>{const t=e.target;if(t.classList&&t.classList.contains('pkl')){const r=+t.dataset.row;(PKD.rows[r]=PKD.rows[r]||{}).lot=t.value}});
-document.addEventListener('keydown',e=>{const t=e.target;if(e.key=='Enter'&&t.classList&&t.classList.contains('pkc')){e.preventDefault();const n=document.getElementById('pk_c'+(+t.dataset.row+1));if(n)n.focus();else t.blur()}});
+/* Estado de cada caja en Empaque (vista completa). Completada = guardada en ST.B (pasó la validación); no hay bandera aparte, así que sobrevive a recargar.
+   Estilo sobrio: texto pequeño con un indicador, sin pastillas de color. */
+const PKS={pend:'<span class="pkst s-pend">Pendiente</span>',prog:'<span class="pkst s-prog">En captura</span>',done:'<span class="pkst s-done">✔ Completada</span>',edit:'<span class="pkst s-edit">Editando</span>',bad:'<span class="pkst s-bad">⚠ Incompleta</span>'};
+const pkRowSt=w=>w&&((w.c!=null&&String(w.c).trim()!=='')||(w.k&&!w.auto))?'prog':'pend',
+ pkEdOk=w=>!!w&&w.c!=null&&String(w.c).trim()!==''&&Math.round(+w.c)>=1&&!!w.k;
+let PKP={key:'',p:0}; /* último avance mostrado: la barra delgada crece desde ahí (animación suave, sin saltos) */
+const pkSeg=(no,sel,act)=>`<div class="seg" role="group" aria-label="Categoría de la caja ${no}">${['R','V','B'].map(q=>`<button type="button" class="chip pk" aria-pressed="${sel==q}" data-pk="${act}${q}"><span class="dot" style="background:var(--${q})"></span>${RC[q][0]}</button>`).join('')}</div>`;
+function pkGrid(d,o,l,key,bs,all,room,next,open){const multi=open.length>1,lotsE=[...new Set([...open,...bs.map(x=>x.l)])],lc=lotsE.length>1,rows=[];d.rows=d.rows||{};
+ const lotSel=(cls,attr,sel,no,blank)=>`<select class="${cls}" ${attr} aria-label="Lote de la caja ${no}">${blank?`<option value="" ${sel?'':'selected'}>Elige lote</option>`:''}${(blank?open:lotsE).map(x=>`<option value="${E(x)}" ${sel==x?'selected':''}>${E(x)}</option>`).join('')}</select>`;
+ bs.forEach(x=>{const b=x.b,no=all.findIndex(y=>y.b===b)+1;
+  if(d.ed===b.seq){const w=d.ew||{},st=pkEdOk(w)?PKS.edit:PKS.bad;
+   rows.push(`<tr class="pkdn is-edit" id="pkd${b.seq}"><td class="pkno"><span class="pkcj">Caja ${no}</span><span class="pkest">${st}</span></td><td class="pkpz"><label class="pkf"><input class="pke" id="pk_e" data-kpn="${no}" type="number" min="1" inputmode="none" enterkeyhint="done" value="${E(w.c==null?'':w.c)}" aria-label="Piezas vivas de la caja ${no} (corrigiendo)"><span class="pku" aria-hidden="true">piezas</span></label></td><td class="pkcat">${pkSeg(no,w.k,'ek:')}</td>${lc?`<td class="pklot">${lotSel('pkel','id="pk_el"',w.lot||x.l,no,false)}</td>`:''}</tr><tr class="pkdn is-edit pkear"><td colspan="${lc?4:3}"><div class="pkea"><button class="btn" data-pk="upd">Actualizar caja ${no}</button><button class="btn s" data-pk="cancel">Cancelar</button><span class="pkesp"></span>${d.cf==b.seq?`<span class="pkcf"><b class="er">¿Quitar la caja ${no}?</b> <button class="btn d" data-pk="rm:${b.seq}">Sí, quitar</button> <button class="btn s" data-pk="no">No</button></span>`:`<button class="lnk pkrm" data-pk="del:${b.seq}">Quitar caja</button>`}</div></td></tr>`);return}
+  rows.push(`<tr class="pkdn is-done" id="pkd${b.seq}" data-pk="ed:${b.seq}" title="Toca para corregir"><td class="pkno"><span class="pkcj">Caja ${no}</span>${PKS.done}</td><td class="pkpz"><button type="button" class="pkvb pked" data-pk="ed:${b.seq}" aria-label="Corregir la caja ${no}: ${b.c} piezas, ${RC[b.k][0]}"><b class="pkv">${b.c}</b><span class="pku">piezas</span><span class="pkch" aria-hidden="true">›</span></button></td><td class="pkcat"><span class="pkcv"><span class="dot" style="background:var(--${b.k})"></span>${RC[b.k][0]}</span></td>${lc?`<td class="pklot"><span class="pklv">${E(x.l)}</span></td>`:''}</tr>`)});
+ for(let r=0;r<room;r++){const w=d.rows[r]||{},lot=w.lot||d.lot||'',k=w.k||'',no=next+r,st=pkRowSt(w);
+  rows.push(`<tr class="pkrow${st=='prog'?' is-prog':''}" id="pkr${r}"><td class="pkno"><span class="pkcj">Caja ${no}</span><span class="pkstw">${PKS[st]}</span></td><td class="pkpz"><label class="pkf"><input class="pkc" id="pk_c${r}" data-row="${r}" data-kpn="${no}" type="number" min="1" inputmode="none" enterkeyhint="next" value="${E(w.c==null?'':w.c)}" aria-label="Piezas vivas de la caja ${no}"><span class="pku" aria-hidden="true">piezas</span></label></td><td class="pkcat">${pkSeg(no,k,`k:${r}:`)}</td>${lc?`<td class="pklot">${multi?lotSel('pkl',`data-row="${r}"`,lot,no,true):`<span class="pklv">${E(lot||open[0]||'')}</span>`}</td>`:''}</tr>`)}
+ const N=Math.max(1,l.boxes),n=bs.length,p=Math.min(1,n/N),pc=Math.round(p*100),from=PKP.key===key?PKP.p:p;PKP={key,p};
+ return `<div class="cd pkx"><h2 class="h3">Cajas de ${E(l.cli)}</h2>
+ <p class="pkhelp">Aparece una fila por cada caja del pedido. Toca una caja, escribe las piezas vivas en el teclado y toca la categoría: pasa sola a la siguiente. Al terminar toca «Guardar cajas»; las filas que dejes en blanco no se guardan. Las cajas guardadas quedan en verde con ✔ Completada: toca una para corregirla.</p>
+ ${room?`<p class="pklh">Lote del que sacas las langostas${multi?' · se aplica a todas las filas; puedes cambiarlo en cada una':''}</p>${open.length?`<div class="pklots" role="group" aria-label="Lote del que sacas las langostas">${open.map(x=>`<button type="button" class="pklb" aria-pressed="${d.lot==x}" data-pk="lot:${E(x)}"><b>${E(x)}</b><span>Tanque ${E(String(tk(x)).replace(/^T/,''))} · ${f(bal(x))} kg</span></button>`).join('')}</div>`:'<p class="mut">No hay lotes en tanques. Registra una entrada primero.</p>'}`:''}
+ <div class="kpwrap"><div class="kpw kpf"><div class="kpmain"><div class="tbl pktw"><table class="pkt"><thead><tr><th>Caja</th><th>Piezas vivas</th><th>Categoría</th>${lc?'<th>Lote</th>':''}</tr></thead><tbody>${rows.join('')}</tbody></table></div>
+ ${n?`<p class="pktot">Total: ${bs.reduce((a,x)=>a+x.b.c,0)} piezas vivas en ${n} ${n==1?'caja':'cajas'}.</p>`:''}
+ </div><div class="kpdock">${kpPad('full')}<div class="pkb" id="pkb" data-p="${p}" style="--p:${from}"><div class="pkprog"><div class="pksum" id="pksum"><span class="pkc1">✔ ${n} ${n==1?'completada':'completadas'}</span><span class="pksep" aria-hidden="true">·</span><span class="pkpen">${room} ${room==1?'pendiente':'pendientes'}</span><span class="pkpc">${pc}% completado</span></div>
+ <div class="pkbar" role="progressbar" aria-label="Cajas completadas" aria-valuemin="0" aria-valuemax="${l.boxes}" aria-valuenow="${n}" aria-valuetext="${n} de ${l.boxes}"><i></i></div></div>
+ ${room?`<button class="btn pkgo" data-pk="addall" aria-describedby="pksum"><span class="pkn">Guardar cajas</span></button>`:`<span class="pkall">✔ ${l.boxes} de ${l.boxes} cajas completadas</span>`}</div></div></div></div></div>`}
+/* La barra delgada parte del avance anterior y llega al real (data-p = guardadas ÷ pedidas). También guarda la altura de la barra fija
+   para que los avisos (toast) y el desplazamiento al campo no queden tapados. */
+function pkAnim(){const b=document.getElementById('pkb');if(!b)return;const R=document.documentElement.style,m=document.querySelector('main');R.setProperty('--pkbh',b.offsetHeight+'px');if(m)R.setProperty('--pkmt',Math.max(0,Math.round(m.getBoundingClientRect().top))+'px');const p=b.dataset.p;if(b.style.getPropertyValue('--p')===p)return;requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.setProperty('--p',p)))}
+function pkCnt(){const d=PKD,n=Object.values(d.rows||{}).filter(w=>+w.c>=1&&w.k).length;document.querySelectorAll('.pkn').forEach(e=>e.textContent=n?`Guardar ${n} ${n==1?'caja':'cajas'}`:'Guardar cajas')}
+function pkLive(r){const row=document.getElementById('pkr'+r);if(!row)return;const st=pkRowSt(PKD.rows[r]);row.classList.toggle('is-prog',st=='prog');row.querySelectorAll('.pkstw').forEach(s=>{if(s.dataset.st!==st){s.dataset.st=st;s.innerHTML=PKS[st]}})}
+function pkEdLive(){const ok=String(pkEdOk(PKD.ew));document.querySelectorAll('.pkest').forEach(s=>{if(s.dataset.st!==ok){s.dataset.st=ok;s.innerHTML=ok=='true'?PKS.edit:PKS.bad}})}
+/* Guarda la corrección de una caja ya completada: actualiza la misma caja (mismo seq), nunca crea otra. */
+function pkUpd(o,l){const s=PKD.ed;if(s==null)return'none';const w=PKD.ew=PKD.ew||{},inp=document.getElementById('pk_e'),sel=document.getElementById('pk_el');if(inp)w.c=inp.value;if(sel)w.lot=sel.value;
+ let lt=null,b=null;for(const k in ST.B){const y=ST.B[k].find(z=>z.seq===s);if(y){lt=k;b=y;break}}
+ if(!b){PKD.ed=null;PKD.ew=null;toast('No se encontró esa caja.');render();return'bad'}
+ const no=ordBoxes(o).findIndex(y=>y.b===b)+1,c=Math.round(+w.c),bad=(m,id)=>{toast(`Caja n.º ${no}: ${m}`);pkEdLive();const el=document.getElementById(id);if(el){el.scrollIntoView({block:'center'});try{el.focus({preventScroll:true})}catch(z){}el.setAttribute('aria-invalid','true')}return'bad'};
+ if(w.c==null||String(w.c).trim()===''||!(c>=1))return bad('escribe las piezas vivas (mínimo 1). Para quitar la caja usa «Quitar».','pk_e');
+ if(!w.k)return bad('toca la categoría.','pk_e');
+ const nl=w.lot||lt;if(!ST.B[nl])return bad('elige el lote.',sel?'pk_el':'pk_e');
+ if(b.d!=null&&ST.P[b.d]&&ST.P[b.d].closed){toast('No se puede: el empaque de este destino ya está cerrado.');return'bad'}
+ const ch=b.c!==c||b.k!==w.k||nl!==lt;b.c=c;b.k=w.k;if(nl!==lt){ST.B[lt]=ST.B[lt].filter(z=>z!==b);ST.B[nl].push(b)}
+ PKD.ed=null;PKD.ew=null;if(ch){save();toast(`✔ Caja n.º ${no} actualizada: ${c} piezas ${RC[b.k][0]}`)}return'ok'}
+document.addEventListener('input',e=>{const t=e.target;if(!t.classList)return;if(t.classList.contains('pkc')){const r=+t.dataset.row;(PKD.rows[r]=PKD.rows[r]||{}).c=t.value;pkCnt();pkLive(r)}else if(t.classList.contains('pke')&&PKD.ew){PKD.ew.c=t.value;pkEdLive()}});
+document.addEventListener('change',e=>{const t=e.target;if(!t.classList)return;if(t.classList.contains('pkl')){const r=+t.dataset.row;(PKD.rows[r]=PKD.rows[r]||{}).lot=t.value}else if(t.classList.contains('pkel')&&PKD.ew)PKD.ew.lot=t.value});
+document.addEventListener('keydown',e=>{const t=e.target;if(!t.classList)return;
+ if(t.classList.contains('pke')){if(e.key=='Enter'){e.preventDefault();const u=document.querySelector('[data-pk="upd"]');if(u)u.click()}else if(e.key=='Escape'){e.preventDefault();const c=document.querySelector('[data-pk="cancel"]');if(c)c.click()}return}
+ if(e.key=='Enter'&&t.classList.contains('pkc')){e.preventDefault();const n=document.getElementById('pk_c'+(+t.dataset.row+1));if(n)n.focus();else t.blur()}});
 document.addEventListener('click',e=>{const x=e.target.closest('[data-pk]');if(!x)return;const P=x.dataset.pk.split(':'),a=P[0],v=P.slice(1).join(':'),[oid,lid]=String(V.id).split('.').map(Number),o=ST.OR.find(q=>q.id===oid),l=o&&o.lines.find(q=>q.id===lid);if(!l)return;
  if(a=='lot'){PKD.lot=v;return render()}
- if(a=='k'){const r=+P[1],q=P[2],w=PKD.rows[r]=PKD.rows[r]||{};w.k=w.k==q?'':q;w.auto=false;const row=document.getElementById('pkr'+r);if(row)row.querySelectorAll('[data-pk^="k:"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pk.split(':')[2]==w.k)));return pkCnt()}
+ if(a=='k'){const r=+P[1],q=P[2],w=PKD.rows[r]=PKD.rows[r]||{};w.k=w.k==q?'':q;w.auto=false;const row=document.getElementById('pkr'+r);if(row)row.querySelectorAll('[data-pk^="k:"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pk.split(':')[2]==w.k)));pkLive(r);return pkCnt()}
+ if(a=='ed'){if(!can('box'))return;const s=+v;if(PKD.ed===s)return;let lt=null,b=null;for(const k in ST.B){const y=ST.B[k].find(z=>z.seq===s);if(y){lt=k;b=y;break}}if(!b)return;
+  if(b.d!=null&&ST.P[b.d]&&ST.P[b.d].closed)return toast('No se puede: el empaque de este destino ya está cerrado.');
+  PKD.ed=s;PKD.ew={c:b.c,k:b.k,lot:lt};PKD.cf=null;render();const i=document.getElementById('pk_e');if(i){i.scrollIntoView({block:'nearest'});try{i.focus({preventScroll:true});if(selOk(i))i.select()}catch(z){}}return}
+ if(a=='ek'){const w=PKD.ew;if(!w)return;const inp=document.getElementById('pk_e');if(inp)w.c=inp.value;w.k=w.k==v?'':v;const row=x.closest('tr');if(row)row.querySelectorAll('[data-pk^="ek:"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pk.slice(3)==w.k)));return pkEdLive()}
+ if(a=='cancel'){PKD.ed=null;PKD.ew=null;return render()}
+ if(a=='upd'){if(pkUpd(o,l)=='bad')return;return render()}
  if(a=='del'){PKD.cf=+v;return render()}if(a=='no'){PKD.cf=null;return render()}
- if(a=='rm'){for(const lt in ST.B)ST.B[lt]=ST.B[lt].filter(b=>b.seq!=+v);PKD.cf=null;save();toast('Caja quitada');return render()}
+ if(a=='rm'){for(const lt in ST.B)ST.B[lt]=ST.B[lt].filter(b=>b.seq!=+v);if(PKD.ed===+v){PKD.ed=null;PKD.ew=null}PKD.cf=null;save();toast('Caja quitada');return render()}
  if(a=='addall'){const room=Math.max(0,l.boxes-ordAssigned(o,l).length),open=lots().filter(z=>!R_(z).closed),base=ordBoxes(o).length,todo=[];
-  if(room<1)return toast('No se agregó: la línea ya tiene todas sus cajas.');
+  const u=pkUpd(o,l);if(u=='bad')return; /* si hay una caja en corrección, «Guardar» también la guarda */
+  if(room<1){if(u=='ok')return render();return toast('No se agregó: la línea ya tiene todas sus cajas.')}
   for(let r=0;r<room;r++){const w=PKD.rows[r]||{},hasC=w.c!=null&&String(w.c).trim()!=='',c=Math.round(+w.c);if(!hasC&&(!w.k||w.auto))continue;
    const lot=w.lot||PKD.lot||(open.length==1?open[0]:null),bad=(m,id)=>{toast(`Caja n.º ${base+r+1}: ${m}`);const el=document.getElementById(id);if(el){el.scrollIntoView({block:'center'});try{el.focus({preventScroll:true})}catch(z){}el.setAttribute('aria-invalid','true')}};
    if(!(c>=1))return bad('escribe las piezas vivas.','pk_c'+r);if(!w.k)return bad('toca la categoría.','pk_c'+r);if(!lot||!ST.B[lot])return bad('elige el lote.',multiLot(open)?'pkr'+r:'pk_c'+r);
    todo.push({c,k:w.k,lot})}
-  if(!todo.length)return toast('Escribe las piezas vivas y toca la categoría de al menos una caja.');
+  if(!todo.length){if(u=='ok')return render();return toast('Escribe las piezas vivas y toca la categoría de al menos una caja.')}
   const si=shipFor(o,l.city,l.cons);if(ST.P[si].closed)return toast('No se puede: el empaque de este destino ya está cerrado.');
-  todo.forEach(t=>{ST.BN=(ST.BN||0)+1;ST.B[t.lot].push({c:t.c,k:t.k,d:si,o:lkey(o,l),seq:ST.BN})});save();PKD.rows={};toast(`✔ ${todo.length} ${todo.length==1?'caja agregada':'cajas agregadas'}`);render()}});
+  todo.forEach(t=>{ST.BN=(ST.BN||0)+1;ST.B[t.lot].push({c:t.c,k:t.k,d:si,o:lkey(o,l),seq:ST.BN})});save();PKD.rows={};toast(`✔ ${todo.length} ${todo.length==1?'caja completada':'cajas completadas'}`);render()}});
 const multiLot=o=>o.length>1;
 function ordCsv(o){const q=v=>'"'+String(v).replace(/"/g,'""')+'"',r=[['No.','Piezas vivas','Lote','Categoría','Cliente','Destino','Consignatario']];
  ordBoxes(o).forEach((x,i)=>r.push([i+1,x.b.c,x.l,RC[x.b.k][0],x.l2.cli,x.l2.city,CONS[x.l2.cons].n]));
@@ -601,7 +892,7 @@ function lotForm(){const e=form.edit?R_(form.edit):null,td=new Date(),dv=e?(e.rd
  <button class="btn" data-a="sv">${e?'Guardar cambios':'Guardar entrada'}</button><button class="btn s" data-a="nf">Cancelar</button></div><p class="er">${E(msg)}</p></div>`}
 function recepcion(){const HL=histList('rec',ST.R.slice().reverse(),lotActive);return `<div class="wrap">${guide(1,'Entrada de producto','Registra cada entrada como un lote con los datos del formato de recepción: fecha, hora, proveedor, tanque, temperaturas, kg por caja en tanque y kg por talla. Aquí no se cuentan ni se numeran cajas: las langostas se cuentan hasta que se empaca cada pedido.','Siguiente: órdenes','ordenes')}${ST.R.length?pdfBar('ent'):''}
  <div class="bar"><button class="btn" data-a="nf" ${can('ent')?'':'disabled'}>+ Nueva entrada</button>${can('ent')?'':'<span class="mut">Tu rol no puede registrar entradas.</span>'}</div>${form&&form.t=='lot'?lotForm():''}
- <div class="cd tbl"><table class="lf"><thead><tr><th>Fecha</th><th>Hora</th><th>Proveedor</th><th>Tanque</th><th>T°F tanque</th><th>T°F producto</th><th>Lote de recepción</th><th>Kg por caja en tanque</th>${S.map((z,i)=>`<th>${szDot(i)} ${SL[i]}</th>`).join('')}<th>Kg total</th><th>Kg desperdicio</th><th>Etapa</th><th aria-label="Acciones"></th></tr></thead><tbody>${HL.items.map(r=>`<tr><td>${E(r.date||'')}</td><td>${E(r.time||'—')}</td><td>${E(r.origin)}</td><td>${E(r.tank)}</td><td>${r.tempT!=null?r.tempT:'—'}</td><td>${E(r.tempP||'—')}</td><td><b>${E(r.lot)}</b></td><td>${r.kgbox!=null?r.kgbox:'—'}</td>${S.map(z=>`<td>${f(rcv(r.lot,z))}</td>`).join('')}<td><b>${f(rcv(r.lot))}</b></td><td>${r.desp!=null?r.desp:'—'}</td><td>${stc(r.lot)}</td><td><button class="lnk" data-go="lote:${E(r.lot)}">Abrir</button></td></tr>`).join('')||`<tr><td colspan="16" class="mut">${ST.R.length?'No hay lotes abiertos ni recientes.':'Todavía no hay entradas. Pulsa “+ Nueva entrada”.'}</td></tr>`}</tbody></table></div>${HL.bar}${evid('recepcion','Fotos y notas de la entrada')}</div>`}
+ <div class="cd tbl"><table class="lf ent"><thead><tr><th>Fecha</th><th>Hora</th><th class="c-prov">Proveedor</th><th>Tanque</th><th class="num">T°F<br>tanque</th><th class="num">T°F<br>producto</th><th class="c-lot">Lote de recepción</th><th class="num">Kg por caja<br>en tanque</th>${S.map((z,i)=>`<th class="szh">${szHead(i)}</th>`).join('')}<th class="num">Kg total</th><th class="num">Kg<br>desperdicio</th><th class="c-etp">Etapa</th><th aria-label="Acciones"></th></tr></thead><tbody>${HL.items.map(r=>`<tr><td>${E(r.date||'')}</td><td>${E(r.time||'—')}</td><td>${E(r.origin)}</td><td>${E(r.tank)}</td><td class="num">${r.tempT!=null?r.tempT:'—'}</td><td class="num">${E(r.tempP||'—')}</td><td><b>${E(r.lot)}</b></td><td class="num">${r.kgbox!=null?r.kgbox:'—'}</td>${S.map(z=>`<td class="szv">${f(rcv(r.lot,z))}</td>`).join('')}<td class="num"><b>${f(rcv(r.lot))}</b></td><td class="num">${r.desp!=null?r.desp:'—'}</td><td>${stc(r.lot)}</td><td><button class="lnk" data-go="lote:${E(r.lot)}">Abrir</button></td></tr>`).join('')||`<tr><td colspan="16" class="mut">${ST.R.length?'No hay lotes abiertos ni recientes.':'Todavía no hay entradas. Pulsa “+ Nueva entrada”.'}</td></tr>`}</tbody></table></div>${HL.bar}${evid('recepcion','Fotos y notas de la entrada')}</div>`}
 function lote(l){const r=R_(l);if(!r)return recepcion();const c=calc(l),rows=ST.L.filter(x=>x.lot===l).slice().reverse(),rv=rvd(),bs=ST.B[l],ds=ST.P.map((p,i)=>({p,x:bs.map((b,n)=>({b,n})).filter(o=>o.b.d===i&&o.b.c>0)})).filter(o=>o.x.length);
  return `<div class="wrap"><button class="back" data-go="recepcion">‹ Volver a Entrada</button>
  <div class="cd head"><div><h1>${E(l)}</h1><p class="mut" style="margin:4px 0 0">${E(r.origin)} · Tanque ${E(r.tank)} · ${f(bal(l))} kg (${cj(bal(l))} cajas eq.)</p><p class="mut" style="margin:2px 0 0">Recibido ${E(r.date||'')} ${E(r.time||'')} · Temp. tanque ${r.tempT!=null?r.tempT+' °F':'—'} · Temp. producto ${E(r.tempP||'—')} °F · ${r.kgbox!=null?r.kgbox+' kg por caja en tanque':'kg por caja en tanque: —'} · Desperdicio ${r.desp!=null?r.desp+' kg':'—'}</p></div><div class="bar" style="margin:0">${stc(l)}<button class="btn" data-go="empaque">Ir a Empaque</button>${can('lot')?`<button class="btn s" data-a="el">Editar</button>${conf=='lot'?'<button class="btn d" data-a="dl2">Confirmar eliminar</button>':'<button class="btn d" data-a="dl">Eliminar</button>'}`:''}</div></div>${form&&form.t=='lot'?lotForm():''}
@@ -614,9 +905,10 @@ function lote(l){const r=R_(l);if(!r)return recepcion();const c=calc(l),rows=ST.
  <div class="cd"><h3>Movimientos de inventario</h3>${can('mv')?`<div class="f"><label>Tipo<select id="ty"><option>SALIDA_EMBARQUE</option><option>RECEPCION</option></select></label><label>Talla<select id="sz">${S.map(s=>`<option>${s}</option>`).join('')}</select></label><label>Kg<input id="kg" type="number" min="0" step="0.01" style="width:110px"></label><button class="btn" data-a="mv">Registrar</button></div><p class="${msg[0]=='✔'?'ok':'er'}">${E(msg)}</p>`:'<p class="mut">Solo el Administrador registra movimientos.</p>'}
  <div class="tbl"><table class="lf"><thead><tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Talla</th><th>Kg</th><th aria-label="Acciones"></th></tr></thead><tbody>${rows.map(x=>`<tr style="${rv.has(x.id)?'opacity:.5;text-decoration:line-through':''}"><td>${x.id}</td><td>${x.t}</td><td>${x.type.replace('_',' ')}${x.rev?` (#${x.rev})`:''}</td><td>${x.size}</td><td>${x.m>0?'+':''}${f(x.m)}</td><td>${can('mv')&&x.type!=='REVERSA'&&!rv.has(x.id)?`<button class="lnk" data-r="${x.id}">Revertir</button>`:can('mv')&&x.type==='REVERSA'?`<button class="lnk" data-ur="${x.id}">Anular reversa</button>`:''}</td></tr>`).join('')}</tbody></table></div></div>${evid('lote:'+l,'Fotos y notas del lote')}</div>`}
 function bsum(l){const o={n:0,t:0,R:0,V:0,B:0};ST.B[l].forEach(b=>{if(b.c>0&&b.k){o.n++;o.t+=b.c;o[b.k]+=b.c}});return o}
-function truck(){const TP=ST.P.filter(p=>!p.closed),w=92,g=6,x0=78,cap=[15,20,20,25,25],slot={};let k=0;const rem=TP.map(p=>p.h);
+function truckPlan(){const TP=ST.P.filter(p=>!p.closed),cap=[15,20,20,25,25],slot={};let k=0;const rem=TP.map(p=>p.h);
  for(let i=4;i>=0;i--)for(let r=0;r<2;r++){while(k<rem.length&&rem[k]<=0)k++;if(k<rem.length){const v=Math.min(cap[i],rem[k]);rem[k]-=v;slot[i+'.'+r]={v,col:TP[k].col}}}
- const over=rem.reduce((x,y)=>x+Math.max(0,y),0);
+ return{TP,cap,slot,over:rem.reduce((x,y)=>x+Math.max(0,y),0)}}
+function truck(){const{TP,cap,slot,over}=truckPlan(),w=92,g=6,x0=78;
  let c='';for(let r=0;r<2;r++)cap.forEach((cp,i)=>{const q=slot[i+'.'+r],v=q?q.v:'—';c+=`<rect x="${x0+i*(w+g)}" y="${58+r*52}" width="${w}" height="46" rx="6" fill="${q?q.col:'#16384a'}"/><text x="${x0+i*(w+g)+w/2}" y="${86+r*52}" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">${v}</text>`});
  return `<div class="tw"><svg viewBox="0 0 800 235" role="img" aria-label="Camión: cola a la izquierda, cabina a la derecha"><rect x="0" y="198" width="800" height="3" fill="#2b4a5e"/>
  <rect x="46" y="38" width="540" height="134" rx="8" fill="#cfe3ea"/><rect x="50" y="42" width="532" height="126" rx="6" fill="#0b2a3a"/>${c}
@@ -665,7 +957,7 @@ function admin(){const u=uf?(ST.U.find(x=>x.id==uf.id)||{}):null,yes=(a,b,c)=>`<
  <div class="g2"><div class="cd"><h3>Qué puede hacer cada rol</h3><div class="tbl"><table><thead><tr><th>Acción</th><th>Admin</th><th>Piso</th><th>Consulta</th></tr></thead><tbody>${yes('Ver todo',1,1)}${yes('Empacar cajas y capturar conteos finales',1,0)}${yes('Registrar entradas (lotes nuevos)',1,0)}${yes('Editar / eliminar lotes',0,0)}${yes('Cerrar lotes y empaques',0,0)}${yes('Gestionar usuarios',0,0)}</tbody></table></div></div>
  <div class="cd"><h3>Informes de cierre (${ST.O.length})</h3><p class="mut">Al cerrar un empaque se guarda aquí su informe. Mándalo por correo con su PDF; los destinatarios sugeridos son los usuarios con “Recibe informes”.</p>${ST.O.map(o=>`<details><summary>${E(o.subject)} · ${o.t}</summary><p class="mut">Destinatarios sugeridos: ${o.to.map(E).join(', ')||'—'}</p><pre>${E(o.body)}</pre>${o.pn&&ST.P.some(p=>p.n===o.pn)?`<button class="btn s" data-pdf="dl:embn:${E(o.pn)}">${IC.pdf} Descargar PDF</button> <button class="btn" data-pdf="mail:embn:${E(o.pn)}">${IC.mail} Enviar por correo</button>`:''}</details>`).join('')||'<p class="mut">Aún no hay informes.</p>'}</div></div>
  <div class="cd"><h3>Datos y respaldo</h3><p>Los datos se guardan en este equipo y la plataforma funciona sin internet.</p><p class="mut">Descarga un respaldo con frecuencia (por ejemplo, al terminar cada día) y guárdalo fuera de la tablet. Para pasar los datos a otro equipo, restaura ahí el respaldo; una restauración reemplaza todo lo que haya en ese equipo.</p><div class="bar"><button class="btn s" data-bk="dl">${IC.pdf} Descargar respaldo (.json)</button><label class="btn s" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></div></div>
- <div class="cd"><h3>Borrar los datos de este equipo</h3><p class="mut">Elimina lotes, órdenes, embarques, notas y usuarios de esta tablet y vuelve a la configuración inicial. Descarga antes un respaldo. No se puede deshacer.</p><div class="bar"><button class="btn d" data-a="rst">Borrar todos los datos</button></div></div><p class="mut" style="text-align:right">PROPESA · Plataforma marítima · versión 1.0.0</p></div>`}
+ <div class="cd"><h3>Borrar los datos de este equipo</h3><p class="mut">Elimina lotes, órdenes, embarques, notas y usuarios de esta tablet y vuelve a la configuración inicial. Descarga antes un respaldo. No se puede deshacer.</p><div class="bar"><button class="btn d" data-a="rst">Borrar todos los datos</button></div></div><p class="mut" style="text-align:right">PROPESA · Plataforma marítima · versión 1.1.0</p></div>`}
 function setupView(){return `<div class="login"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><h2 style="margin:4px 0 2px">Configuración inicial</h2><p class="mut">Crea la cuenta del Administrador de este equipo. Después podrás agregar a los demás usuarios en Administración.</p>
  <div class="f" style="flex-direction:column;align-items:stretch"><label>Nombre<input id="s0n" autocomplete="name"></label><label>Correo<input id="s0e" type="email" autocomplete="username"></label><label>Contraseña (mínimo 6)<input id="s0p" type="password" autocomplete="new-password"></label><label>Repite la contraseña<input id="s0q" type="password" autocomplete="new-password"></label><button class="btn" data-a="s0">Crear Administrador y entrar</button></div><p class="er" id="lm"></p><p class="mut" style="margin:6px 0 0">¿Ya tienes un respaldo? <label class="lnk" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></p></div></div>`}
 function setupSave(){const n=g('s0n').trim(),e=g('s0e').trim(),pw=g('s0p'),pq=g('s0q'),m=document.getElementById('lm'),bad=(t,id)=>{m.textContent=t;const el=document.getElementById(id);if(el){el.setAttribute('aria-invalid','true');el.focus()}};
@@ -684,18 +976,23 @@ let _pl;const pdfLogo=()=>_pl||(_pl=new Promise(ok=>{try{const svg=LG(0).replace
  im.onerror=()=>ok(null);im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}catch(e){ok(null)}}));
 const NAVY='#0B1D59',INK='#1b2733',MUT='#5d6b79',RED='#c4222f',GRN='#1f7a4d',AMB='#9a6a00';
 function PdfRep(o){const W=o.land?841.89:595.28,H=o.land?595.28:841.89,M=36,CW=W-2*M,LIM=H-M-16,pages=[],gen=now()+(me?' · '+me.name:'');let ops,y,first=true;
- const rgb=h=>{h=h.replace('#','');return[0,2,4].map(i=>(parseInt(h.substr(i,2),16)/255).toFixed(3)).join(' ')},Y=v=>(H-v).toFixed(2);
+ const rgb=h=>{h=String(h).replace('#','');if(h.length==3)h=h.replace(/./g,'$&$&');return[0,2,4].map(i=>(parseInt(h.substr(i,2),16)/255).toFixed(3)).join(' ')},Y=v=>(H-v).toFixed(2);
  const T=(x,yy,s,sz,b,c)=>{const e=pe(s);if(e)ops.push(`BT /F${b?2:1} ${sz} Tf ${rgb(c||INK)} rg ${x.toFixed(2)} ${Y(yy)} Td ${pq(e)} Tj ET`)};
  const TR=(xr,yy,s,sz,b,c)=>T(xr-ptw(pe(s),sz,b),yy,s,sz,b,c),TC=(xc,yy,s,sz,b,c)=>T(xc-ptw(pe(s),sz,b)/2,yy,s,sz,b,c);
  const RECT=(x,yy,w,h,c)=>ops.push(`${rgb(c)} rg ${x.toFixed(2)} ${Y(yy+h)} ${w.toFixed(2)} ${h.toFixed(2)} re f`);
  const BOX=(x,yy,w,h,c,lw)=>ops.push(`${rgb(c)} RG ${lw||.8} w ${x.toFixed(2)} ${Y(yy+h)} ${w.toFixed(2)} ${h.toFixed(2)} re S`);
  const LN=(x1,y1,x2,y2,c,lw)=>ops.push(`${rgb(c)} RG ${lw||.6} w ${x1.toFixed(2)} ${Y(y1)} m ${x2.toFixed(2)} ${Y(y2)} l S`);
+ const PT=(a,b)=>`${a.toFixed(2)} ${Y(b)}`;
+ const RRECT=(x,yy,w,h,r,c)=>{r=Math.min(r||0,w/2,h/2);if(r<=0)return RECT(x,yy,w,h,c);const k=r*.5523,x1=x+w,y1=yy+h;
+  ops.push(`${rgb(c)} rg ${PT(x+r,yy)} m ${PT(x1-r,yy)} l ${PT(x1-r+k,yy)} ${PT(x1,yy+r-k)} ${PT(x1,yy+r)} c ${PT(x1,y1-r)} l ${PT(x1,y1-r+k)} ${PT(x1-r+k,y1)} ${PT(x1-r,y1)} c ${PT(x+r,y1)} l ${PT(x+r-k,y1)} ${PT(x,y1-r+k)} ${PT(x,y1-r)} c ${PT(x,yy+r)} l ${PT(x,yy+r-k)} ${PT(x+r-k,yy)} ${PT(x+r,yy)} c f`)};
+ const CIRC=(cx,cy,r,c)=>RRECT(cx-r,cy-r,2*r,2*r,r,c);
+ const POLY=(pts,c)=>ops.push(`${rgb(c)} rg ${pts.map((q,i)=>q.length==2?`${PT(q[0],q[1])} ${i?'l':'m'}`:`${PT(q[0],q[1])} ${PT(q[2],q[3])} ${PT(q[4],q[5])} c`).join(' ')} h f`);
  function head(){if(first){const lg=o.logo,lw=104,lh=lg?lw*lg.h/lg.w:0;if(lg)ops.push(`q ${lw} 0 0 ${lh.toFixed(2)} ${M} ${Y(M+lh)} cm /Im1 Do Q`);else T(M,M+22,'PROPESA',22,1,NAVY);
    TR(W-M,M+16,o.title,17,1,NAVY);if(o.sub)TR(W-M,M+31,o.sub,9.5,0,MUT);TR(W-M,M+43,'Generado: '+gen,8,0,MUT);const by=M+Math.max(lh,46)+8;RECT(M,by,CW,2,'#087DBA');y=by+14;first=false}
   else{T(M,M+8,'PROPESA · '+o.title,9,1,NAVY);TR(W-M,M+8,o.sub||'',8,0,MUT);LN(M,M+14,W-M,M+14,'#c9d3dc');y=M+28}}
  const page=()=>{ops=[];pages.push(ops);head()},need=h=>{if(y+h>LIM)page()};
  page();
- const R={W,H,M,CW,T,TR,TC,RECT,BOX,LN,
+ const R={W,H,M,CW,T,TR,TC,RECT,BOX,LN,RRECT,CIRC,POLY,
   get y(){return y},set y(v){y=v},need,
   h2(t){need(110);y+=8;T(M,y+11,t,12,1,NAVY);LN(M,y+16,M+CW,y+16,'#c9d3dc');y+=26},
   p(t,x){x=x||{};const sz=x.sz||9.5;for(const l of pwrap(t,CW,sz,x.b)){need(sz+4);T(M,y+sz,l,sz,x.b,x.c||INK);y+=sz*1.3}y+=x.gap==null?4:x.gap},
@@ -713,6 +1010,16 @@ function PdfRep(o){const W=o.land?841.89:595.28,H=o.land?595.28:841.89,M=36,CW=W
    rows.forEach((r,k)=>{const h=hh(r);if(y+h>LIM){page();hdr()}if(k%2)RECT(M,y,CW,h,'#f6f9fb');drawRow(r,y,h,{});LN(M,y+h,M+CW,y+h,'#e1e8ee',.5);y+=h});
    if(opt.foot){const h=hh(opt.foot);need(h);RECT(M,y,CW,h,'#e8eef4');LN(M,y,M+CW,y,NAVY,.9);drawRow(opt.foot,y,h,{b:1});y+=h}
    y+=8},
+  truck(pl){const s=CW/800,h=235*s;need(h+8);const y0=y,X=v=>M+v*s,V=v=>y0+v*s,B=(x,yy,w,hh,r,c)=>RRECT(X(x),V(yy),w*s,hh*s,r*s,c),C=(cx,cy,r,c)=>CIRC(X(cx),V(cy),r*s,c);
+   B(0,198,800,3,0,'#2b4a5e');B(46,38,540,134,8,'#cfe3ea');B(50,42,532,126,6,'#0b2a3a');
+   for(let r=0;r<2;r++)pl.cap.forEach((cp,i)=>{const q=pl.slot[i+'.'+r],x=78+i*98;B(x,58+r*52,92,46,6,q?q.col:'#16384a');TC(X(x+46),V(86+r*52),q?String(q.v):'—',18*s,1,'#ffffff')});
+   B(34,34,14,142,3,'#9db6c2');B(24,48,10,16,2,'#e5484d');B(24,146,10,16,2,'#e5484d');B(24,100,10,10,2,'#ffd166');
+   B(586,150,46,22,0,'#3b5a6a');POLY([[X(628),V(172)],[X(628),V(84)],[X(628),V(73.33),X(633.33),V(68),X(644),V(68)],[X(698),V(68)],[X(752),V(116)],[X(752),V(172)]],'#1c7f9a');
+   POLY([[X(670),V(78)],[X(696),V(78)],[X(730),V(112)],[X(670),V(112)]],'#bfe6f2');B(744,126,10,34,2,'#0b2a3a');C(746,138,6,'#ffd166');B(738,166,20,8,2,'#9db6c2');
+   [110,160,480,530,680,730].forEach(x=>{C(x,182,17,'#04121a');C(x,182,6,'#9db6c2')});
+   T(X(24),V(24),'COLA · puertas traseras',13*s,1,'#b8862b');T(X(600),V(24),'CABINA',13*s,1,'#b8862b');TC(X(400),V(228),'Hieleras por celda · 2 filas × 5 columnas = 210',12*s,0,MUT);
+   y=y0+h+8},
+  legend(items){const sz=9,gap=16,sq=10;let x=M;need(sz+8);items.forEach(([c,t])=>{const w=sq+6+ptw(pe(t),sz,0);if(x>M&&x+w>M+CW){x=M;y+=sz+8;need(sz+8)}RRECT(x,y,sq,sq,2,c);T(x+sq+6,y+sz,t,sz,0,INK);x+=w+gap});y+=sz+12},
   notes(key,title){const L=(ST.M||{})[key]||[];if(!L.length)return;R.h2(title);L.forEach(n=>{const meta=(n.ref?n.ref+' · ':'')+n.by+' · '+n.t,ls=pwrap(n.text||'(solo fotos)',CW-12,9.5,0),h=14+ls.length*12.5;need(h+4);RECT(M,y,3,h-2,'#0583c3');T(M+10,y+9,meta,8,1,MUT);ls.forEach((l,i)=>T(M+10,y+22+i*12.5-2,l,9.5,0,INK));y+=h+4});y+=4},
   build(){const N=pages.length;pages.forEach((ps,i)=>{ops=ps;LN(M,H-M+2,W-M,H-M+2,'#c9d3dc',.5);T(M,H-M+14,'PROPESA · Proveedor del Pescador S.A. de C.V. · Ensenada, B.C.',7.5,0,MUT);TR(W-M,H-M+14,`Página ${i+1} de ${N}`,7.5,0,MUT)});
    const lg=o.logo,ni=lg?1:0,base=6+ni;let out='%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';const off=[];const put=(id,b)=>{off[id]=out.length;out+=`${id} 0 obj\n${b}\nendobj\n`};
@@ -774,6 +1081,11 @@ async function pdfEmbarque(i){const p=ST.P[i];if(!p)throw new Error('ese embarqu
  R.notes('emb:'+i,'Notas del embarque');return{u8:R.build(),name:pdfName('Embarque',p.n),title:'Informe de embarque '+p.n}}
 async function pdfEmbarques(){const R=PdfRep({title:'Plan de embarques',sub:'Paso 4 · Embarque',logo:await pdfLogo()}),tot=ST.P.reduce((a,p)=>a+gross(p),0);
  R.stats([['Embarques',ST.P.length],['Hieleras',ST.P.reduce((a,p)=>a+p.h,0)],['Peso bruto kg',tot.toFixed(1)],['Cerrados',`${ST.P.filter(p=>p.closed).length} de ${ST.P.length}`]]);
+ const pl=truckPlan(),OP=pl.TP;
+ R.h2(`Plan de carga (embarques abiertos) · ${OP.reduce((a,p)=>a+p.h,0)} hieleras · ${OP.reduce((a,p)=>a+gross(p),0).toFixed(1)} kg de peso bruto`);
+ R.truck(pl);
+ if(OP.length)R.legend(OP.map(p=>[p.col,p.n+(p.z0?' · zona '+p.z0.toLowerCase():'')]));else R.p('No hay embarques abiertos: el camión está vacío.',{c:MUT});
+ if(pl.over>0)R.alert(`La carga excede la capacidad del camión por ${pl.over} hieleras.`,[]);
  R.h2('Embarques');
  R.table([{h:'Embarque',w:3},{h:'Hieleras',w:.9,al:'r'},{h:'Peso bruto kg',w:1.1,al:'r'},{h:'Cajas',w:.8,al:'r'},{h:'Langostas',w:1,al:'r'},{h:'Estado',w:1.2},{h:'Alertas',w:.8,al:'r'}],ST.P.map((p,i)=>[{t:p.n,b:1},p.h,gross(p).toFixed(1),boxesOf(i).length,sent(i),{t:p.closed?'Cerrado':'Abierto',b:1,c:p.closed?GRN:AMB},{t:shipIssues(i).length,b:1,c:shipIssues(i).length?RED:GRN}]));
  R.p('El informe detallado de cada embarque se descarga desde su propia página.',{sz:8.5,c:MUT});return{u8:R.build(),name:pdfName('Plan_de_embarques'),title:'Plan de embarques'}}
@@ -815,6 +1127,7 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-hist],[dat
 /* ===== MODO PISO: botones grandes, una tarea a la vez (pensado como la caja de un restaurante de comida rápida) ===== */
 const SZC=[['Blanco','#FFFFFF'],['Rojo','#E5484D'],['Verde','#30A46C'],['Amarillo','#F5C518']];
 const szDot=i=>`<span class="szd" style="background:${SZC[i][1]}" title="${SZC[i][0]}" aria-hidden="true"></span>`;
+const szHead=i=>{const[a,b]=SL[i].split(' / ');return `<span class="szh-in">${szDot(i)}<span class="szh1">${a}</span><span class="szh2"><span class="vh"> / </span>${b}</span></span>`};
 let PISO=false;try{PISO=localStorage.getItem('propesa-piso')=='1'}catch(e){}
 const setPiso=v=>{PISO=v;try{localStorage.setItem('propesa-piso',v?'1':'0')}catch(e){}};
 let PE={key:null,lot:null,chg:false,rows:{},cf:null},PEN=null;
@@ -824,7 +1137,7 @@ const ptile=(go,ic,t,s,cls,dis)=>`<button class="pt ${cls||''}" data-go="${go}" 
 function pisoHome(){const pl=pendLines(),pb=pl.reduce((a,x)=>a+x.l.boxes-x.n,0),op=ST.P.filter(p=>!p.closed&&boxesOf(ST.P.indexOf(p)).length).length,fc=ST.R.filter(r=>!r.closed&&r.final==null).length;
  return `<div class="pw"><h1 class="ph">¿Qué vas a hacer?</h1><div class="pg">
  ${ptile('pemp',IC.cajas,'Empacar cajas',pl.length?`${pl.length} ${pl.length==1?'cliente':'clientes'} · faltan ${pb} cajas`:'No hay cajas pendientes','p1',!can('box'))}
- ${ptile('pent',IC.recepcion,'Registrar entrada',`${openLots().length} ${openLots().length==1?'lote':'lotes'} en tanques`,'p2',!can('ent'))}
+ ${ptile('pent',IC.recepcion,'Registrar entrada',`${openLots().length} ${openLots().length==1?'lote':'lotes'} en tanques${penPend().length?` · ${penPend().length} sin guardar`:''}`,'p2',!can('ent'))}
  ${ptile('embarques',IC.embarques,'Cerrar embarque',op?`${op} listo${op==1?'':'s'} para revisar`:'Sin embarques por cerrar','p3')}
  ${ptile('cierre',IC.cierre,'Conteo final',fc?`${fc} ${fc==1?'lote':'lotes'} por contar`:'Sin lotes por contar','p3',!can('fin'))}
  </div></div>`}
@@ -840,65 +1153,190 @@ function pisoEmp(key){if(!key){const pl=pendLines();PE={key:null,lot:PE.lot,chg:
  const sl=peSlots(o,l),n=sl.filter(Boolean).length,done=n>=l.boxes,si=(o.sh||{})[l.city+'|'+l.cons],closed=si!=null&&ST.P[si]&&ST.P[si].closed;
  if((!PE.lot||PE.chg)&&!done&&!closed)return `<div class="pw"><p class="pcx"><b>${E(l.cli)}</b> · ${l.city} · ${n} de ${l.boxes} cajas</p><h1 class="ph">¿De qué lote sacas las langostas?</h1>${op.length?`<div class="pg pc">${op.map(x=>`<button class="pt pk2${PE.lot==x?' on':''}" data-pe="lot:${E(x)}"><b class="cli" style="font-size:1.6rem">${E(x)}</b><span>Tanque ${E(String(tk(x)).replace(/^T/,''))}</span><span>${f(bal(x),0)} kg en tanque</span></button>`).join('')}</div>`:`<div class="pmsg">${IC.recepcion}<b>No hay lotes en tanques.</b><span>Registra una entrada primero.</span><button class="pbtn" data-go="pent">Registrar entrada</button></div>`}</div>`;
  const multi=new Set(sl.filter(Boolean).map(x=>x.l)).size>1||(PE.lot&&sl.some(x=>x&&x.l!==PE.lot)),dis=closed?'disabled':'';
- const cards=sl.map((x,i)=>{const no=i+1;if(x){const b=x.b,cf=PE.cf===b.seq;return `<div class="pbx sv" id="pps${no}"><span class="pok" aria-hidden="true">✔</span><b class="pbn">Caja ${no}</b><input class="psc" data-seq="${b.seq}" type="number" min="1" inputmode="numeric" enterkeyhint="next" aria-label="Piezas vivas de la caja ${no} (guardada)" value="${b.c}" ${dis}><div class="pcat">${['R','V','B'].map(q=>`<button type="button" class="chip pk pc${q}" aria-pressed="${b.k==q}" data-pe="sk:${b.seq}:${q}" ${dis}>${RC[q][0]}</button>`).join('')}</div><div class="pft"><span>Guardada${multi?' · '+E(x.l):''}</span>${closed?'':cf?`<span><b class="er">¿Quitar?</b> <button class="lnk" data-pe="rm:${b.seq}">Sí</button> <button class="lnk" data-pe="no">No</button></span>`:`<button class="lnk" data-pe="cf:${b.seq}">Quitar</button>`}</div></div>`}
-  const w=PE.rows[no]||{};return `<div class="pbx" id="pps${no}"><b class="pbn">Caja ${no}</b><input class="ppc" data-slot="${no}" type="number" min="1" inputmode="numeric" enterkeyhint="next" placeholder="Piezas" aria-label="Piezas vivas de la caja ${no}" value="${E(w.c==null?'':w.c)}" ${dis}><div class="pcat">${['R','V','B'].map(q=>`<button type="button" class="chip pk pc${q}" aria-pressed="${w.k==q}" data-pe="k:${no}:${q}" ${dis}>${RC[q][0]}</button>`).join('')}</div></div>`}).join('');
- return `<div class="pw pkw"><div class="pkh"><div><span class="mut2">Empacando</span><b class="cli">${E(l.cli)}</b><span class="mut2">${l.city} · ${E(CONS[l.cons].k)}</span></div><div class="pkn2"><span class="mut2">Guardadas</span><b>${n}<small> de ${l.boxes}</small></b><div class="pb"><i style="width:${n/l.boxes*100}%"></i></div></div>${closed?'<span class="chip ok">Embarque cerrado</span>':`<button class="plot" data-pe="chg">Lote <b>${E(PE.lot||'—')}</b><span>Cambiar</span></button>`}</div>
- ${done?`<div class="pdone"><b>✔ ${E(l.cli)} completo · ${l.boxes} de ${l.boxes}</b><span>Puedes corregir cualquier caja abajo.</span><div class="pbar">${pendKey(o,key)&&pendKey(o,key)!==key?`<button class="pbtn" data-go="pemp:${pendKey(o,key)}">Siguiente cliente que falta ›</button>`:`<button class="pbtn" data-go="pemp">Empacar otro cliente</button>`}<button class="pbtn s" data-go="piso">Inicio</button></div></div>`:closed?'<p class="pcx">Este embarque ya se cerró: las cajas solo se pueden ver.</p>':`<p class="pcx" style="margin:0 0 10px">Escribe las piezas y toca la categoría. <b>Cada caja se guarda sola</b> y se queda en gris con ✔; si te equivocas, corrígela ahí mismo.</p>
+ const cards=sl.map((x,i)=>{const no=i+1;if(x){const b=x.b,cf=PE.cf===b.seq;return `<div class="pbx sv" id="pps${no}" data-kps="${no}"><span class="pok" aria-hidden="true">✔</span><b class="pbn">Caja ${no}</b><input class="psc" data-seq="${b.seq}" data-kpn="${no}" type="number" min="1" inputmode="none" enterkeyhint="next" aria-label="Piezas vivas de la caja ${no} (guardada)" value="${b.c}" ${dis}><span class="pcv">${catLbl(b.k)}</span><div class="pft"><span class="pdc">✔ Completada</span><span class="pde">Corrigiendo</span>${multi?`<span class="plt">${E(x.l)}</span>`:''}</div></div>`}
+  const w=PE.rows[no]||{};return `<div class="pbx${pkRowSt(w)=='prog'?' ip':''}" id="pps${no}" data-kps="${no}"><b class="pbn">Caja ${no}</b><input class="ppc" data-slot="${no}" data-kpn="${no}" type="number" min="1" inputmode="none" enterkeyhint="next" placeholder="—" aria-label="Piezas vivas de la caja ${no}" value="${E(w.c==null?'':w.c)}" ${dis}><span class="pcv">${peCv(w)}</span></div>`}).join('');
+ return `<div class="pw pkw${closed?'':' kpon2'}">${closed?'':'<div class="kpwrap"><div class="kpw kpp"><div class="kpmain">'}<div class="pkh"><div><span class="mut2">Empacando</span><b class="cli">${E(l.cli)}</b><span class="mut2">${l.city} · ${E(CONS[l.cons].k)}</span></div><div class="pkn2"><span class="mut2">Completadas</span><b>${n}<small> de ${l.boxes}</small></b><div class="pb"><i style="width:${n/l.boxes*100}%"></i></div><span class="mut2 pks2">${l.boxes-n} ${l.boxes-n==1?'pendiente':'pendientes'} · ${Math.round(n/l.boxes*100)}% completado</span></div>${closed?'<span class="chip ok">Embarque cerrado</span>':`<button class="plot" data-pe="chg">Lote <b>${E(PE.lot||'—')}</b><span>Cambiar</span></button>`}</div>
+ ${done?`<div class="pdone"><b>✔ ${E(l.cli)} completo · ${l.boxes} de ${l.boxes}</b><span>Puedes corregir cualquier caja abajo.</span><div class="pbar">${pendKey(o,key)&&pendKey(o,key)!==key?`<button class="pbtn" data-go="pemp:${pendKey(o,key)}">Siguiente cliente que falta ›</button>`:`<button class="pbtn" data-go="pemp">Empacar otro cliente</button>`}<button class="pbtn s" data-go="piso">Inicio</button></div></div>`:closed?'<p class="pcx">Este embarque ya se cerró: las cajas solo se pueden ver.</p>':`<p class="pcx" style="margin:0 0 10px">Escribe las piezas en el teclado y <b>toca la categoría: la caja se guarda y pasa sola a la siguiente.</b> Para corregir, toca cualquier caja.</p>
  <div class="pall"><span class="mut2">Poner a todas las vacías:</span>${['R','V','B'].map(q=>`<button class="chip pk pc${q}" data-pe="all:${q}">${RC[q][0]}</button>`).join('')}</div>`}
- <div class="pbxs">${cards}</div></div>`}
-function peTry(no){const{o,l}=peLine();if(!l)return;const w=PE.rows[no]||{},c=Math.round(+w.c);if(!(c>=1)||!w.k)return false;
+ <div class="pbxs">${cards}</div>${closed?'':`</div>${kpPad('piso')}</div></div>`}</div>`}
+function peTry(no,quiet){const{o,l}=peLine();if(!l)return;const w=PE.rows[no]||{},c=Math.round(+w.c);if(!(c>=1)||!w.k)return false;
  if(!PE.lot||!ST.B[PE.lot]){toast('Elige el lote.');return false}const sl=peSlots(o,l);if(sl[no-1])return false;
  const si=shipFor(o,l.city,l.cons);if(ST.P[si].closed){toast('No se puede: el embarque de este destino ya está cerrado.');return false}
- ST.BN=(ST.BN||0)+1;ST.B[PE.lot].push({c,k:w.k,d:si,o:lkey(o,l),seq:ST.BN,ps:no});delete PE.rows[no];Object.keys(PE.rows).forEach(k=>{if(peSlots(o,l)[k-1])delete PE.rows[k]});save();toast(`✔ Caja ${no} guardada: ${c} piezas ${RC[w.k][0]}`);peRender(no);return true}
+ ST.BN=(ST.BN||0)+1;ST.B[PE.lot].push({c,k:w.k,d:si,o:lkey(o,l),seq:ST.BN,ps:no});delete PE.rows[no];Object.keys(PE.rows).forEach(k=>{if(peSlots(o,l)[k-1])delete PE.rows[k]});save();toast(`✔ Caja ${no} guardada: ${c} piezas ${RC[w.k][0]}`);quiet?render():peRender(no);return true}
 function peRender(no){render();const nx=[...document.querySelectorAll('.ppc')].find(e=>+e.dataset.slot>no&&!e.value)||document.querySelector('.ppc:placeholder-shown');if(nx){try{nx.focus({preventScroll:false})}catch(z){}}}
 const peBox=seq=>{for(const lt in ST.B){const b=ST.B[lt].find(x=>x.seq===seq);if(b)return b}return null};
 document.addEventListener('click',e=>{const x=e.target.closest('[data-pe]');if(!x)return;const P=x.dataset.pe.split(':'),a=P[0],v=P.slice(1).join(':');
  if(a=='chg'){PE.chg=true;return render()}if(a=='lot'){PE.lot=v;PE.chg=false;return render()}
  if(a=='k'){const no=+P[1],q=P[2],w=PE.rows[no]=PE.rows[no]||{},inp=document.querySelector(`.ppc[data-slot="${no}"]`);if(inp)w.c=inp.value;w.k=w.k==q?'':q;w.auto=false;
-  if(peTry(no))return;const card=document.getElementById('pps'+no);if(card)card.querySelectorAll('[data-pe^="k:"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pe.split(':')[2]==w.k)));if(w.k&&inp&&!inp.value)inp.focus();return}
+  if(peTry(no))return;peLive(no);const card=document.getElementById('pps'+no);if(card)card.querySelectorAll('[data-pe^="k:"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pe.split(':')[2]==w.k)));if(w.k&&inp&&!inp.value)inp.focus();return}
  if(a=='all'){const{o,l}=peLine();if(!l)return;const sl=peSlots(o,l);sl.forEach((s,i)=>{if(!s){const w=PE.rows[i+1]=PE.rows[i+1]||{};if(!w.k){w.k=v;w.auto=true}}});
   const saved=Object.keys(PE.rows).map(Number).filter(no=>{const w=PE.rows[no];return +w.c>=1&&w.k}).map(no=>peTry(no));if(!saved.length)render();return}
  if(a=='sk'){const b=peBox(+P[1]);if(!b)return;b.k=P[2];save();toast('✔ Caja corregida: '+RC[b.k][0]);return render()}
  if(a=='cf'){PE.cf=+v;return render()}if(a=='no'){PE.cf=null;return render()}
  if(a=='rm'){const s=+v,bx=peBox(s);if(bx&&bx.ps)delete PE.rows[bx.ps];for(const lt in ST.B)ST.B[lt]=ST.B[lt].filter(b=>b.seq!==s);PE.cf=null;save();toast('Caja quitada: el lugar quedó libre');return render()}});
-document.addEventListener('input',e=>{const t=e.target;if(t.classList&&t.classList.contains('ppc')){const no=+t.dataset.slot;(PE.rows[no]=PE.rows[no]||{}).c=t.value}});
+const peLive=no=>{const c=document.getElementById('pps'+no);if(c&&!c.classList.contains('sv'))c.classList.toggle('ip',pkRowSt(PE.rows[no])=='prog')};
+document.addEventListener('input',e=>{const t=e.target;if(t.classList&&t.classList.contains('ppc')){const no=+t.dataset.slot;(PE.rows[no]=PE.rows[no]||{}).c=t.value;peLive(no)}});
 document.addEventListener('change',e=>{const t=e.target;if(!t.classList)return;
  if(t.classList.contains('ppc')){if(!t.isConnected)return;const no=+t.dataset.slot;(PE.rows[no]=PE.rows[no]||{}).c=t.value;peTry(no)}
  else if(t.classList.contains('psc')){if(!t.isConnected)return;const b=peBox(+t.dataset.seq),c=Math.round(+t.value);if(!b)return;if(!(c>=1)){toast('Escribe cuántas piezas vivas hay (mínimo 1). Para quitar la caja usa «Quitar».');t.value=b.c;return}if(c!==b.c){b.c=c;save();toast(`✔ Caja corregida: ${c} piezas`)}}});
 document.addEventListener('keydown',e=>{const t=e.target;if(e.key!='Enter'||!t.classList||!(t.classList.contains('ppc')||t.classList.contains('psc')))return;e.preventDefault();
  if(t.classList.contains('psc')){t.blur();return}const no=+t.dataset.slot;(PE.rows[no]=PE.rows[no]||{}).c=t.value;if(peTry(no))return;
  const w=PE.rows[no];if(+w.c>=1&&!w.k){toast('Toca la categoría de la caja '+no+'.');return}const nx=document.querySelector(`.ppc[data-slot="${no+1}"]`);if(nx)nx.focus()});
-/* --- Registrar entrada --- */
-const PEN0=()=>{const d=new Date();return{step:0,done:null,d:{origin:'',tank:'',lot:'',tempT:'',tempP:'',kgbox:'',k0:'',k1:'',k2:'',k3:'',desp:'',rdate:dLoc(d),time:d.toTimeString().slice(0,5)}}};
-const PSTEPS=['Proveedor','Tanque','Lote','Kilos','Revisar'];
-function pisoEnt(){if(!PEN)PEN=PEN0();const d=PEN.d,st=PEN.step,inp=(k,lab,t,x)=>`<label class="pf">${lab}<input data-pn="${k}" ${t=='n'?'type="number" min="0" step="0.01" inputmode="decimal"':''} value="${E(d[k])}" ${x||''}></label>`;
- if(PEN.done)return `<div class="pw"><div class="pmsg ok2">${IC.cierre}<b>✔ Lote ${E(PEN.done)} registrado</b><span>Ya está en tanques y listo para empacar.</span><div class="pbar"><button class="pbtn" data-pn="again">Registrar otra entrada</button><button class="pbtn s" data-go="pemp">Empacar cajas</button><button class="pbtn s" data-go="piso">Inicio</button></div></div></div>`;
- const tot=[0,1,2,3].reduce((a,i)=>a+(+d['k'+i]||0),0),provs=[...new Set(ST.R.map(r=>r.origin))].slice(-8);
- let body='';
- if(st==0)body=`<h1 class="ph">¿Quién es el proveedor?</h1>${provs.length?`<div class="pg pc">${provs.map(p=>`<button class="pt pk2${d.origin==p?' on':''}" data-pn="prov:${E(p)}"><b style="font-size:1.4667rem">${E(p)}</b></button>`).join('')}</div><p class="mut2" style="margin:14px 0 6px">¿Otro proveedor?</p>`:''}${inp('origin','Proveedor','','placeholder="Escribe el nombre" autocomplete="off"')}`;
- if(st==1)body=`<h1 class="ph">¿En qué tanque queda?</h1><div class="pg pt6">${TK.map(t=>`<button class="pt pk2 tk${d.tank==t?' on':''}" data-pn="tank:${t}"><span>Tanque</span><b class="cli">${t.replace(/^T/,'')}</b></button>`).join('')}</div>`;
- if(st==2)body=`<h1 class="ph">Lote y temperaturas</h1><div class="pfs">${inp('lot','Lote de recepción','','placeholder="WLRCO051026" autocapitalize="characters" autocomplete="off" spellcheck="false" style="text-transform:uppercase" id="pn_lot"')}${inp('tempT','Temp. °F del tanque','n')}${inp('tempP','Temp. °F del producto','','placeholder="59-62"')}</div>`;
- if(st==3)body=`<h1 class="ph">Kilos por talla</h1><div class="pfs">${SL.map((s,i)=>`<label class="pf sz sz${i}"><span>${szDot(i)} ${s} <small>${SZC[i][0]}</small></span><input data-pn="k${i}" type="number" min="0" step="0.01" inputmode="decimal" value="${E(d['k'+i])}"></label>`).join('')}</div><div class="ptot">Kg total <b id="pn_tot">${tot.toFixed(2)} kg</b></div><div class="pfs">${inp('kgbox','Kg por caja en tanque','n')}${inp('desp','Kg desperdicio','n')}</div>`;
- if(st==4)body=`<h1 class="ph">Revisa y guarda</h1><div class="prev">${[['Proveedor',d.origin],['Tanque',d.tank.replace(/^T/,'')],['Lote',d.lot],['Temp. tanque',d.tempT?d.tempT+' °F':'—'],['Temp. producto',d.tempP?d.tempP+' °F':'—'],['Kg por caja en tanque',d.kgbox||'—'],...SL.map((s,i)=>[`${szDot(i)} ${s}`,(+d['k'+i]||0).toFixed(2)+' kg']),['Kg total',tot.toFixed(2)+' kg'],['Kg desperdicio',d.desp||'—']].map(([k,v],i)=>`<div><span>${k}</span><b>${i<6||i>9?E(v):v}</b></div>`).join('')}</div><div class="pfs">${inp('rdate','Fecha de recepción','','type="date"')}${inp('time','Hora','','type="time"')}</div>`;
- return `<div class="pw"><ol class="psteps">${PSTEPS.map((s,i)=>`<li class="${i<st?'dn':i==st?'cur':''}">${i<st?'✔ ':''}${s}</li>`).join('')}</ol>${body}
- <div class="pnav">${st?`<button class="pbtn s" data-pn="back">‹ Atrás</button>`:'<span></span>'}${st==4?`<button class="pbtn big" data-pn="save">✔ Guardar entrada</button>`:st==1?'<span></span>':`<button class="pbtn big" data-pn="next">Siguiente ›</button>`}</div></div>`}
-function penCheck(){const d=PEN.d,st=PEN.step;if(st==0&&!d.origin.trim())return['Elige o escribe el proveedor.','origin'];if(st==1&&!d.tank)return['Toca el tanque.'];
- if(st==2){const l=d.lot.trim().toUpperCase();if(!l)return['Escribe el lote de recepción.','lot'];if(R_(l))return['Ese lote ya existe.','lot']}
- if(st==3&&![0,1,2,3].some(i=>+d['k'+i]>0))return['Captura al menos una talla con kg.','k0'];if(st==4&&!d.rdate)return['Indica la fecha de recepción.','rdate'];return null}
-function penSave(){for(PEN.step=0;PEN.step<5;PEN.step++){const c=penCheck();if(c){render();return toast(c[0])}}PEN.step=4;const d=PEN.d,l=d.lot.trim().toUpperCase(),id=newLotId();
- ST.R.push({id,lot:l,origin:d.origin.trim(),tank:d.tank,rdate:d.rdate,time:d.time,date:fd(d.rdate),tempT:d.tempT===''?null:+d.tempT,tempP:d.tempP.trim(),kgbox:d.kgbox===''?null:+d.kgbox,desp:d.desp===''?null:+d.desp,final:null,closed:false});
- ST.B[l]=[];S.forEach((s,i)=>{const k=+d['k'+i]||0;if(k>0)post('RECEPCION',l,s,k,0,id)});PEN.done=l;save();toast('✔ Entrada guardada');render()}
-document.addEventListener('input',e=>{const t=e.target;if(!t.dataset||!t.dataset.pn||!PEN)return;let v=t.value;if(t.dataset.pn=='lot'&&v!==v.toUpperCase()){const a=t.selectionStart;v=t.value=v.toUpperCase();try{t.setSelectionRange(a,a)}catch(x){}}PEN.d[t.dataset.pn]=v;t.removeAttribute('aria-invalid');
- if(/^k[0-3]$/.test(t.dataset.pn)){const o=document.getElementById('pn_tot');if(o)o.textContent=[0,1,2,3].reduce((a,i)=>a+(+PEN.d['k'+i]||0),0).toFixed(2)+' kg'}});
-document.addEventListener('click',e=>{const x=e.target.closest('button[data-pn]');if(!x||!PEN)return;const P=x.dataset.pn.split(':'),a=P[0],v=P.slice(1).join(':');
- if(a=='prov'){PEN.d.origin=v;PEN.step=1;return render()}if(a=='tank'){PEN.d.tank=v;PEN.step=2;return render()}
- if(a=='back'){PEN.step=Math.max(0,PEN.step-1);return render()}if(a=='again'){PEN=PEN0();return render()}if(a=='save')return penSave();
- if(a=='next'){const c=penCheck();if(c){toast(c[0]);const el=c[1]&&document.querySelector(`[data-pn="${c[1]}"]`);if(el){el.setAttribute('aria-invalid','true');el.focus()}return}PEN.step++;render();const f=document.querySelector('.pw input');if(f&&PEN.step!=1)try{f.focus()}catch(z){}}});
-document.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.dataset&&e.target.dataset.pn){e.preventDefault();const b=document.querySelector('button[data-pn=next],button[data-pn=save]');if(b)b.click()}});
+/* ===== Teclado numérico fijo en Empaque (v1.3.0) — vista completa y Modo piso =====
+   Siempre está en pantalla; el teclado de la tablet no aparece (inputmode="none"), pero un teclado físico sigue escribiendo normal.
+   KPT.t = caja activa: 'slot:N' (piso, lugar N), 'row:R' (vista completa, fila nueva R) o 'ed' (vista completa, corrigiendo una caja guardada).
+   El teclado escribe en el campo de esa caja y dispara «input», así que las reglas de siempre (PE.rows, PKD.rows, PKD.ew) siguen igual.
+   Tocar la categoría: en piso guarda la caja (peTry) o la corrección; en vista completa marca la fila y pasa a la siguiente
+   (se guardan todas con «Guardar cajas»), o guarda la corrección (pkUpd). */
+let KPT={k:'',t:null,fresh:true};
+const catLbl=k=>k&&RC[k]?`<span class="dot" style="background:var(--${k})"></span>${RC[k][0]}`:'',
+ peCv=w=>w&&w.k?catLbl(w.k):w&&String(w.c==null?'':w.c).trim()!==''?'<span class="pcx2">Falta categoría</span>':'<span class="pcx2">Pendiente</span>';
+const DEL_IC='<svg width="30" height="22" viewBox="0 0 34 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M11 2h19a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H11L2 13z"/><path d="M16 8l10 10M26 8L16 18"/></svg>';
+function kpPad(mode){return `<aside class="kpad" id="kpad" data-kpm="${mode}" aria-label="Teclado para capturar piezas"><div class="kph"><b id="kpt">Caja</b><span id="kps"></span></div>
+ <div class="kpd" id="kpd"><span class="kpdt" id="kpdt" aria-hidden="true"></span><span class="kpv" id="kpv" aria-live="polite">—</span><span class="kpu">piezas vivas</span></div>
+ <div class="kpk">${[1,2,3,4,5,6,7,8,9].map(d=>`<button type="button" data-kp="d:${d}">${d}</button>`).join('')}<button type="button" class="f" data-kp="clr">Borrar</button><button type="button" data-kp="d:0">0</button><button type="button" class="f" data-kp="bk" aria-label="Borrar un número">${DEL_IC}</button></div>
+ <p class="kpcl" id="kpcl"></p><div class="kpc" role="group" aria-label="Categoría">${['R','V','B'].map(q=>`<button type="button" class="kc${q}" data-kp="k:${q}" aria-pressed="false">${RC[q][0]}</button>`).join('')}</div>
+ <div class="kpn"><button type="button" data-kp="prev">‹ Caja anterior</button><span id="kpx"></span><button type="button" data-kp="next">Siguiente caja ›</button></div></aside>`}
+const kpEl=t=>{t=t||KPT.t;if(!t)return null;const[a,b]=t.split(':');if(a=='slot'){const c=document.getElementById('pps'+b);return c&&c.querySelector('input.ppc,input.psc')}if(a=='row')return document.getElementById('pk_c'+b);if(a=='ed')return document.getElementById('pk_e');return null};
+const kpOf=el=>{if(!el||!el.classList)return null;if(el.classList.contains('ppc')||el.classList.contains('psc')){const c=el.closest('[data-kps]');return c?'slot:'+c.dataset.kps:null}if(el.classList.contains('pkc'))return 'row:'+el.dataset.row;if(el.classList.contains('pke'))return 'ed';return null};
+const kpList=()=>[...document.querySelectorAll('#app [data-kps] input,#app #pk_e,#app input.pkc')].filter(e=>!e.disabled).map(kpOf).filter(Boolean);
+/* Primera caja vacía después de «from» (si no hay, la primera vacía desde el principio). */
+function kpFirst(from){if(document.getElementById('pk_e'))return'ed';const L=kpList(),emp=t=>{const e=kpEl(t);return e&&e.classList&&(e.classList.contains('ppc')||e.classList.contains('pkc'))&&!String(e.value).trim()},i=from?L.indexOf(from):-1;
+ return L.slice(i+1).find(emp)||L.find(emp)||null}
+function kpCat(){const t=KPT.t;if(!t)return'';const[a,b]=t.split(':');if(a=='slot'){const{o,l}=peLine();if(!l)return'';const x=peSlots(o,l)[+b-1];return x?x.b.k:(PE.rows[+b]||{}).k||''}if(a=='row')return(PKD.rows[+b]||{}).k||'';if(a=='ed')return(PKD.ew||{}).k||'';return''}
+function kpSync(){const pad=document.getElementById('kpad');if(!pad)return;const rk=V.v+':'+V.id,enter=KPT.k!==rk;if(enter)KPT={k:rk,t:null,fresh:true};
+ const t0=KPT.t,sig=document.querySelectorAll('#app .pkdn.is-done,#app .pbx.sv').length;if(KPT.sig!==sig){if(KPT.sig!=null&&KPT.t&&KPT.t.startsWith('row:'))KPT.t=null;KPT.sig=sig}
+ let el=kpEl();if(!el||el.disabled){KPT.t=kpFirst();KPT.fresh=true;el=kpEl()}if(document.getElementById('pk_e')&&KPT.t!=='ed'){KPT.t='ed';KPT.fresh=true;el=kpEl()}
+ document.querySelectorAll('#app .kpon').forEach(x=>x.classList.remove('kpon'));const box=el&&el.closest('[data-kps],tr');if(box)box.classList.add('kpon');if(box&&t0!==KPT.t&&t0!=null)kpReveal(box);
+ const mode=pad.dataset.kpm,saved=!!el&&(el.classList.contains('psc')||el.classList.contains('pke')),no=el?el.dataset.kpn:'',val=el?String(el.value||''):'';
+ const g=id=>document.getElementById(id);g('kpt').textContent=el?`Caja ${no}`:'Toca una caja';g('kpdt').textContent=el?`Caja ${no}`:'';
+ g('kps').textContent=!el?'':saved?'Corrigiendo':mode=='piso'?`de ${(peLine().l||{}).boxes||''}`:'Sin guardar';
+ g('kpv').textContent=val||'—';g('kpd').classList.toggle('e',!val);g('kpd').classList.toggle('fr',!!val&&KPT.fresh);
+ g('kpcl').textContent=!el?'Toca una caja para escribir sus piezas.':saved?'Toca la categoría para guardar la corrección':mode=='piso'?'Toca la categoría para guardar':'Toca la categoría: pasa a la siguiente caja';
+ const k=kpCat();pad.querySelectorAll('[data-kp^="k:"]').forEach(b=>{b.setAttribute('aria-pressed',String(!!el&&b.dataset.kp.slice(2)==k));b.disabled=!el});
+ pad.querySelectorAll('[data-kp^="d:"],[data-kp=clr],[data-kp=bk]').forEach(b=>b.disabled=!el);
+ const L=kpList(),i=L.indexOf(KPT.t);pad.querySelector('[data-kp=prev]').disabled=!(i>0);pad.querySelector('[data-kp=next]').disabled=!(i>=0&&i<L.length-1);
+ /* Quitar caja (piso, caja guardada): con confirmación, aquí mismo */
+ let x='';if(mode=='piso'&&el&&el.classList.contains('psc')){const s=+el.dataset.seq;x=PE.cf===s?`<span class="kpcf"><b class="er">¿Quitar?</b><button type="button" class="lnk" data-pe="rm:${s}">Sí</button><button type="button" class="lnk" data-pe="no">No</button></span>`:`<button type="button" class="lnk kprm" data-pe="cf:${s}">Quitar caja</button>`}
+ g('kpx').innerHTML=x;
+ /* Al abrir el cliente en la vista completa, si el teclado no se ve entero, la pantalla baja lo justo para verlo completo con «Guardar cajas» */
+ if(enter&&pad.dataset.kpm=='full')setTimeout(()=>{if(!pad.isConnected)return;const m=pad.closest('main'),d=pad.closest('.kpdock')||pad;if(!m)return;
+  for(let i=0;i<3;i++){const mr=m.getBoundingClientRect(),dr=d.getBoundingClientRect(),dn=dr.bottom-(mr.bottom-12);if(dn<=1)break;m.scrollTop+=Math.min(dn,Math.max(0,dr.top-mr.top-8))}},0)
+ if(mode=='piso'&&el){const c=el.closest('[data-kps]'),cv=c&&c.querySelector('.pcv');if(cv&&el.classList.contains('ppc')){const w=PE.rows[+c.dataset.kps]||{};cv.innerHTML=peCv({c:el.value,k:w.k})}}}
+/* Deja la caja activa a la vista, sin que quede detrás del teclado cuando el teclado va abajo. */
+function kpReveal(box){const m=box&&box.closest('main');if(!m)return;const pad=document.getElementById('kpad'),dock=pad&&(pad.closest('.kpdock')||pad),r=box.getBoundingClientRect(),mr=m.getBoundingClientRect(),dr=dock?dock.getBoundingClientRect():null;
+ const below=dr&&dr.left<r.right&&dr.right>r.left&&dr.top>mr.top+80,top=mr.top+8,bot=(below?Math.min(dr.top,mr.bottom):mr.bottom)-8;
+ if(r.top<top)m.scrollTop-=top-r.top;else if(r.bottom>bot)m.scrollTop+=Math.min(r.bottom-bot,r.top-top)}
+function kpGo(t){if(!t)return;KPT.t=t;KPT.fresh=true;const el=kpEl();if(el){try{el.focus({preventScroll:true})}catch(z){}kpReveal(el.closest('[data-kps],tr'))}kpSync()}
+/* Antes de cambiar de caja: una caja de piso guardada con piezas distintas se guarda (igual que al salir del campo con el teclado físico);
+   una caja nueva de piso que ya tiene piezas y categoría también. */
+function kpLeave(){const el=kpEl();if(!el)return false;if(el.classList.contains('psc')){const b=peBox(+el.dataset.seq);if(b&&String(b.c)!==String(el.value).trim())el.dispatchEvent(new Event('change',{bubbles:true}));return false}
+ if(el.classList.contains('ppc')){const no=+el.dataset.slot,w=PE.rows[no];if(w&&w.k&&Math.round(+el.value)>=1){w.c=el.value;return peTry(no,true)}}return false}
+function kpType(a){const el=kpEl();if(!el||el.disabled)return toast('Toca primero una caja.');let v=String(el.value||'');
+ if(a=='bk')v=v.slice(0,-1);else if(a=='clr')v='';else{if(KPT.fresh)v='';if(v.length>=4)return;v=(v=='0'?'':v)+a}
+ KPT.fresh=false;el.value=v;el.removeAttribute('aria-invalid');el.dispatchEvent(new Event('input',{bubbles:true}));kpSync()}
+function kpCatPress(q){const el=kpEl();if(!el)return toast('Toca primero una caja.');const t=KPT.t,[a,b]=t.split(':');
+ if(a=='slot'){const no=+b;if(el.classList.contains('psc')){const bx=peBox(+el.dataset.seq),c=Math.round(+el.value);if(!bx)return;if(!(c>=1)){toast('Escribe cuántas piezas vivas hay (mínimo 1). Para quitar la caja usa «Quitar caja».');return}
+   bx.c=c;bx.k=q;save();toast(`✔ Caja ${no} corregida: ${c} piezas ${RC[q][0]}`);KPT.t=kpFirst(t)||t;KPT.fresh=true;return render()}
+  const w=PE.rows[no]=PE.rows[no]||{};w.c=el.value;w.k=q;w.auto=false;
+  if(!(Math.round(+w.c)>=1)){peLive(no);kpSync();return toast(`Escribe las piezas de la caja ${no}.`)}
+  const n=kpFirst(t);KPT.t=n||t;KPT.fresh=true; /* la siguiente vacía se elige antes de guardar: así se dibuja una sola vez */
+  if(!peTry(no,true)){KPT.t=t;KPT.fresh=false;return kpSync()}{const nx=kpEl();if(nx){try{nx.focus({preventScroll:true})}catch(z){}kpReveal(nx.closest('[data-kps]'))}}return}
+ if(a=='row'){const r=+b,w=PKD.rows[r]=PKD.rows[r]||{};w.c=el.value;w.k=q;w.auto=false;const row=document.getElementById('pkr'+r);if(row)row.querySelectorAll('[data-pk^="k:"]').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.pk.split(':')[2]==q)));pkLive(r);pkCnt();
+  if(!(Math.round(+w.c)>=1)){kpSync();return toast(`Escribe las piezas de la caja ${el.dataset.kpn}.`)}return kpGo(kpFirst(t)||t)}
+ if(a=='ed'){const[oid,lid]=String(V.id).split('.').map(Number),o=ST.OR.find(x=>x.id===oid),l=o&&o.lines.find(x=>x.id===lid);if(!l||!PKD.ew)return;PKD.ew.c=el.value;PKD.ew.k=q;
+  if(pkUpd(o,l)=='bad')return kpSync();KPT.t=null;KPT.fresh=true;render()}}
+function kpNav(d){const L=kpList(),i=L.indexOf(KPT.t),t=L[i+d];if(!t)return;const was=KPT.t;if(kpLeave()){KPT.t=t;KPT.fresh=true;kpSync();const e=kpEl();if(e)try{e.focus({preventScroll:true})}catch(z){}return}if(KPT.t===was)kpGo(t)}
+/* Los botones del teclado no le quitan el foco al campo (así un teclado físico también sigue funcionando). */
+document.addEventListener('pointerdown',e=>{if(e.target.closest&&e.target.closest('#kpad button'))e.preventDefault()});
+document.addEventListener('click',e=>{const x=e.target.closest('[data-kp]');if(x){const v=x.dataset.kp;if(v.startsWith('d:'))return kpType(v.slice(2));if(v=='clr'||v=='bk')return kpType(v);if(v.startsWith('k:'))return kpCatPress(v.slice(2));if(v=='prev')return kpNav(-1);if(v=='next')return kpNav(1);return}
+ const tile=e.target.closest('#app [data-kps]');if(tile&&document.getElementById('kpad')&&!e.target.closest('button,input')){const i=tile.querySelector('input');if(i&&!i.disabled){const t=kpOf(i);if(t!==KPT.t){kpLeave();kpGo(t)}}}});
+document.addEventListener('focusin',e=>{const t=kpOf(e.target);if(!t||!document.getElementById('kpad')||t===KPT.t)return;KPT.t=t;KPT.fresh=true;kpSync()});
+document.addEventListener('input',e=>{if(kpOf(e.target)&&document.getElementById('kpad')){if(e.isTrusted)KPT.fresh=false;kpSync()}});
+/* Teclado físico sin ningún campo enfocado: los números van a la caja activa. */
+document.addEventListener('keydown',e=>{if(!document.getElementById('kpad')||e.ctrlKey||e.metaKey||e.altKey)return;const a=document.activeElement;if(a&&a!==document.body&&!(a.closest&&a.closest('#kpad')))return;
+ if(/^[0-9]$/.test(e.key)){e.preventDefault();kpType(e.key)}else if(e.key=='Backspace'){e.preventDefault();kpType('bk')}});
+/* --- Registrar entradas: hoja para capturar varias entradas a la vez (Modo piso) --- */
+const PNK=['origin','tank','lot','k0','k1','k2','k3','tempT','tempP','kgbox','desp'],PND=['tempT','tempP','kgbox','desp','rdate','time'],PNX=['tempT','tempP','kgbox','desp'];
+function penRow(){const d=new Date();return{u:++PEN.n,st:'',er:{},open:false,d:{origin:'',tank:'',lot:'',k0:'',k1:'',k2:'',k3:'',tempT:'',tempP:'',kgbox:'',desp:'',rdate:dLoc(d),time:d.toTimeString().slice(0,5)}}}
+function PEN0(){PEN={n:0,rows:[],cf:null,cur:null,busy:false};PEN.rows.push(penRow());return PEN}
+const penR=u=>PEN&&PEN.rows.find(r=>r.u===u),penFull=r=>PNK.some(k=>String(r.d[k]).trim()!==''),penKg=r=>[0,1,2,3].reduce((a,i)=>a+(+r.d['k'+i]||0),0),
+ penState=r=>r.st=='ok'?'ok':Object.keys(r.er).length?'bad':penFull(r)?'pnd':'new',
+ penChip=r=>({ok:'<span class="chip ok">✔ Guardada</span>',bad:'<span class="chip al">⚠ Revisar</span>',pnd:'<span class="chip pnd">Sin guardar</span>',new:'<span class="chip pnw">Vacía</span>'})[penState(r)],
+ penPend=()=>PEN?PEN.rows.filter(r=>r.st!='ok'&&penFull(r)):[],
+ penMore=r=>PNX.filter(k=>String(r.d[k]).trim()!=='').length;
+/* Mismas reglas que la Entrada de la vista completa: proveedor, tanque, lote único, al menos una talla con kg y fecha. */
+function penVal(r){const d=r.d,er={},l=d.lot.trim().toUpperCase();
+ if(!d.origin.trim())er.origin='Escribe el proveedor.';if(!d.tank)er.tank='Elige el tanque.';
+ if(!l)er.lot='Escribe el lote.';else if(R_(l))er.lot='Ese lote ya existe.';else{const i=PEN.rows.indexOf(r),o=PEN.rows.findIndex((x,j)=>j<i&&x.st!='ok'&&x.d.lot.trim().toUpperCase()==l);if(o>=0)er.lot=`Repetido en la fila ${o+1}.`}
+ [0,1,2,3].forEach(i=>{if(+d['k'+i]<0)er['k'+i]='No puede ser negativo.'});
+ if(![0,1,2,3].some(i=>+d['k'+i]>0)&&![0,1,2,3].some(i=>er['k'+i]))er.kg='Captura al menos una talla con kg.';
+ if(!d.rdate)er.rdate='Indica la fecha de recepción.';return er}
+function penTr(r,i){const u=r.u,ok=r.st=='ok',er=r.er,n=i+1,cf=PEN.cf===u,
+ bad=k=>er[k]||(/^k\d$/.test(k)&&er.kg),
+ at=(k,al)=>`data-pr="${u}:${k}" aria-label="${al} · entrada ${n}"${bad(k)?` aria-invalid="true" aria-describedby="pe_${u}_${er[k]?k:'kg'}"`:''}${ok?' disabled':''}`,
+ ms=k=>er[k]?`<small class="perr" id="pe_${u}_${k}">${E(er[k])}</small>`:'',
+ el=t=>`<span class="pel" aria-hidden="true">${t}</span>`,
+ num='type="number" min="0" step="0.01" inputmode="decimal" enterkeyhint="next"',mc=penMore(r);
+ return `<tr class="per${ok?' sv':''}${PEN.cur===u?' cur':''}${r.open?' op':''}" data-pu="${u}">
+ <td class="c-no"><b>${n}</b><span class="pst" id="ps_${u}">${penChip(r)}</span></td>
+ <td class="c-or">${el('Proveedor')}<input ${at('origin','Proveedor')} value="${E(r.d.origin)}" list="pn_provs" autocomplete="off" enterkeyhint="next">${ms('origin')}</td>
+ <td class="c-tk">${el('Tanque')}<select ${at('tank','Tanque')}><option value=""${r.d.tank?'':' selected'}>—</option>${TK.map(t=>`<option value="${t}"${r.d.tank==t?' selected':''}>${t.replace(/^T/,'')}</option>`).join('')}</select>${ms('tank')}</td>
+ <td class="c-lo">${el('Lote')}<input ${at('lot','Lote')} value="${E(r.d.lot)}" autocapitalize="characters" autocomplete="off" spellcheck="false" enterkeyhint="next"${n==1&&!ok?' placeholder="WLRCO051026"':''}>${ms('lot')}</td>
+ ${S.map((s,i)=>`<td class="c-k sz${i}">${el(`${szDot(i)} ${s.toUpperCase()} kg`)}<input ${at('k'+i,'Kg talla '+s.toUpperCase())} ${num} value="${E(r.d['k'+i])}">${ms('k'+i)}</td>`).join('')}
+ <td class="c-tot">${el('Kg total')}<b id="pt_${u}">${penKg(r).toFixed(2)}</b>${ms('kg')}</td>
+ <td class="c-ac">${cf?`<span class="pecf"><button class="btn d" data-pa="rmy:${u}">Quitar</button><button class="btn s" data-pa="rmn:${u}">No</button></span>`:`<button class="pmore" data-pa="more:${u}" aria-expanded="${r.open}" aria-controls="pd_${u}">Más<span class="pmc" id="pm_${u}">${mc?' · '+mc:''}</span></button>${ok?'':`<button class="prm" data-pa="rm:${u}" aria-label="Quitar entrada ${n}" title="Quitar entrada">✕</button>`}`}</td></tr>
+ <tr class="pdet${ok?' sv':''}${PEN.cur===u?' cur':''}" data-pu="${u}" id="pd_${u}"${r.open?'':' hidden'}><td colspan="10"><div class="pdg">${[['tempT','Temp. °F del tanque',num],['tempP','Temp. °F del producto','placeholder="59-62" autocomplete="off" enterkeyhint="next"'],['kgbox','Kg por caja en tanque',num],['desp','Kg desperdicio',num],['rdate','Fecha de recepción','type="date"'],['time','Hora','type="time"']].map(([k,l,x])=>`<label>${l}<input ${at(k,l)} ${x} value="${E(r.d[k])}">${ms(k)}</label>`).join('')}</div></td></tr>`}
+function penCnt(){const p=penPend(),kg=p.reduce((a,r)=>a+penKg(r),0);return p.length?`${p.length} por guardar · ${f(kg*1000)} kg`:'Nada por guardar'}
+function pisoEnt(){if(!PEN)PEN0();const R=PEN.rows,sv=R.filter(r=>r.st=='ok').length,bad=R.filter(r=>penState(r)=='bad').length,np=penPend().length,
+ provs=[...new Set([...ST.R.map(r=>r.origin),...R.map(r=>r.d.origin.trim())].filter(Boolean))].slice(-30);
+ return `<div class="pw pent"><div class="penh"><h1 class="ph">Registrar entradas</h1><p class="mut2">Una fila por lote. Pasa de un campo al siguiente con Tab o Enter; las filas vacías no se guardan.</p></div>
+ ${bad?`<div class="penal" id="pn_al" role="alert"><b>⚠ <span id="pn_aln">${bad} ${bad==1?'entrada tiene':'entradas tienen'}</span> datos por corregir.</b><button class="chip al chipb" data-pa="jump">Revisar ›</button></div>`:''}
+ ${sv?`<div class="pesv"><b>✔ ${sv} ${sv==1?'entrada guardada':'entradas guardadas'}</b><span class="mut">Ya están en tanques y listas para empacar.</span><span class="sp"></span><button class="btn s" data-go="pemp">Empacar cajas</button><button class="btn s" data-pa="clear">Quitar guardadas de la lista</button></div>`:''}
+ <datalist id="pn_provs">${provs.map(p=>`<option value="${E(p)}"></option>`).join('')}</datalist>
+ <div class="pnt"><table class="pnt-t"><thead><tr><th class="c-no" scope="col">#</th><th scope="col">Proveedor</th><th class="c-tk" scope="col">Tanque</th><th scope="col">Lote</th>${S.map((s,i)=>`<th class="c-k" scope="col"><span>${szDot(i)} ${s.toUpperCase()}</span><small>kg · ${SZC[i][0]}</small></th>`).join('')}<th class="c-tot" scope="col">Kg total</th><th class="c-ac" aria-label="Acciones"></th></tr></thead><tbody>${R.map(penTr).join('')}</tbody></table></div>
+ <div class="pnav pebar"><button class="pbtn s" data-pa="add">+ Agregar entrada</button><span class="pecnt" id="pn_cnt">${penCnt()}</span><button class="pbtn" data-pa="save" id="pn_save"${np?'':' disabled'}>✔ Guardar entradas<span id="pn_n">${np?` (${np})`:''}</span></button></div></div>`}
+function penFocus(u,k){const el=document.querySelector(`[data-pr="${u}:${k}"]`);if(!el)return;el.scrollIntoView({block:'center'});try{el.focus({preventScroll:true})}catch(z){}}
+function penJump(){const r=PEN&&PEN.rows.find(x=>x.st!='ok'&&Object.keys(x.er).length);if(!r)return;const k=['origin','tank','lot','k0','k1','k2','k3','kg',...PND].find(k=>r.er[k]);
+ if(PND.includes(k)&&!r.open){r.open=true;render()}penFocus(r.u,k=='kg'?'k0':k)}
+/* Guarda cada fila por separado: las que tienen errores se quedan marcadas y las demás se guardan. Solo se guardan filas que aún no están guardadas, así un doble toque no duplica lotes. */
+function penSave(){if(!PEN||PEN.busy)return;const todo=penPend();if(!todo.length){toast('Escribe al menos una entrada.');return}
+ PEN.busy=true;let ok=0,bad=0;
+ try{for(const r of todo){r.er=penVal(r);if(Object.keys(r.er).length){bad++;if(PND.some(k=>r.er[k]))r.open=true;continue}
+  const d=r.d,l=d.lot.trim().toUpperCase(),id=newLotId();
+  ST.R.push({id,lot:l,origin:d.origin.trim(),tank:d.tank,rdate:d.rdate,time:d.time,date:fd(d.rdate),tempT:d.tempT===''?null:+d.tempT,tempP:String(d.tempP).trim(),kgbox:d.kgbox===''?null:+d.kgbox,desp:d.desp===''?null:+d.desp,final:null,closed:false});
+  ST.B[l]=[];S.forEach((s,i)=>{const k=+d['k'+i]||0;if(k>0)post('RECEPCION',l,s,k,0,id)});r.st='ok';r.d.lot=l;r.d.origin=d.origin.trim();r.open=false;r.er={};ok++}
+  if(ok)save()}finally{PEN.busy=false}
+ PEN.cf=null;render();
+ if(bad){toast(`Faltan datos en ${bad} ${bad==1?'entrada':'entradas'} (marcadas en rojo).${ok?` Se ${ok==1?'guardó 1':'guardaron '+ok}.`:''}`);penJump()}
+ else toast(ok==1?'✔ Entrada guardada':`✔ ${ok} entradas guardadas`)}
+function penDel(u){const i=PEN.rows.findIndex(r=>r.u===u);PEN.rows=PEN.rows.filter(r=>r.u!==u);PEN.cf=null;if(!PEN.rows.length)PEN.rows.push(penRow());render();const n=PEN.rows[Math.min(Math.max(i,0),PEN.rows.length-1)];const b=n&&document.querySelector(`[data-pa="rm:${n.u}"]`)||document.querySelector('[data-pa=add]');if(b)try{b.focus({preventScroll:true})}catch(z){}}
+/* Actualiza estado, totales y conteos sin redibujar (no se pierde el foco ni lo escrito). */
+function penLive(r){const c=document.getElementById('ps_'+r.u);if(c)c.innerHTML=penChip(r);const m=document.getElementById('pm_'+r.u),mc=penMore(r);if(m)m.textContent=mc?' · '+mc:'';
+ const np=penPend().length,b=document.getElementById('pn_save'),n=document.getElementById('pn_n'),t=document.getElementById('pn_cnt');if(b)b.disabled=!np;if(n)n.textContent=np?` (${np})`:'';if(t)t.textContent=penCnt();
+ const al=document.getElementById('pn_al');if(al){const bad=PEN.rows.filter(x=>penState(x)=='bad').length;if(!bad)al.remove();else document.getElementById('pn_aln').textContent=`${bad} ${bad==1?'entrada tiene':'entradas tienen'}`}}
+document.addEventListener('input',e=>{const t=e.target,a=t.dataset&&t.dataset.pr;if(!a||!PEN)return;const[u,k]=a.split(':'),r=penR(+u);if(!r||r.st=='ok')return;let v=t.value;
+ if(k=='lot'&&v!==v.toUpperCase()){const p=t.selectionStart;v=t.value=v.toUpperCase();try{t.setSelectionRange(p,p)}catch(x){}}
+ r.d[k]=v;const clr=x=>{if(!r.er[x])return;delete r.er[x];const m=document.getElementById(`pe_${u}_${x}`);if(m)m.remove()};clr(k);t.removeAttribute('aria-invalid');t.removeAttribute('aria-describedby');
+ if(/^k\d$/.test(k)){clr('kg');[0,1,2,3].forEach(i=>{const x=document.querySelector(`[data-pr="${u}:k${i}"]`);if(x&&!r.er['k'+i]){x.removeAttribute('aria-invalid');x.removeAttribute('aria-describedby')}});const o=document.getElementById('pt_'+u);if(o)o.textContent=penKg(r).toFixed(2)}
+ penLive(r)});
+document.addEventListener('focusin',e=>{if(!PEN||V.v!='pent'||!e.target.closest)return;const tr=e.target.closest('tr[data-pu]');if(!tr)return;const u=+tr.dataset.pu;if(PEN.cur===u)return;PEN.cur=u;document.querySelectorAll('tr[data-pu]').forEach(x=>x.classList.toggle('cur',+x.dataset.pu===u))});
+document.addEventListener('click',e=>{const x=e.target.closest('[data-pa]');if(!x||!PEN)return;const P=x.dataset.pa.split(':'),a=P[0],u=+P[1];
+ if(a=='add'){const r=penRow();PEN.rows.push(r);PEN.cur=r.u;PEN.cf=null;render();penFocus(r.u,'origin');return}
+ if(a=='save')return penSave();if(a=='jump')return penJump();
+ if(a=='more'){const r=penR(u),d=document.getElementById('pd_'+u);if(!r||!d)return;r.open=!r.open;d.hidden=!r.open;x.setAttribute('aria-expanded',String(r.open));const tr=x.closest('tr');if(tr)tr.classList.toggle('op',r.open);if(r.open){const f=d.querySelector('input:not([disabled])');if(f)try{f.focus()}catch(z){}}return}
+ if(a=='rm'){const r=penR(u);if(!r||r.st=='ok')return;if(!penFull(r))return penDel(u);PEN.cf=u;render();const y=document.querySelector(`[data-pa="rmn:${u}"]`);if(y)y.focus({preventScroll:true});return}
+ if(a=='rmy'){penDel(u);return toast('Entrada quitada de la lista')}
+ if(a=='rmn'){PEN.cf=null;render();const y=document.querySelector(`[data-pa="rm:${u}"]`);if(y)y.focus({preventScroll:true});return}
+ if(a=='clear'){PEN.rows=PEN.rows.filter(r=>r.st!='ok');if(!PEN.rows.length)PEN.rows.push(penRow());PEN.cf=null;render();return}});
+document.addEventListener('keydown',e=>{const t=e.target;if(e.key!='Enter'||!PEN||!t.dataset||!t.dataset.pr)return;e.preventDefault();
+ if(e.ctrlKey||e.metaKey)return penSave();
+ const all=[...document.querySelectorAll('#app [data-pr]:not([disabled])')].filter(x=>x.offsetParent!==null),i=all.indexOf(t);
+ if(i>=0&&i<all.length-1){all[i+1].focus();return}const b=document.querySelector('[data-pa=add]');if(b)b.click()});
 const PTIT={piso:'Inicio',pemp:'Empacar cajas',pent:'Registrar entrada',embarques:'Cerrar embarque',emb:'Cerrar embarque',cierre:'Conteo final'};
 function pisoShell(inner){return `<div class="pshell"><header class="phd"><button class="plg lgb" data-go="piso" aria-label="PROPESA · ir al inicio" title="Ir al inicio">${LOGOD}</button><b class="ptit">${PTIT[V.v]||''}</b><span class="sp"></span>${V.v!='piso'?`<button class="pbtn s ph1" data-go="piso">${IC.inicio} Inicio</button>`:''}${setBtn(true)}${me.role=='admin'?`<button class="iosrow on dk" role="switch" aria-checked="true" data-mode="full"><span class="iostx"><b>Modo piso</b><small>Encendido</small></span><span class="iossw" aria-hidden="true"><i></i></span></button>`:''}${avatarBtn(true)}</header><main id="main" tabindex="-1">${inner}</main></div>`}
 
-function switchMode(on){const run=()=>{setPiso(on);if(on)PEN=null;go(on?'piso':'inicio')};const root=document.documentElement;
+function switchMode(on){const run=()=>{setPiso(on);go(on?'piso':'inicio')};const root=document.documentElement;
  if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches){root.classList.add('mswap');const t=document.startViewTransition(run);t.finished.finally(()=>root.classList.remove('mswap'))}else run()}
 document.addEventListener('click',e=>{const x=e.target.closest('[data-mode]');if(!x)return;const on=x.dataset.mode=='piso';x.setAttribute('aria-checked',String(on));x.classList.toggle('on',on);
  const sm=x.querySelector('small');if(sm&&x.classList.contains('dk'))sm.textContent=on?'Encendido':'Apagado';setTimeout(()=>switchMode(on),260)});
@@ -963,7 +1401,7 @@ function pmenuHTML(){return `<div class="pmscrim" data-pmclose="1"></div><div cl
  <div class="pmsep"></div>
  ${me.role=='admin'?`<button role="menuitem" class="pmi" data-pm="users">${IC.admin}<span>Administración</span><small>Usuarios, permisos, correos y respaldo</small></button>
  <div class="pmsep"></div>`:''}
- <button role="menuitem" class="pmi out" data-pm="logout">${IC.logout}<span>Cerrar sesión</span></button><p class="pmver">Versión 1.0.0</p></div>`}
+ <button role="menuitem" class="pmi out" data-pm="logout">${IC.logout}<span>Cerrar sesión</span></button><p class="pmver">Versión 1.3.0</p></div>`}
 function placePmenu(){const c=document.getElementById('pmenu'),b=PMRET&&PMRET.isConnected?PMRET:document.querySelector('[data-avatar]'),m=c&&c.querySelector('.pmbox');if(!m||!b)return;
  const r=b.getBoundingClientRect(),W=document.documentElement.clientWidth;m.style.top=Math.round(r.bottom+8)+'px';m.style.right=Math.max(8,Math.round(W-r.right))+'px'}
 function openPmenu(btn){PMRET=btn;PMOPEN=true;const c=document.getElementById('pmenu');c.hidden=false;c.innerHTML=pmenuHTML();placePmenu();syncAv();const f=c.querySelector('[role=menuitem]');if(f)f.focus({preventScroll:true})}
@@ -982,13 +1420,36 @@ document.addEventListener('keydown',e=>{if(!PMOPEN)return;const its=[...document
 window.addEventListener('resize',()=>{if(PMOPEN)placePmenu()});
 
 /* ---------- NÚCLEO ---------- */
+/* Nombre de la sección actual en la barra de arriba del celular (el menú lateral está escondido ahí). Mismo ícono y nombre que en el menú. */
+function hdTitle(steps,s){const x=s?steps.find(z=>z[1]==s):null,O={inicio:['inicio','Panel'],temperatura:['temperatura','Temperatura'],admin:['admin','Administración'],buscar:['','Buscar']}[V.v],
+ ic=x?IC[x[0]]:O&&O[0]?IC[O[0]]:'',t=x?x[2]:O?O[1]:'';if(!t)return'';
+ return `<div class="hdt"><span class="hdti" aria-hidden="true">${ic}</span><span class="hdtt"><b>${t}</b></span></div>`}
 const PG={piso:pisoHome,pemp:pisoEmp,pent:pisoEnt,inicio,recepcion,lote,empaque,empacar,embarques,emb:i=>emb(+i),ordenes,orden:i=>orden(+i),cierre,temperatura,admin,buscar},STEP={recepcion:1,lote:1,ordenes:2,orden:2,empaque:3,empacar:3,embarques:4,emb:4,cierre:5};
-function render(){RX={};try{render0()}finally{RX=null}}
+function render(){RX={};try{render0()}finally{RX=null}uiSoon()}
+/* --- Recargar sin perder nada: la sesión, la pantalla y lo que se estaba escribiendo sobreviven al refresh.
+   propesa-ses = {u: id del usuario, exp}: dura SES_H horas desde el último uso. propesa-ui = pantalla + borradores.
+   Al cerrar sesión (me=null) se borran las dos. Las fotos de una nota sin guardar NO se conservan (pesan demasiado). --- */
+const SES_KEY='propesa-ses',UI_KEY='propesa-ui',SES_H=12;let UI_T=null,UI_REST=false,LAST_ACT=Date.now(); /* LAST_ACT = último toque o tecla: la sesión vence SES_H horas después */
+const uiKey=el=>{if(el.id)return '#'+CSS.escape(el.id);const a=[...el.attributes].filter(x=>x.name.startsWith('data-'));if(!a.length)return null;return el.tagName.toLowerCase()+a.map(x=>`[${x.name}="${CSS.escape(x.value)}"]`).join('')};
+const uiSkip=el=>el.type=='file'||el.type=='password'||el.id=='sq'||el.disabled;
+function uiFields(){const o={};document.querySelectorAll('#app input,#app select,#app textarea').forEach(el=>{if(uiSkip(el))return;const k=uiKey(el);if(!k)return;o[k]=el.type=='checkbox'||el.type=='radio'?{c:el.checked}:el.value});return o}
+function uiSave(){try{if(!me){localStorage.removeItem(SES_KEY);localStorage.removeItem(UI_KEY);return}
+  localStorage.setItem(SES_KEY,JSON.stringify({u:me.id,exp:LAST_ACT+SES_H*36e5}));
+  const m=document.querySelector('main');localStorage.setItem(UI_KEY,JSON.stringify({u:me.id,V,form,uf,PKD,PE,PEN:PEN&&{...PEN,busy:false},OD,OA,HIST,KPT,ND:ND&&{key:ND.key,text:ND.text,ref:ND.ref,imgs:[]},sc:m?m.scrollTop:0,f:uiFields()}))}catch(e){}}
+function uiSoon(){if(UI_REST)return;clearTimeout(UI_T);UI_T=setTimeout(uiSave,150)}
+function uiRestore(){try{const s=JSON.parse(localStorage.getItem(SES_KEY)||'null');if(!s||!(s.exp>Date.now())){localStorage.removeItem(SES_KEY);localStorage.removeItem(UI_KEY);return false}
+  const u=(ST.U||[]).find(x=>x.id===s.u);if(!u)return false;me=u;LAST_ACT=s.exp-SES_H*36e5;const ui=JSON.parse(localStorage.getItem(UI_KEY)||'null');if(!ui||ui.u!==u.id||!ui.V||!PG[ui.V.v]){V={v:PISO?'piso':'inicio',id:null};return false}
+  V={v:ui.V.v,id:ui.V.id==null?null:String(ui.V.id)};form=ui.form||null;uf=ui.uf||null;if(ui.PKD)PKD=ui.PKD;if(ui.PE)PE=ui.PE;PEN=ui.PEN||null;if(ui.OD)OD=ui.OD;OA=ui.OA||{};HIST=ui.HIST||{};ND=ui.ND||null;if(ui.KPT&&typeof ui.KPT.k=='string')KPT=ui.KPT;
+  UI_REST=true;try{render();const f=ui.f||{};for(const k in f){let el;try{el=document.querySelector('#app '+k)}catch(z){continue}if(!el||uiSkip(el))continue;const v=f[k];if(v&&typeof v=='object')el.checked=!!v.c;else if(el.value!==v)el.value=v}
+   const m=document.querySelector('main');if(m&&ui.sc)m.scrollTop=ui.sc;kpSync()}finally{UI_REST=false}uiSoon();return true}catch(e){}return false}
+const uiAct=()=>{LAST_ACT=Date.now();uiSoon()};['input','change','click','keydown'].forEach(t=>document.addEventListener(t,uiAct));
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden'){clearTimeout(UI_T);uiSave()}});
+window.addEventListener('pagehide',()=>{clearTimeout(UI_T);uiSave()});
 function render0(){const A=document.getElementById('app');if(ST.U&&ST.U.some(u=>u.pw!=null))migrateUsers();if(!me){A.innerHTML=ST.U&&ST.U.length?loginView():setupView();return}if(!ST.M)seedM();if(!ST.OR)seedOR();if(!ST.ORc)cleanOrders();if(!ST.PK)migratePK();
  if(V.v=='admin'&&me.role!='admin')V={v:'inicio'};const o=document.querySelector('main'),sc=o?o.scrollTop:0,s=STEP[V.v]||0,T=orderedAll(),PA=packedAll();
  const steps=[['recepcion',1,'Entrada',`${ST.R.length} lotes`],['ordenes',2,'Órdenes',ST.OR.length?`${ST.OR.length} ${ST.OR.length==1?'orden':'órdenes'}`:'Sin órdenes'],['empaque',3,'Empaque',T?`${PA}/${T} cajas`:'Sin cajas pedidas',T>PA],['embarques',4,'Embarque',`${ST.P.filter(p=>p.closed).length}/${ST.P.length} cerrados`,ST.P.some(p=>!p.closed)],['cierre',5,'Mortalidad final',`${ST.R.filter(r=>r.closed).length}/${ST.R.length} lotes`,false]];
- if(PISO)A.innerHTML=pisoShell(topBanners()+PG[V.v](V.id));else A.innerHTML=`<div class="shell"><a class="skip" href="#main">Saltar al contenido</a><aside class="sb" aria-label="Menú principal"><button class="lt lgb" data-go="inicio" aria-label="PROPESA · ir al inicio" title="Ir al inicio">${LOGOD}</button><h4>Operación</h4><button class="iosrow" role="switch" aria-checked="false" data-mode="piso"><span class="iosic">${IC.cajas}</span><span class="iostx"><b>Modo piso</b><small>Botones grandes</small></span><span class="iossw" aria-hidden="true"><i></i></span></button><button class="fs ${V.v=='inicio'?'on':''}" data-go="inicio" ${V.v=='inicio'?'aria-current="page"':''}><i>${IC.inicio}</i><span><b>Panel</b><small>Siguiente paso</small></span></button>${steps.map(([k,n,t,sub,pn])=>`<button class="fs ${s==n?'on':''}${pn?' pn':''}" data-go="${k}" ${s==n?'aria-current="page"':''}><i>${IC[k]}<em>${n}</em></i><span><b>${t}</b><small>${pn?'⚠ ':''}${sub}</small></span></button>`).join('')}<span class="sp"></span><h4>Sistema</h4><button class="fs sm ${V.v=='temperatura'?'on':''}" data-go="temperatura" ${V.v=='temperatura'?'aria-current="page"':''}><i>${IC.temperatura}</i><span><b>Temperatura</b></span></button>${me.role=='admin'?`<button class="fs sm ${V.v=='admin'?'on':''}" data-go="admin" ${V.v=='admin'?'aria-current="page"':''}><i>${IC.admin}</i><span><b>Administración</b></span></button>`:''}<div style="height:12px"></div></aside><div class="scr" data-sb="0"></div><div class="ct"><header class="hd"><button class="mb" data-sb="1" aria-label="Menú">☰</button><input id="sq" type="search" placeholder="Buscar lote o envío" aria-label="Buscar"><div class="usr">${setBtn(false)}${avatarBtn(false)}</div></header><main id="main" tabindex="-1">${topBanners()}${PG[V.v](V.id)}</main></div></div>`;
- document.querySelector('main').scrollTop=sc;if(V.v=='empacar'||V.v=='pemp')pkCnt();const q=document.getElementById('sq');if(q&&V.v=='buscar')q.value=V.id||''}
+ if(PISO)A.innerHTML=pisoShell(topBanners()+PG[V.v](V.id));else A.innerHTML=`<div class="shell"><a class="skip" href="#main">Saltar al contenido</a><aside class="sb" aria-label="Menú principal"><button class="lt lgb" data-go="inicio" aria-label="PROPESA · ir al inicio" title="Ir al inicio">${LOGOD}</button><h4>Operación</h4><button class="iosrow" role="switch" aria-checked="false" data-mode="piso"><span class="iosic">${IC.cajas}</span><span class="iostx"><b>Modo piso</b><small>Botones grandes</small></span><span class="iossw" aria-hidden="true"><i></i></span></button><button class="fs ${V.v=='inicio'?'on':''}" data-go="inicio" ${V.v=='inicio'?'aria-current="page"':''}><i>${IC.inicio}</i><span><b>Panel</b><small>Siguiente paso</small></span></button>${steps.map(([k,n,t,sub,pn])=>`<button class="fs ${s==n?'on':''}${pn?' pn':''}" data-go="${k}" ${s==n?'aria-current="page"':''}><i>${IC[k]}<em>${n}</em></i><span><b>${t}</b><small>${pn?'⚠ ':''}${sub}</small></span></button>`).join('')}<span class="sp"></span><h4>Sistema</h4><button class="fs sm ${V.v=='temperatura'?'on':''}" data-go="temperatura" ${V.v=='temperatura'?'aria-current="page"':''}><i>${IC.temperatura}</i><span><b>Temperatura</b></span></button>${me.role=='admin'?`<button class="fs sm ${V.v=='admin'?'on':''}" data-go="admin" ${V.v=='admin'?'aria-current="page"':''}><i>${IC.admin}</i><span><b>Administración</b></span></button>`:''}<div style="height:12px"></div></aside><div class="scr" data-sb="0"></div><div class="ct"><header class="hd"><button class="mb" data-sb="1" aria-label="Menú">☰</button>${hdTitle(steps,s)}<input id="sq" type="search" placeholder="Buscar lote o envío" aria-label="Buscar"><div class="usr">${setBtn(false)}${avatarBtn(false)}</div></header><main id="main" tabindex="-1">${topBanners()}${PG[V.v](V.id)}</main></div></div>`;
+ document.querySelector('main').scrollTop=sc;if(V.v=='empacar'||V.v=='pemp'){pkCnt();pkAnim();kpSync()}const q=document.getElementById('sq');if(q&&V.v=='buscar')q.value=V.id||''}
 function go(s){const[v,...r]=s.split(':');if(v!==V.v)HIST={};V={v,id:r.join(':')};ND=null;evc=null;msg='';form=null;conf=null;uf=null;render();document.querySelector('main').scrollTop=0}
 const g=i=>document.getElementById(i).value;
 function mv(){const ty=g('ty'),s=g('sz'),k=+g('kg'),l=V.id;if(!(k>0))return fail('Ingresa una cantidad mayor a 0.','kg');
@@ -1039,5 +1500,5 @@ document.addEventListener('change',e=>{const t=e.target,d=t.dataset||{};
  if(d.k&&d.j!=null){ST.P[+V.id].c[+d.j][+d.k]=Math.max(0,+t.value||0);save();return render()}
  if(d.alive!=null){const i=+d.alive,n=sent(i);ST.P[i].alive=t.value===''?null:Math.min(n,Math.max(0,Math.floor(+t.value)||0));save();return render()}
  if(d.fin!=null){const r=R_(d.fin),v=t.value===''?null:+t.value;if(v!=null&&(v<0||Math.round(v*1000)>bal(r.lot))){toast(`El conteo final no puede ser mayor al esperado (${f(bal(r.lot))} kg).`);render();const q=document.querySelector(`[data-fin="${d.fin}"]`);if(q){q.value=t.value;q.setAttribute('aria-invalid','true');q.focus({preventScroll:true})}return}r.final=v;save();return render()}});
-render();
+if(!uiRestore())render();
 </script></body></html>
