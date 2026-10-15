@@ -1,5 +1,5 @@
 """Prueba PROPESA (correcciones_t). Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/correcciones_t.py"""
-import json,datetime,hashlib
+import json,datetime
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
 BASE=os.environ.get('BASE','http://localhost:8765/index.html')
@@ -16,20 +16,12 @@ with sync_playwright() as p:
     ctx=b.new_context(timezone_id='America/Tijuana',accept_downloads=True);pg=ctx.new_page();pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('dialog',lambda d:d.accept())
     pg.clock.set_fixed_time(datetime.datetime(2026,10,12,19,30,tzinfo=datetime.timezone(datetime.timedelta(hours=-7))))
     pg.goto(BASE);pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s)}',seed);pg.reload()
-    # sha256 correctness
-    for t in ['','abc','propesa:1:admin123','ñandú'*40]:
-        chk(pg.evaluate('s=>sha256(s)',t)==hashlib.sha256(t.encode()).hexdigest(),f'sha256 matches ({len(t)} chars)')
-    st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
-    chk(all('pw' not in u and len(u.get('pwh',''))==64 for u in st['U']),'#2 no plain passwords stored')
+    # #2 (v1.4.1): la app ya no maneja contraseñas; en la base compartida las revisa Supabase. El modo local (solo pruebas) entra con el correo.
+    chk(pg.evaluate("typeof sha256=='undefined'&&typeof pwHash=='undefined'&&typeof PWD0=='undefined'"),'#2 sin código de contraseñas en la app')
     chk('admin123' not in pg.inner_text('body') and pg.locator('[data-q]').count()==0,'#2 login screen has no demo buttons/passwords')
-    pg.fill('#le','admin@propesa.mx');pg.fill('#lp','mala');pg.click('[data-a=lg]');chk('incorrectos' in pg.inner_text('#lm'),'#2 wrong password rejected')
-    pg.fill('#le','ADMIN@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]');chk(pg.locator('.sb').count()==1,'#2 correct password works (email case-insensitive)')
-    chk('contraseña de prueba' in pg.inner_text('#app').lower(),'#2 default-password banner shown')
-    pg.click("button:has-text('Cambiar contraseñas')");chk(pg.evaluate('V.v')=='admin','#2 banner goes to admin')
-    pg.click('[data-eu="2"]');pg.fill('#up','piso123');pg.click('[data-a=su]');chk('prueba' in pg.inner_text('#app'),'#2 rejects demo password as new one')
-    pg.fill('#up','Ens3nada!');pg.click('[data-a=su]');chk(not pg.evaluate("ST.U.find(u=>u.id==2).dflt"),'#2 password changed, flag cleared')
-    pg.locator('[data-avatar]:visible').first.click();pg.click('[data-pm=logout]');pg.fill('#le','piso@propesa.mx');pg.fill('#lp','Ens3nada!');pg.click('[data-a=lg]');chk(pg.locator('.pt.p1').count()==1,'#2 piso logs in with new password')
-    pg.locator('[data-avatar]:visible').first.click();pg.click('[data-pm=logout]');pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
+    pg.fill('#le','nadie@propesa.mx');pg.fill('#lp','x');pg.click('[data-a=lg]');chk('incorrectos' in pg.inner_text('#lm'),'#2 unknown email rejected')
+    pg.fill('#le','ADMIN@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]');chk(pg.locator('.sb').count()==1,'#2 login works (email case-insensitive)')
+    chk('contraseña de prueba' not in pg.inner_text('#app').lower(),'#2 sin aviso de contraseña de prueba')
     # 3 dates at 19:30 local
     pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');chk(pg.input_value('#fd')=='2026-10-12','#3 reception date local: '+pg.input_value('#fd'))
     pg.evaluate("go('ordenes')");chk(pg.input_value('#no_etd')=='2026-10-13','#3 ETD tomorrow: '+pg.input_value('#no_etd'))
@@ -53,8 +45,8 @@ with sync_playwright() as p:
     chk(pg.evaluate("ST.R[0].tank")=='T1' and pg.evaluate("(ST.M['emp:1.1']||[{imgs:[]}])[0].imgs.length")==1,'#4 invalid fields sanitized')
     bad=json.loads(seed);bad['U']=[u for u in bad['U'] if u['role']!='admin'];open(T+'bad2.json','w').write(json.dumps(bad));nR=pg.evaluate('ST.R.length')
     pg.evaluate("go('admin')");pg.set_input_files('[data-bk=up]',T+'bad2.json');pg.wait_for_timeout(200);chk('Administrador' in pg.inner_text('#toast'),'#4 backup without admin rejected')
-    # old backup with plain passwords still restores and gets hashed
-    pg.evaluate("go('admin')");pg.set_input_files('[data-bk=up]',T+'backup.json');pg.wait_for_timeout(300);chk(pg.evaluate("ST.U.every(u=>!('pw' in u)&&u.pwh)"),'#4 old backup restores, passwords hashed')
+    # old backup with plain passwords still restores; passwords are dropped
+    pg.evaluate("go('admin')");pg.set_input_files('[data-bk=up]',T+'backup.json');pg.wait_for_timeout(300);chk(pg.evaluate("ST.U.length>0&&ST.U.every(u=>!('pw' in u)&&!('pwh' in u))"),'#4 old backup restores without passwords')
     # 1 storage full
     pg.evaluate("(()=>{let n=0;for(const sz of [1<<20,1<<16,1<<12,256,16]){const s='x'.repeat(sz);while(true){try{localStorage.setItem('pad'+(n++),s)}catch(e){break}}}})()")
     pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fl','PRUEBA');pg.fill('#fo','X');pg.fill('#fk0','10');pg.click('[data-a=sv]');pg.wait_for_timeout(100)

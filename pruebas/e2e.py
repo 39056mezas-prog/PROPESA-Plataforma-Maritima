@@ -1,6 +1,6 @@
 """Flujo completo: entrada → órdenes → empaque → embarque → cierre. Uso: python3 -I pruebas/e2e.py"""
 import json,sys,os
-FIX="localStorage.clear();localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:[{id:1,name:'Ana Torres',email:'admin@propesa.mx',pw:'admin123',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',pw:'piso123',role:'piso',notify:true},{id:3,name:'Dirección',email:'consulta@propesa.mx',pw:'ver123',role:'consulta',notify:false}]}))"  # usuarios SOLO para pruebas
+FIX="localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:[{id:1,name:'Ana Torres',email:'admin@propesa.mx',pw:'admin123',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',pw:'piso123',role:'piso',notify:true},{id:3,name:'Dirección',email:'consulta@propesa.mx',pw:'ver123',role:'consulta',notify:false}]}))"  # usuarios SOLO para pruebas
 
 BASE=os.environ.get('BASE','http://localhost:8765/index.html');OUT=os.environ.get('OUT','/tmp/propesa-pruebas');os.makedirs(OUT,exist_ok=True)
 from playwright.sync_api import sync_playwright
@@ -23,13 +23,15 @@ with sync_playwright() as p:
     chk('WLRCO051026A' in pg.inner_text('#app'),'lote guardado')
     # icons
     ic=pg.evaluate("[...document.querySelectorAll('.sb .fs')].map(b=>[b.dataset.go,b.querySelector('svg').outerHTML])")
-    d=dict(ic);chk(d['embarques']==d['recepcion'],'icono embarque == recepcion')
+    d=dict(ic);chk(d['embarques']!=d['recepcion'] and 'currentColor' in d['recepcion'] and 'M256 384' in d['recepcion'],'Entrada lleva la langosta (blanca) y Embarque el camión')
     # orders
     def mk(etd):
         pg.click('.sb [data-go=ordenes]');pg.fill('#no_etd',etd);pg.click('[data-oa=new]')
     def addline(cli,n,city='PVG'):
         pg.select_option('#ol_city',city);pg.fill('#ol_cli',cli);pg.fill('#ol_n',str(n));pg.click('[data-oa=ln]')
     mk('2026-10-12');addline('HXH',3)
+    tx=pg.inner_text('#app');chk('3 cajas · 48 kg neto · 58.8 kg bruto' in tx and '19.6 kg brutos por caja' in tx,'orden: peso bruto 19.6 kg por caja, sin decimales de más')
+    chk(abs(pg.evaluate("ST.P[0].exp")-58.8)<1e-9,'el embarque espera el mismo peso bruto que la orden (58.8 kg)')
     mk('2026-10-13');addline('ZSM',2)
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     chk(len(st['P'])==2,'2 embarques antes de unir: %d'%len(st['P']))

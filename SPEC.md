@@ -98,7 +98,7 @@ propesa-plataforma/
   index.html        → toda la app (CSS en <style>, JS en <script>)
   SPEC.md           → esta especificación
   README.md         → uso y despliegue
-  supabase/         → esquema preparado (no aplicado)
+  supabase/         → base compartida (ver docs/SUPABASE.md)
   pruebas/          → pruebas Playwright (se agrega en esta función)
 ```
 

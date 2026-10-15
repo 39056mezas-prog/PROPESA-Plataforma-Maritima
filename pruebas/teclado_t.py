@@ -28,7 +28,7 @@ with sync_playwright() as p:
     for vw,scheme in [((1180,820),'light'),((820,1180),'dark'),((390,844),'light')]:
         w=vw[0];pg=start(b,vw,'piso@propesa.mx','piso123','pemp:3.1',scheme)
         pg.click('[data-pe="lot:WLRCO061026B"]')
-        chk(pg.locator('#kpad').count()==1 and inview(pg,'#kpad [data-kp="k:B"]'),f'{w} piso: teclado en pantalla con las categorías a la vista')
+        chk(pg.locator('#kpad').count()==1 and inview(pg,'#kpad [data-kp="k:A"]'),f'{w} piso: teclado en pantalla con las categorías a la vista')
         chk(pg.get_attribute('.ppc[data-slot="1"]','inputmode')=='none',f'{w} piso: el teclado de la tablet no aparece (inputmode none)')
         chk(pg.evaluate('KPT.t')=='slot:1' and pg.locator('#pps1.kpon').count()==1 and 'Caja 1' in pg.inner_text('#kpt'),f'{w} piso: empieza en la caja 1, resaltada')
         kp(pg,'123');chk(disp(pg)=='123' and pg.input_value('.ppc[data-slot="1"]')=='123',f'{w} piso: los números van a la caja y al recuadro')
@@ -41,11 +41,12 @@ with sync_playwright() as p:
         chk(pg.evaluate('KPT.t')=='slot:2' and pg.locator('#pps2.kpon').count()==1 and disp(pg)=='—',f'{w} piso: pasa sola a la caja 2')
         kp(pg,'11');cat(pg,'V');kp(pg,'8');cat(pg,'B')
         chk(boxes(pg)==[(1,9,'R'),(2,11,'V'),(3,8,'B')] and pg.evaluate('KPT.t')=='slot:4',f'{w} piso: tres cajas seguidas sin tocar la pantalla de las cajas')
+        chk(pg.locator('#kpad [data-kp="k:A"]').inner_text().strip()=='Amarillo',f'{w} piso: cuarta categoría Amarillo (1221-UP)')
         # corregir la caja 2: tocarla, escribir (reemplaza) y categoría
         pg.click('#pps2 .pbn');chk('Corrigiendo' in pg.inner_text('#kps') and disp(pg)=='11',f'{w} piso: al tocar una caja guardada el teclado la corrige')
         chk(pg.locator('#kpad [data-kp="k:V"][aria-pressed=true]').count()==1,f'{w} piso: marca la categoría que ya tenía')
         kp(pg,'7');chk(disp(pg)=='7',f'{w} piso: el primer número reemplaza el valor anterior')
-        cat(pg,'R');chk((2,7,'R') in boxes(pg) and len(boxes(pg))==3,f'{w} piso: corrección guardada sin crear otra caja {boxes(pg)}')
+        cat(pg,'A');chk((2,7,'A') in boxes(pg) and len(boxes(pg))==3,f'{w} piso: corrección guardada como Amarillo sin crear otra caja {boxes(pg)}')
         chk(pg.evaluate('KPT.t')=='slot:4',f'{w} piso: después de corregir vuelve a la siguiente vacía')
         # categoría primero, luego piezas, luego «Siguiente caja»
         cat(pg,'V');chk(len(boxes(pg))==3 and pg.locator('#pps4.ip').count()==1,f'{w} piso: solo categoría no guarda (queda en captura)')
@@ -66,7 +67,7 @@ with sync_playwright() as p:
         pg=start(b,vw,'piso@propesa.mx','piso123','pemp:3.1',fs=20);pg.click('[data-pe="lot:WLRCO061026B"]')
         ov=pg.evaluate("document.documentElement.scrollWidth-document.documentElement.clientWidth")
         cut=pg.evaluate("[...document.querySelectorAll('#kpad button')].filter(b=>b.scrollWidth>b.clientWidth+1).map(b=>b.textContent)")
-        chk(ov==0 and not cut and inview(pg,'#kpad [data-kp="k:B"]'),f'{vw[0]} piso letra 20 px: sin desborde ni botones cortados {cut}');pg.screenshot(path=T+f'tec_piso20_{vw[0]}.png');pg.close()
+        chk(ov==0 and not cut and inview(pg,'#kpad [data-kp="k:A"]'),f'{vw[0]} piso letra 20 px: sin desborde ni botones cortados {cut}');pg.screenshot(path=T+f'tec_piso20_{vw[0]}.png');pg.close()
     # ---------- iPad simulado (pantalla táctil, sin mouse) ----------
     ctx=b.new_context(viewport={'width':820,'height':1180},has_touch=True,is_mobile=True,device_scale_factor=2)
     pg=ctx.new_page();pg.on('pageerror',lambda e:errs.append(str(e)))
@@ -87,8 +88,9 @@ with sync_playwright() as p:
     for vw,scheme in [((1440,900),'light'),((1180,820),'dark'),((820,1180),'light'),((390,844),'light')]:
         w=vw[0];pg=start(b,vw,'admin@propesa.mx','admin123','empacar:3.1',scheme)
         pg.click('[data-pk="lot:WLRCO061026B"]')
-        chk(pg.locator('#kpad').count()==1 and inview(pg,'#kpad [data-kp="k:B"]') and inview(pg,'[data-pk=addall]'),f'{w} completa: teclado y «Guardar cajas» a la vista')
+        chk(pg.locator('#kpad').count()==1 and inview(pg,'#kpad [data-kp="k:A"]') and inview(pg,'[data-pk=addall]'),f'{w} completa: teclado y «Guardar cajas» a la vista')
         chk(pg.evaluate('KPT.t')=='row:0' and pg.locator('#pkr0.kpon').count()==1,f'{w} completa: empieza en la primera fila')
+        chk(pg.locator('.pklots .pklb').count()>1 and pg.locator('#app .pkrow select').count()==0 and pg.locator('#app .pkrow .pklv').count()==0,f'{w} completa: hay varios lotes y ninguna caja nueva pide ni repite el lote')
         kp(pg,'10');cat(pg,'R');chk(pg.evaluate('KPT.t')=='row:1' and pg.evaluate("PKD.rows[0].k")=='R' and pg.input_value('#pk_c0')=='10',f'{w} completa: categoría marca la fila y pasa a la siguiente')
         chk(pg.locator('#pkr0 [data-pk="k:0:R"][aria-pressed=true]').count()==1,f'{w} completa: el segmentado de la fila también se marca')
         kp(pg,'12');cat(pg,'V');chk(len(boxes(pg))==0,f'{w} completa: no guarda hasta «Guardar cajas»')
@@ -100,7 +102,16 @@ with sync_playwright() as p:
         pg.click(f'#pkd{seq} .pked');chk(pg.evaluate('KPT.t')=='ed' and disp(pg)=='12' and 'Corrigiendo' in pg.inner_text('#kps'),f'{w} completa: tocar una caja guardada la abre en el teclado')
         kp(pg,'13');cat(pg,'B');chk((13,'B') in [(c,k) for _,c,k in boxes(pg)] and len(boxes(pg))==2,f'{w} completa: categoría guarda la corrección {boxes(pg)}')
         chk(pg.locator('#pk_e').count()==0 and pg.evaluate('KPT.t')=='row:0',f'{w} completa: después de corregir vuelve a la primera vacía')
+        chk(len([1 for x in pg.evaluate("ST.B['WLRCO061026B']") if x['o']=='3.1'])==2,f'{w} completa: las cajas se guardaron en el lote elegido arriba')
+        otro=pg.get_attribute('.pklb[aria-pressed=false] >> nth=0','data-pk');pg.click(f'[data-pk="{otro}"]')
+        kp(pg,'9');cat(pg,'A');pg.click('[data-pk=addall]');ol=otro.split(':',1)[1]
+        chk(any(x['o']=='3.1' and x['c']==9 and x['k']=='A' for x in pg.evaluate(f"ST.B[{json.dumps(ol)}]")),f'{w} completa: al cambiar el lote arriba, la siguiente caja va a ese lote ({ol})')
         pg.screenshot(path=T+f'tec_full_{w}.png')
+        # abrir y cerrar el teclado: abierto, las filas no repiten las categorías; cerrado, cada fila trae las suyas
+        chk(pg.evaluate("[...document.querySelectorAll('#app .pkrow .seg button')].filter(b=>b.offsetParent&&b.getAttribute('aria-pressed')!='true').length")==0,f'{w} completa: con el teclado abierto las filas no repiten las categorías')
+        pg.click('[data-kpo="0"]');chk(pg.locator('#kpad').count()==0 and pg.evaluate("[...document.querySelectorAll('#app .pkrow .seg button')].filter(b=>b.offsetParent).length")>=4 and pg.get_attribute('#pk_c0','inputmode')=='numeric',f'{w} completa: «Cerrar teclado» lo quita, cada fila trae sus categorías y el teclado de la tablet')
+        chk(pg.evaluate("localStorage.getItem('propesa-kp')")=='0' and pg.locator('[data-kpo="1"]').count()==1,f'{w} completa: se recuerda cerrado y aparece «Abrir teclado»')
+        pg.click('[data-kpo="1"]');chk(pg.locator('#kpad').count()==1,f'{w} completa: «Abrir teclado» lo regresa')
         ov=pg.evaluate("document.documentElement.scrollWidth-document.documentElement.clientWidth");chk(ov==0,f'{w} completa: sin desborde')
         pg.close()
     # consulta: sin teclado

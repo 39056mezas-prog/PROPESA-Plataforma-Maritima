@@ -19,7 +19,7 @@ def fill(pg):  # ancho de la barra delgada de avance ÷ ancho del riel (espera a
 def btnw(pg):return pg.evaluate("(()=>{const b=document.querySelector('.pkgo');return b?b.getBoundingClientRect().width:null})()")
 def overlap(pg,a,b):return pg.evaluate("([a,b])=>{const x=document.querySelector(a),y=document.querySelector(b);if(!x||!y)return false;const p=x.getBoundingClientRect(),q=y.getBoundingClientRect();return !(p.right<=q.left||q.right<=p.left||p.bottom<=q.top||q.bottom<=p.top)}",[a,b])
 def login(pg,u,pw):
-    pg.goto(BASE);pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s)}',S);pg.reload()
+    pg.goto(BASE);pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-kp","0")}',S);pg.reload()  # filas con sus botones de categoría (teclado cerrado)
     pg.fill('#le',u);pg.fill('#lp',pw);pg.click('[data-a=lg]');pg.evaluate("syncShip(ST.OR[2],'HKG',0);save()")
 with sync_playwright() as p:
     b=p.chromium.launch()
@@ -37,6 +37,11 @@ with sync_playwright() as p:
         sw=pg.evaluate("[...document.querySelectorAll('#pkr0 .seg .chip')].map(e=>Math.round(e.getBoundingClientRect().width))");chk(len(set(sw))==1 and min(sw)>=60,tag+' Rojo/Verde/Blanco del mismo tamaño '+str(sw))
         sh=pg.evaluate("Math.min(...[...document.querySelectorAll('#pkr0 .seg .chip')].map(e=>e.getBoundingClientRect().height))");chk(sh>=44,tag+f' categoría con objetivo táctil ≥44 px ({sh:.0f})')
         chk(pg.locator('.pklb[aria-pressed=true]').count()==1,tag+' un lote marcado arriba')
+        if pg.locator('.pklb').count()>1:  # v1.5: con cajas escritas, cambiar de pestaña de lote avisa y no las lleva al otro lote
+            lot0=pg.evaluate("PKD.lot");pg.fill('#pk_c0','7')
+            pg.click('.pklb[aria-pressed=false] >> nth=0');pg.wait_for_timeout(100)
+            chk(pg.evaluate("PKD.lot")==lot0 and 'Primero guarda' in pg.inner_text('#toast'),tag+' cajas sin guardar: no cambia de lote y avisa')
+            pg.fill('#pk_c0','')
         chk(pg.locator('.pkx .chip.ok').count()==0,tag+' sin pastillas verdes de estado')
         # elegir categoría sola: «En captura», NO completada
         pg.click('[data-pk="k:0:R"]')

@@ -30,8 +30,8 @@ Además: **Panel** (`inicio`), **Temperatura** (`temperatura`), **Administració
 |---|---|
 | **Lote** | Una entrada de producto. Código tipo `WLRCO170926` = `WLR` (langosta roja) + proveedor (`CO` Cooperativa/SCPP Ensenada, `EM` Emancipación, `LE` Leyes de Reforma) + fecha `ddmmyy`. *Inferido de los PDFs; confirmar.* |
 | **Tallas (g)** | 491-610, 611-850, 851-1220, 1221-UP. En papel también: 0-650, 651-850, 851-1250, 1251-UP. Interno: `S`, etiquetas `SL`. |
-| **Caja / hielera** | Se tratan como lo mismo. Una caja = **16 kg netos** (`KGN`) y **20 kg brutos** (`KGB`) en la orden. |
-| **Categoría** | Rojo / Verde / Blanco por caja (`RC`). |
+| **Caja / hielera** | Se tratan como lo mismo. Una caja = **16 kg netos** (`KGN`) y **19.6 kg brutos** (`KGB` = 1.4 hielera + 1.5 gel + 16 producto + 0.7 caja de cartón), igual en la orden y en el embarque. |
+| **Categoría** | La **talla** de la caja, por color (`RC`): Blanco 491-610 · Rojo 611-850 · Verde 851-1220 · Amarillo 1221-UP (v1.5.0). |
 | **Consignatario** | A quién se factura en destino. Lista oficial de 7 (`CONS`). |
 | **Cliente final** | Código de 3 letras: HXH, ZSM, LHD, RSK, HSF, HYG, HJX, ZYX, LMD, MXH (`CLI0`). Una orden a PVG se reparte entre varios. |
 | **Consignación / embarque** | Grupo orden(es) + ciudad + consignatario. Nombre tipo `PVG · YISHUNHAI · 12/10 + 13/10`. |
@@ -58,7 +58,7 @@ Direcciones, contactos y USCI completos: `index.html` (`CONS`) y `docs/referenci
 - **Existencia por lote** = suma de movimientos (`L`, en gramos). La entrada crea un movimiento `RECEPCION` por talla. La salida a embarque es un movimiento manual en la página del lote. **Empacar una caja NO descuenta kilos** (pregunta abierta).
 - **Kg total de entrada** = suma de las 4 tallas (solo lectura). **Desperdicio** es informativo; no resta existencia.
 - **Lote:** fecha, proveedor y lote obligatorios; el lote no se repite; al menos una talla con kilos. ID interno `R-0121` con contador que solo crece (`ST.RN`).
-- **Orden:** neto = cajas × 16 kg; bruto = cajas × 20 kg. Una línea no admite más cajas empacadas que las pedidas. No se elimina una línea con cajas. No se agregan líneas a un destino cuyo embarque está cerrado.
+- **Orden:** neto = cajas × 16 kg; bruto = cajas × 19.6 kg. Una línea no admite más cajas empacadas que las pedidas. No se elimina una línea con cajas. No se agregan líneas a un destino cuyo embarque está cerrado.
 - **Consignación:** una por (orden + ciudad + consignatario); varias órdenes pueden unirse en un embarque («Unir», «Agregar otra orden», «Separar»). Hieleras = suma de cajas de sus órdenes. Peso bruto = hieleras × (1.4 hielera + 1.5 gel + 16 producto + 0.7 cartón) = **19.6 kg/hielera**.
 - **Plan de carga:** 10 celdas (2 × 5) de 15/20/20/25/25 hieleras = **210** por camión; se llena desde la cabina; avisa si se excede. Solo cuenta embarques abiertos.
 - **Alertas de embarque (rojo):** peso bruto ≠ formato; tallas ≠ hieleras (también con tallas en 0); cajas sin cantidad o categoría; sin cajas empacadas. Cada una con «Resolver ›».

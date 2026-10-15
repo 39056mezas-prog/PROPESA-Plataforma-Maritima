@@ -5,7 +5,7 @@
 | Cosa | Cómo |
 |---|---|
 | Archivos | **Un solo `index.html`** (~205 KB, ~1,040 líneas): HTML + CSS + JS vanilla. Sin dependencias, sin build, sin npm. |
-| Datos | En el navegador (`localStorage`, clave `propesa-v4`). Funciona sin internet. |
+| Datos | **Base compartida en Supabase** (v1.4.0): todos los equipos ven lo mismo. Copia en el navegador (`propesa-c1`) para trabajar sin internet. Modo local de pruebas: `propesa-v4`. |
 | Despliegue | GitHub → Vercel (Framework *Other*, sin build, se sirve la raíz). `vercel.json` pone cabeceras de seguridad y caché. |
 | PWA ligera | `manifest.webmanifest` + íconos para «Agregar a pantalla de inicio». Sin service worker todavía. |
 | Copia suelta | `PROPESA_Plataforma_maritima.html` = el mismo `index.html`. |
@@ -36,7 +36,7 @@ STEP = { recepcion:1, lote:1, ordenes:2, orden:2, empaque:3, empacar:3, embarque
 | Ruta | Parámetro | Pantalla |
 |---|---|---|
 | `inicio` | — | Panel |
-| `recepcion` · `lote:<lote>` | código de lote | Entrada · detalle de lote |
+| `recepcion` · `lote:<lote>` | código de lote | Entrada (arriba, tablero de tanques `tanques()`) · detalle de lote |
 | `ordenes` · `orden:<id>` | id de orden | Órdenes · detalle |
 | `empaque` · `empacar:<orden>.<línea>` | `3.2` | Empaque · empacar un cliente |
 | `embarques` · `emb:<i>` | índice en `ST.P` | Embarque · consignación |
@@ -88,7 +88,7 @@ Antes de agregar un `data-*` nuevo, busca que no exista ya con otro significado.
 | Temperatura | `temperatura`, `saveTemp` |
 | Panel / búsqueda | `inicio`, `nxt` (siguiente paso), `buscar` |
 | Fotos y notas | `evid`, `evDraft`, `shrink` (reduce fotos) |
-| Usuarios | `setupView`, `setupSave`, `loginView`, `saveU`, `admin`, `sha256`, `pwHash`, `migrateUsers`, `can` |
+| Usuarios | `setupView`, `setupSave`, `loginView`, `saveU`, `admin`, `can` (sin contraseñas en la app desde la v1.4.1) |
 | Respaldo | `cleanST` (limpia y valida un respaldo antes de usarlo) |
 | PDF | `PdfRep` (escritor propio), `pdfEntrada`, `pdfOrdenes`, `pdfEmpaque`, `pdfEmbarque`, `pdfEmbarques`, `pdfMort`, `pdfMake`, `pdfSave`, `pdfMail`, `pdfBar` |
 | Teclado de Empaque | `kpPad(mode)`, `kpSync` (después de cada dibujo de Empaque), `kpEl`/`kpOf` (caja activa ↔ campo), `kpList`, `kpFirst` (primera vacía), `kpType`, `kpCatPress`, `kpNav`, `kpLeave` (guarda al cambiar de caja si ya estaba lista), `kpGo`, `kpReveal` (deja la caja a la vista sin quedar detrás del teclado), `catLbl`, `peCv`. Estado `KPT = {k: ruta, t: 'slot:N' / 'row:R' / 'ed', fresh, sig}` (también se guarda en `propesa-ui`) |
@@ -120,12 +120,17 @@ Escritor propio `PdfRep` (sin librerías): Helvetica con codificación WinAnsi y
 
 | Clave | Contenido |
 |---|---|
-| `propesa-v4` | `ST` completo |
+| `propesa-c1` | Copia de `ST` de la base compartida (v1.4.0) |
+| `propesa-c1-since` | Último número de cambio (`rev`) ya aplicado |
+| `propesa-out` | Cola de cambios por subir (`{clave: JSON o 'null'}`) |
+| `propesa-outb` | Cómo estaba cada registro de la cola en la base antes del primer cambio (`{clave: JSON o null}`); sin clave = sube sin revisar (cola de la v1.4.0) |
+| `propesa-sb` | Sesión de Supabase: `{at, rt, exp, uid}` |
+| `propesa-v4` | `ST` del modo local de pruebas; en tablets viejas, sus datos de antes (no se mezclan) |
 | `propesa-theme` | `light` / `dark` / sin valor (sigue al equipo) |
 | `propesa-fs` | Tamaño de texto (15, 17 o 20) |
 | `propesa-piso` | Preferencia de Modo piso del equipo |
 | `propesa-z` | Tamaño viejo (solo se lee para migrar) |
-| `propesa-ses` | Sesión abierta: `{u: id del usuario, exp}`. Vence 12 h (`SES_H`) después del último toque o tecla (`LAST_ACT`). Se borra al cerrar sesión |
+| `propesa-ses` | Sesión abierta: `{u: id del usuario, exp}` (en la base compartida, además debe existir `propesa-sb` del mismo usuario). Vence 12 h (`SES_H`) después del último toque o tecla (`LAST_ACT`). Se borra al cerrar sesión |
 | `propesa-ui` | Dónde estaba y lo que se estaba escribiendo: `V`, `form`, `uf`, `PKD`, `PE`, `PEN`, `OD`, `OA`, `HIST`, `ND` (sin fotos), scroll de `main` y `f` = valor de cada campo de `#app` (clave = `#id` o etiqueta + atributos `data-*`). Se borra al cerrar sesión |
 
 **Recargar sin perder nada (v1.2.5):** `render()` termina con `uiSoon()` (guardado de `propesa-ui` 150 ms después); también se guarda con cada `input`/`change`/`click`/`keydown` y de inmediato en `pagehide` y `visibilitychange`. Al arrancar, `uiRestore()` revisa la sesión, recupera `me` y el estado, dibuja una vez y vuelve a poner los valores de los campos (sin disparar eventos). Si la ruta guardada ya no existe, el usuario se borró o la sesión venció, se queda en el inicio o en el acceso. Los campos de contraseña, archivos y el buscador no se guardan.
@@ -141,7 +146,28 @@ propesa-plataforma/
 ├── docs/                   ← contexto del proyecto (este archivo y los demás)
 │   └── referencias/        ← formatos en papel y documentos del usuario
 ├── pruebas/                ← pruebas automáticas (Playwright/Python) y datos de prueba
-├── supabase/schema.sql     ← esquema preparado, NO aplicado
+├── supabase/               ← schema.sql (primer esquema), migrations/ (lo aplicado el 14/oct) y functions/usuarios
 ├── vercel.json · manifest.webmanifest · íconos
 └── .claude/settings.json   ← activa el plugin agent-skills en Claude Code
 ```
+
+## 11. Base compartida (v1.4.0)
+
+Todo el código está en el bloque «Base compartida (Supabase)» de `index.html`, antes de `ST=load()`.
+
+| Pieza | Qué hace |
+|---|---|
+| `LOCAL` / `CLOUD` | Modo local solo en `localhost` con `?modo=local` (o `window.PROPESA_LOCAL`), para las pruebas. Todo lo demás usa la base. `window.PROPESA_SB = {url, key}` cambia el servidor (lo usan las pruebas con el Supabase de mentira) |
+| `SBC` | URL del proyecto y llave **publicable** (puede ir en el código; la seguridad la dan las reglas RLS) |
+| `WN`, `encodeST`, `decodeST` | `ST` ⇄ registros. Cajas con caché por lote (`ENC_C`) para que guardar sea rápido |
+| `SHW` | Lo último que se sabe de cada registro (texto + objeto) |
+| `syncStage()` | Compara `encodeST()` con `SHW` y anota lo cambiado en `OUT` (`propesa-out`) y, la primera vez, cómo estaba en `OUTB`. Con Consulta no anota nada: vuelve a bajar todo para regresar a lo de la base. Lo llama `save()` |
+| `flush()` | Sube `OUT` en tandas a `rpc/push` (≤ 500 registros / 1.5 MB). Lo que choca (otro equipo lo cambió antes) se aplica desde la base con `applyRows()` y avisa. Si la base no tiene `push` (404), sube como antes. Consulta nunca sube ni vacía la cola |
+| `syncNow()` | Sube (`flush`) y baja (`pull`). Si la base rechaza lo que se sube, igual baja lo de los demás y después muestra el error (v1.4.1). `wp()` quita el carácter nulo, que la base no acepta |
+| `pull()` / `applyRows()` | Baja `rpc/pull` desde `propesa-c1-since` (de 1000 en 1000). Solo avanza el número hasta lo que tiene más de 8 s (por si otro equipo estaba guardando). Lo pendiente en `OUT` gana. Rearma `ST`, conserva el embarque abierto (`emb:<i>` por su `u`) y corrige la ruta si algo se borró (`fixRoute`) |
+| `syncNow`, `syncLoop`, `syncSoon` | Cada 4 s (30 s en segundo plano), al volver el internet y al regresar a la app; `save()` sube a los 250 ms. Perfiles cada 60 s |
+| `softRender()` | Redibuja por cambios de otros sin borrar lo escrito (conserva los campos cambiados por el usuario); si hay un campo con el cursor, espera a que salga |
+| `cacheSoon` / `cacheST` | Copia en el equipo agrupada cada 1.5 s (y al salir de la app); guarda `ST` y `since` juntos |
+| `syncBanners()` | «Descargando los datos compartidos…», «Sin conexión…» (rojo si hay pendientes) |
+| Acceso | `sbAuth`, `sbToken` (renueva el token solo), `sbFetch`, `cloudLogin`, `cloudSetup`, `checkSetup` (`rpc/has_admin`), `signOut`, `dropSes` |
+| Usuarios | `loadProfiles()` llena `ST.U`; `fnUsers(action)` llama a la función `usuarios` (`create`, `update`, `delete`, `setup`) |

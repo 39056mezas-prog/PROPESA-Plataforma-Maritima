@@ -1,5 +1,73 @@
 # Cambios
 
+## 1.5.0 · 14 de octubre de 2026
+
+### Corregido (auditoría `/ponytail-audit`)
+- **Seguridad:** los números que llegan de la base compartida (temperaturas, kg por caja, desperdicio, conteo final, vivas, peso de componentes) ahora solo aceptan números. Antes aceptaban texto, y una cuenta de piso podía esconder código en una «temperatura» que corría en la pantalla del Administrador (sobre todo en el tablero de tanques, que es lo primero de Entrada). Se revisó con la base de prueba.
+- **Panel:** la tarjeta «En tanques» ya no suma los lotes cerrados; cuenta solo lo que sigue en tanque, igual que el tablero de tanques. Antes crecía para siempre.
+- **Empaque:** si cambias de pestaña de lote con cajas escritas sin guardar, ya no se van al otro lote: la app avisa «Primero guarda las cajas del lote …, luego cambia de lote».
+
+### Cambiado (decisiones del cliente)
+- **Peso bruto 19.6 kg por caja en todos lados** (hielera 1.4 + gel 1.5 + producto 16 + caja de cartón 0.7). La orden usaba 20 kg; ahora dice lo mismo que el embarque. Ejemplo: 3 cajas = 58.8 kg bruto.
+- **La categoría de la caja es su talla**, con los colores de talla: Blanco 491-610, Rojo 611-850, Verde 851-1220 y **Amarillo 1221-UP (nuevo)**. Amarillo aparece en el teclado de Empaque, en «Poner a todas las vacías», en el embarque, en el packing list y en el PDF.
+- **Empaque: el lote ya no aparece en cada caja.** Se escoge una vez en **pestañas por lote** arriba de las cajas (como las pestañas de Chrome); en tablet y computadora se quedan a la vista al bajar. Para corregir el lote de una caja guardada, se toca la caja y se cambia junto a «Actualizar caja».
+- **La barra de arriba dice dónde estás**, también en tablet y computadora (antes solo en celular). En Empaque agrega el cliente y el lote: «Empaque · LHD · Lote WLRCO051026A».
+- **Tablero de tanques en Entrada, como el plano del piso.** Arriba de la tabla, un mapa con los tanques donde están en la planta: T1 a T4 a la derecha (de arriba abajo), T6 a la altura de T3 y T5 a la altura de T4 a la izquierda; arriba a la izquierda, el total en tanques y los colores de talla. Cada tanque muestra sus kg, una barra con los colores de talla, cuántos lotes tiene y la temperatura del agua. Al tocar un tanque, abajo sale su detalle: kg de cada talla, sus lotes (proveedor y días en tanque; al tocar uno se abre) y la última temperatura de agua, superficie y producto (al tocarla lleva a Temperatura). Los tanques sin lotes dicen «Vacío». Cuenta los lotes abiertos con existencia; un lote cerrado ya no aparece. Con la base compartida se actualiza solo cuando otro equipo captura algo («● En vivo»). No muestra qué tan lleno está cada tanque porque falta la capacidad.
+- **Ícono de Entrada = una langosta** (la misma del ícono de la app, en blanco) en el menú, la barra de arriba y el Modo piso. Embarque se queda con el camión.
+- Teclado de Empaque: en tablet horizontal y computadora las 4 categorías van en 2×2, más grandes para tocar con guantes.
+- **Empaque (vista completa): las cajas son tarjetas como en Modo piso** (Caja N, número grande, «piezas», categoría y estado; las completadas con ✓ verde).
+- **El teclado se abre y se cierra.** Abierto es la herramienta principal: las tarjetas ya no repiten los botones de categoría, solo muestran la que elegiste. La **X** redonda en la esquina del teclado lo cierra: cada tarjeta trae sus 4 botones de talla y se escribe con el teclado de la tablet. Un **botón flotante con el dibujo de un teclado numérico** (encima de «Guardar cajas», a la derecha) lo vuelve a abrir. Cada equipo recuerda cómo lo dejaste.
+
+### Pruebas
+- `e2e.py` (peso bruto), `teclado_t.py` (Amarillo, 4 botones a la vista, sin lote en las filas), `titulo_t.py` (título en todos los tamaños, cliente y lote en Empaque), abrir y cerrar el teclado, `tanques_t.py` (nueva: tablero de tanques) y 3 verificaciones «en vivo» en `sincronizacion_t.py`. 20 grupos, 1101 verificaciones, TODO BIEN.
+
+## 1.4.1 · 14 de octubre de 2026
+
+### Corregido (base compartida)
+- **Un equipo que estuvo sin internet ya no deshace lo que guardó otro.** Antes, si piso capturaba algo de un embarque o un lote sin internet y mientras tanto el Administrador lo cerraba, al volver la conexión el embarque o el lote se reabría en todos los equipos. Ahora, si otro equipo cambió lo mismo antes, se queda lo de la base y el equipo que llegó tarde ve «No se guardó tu cambio: otro equipo lo cambió antes. Revisa y vuelve a capturarlo si hace falta.»
+- **Consulta ya no borra lo pendiente de otro usuario.** Si piso capturaba sin internet, cerraba sesión y luego entraba alguien de Consulta en esa tablet, lo pendiente se perdía. Ahora espera y se sube cuando vuelve a entrar un Administrador o Piso.
+
+- **Si la base rechaza lo que sube un equipo, ese equipo sigue recibiendo lo de los demás.** Antes se quedaba con datos viejos hasta borrar el navegador. Un texto con un carácter invisible «nulo» (por ejemplo, copiado de un PDF) ya no traba la subida: se limpia solo.
+
+### Corregido (auditoría completa con `/ponytail-audit`)
+- **Seguridad: una cuenta de piso ya no puede meter código en la pantalla de otro usuario.** Antes, alguien con la contraseña de piso podía guardar directo en la base un nombre de embarque con código escondido; al abrir Embarques, ese código corría en la pantalla del Administrador y se llevaba su sesión. Ahora todo lo que llega de la base se revisa igual que un respaldo.
+- **Fotos más ligeras:** se guardan a 800 px (antes 1280), así caben el doble en cada equipo antes de llenar su memoria. Se siguen viendo bien en la tablet.
+- **Aviso «Existencia negativa»** (solo Administrador): si dos equipos registran salidas del mismo lote al mismo tiempo y la existencia queda debajo de cero, aparece un aviso rojo con «Ver lote ›» para revertir la que sobra.
+- **La app ya no maneja contraseñas.** Las revisa solo Supabase. Se quitó el cálculo de huellas de contraseña, la lista de contraseñas fáciles y el aviso de «contraseña de prueba», que solo servían en el modo de pruebas. Los respaldos ya no llevan contraseñas.
+
+### Base de datos (ya aplicado en `propesa_bc`)
+- Función `public.push` (`20261014b_sin_pisar.sql`): guarda un cambio solo si nadie cambió ese registro antes.
+- **Historial** `app_records_hist` (`20261014c_historial.sql`): cada cambio o borrado guarda cómo estaba antes, para poder recuperarlo. Solo lo ve el Administrador. Cómo recuperar: `docs/SUPABASE.md` §7.
+- Función `usuarios` versión 2: se quitó un paso repetido al eliminar un usuario (la base ya borraba su perfil).
+- **Por aplicar:** `20261014d_quitar_tablas_viejas.sql` borra las 9 tablas vacías del primer esquema. Supabase pide confirmar los borrados.
+
+### Pruebas
+- `sincronizacion_t.py`: 27 verificaciones nuevas (76 en total). 19 grupos, 972 verificaciones, TODO BIEN.
+
+## 1.4.0 · 14 de octubre de 2026
+
+### Agregado: base compartida (Supabase)
+- **Todos los equipos y todas las cuentas ven la misma información.** Entradas, movimientos, órdenes, cajas, embarques, informes de cierre, temperatura, notas y fotos se guardan en la base compartida del proyecto `propesa_bc` de Supabase. Antes cada tablet tenía sus propios datos.
+- **Usuarios reales:** cada persona entra con su correo y contraseña de Supabase. El Administrador da de alta, cambia y elimina usuarios desde Administración, igual que antes (ahora quedan en la base y sirven en cualquier equipo). Si todavía no hay Administrador, la app muestra la Configuración inicial y lo crea en la base.
+- **Se actualiza solo:** cada pocos segundos la app trae lo que capturaron los demás. Si estás escribiendo en un campo, espera a que termines para no borrarte nada.
+- **Sin internet se sigue trabajando:** lo que captures se guarda en el equipo y se sube solo cuando regresa la conexión. Mientras tanto aparece el aviso rojo «Sin conexión: lo último que capturaste está guardado solo en este equipo» con «Reintentar ahora».
+- Al entrar por primera vez en un equipo aparece «Descargando los datos compartidos…» hasta que llega todo.
+
+### Cambiado
+- **Administración → Datos y respaldo:** dice cuándo fue la última actualización con la base y si hay cambios pendientes. «Restaurar respaldo» reemplaza los datos de **todos** los equipos (los usuarios no cambian). «Borrar todos los datos» borra en todos los equipos y conserva los usuarios.
+- **Datos viejos de cada tablet:** lo que cada equipo tenía antes **no se mezcla** con la base compartida. En Administración aparece «Datos viejos de este equipo» para descargarlos (y subirlos con «Restaurar respaldo» si hacen falta) o borrarlos.
+- La Configuración inicial ya no ofrece restaurar un respaldo (eso ahora se hace en Administración, ya con sesión).
+- Los números internos de cajas, movimientos, órdenes, notas y lecturas ya no son contadores de cada tablet (chocaban entre equipos). En la tabla de movimientos de un lote, la columna # ahora cuenta 1, 2, 3… dentro de ese lote.
+
+### Seguridad
+- Solo ve datos quien tiene perfil en la plataforma; una cuenta creada fuera de la app no ve nada. **Consulta** no puede escribir (lo bloquea la base, no solo la pantalla). Los perfiles solo los cambia el Administrador.
+- La CSP de `vercel.json` permite conectarse únicamente a `https://lktqwmfmdhusscudgflo.supabase.co`.
+
+### Pruebas
+- `pruebas/sincronizacion_t.py` (nueva, 49 verificaciones) con un Supabase de mentira (`pruebas/supabase_falso.py`) y hasta 6 navegadores a la vez: configuración inicial, acceso, entradas y órdenes simultáneas, empaque en un equipo y embarque en otro, notas, mismo orden de embarques, sin internet y de regreso, borrar, sesión vencida, consulta sin escritura, piso, alta de usuarios, equipo nuevo, borrar todo, restaurar respaldo, cerrar sesión, y que no haya escrituras de ida y vuelta.
+- Las pruebas de pantallas corren en modo local (`index.html?modo=local`, solo en `localhost`). 19 grupos, 953 verificaciones, TODO BIEN.
+- Con un año de datos y CPU 4× más lenta: guardar una caja ≈ 85 ms más el dibujo; recibir un cambio de otro equipo ≈ 80 ms.
+
 ## 1.3.0 · 13 de octubre de 2026
 
 ### Agregado

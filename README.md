@@ -1,4 +1,4 @@
-# PROPESA · Plataforma marítima · v1.0.0
+# PROPESA · Plataforma marítima · v1.5.0
 
 Sitio estático de una sola página (HTML + CSS + JavaScript, sin dependencias ni paso de compilación).
 Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, temperatura, y fotos y notas por sección.
@@ -10,7 +10,7 @@ Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, t
 | `index.html` | Toda la aplicación |
 | `manifest.webmanifest`, `favicon.svg`, `icon-*.png`, `apple-touch-icon.png` | Ícono (langosta) y opción "Agregar a pantalla de inicio" en tablet |
 | `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; y caché) |
-| `supabase/schema.sql` | Esquema preparado para la base compartida (todavía no conectado) |
+| `supabase/` | Base compartida: `migrations/` (lo que está aplicado en el proyecto `propesa_bc`), `functions/usuarios` (alta de usuarios) y `schema.sql` (primer esquema) |
 | `pruebas/` | Pruebas automáticas (ver «Pruebas») |
 | `CHANGELOG.md` | Cambios por versión |
 | `CLAUDE.md` · `AGENTS.md` | Instrucciones para asistentes de IA (empiezan aquí) |
@@ -26,9 +26,13 @@ python3 -m http.server 8080
 # abre http://localhost:8080
 ```
 
+## Base compartida
+
+Desde la v1.4.0 los datos viven en Supabase (proyecto `propesa_bc`): **todos los equipos y todas las cuentas ven lo mismo**, y cada equipo guarda una copia para seguir trabajando si se va el internet (lo sube solo al regresar). Detalle en `docs/SUPABASE.md`.
+
 ## Primer uso
 
-En un equipo nuevo la app abre **Configuración inicial**: se crea la cuenta del **Administrador** (nombre, correo y contraseña de mínimo 6 caracteres; las contraseñas muy fáciles se rechazan). Después, en **Administración**, el Administrador da de alta a los demás usuarios con su rol:
+Cada persona entra con el **correo y la contraseña** que le dio el Administrador. Si la base todavía no tiene Administrador, la app abre **Configuración inicial** para crearlo (nombre, correo y contraseña de mínimo 6 caracteres; las contraseñas muy fáciles se rechazan). Después, en **Administración**, el Administrador da de alta a los demás usuarios con su rol:
 
 | Rol | Puede |
 |---|---|
@@ -36,7 +40,7 @@ En un equipo nuevo la app abre **Configuración inicial**: se crea la cuenta del
 | Encargado de piso | Entra directo a Modo piso: empacar, registrar entradas, cerrar embarques, conteo final |
 | Consulta | Solo ver |
 
-Si ya tienes un respaldo `.json`, en esa misma pantalla puedes **Restaurar respaldo** y entrar con los usuarios que trae.
+Para cargar un respaldo `.json`: Administración → **Restaurar respaldo** (reemplaza los datos de todos los equipos; los usuarios no cambian).
 
 ## Subir a GitHub
 
@@ -65,7 +69,7 @@ También con la CLI: `npx vercel --prod` dentro de la carpeta.
 **Entrada → Órdenes → Empaque → Embarque → Mortalidad final**
 
 1. **Entrada:** se captura el formato de recepción (fecha, hora, proveedor, tanque, temperaturas, lote (se escribe en mayúsculas solo), kg por caja en tanque, kg por talla, kg total y kg de desperdicio). Aquí no se cuentan ni se numeran cajas.
-2. **Órdenes:** ciudad destino → consignatario (lista oficial, constante `CONS`) → cliente final → cajas. Se usan 16 kg netos y 20 kg brutos por caja (`KGN` y `KGB`).
+2. **Órdenes:** ciudad destino → consignatario (lista oficial, constante `CONS`) → cliente final → cajas. Se usan 16 kg netos y 19.6 kg brutos por caja (`KGN` y `KGB`; el bruto es la suma de hielera, gel, producto y caja).
 3. **Empaque:** las langostas se cuentan al empacar cada pedido. Aparece una fila por cada caja que falta (piezas vivas + categoría + lote) y se guardan todas a la vez; las filas en blanco no se guardan. Cada caja se numera sola. Aquí solo hay notas, sin fotos.
 4. **Embarque:** cada orden crea su embarque, pero varias órdenes con el mismo destino y consignatario se pueden juntar en uno solo (botón «Unir» en la orden, o «Agregar otra orden» en el embarque; «Separar» las divide). Las hieleras se suman, se revisan peso y tallas y se cierra el empaque.
 5. **Mortalidad final:** conteo final por lote y langostas vivas al llegar; el sistema calcula la pérdida.
@@ -96,10 +100,11 @@ Bitácora real de lecturas por tanque (agua, superficie y producto en °F, 20–
 
 ## Datos y respaldo
 
-- Los datos se guardan **en el navegador de cada equipo** (`localStorage`, clave `propesa-v4`) y la app funciona sin internet. No se comparten solos entre equipos.
-- Administración → *Datos y respaldo*: **descarga un respaldo `.json` cada día** y restáuralo en otro equipo cuando haga falta. Al restaurar, el archivo se revisa y limpia antes de usarse.
-- Administración → *Borrar los datos de este equipo*: pide escribir BORRAR y regresa a la Configuración inicial.
-- `supabase/schema.sql` es el esquema **preparado, no aplicado**, para la base compartida en la web. Ninguna cuenta está conectada todavía (ver `PROYECTO_PROPESA.md`, sección «Sincronización»).
+- Los datos se guardan en la **base compartida** (Supabase, proyecto `propesa_bc`): todos los equipos y cuentas ven lo mismo. Cada equipo guarda una copia y sigue funcionando sin internet; lo que se capture se sube solo cuando regresa la conexión.
+- Administración → *Datos y respaldo*: muestra la última actualización con la base y si hay cambios pendientes. **Descarga un respaldo `.json` de vez en cuando.** «Restaurar respaldo» reemplaza los datos de **todos** los equipos (el archivo se revisa y limpia antes; los usuarios no cambian).
+- Administración → *Borrar todos los datos*: pide escribir BORRAR y borra en todos los equipos; los usuarios se conservan.
+- Lo que cada tablet tenía antes de la v1.4.0 no se mezcla: Administración → *Datos viejos de este equipo* para descargarlo o borrarlo.
+- Para las pruebas existe un modo local (`http://localhost:8765/index.html?modo=local`) que no usa la base.
 
 ## Pruebas
 

@@ -13,14 +13,14 @@
 <style>
 :root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
 --brand-navy:#0B1D59;--brand-blue:#087DBA;--brand-cyan:#16A6D1;--ok:#1f7a4d;--okb:#1f7a4d;--okf:#fff;
---bg:#f2f4f6;--cd:#fff;--ink:#1c2733;--mut:#556575;--ln:#d9e0e6;--nav:#0B1D59;--ac:#087DBA;--fr:#0B1D59;--acf:#fff;--sand:#b8862b;--cor:#c23a26;--in:#eef1f4;--hl:#e1eff8;--R:#d93f45;--V:#2a9a63;--B:#c9d6de}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111827;--cd:#1C2638;--ink:#F1F5F9;--mut:#A9B7CA;--ln:#2D3B50;--ac:#087DBA;--fr:#16A6D1;--acf:#fff;--sand:#e6d3a3;--cor:#ff7a66;--in:#243249;--hl:#2D3B50;--B:#e8f1f5;--ok:#22C55E;--okb:#22C55E;--okf:#052e16}}
-:root[data-theme="dark"]{--bg:#111827;--cd:#1C2638;--ink:#F1F5F9;--mut:#A9B7CA;--ln:#2D3B50;--ac:#087DBA;--fr:#16A6D1;--acf:#fff;--sand:#e6d3a3;--cor:#ff7a66;--in:#243249;--hl:#2D3B50;--B:#e8f1f5;--ok:#22C55E;--okb:#22C55E;--okf:#052e16}
+--bg:#f2f4f6;--cd:#fff;--ink:#1c2733;--mut:#556575;--ln:#d9e0e6;--nav:#0B1D59;--ac:#087DBA;--fr:#0B1D59;--acf:#fff;--sand:#b8862b;--cor:#c23a26;--in:#eef1f4;--hl:#e1eff8;--R:#d93f45;--V:#2a9a63;--B:#c9d6de;--A:#F5C518}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111827;--cd:#1C2638;--ink:#F1F5F9;--mut:#A9B7CA;--ln:#2D3B50;--ac:#087DBA;--fr:#16A6D1;--acf:#fff;--sand:#e6d3a3;--cor:#ff7a66;--in:#243249;--hl:#2D3B50;--B:#e8f1f5;--A:#F5C518;--ok:#22C55E;--okb:#22C55E;--okf:#052e16}}
+:root[data-theme="dark"]{--bg:#111827;--cd:#1C2638;--ink:#F1F5F9;--mut:#A9B7CA;--ln:#2D3B50;--ac:#087DBA;--fr:#16A6D1;--acf:#fff;--sand:#e6d3a3;--cor:#ff7a66;--in:#243249;--hl:#2D3B50;--B:#e8f1f5;--A:#F5C518;--ok:#22C55E;--okb:#22C55E;--okf:#052e16}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
 body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:1rem/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
 #app{height:100%}
 .hd{background:#fff;color:#0a2147;display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap;border-bottom:3px solid #087DBA}.hd b{color:#0a2147}.hd .lnk.w{color:#0B1D59;border-color:#0B1D5955}.hd input{flex:1;min-width:150px;max-width:520px}
-.usr{display:flex;align-items:center;gap:10px;margin-left:auto}.hdt{display:none;align-items:center;gap:10px;min-width:0;flex:1 1 auto;color:var(--ink)}.hdti{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand-navy);color:#fff}.hdti svg{width:20px;height:20px}.hdtt{display:grid;min-width:0;line-height:1.2}.hdtt b{font-size:1.0667rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.usr .chip{background:var(--in);color:var(--ink)}
+.usr{display:flex;align-items:center;gap:10px;margin-left:auto}/* Dónde estás: en todos los tamaños, entre el buscador y Ajustes */.hdt{display:flex;order:1;align-items:center;gap:10px;min-width:0;flex:1 1 auto;color:var(--ink)}.hd .usr{order:2}.hdtt small{font-size:.8rem;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hdti{flex:none;display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--brand-navy);color:#fff}.hdti svg{width:20px;height:20px}.hdtt{display:grid;min-width:0;line-height:1.2}.hdtt b{font-size:1.0667rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.usr .chip{background:var(--in);color:var(--ink)}
 .shell{display:flex;height:100%}.ct{flex:1;min-width:0;display:flex;flex-direction:column}
 .sb{width:248px;flex:none;background:linear-gradient(180deg,#0B1D59,#07123a);color:#fff;display:flex;flex-direction:column;overflow-y:auto;z-index:20}
 .sb .lt{margin:18px 16px 10px;padding-bottom:14px;border-bottom:1px solid #ffffff33}.lg{display:block;width:100%;height:auto}.lg.o path{fill:#fff!important}.lg.o .wm{stroke:#fff!important}
@@ -141,7 +141,7 @@ a,.lnk{text-underline-offset:3px}
 .ctxi .cn{font-variant-numeric:tabular-nums}
 
 .chip[data-k]::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:var(--k);box-shadow:inset 0 0 0 1px #0003}
-.chip[data-k=R]{--k:var(--R)}.chip[data-k=V]{--k:var(--V)}.chip[data-k=B]{--k:var(--B)}
+.chip[data-k=R]{--k:var(--R)}.chip[data-k=V]{--k:var(--V)}.chip[data-k=B]{--k:var(--B)}.chip[data-k=A]{--k:var(--A)}
 .head h1{display:flex;align-items:center;gap:10px}.head h1 .cs{width:18px;height:18px;border-radius:5px}
 .gi{margin-right:.45em}
 .ctxi{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px 22px}.ctxi .cl{grid-area:1/1}.ctxi .cm{grid-area:1/2}.ctxi .ca{grid-area:1/3;margin-left:0}
@@ -160,11 +160,11 @@ button.chip.pk[aria-pressed=true]{background:var(--ac);color:var(--acf);border-c
 .pkx h2.h3{font-weight:600;margin-bottom:4px}
 .pkhelp{color:var(--mut);font-size:.9333rem;margin:0 0 14px;max-width:78ch}
 .pklh{font-size:.8667rem;font-weight:500;color:var(--mut);margin:0 0 6px}
-.pklots{display:flex;gap:8px;overflow-x:auto;padding:1px 1px 4px;margin:0 0 6px;scrollbar-width:thin}
-.pklb{flex:0 0 auto;display:grid;gap:1px;text-align:left;min-height:48px;padding:6px 14px;border:1px solid var(--ln);border-radius:10px;background:var(--cd);color:var(--ink);font:inherit;cursor:pointer;transition:border-color .15s,background-color .15s}
+.pklots{display:flex;gap:4px;overflow-x:auto;padding:6px 1px 0;margin:0 0 10px;scrollbar-width:thin;border-bottom:2px solid var(--brand-blue);background:var(--cd)}@media(min-width:761px){.pklots{position:sticky;top:0;z-index:3}}
+.pklb{flex:0 0 auto;display:grid;gap:1px;text-align:left;min-height:48px;padding:6px 16px;border:1px solid var(--ln);border-bottom:none;border-radius:12px 12px 0 0;background:var(--in);color:var(--ink);font:inherit;cursor:pointer;transition:border-color .15s,background-color .15s}
 .pklb b{font-weight:600;font-size:.9333rem}
 .pklb span{font-size:.8rem;color:var(--mut);font-variant-numeric:tabular-nums}
-.pklb[aria-pressed=true]{border-color:var(--pkac);background:color-mix(in srgb,var(--pkac) 7%,var(--cd));box-shadow:inset 0 -2px 0 var(--pkac)}
+.pklb[aria-pressed=true]{border-color:var(--brand-blue);background:var(--brand-blue);color:#fff;box-shadow:none}.pklb[aria-pressed=true] span{color:#ffffffd9}
 .pkx .pktw{margin-top:8px}
 .pkx .pkt{border-collapse:collapse;width:100%}
 .pkx .pkt th{font-size:.8rem;font-weight:500;color:var(--mut);white-space:nowrap;padding:6px 10px;border-bottom:1px solid var(--ln);background:none;text-align:left}
@@ -186,12 +186,12 @@ button.chip.pk[aria-pressed=true]{background:var(--ac);color:var(--acf);border-c
 .pkf:has(input[aria-invalid=true]){border-color:var(--alr);box-shadow:0 0 0 1px var(--alr)}
 .pkx .pkt select{min-height:44px;border-radius:8px;width:auto;max-width:15rem}
 .pkx .pkt select:focus{outline:2px solid var(--pkac);outline-offset:1px}.pkx .pkt .pkf input:is(.pkc,.pke):not(.vh):not([type=range]):not([type=file]):focus{outline:0;box-shadow:none}
-.pkx .seg{display:inline-grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;padding:2px;min-width:16.5rem;border:1px solid var(--ln);border-radius:10px;background:var(--in);flex-wrap:nowrap}
+.pkx .seg{display:inline-grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;padding:2px;min-width:22rem;border:1px solid var(--ln);border-radius:10px;background:var(--in);flex-wrap:nowrap}
 .pkx .seg .chip.pk{display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px;margin:0;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--mut);font-size:.9333rem;font-weight:500;white-space:nowrap;box-shadow:none;transition:background-color .15s,color .15s,box-shadow .15s}
 .pkx .seg .chip.pk[aria-pressed=true]{background:var(--pksel);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.14),inset 0 0 0 1.5px var(--pkac)}
 .pkx .seg .dot,.pkcv .dot{width:8px;height:8px;margin:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.28)}
 .pkcv{display:inline-flex;align-items:center;gap:7px;font-weight:500}
-.pklv{font-size:.9333rem}
+.pkell{display:flex;align-items:center;gap:8px;font-weight:600}.pkx.kpo .pkt .seg{background:none;border:0;padding:0}.pkx.kpo .pkt .seg button[aria-pressed=false]{display:none}.pkx.kpo .pkt td.pkcat:not(:has([aria-pressed=true])){display:none}.kpw.kpoff{grid-template-columns:minmax(0,1fr)}.kpw.kpoff .kpdock{position:sticky;top:auto;bottom:12px}.pkgos{display:flex;gap:8px;flex-wrap:wrap}.kpdock .kpad .kph{padding-right:34px}.kpclose{position:absolute;top:-16px;right:-12px;z-index:4;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;border:2px solid var(--ln);background:var(--cd);color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.18);cursor:pointer}.kpclose:hover{background:var(--in)}.kpclose:focus-visible,.kpfab:focus-visible{outline:3px solid var(--brand-cyan);outline-offset:2px}.kpfab{position:absolute;right:6px;bottom:calc(100% + 14px);z-index:5;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:0;background:var(--brand-blue);color:#fff;box-shadow:0 8px 24px rgba(8,125,186,.45),0 2px 6px rgba(0,0,0,.2);cursor:pointer}.kpfab:hover{filter:brightness(1.08)}@media (prefers-reduced-motion:no-preference){.kpfab{animation:kpfabin .2s ease-out}@keyframes kpfabin{from{transform:scale(.6);opacity:0}}}
 .pkvb{display:flex;align-items:center;justify-content:flex-end;gap:5px;width:var(--pkin);min-height:44px;padding:0 12px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--ink);font:inherit;cursor:pointer;text-align:right}
 .pkvb .pku{color:var(--mut);font-size:.9333rem;font-weight:500}.pkvb .pkch{align-self:center;margin-left:6px;color:var(--mut);font-size:1.4rem;line-height:1}
 .pkvb .pkv{font-size:max(16px,1.0667rem);font-weight:600}
@@ -235,12 +235,12 @@ main:has(#pkb){scroll-padding-bottom:calc(var(--pkbh,90px) + 12px)}
  .pkx .pkt td{display:block;padding:0;border:0;background:none!important;box-shadow:none!important}
  .pkx .pkt td.pkno{grid-column:1;grid-row:1}
  .pkx .pkt td.pkpz{grid-column:2;grid-row:1}
- .pkx .pkt td.pkcat,.pkx .pkt td.pklot{grid-column:1/-1}
+ .pkx .pkt td.pkcat{grid-column:1/-1}
  .pkx .pkt tr.is-done{grid-template-columns:minmax(0,1fr) auto auto;background:color-mix(in srgb,var(--pkok) 6%,transparent)}
  .pkx .pkt tr.is-done td.pkcat{grid-column:2;grid-row:1}
  .pkx .pkt tr.is-done td.pkpz{grid-column:3;grid-row:1}
- .pkx .pkt tr.is-done td.pklot{grid-column:1/-1;grid-row:2}
- .pkx .pkt tr.is-done .pklv{font-size:.8rem;color:var(--mut)}
+ 
+ 
  .pkx .pkvb{width:auto}
  .pkx .seg{display:grid;min-width:0;width:100%}
  .pkx .pkt select{max-width:100%;width:100%}
@@ -254,7 +254,7 @@ main:has(#pkb){scroll-padding-bottom:calc(var(--pkbh,90px) + 12px)}
  .pkx .pkt tr.is-done{grid-template-columns:minmax(0,1fr) auto}
  .pkx .pkt tr.is-done td.pkcat{grid-column:1;grid-row:2}
  .pkx .pkt tr.is-done td.pkpz{grid-column:2;grid-row:1/span 2}
- .pkx .pkt tr.is-done td.pklot{grid-row:3}
+ 
  .pkx .seg .chip.pk{padding:0 4px;gap:5px}
 }
 @media(max-width:640px){.pkx .pkgo{flex:1 1 100%}}
@@ -297,14 +297,14 @@ input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{b
 .pkb2{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}.kp{background:var(--cd);border:1px solid var(--ln);border-radius:20px;padding:16px}.kd2{text-align:center;padding:6px 0 12px}.kd2 b{display:block;font-size:4.2667rem;line-height:1.1;font-weight:800}
 .kg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.key{min-height:76px;border-radius:16px;border:1px solid var(--ln);background:var(--in);color:var(--ink);font:inherit;font-size:2.1333rem;font-weight:800;cursor:pointer}.key.fn{font-size:1.6rem;color:var(--mut)}.key:active{background:var(--hl)}
 .cats{display:flex;flex-direction:column;gap:12px}.cat{flex:1;min-height:110px;border-radius:20px;border:3px solid transparent;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.cat span{font-size:2.2667rem;font-weight:900;letter-spacing:.04em}.cat small{font-size:1rem;font-weight:600;opacity:.85}
-.cat.cR{background:#E5484D;color:#fff}.cat.cV{background:#2a9a63;color:#fff}.cat.cB{background:#fff;color:#1c2733;border-color:#cbd5e1}.cat:active{transform:scale(.98)}
+.cat.cR{background:#E5484D;color:#fff}.cat.cV{background:#2a9a63;color:#fff}.cat.cB{background:#fff;color:#1c2733;border-color:#cbd5e1}.cat.cA{background:#F5C518;color:#1c2733}.cat:active{transform:scale(.98)}
 .plast{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-radius:14px;background:var(--cd);border:1px solid var(--ln);font-weight:700;color:var(--ok)}
 .chipb{border:0;cursor:pointer;font:inherit;font-size:.8rem;font-weight:700;min-height:34px;padding:6px 12px}.chipb:hover{filter:brightness(1.1)}
 .pbxs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.pbx{display:grid;grid-template-columns:auto 1fr;gap:10px 12px;align-items:center;background:var(--cd);border:2px solid var(--ln);border-radius:18px;padding:14px}.pbn{font-size:1.3333rem;white-space:nowrap}
 .pbx input.pkc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pcat{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .pcat .chip.pk,.pall .chip.pk{min-height:58px;font-size:1.2rem;font-weight:800;justify-content:center;border:2px solid var(--ln);display:flex;align-items:center;gap:8px}.pall .chip.pk{min-height:46px;padding:6px 18px;font-size:1.0667rem}
-.pcR::before,.pcV::before,.pcB::before{content:"";width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1.5px #64748b}.pcR::before{background:#E5484D}.pcV::before{background:#2a9a63}.pcB::before{background:#fff}
-button.chip.pk.pcR[aria-pressed=true]{background:#E5484D;border-color:#E5484D;color:#fff}button.chip.pk.pcV[aria-pressed=true]{background:#2a9a63;border-color:#2a9a63;color:#fff}button.chip.pk.pcB[aria-pressed=true]{background:#fff;border-color:#1c2733;color:#1c2733}
+.pcR::before,.pcV::before,.pcB::before,.pcA::before{content:"";width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1.5px #64748b}.pcR::before{background:#E5484D}.pcV::before{background:#2a9a63}.pcB::before{background:#fff}.pcA::before{background:#F5C518}
+button.chip.pk.pcR[aria-pressed=true]{background:#E5484D;border-color:#E5484D;color:#fff}button.chip.pk.pcV[aria-pressed=true]{background:#2a9a63;border-color:#2a9a63;color:#fff}button.chip.pk.pcB[aria-pressed=true]{background:#fff;border-color:#1c2733;color:#1c2733}button.chip.pk.pcA[aria-pressed=true]{background:#F5C518;border-color:#F5C518;color:#1c2733}
 .pbx.sv{background:var(--in);border-color:var(--ln);position:relative;opacity:.62;transition:opacity .15s}.pbx.sv:focus-within,.pbx.sv:hover{opacity:1}.pbx.sv input.psc{background:#eef2f5;color:#334155}.pok{position:absolute;top:-10px;right:-10px;width:34px;height:34px;border-radius:50%;background:var(--okb);color:var(--okf);display:grid;place-items:center;font-weight:900;font-size:1.2rem;box-shadow:0 0 0 3px var(--bg)}
 .pbx input.psc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pbx input.ppc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pft{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-size:.9333rem;font-weight:700;color:var(--ok)}.pft .lnk{font-size:.9333rem}.pbx.sv{border-color:color-mix(in srgb,var(--okb) 60%,var(--ln))}.pbx.sv:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 30%,transparent)}.pbx.ip{border-color:var(--brand-cyan);background:color-mix(in srgb,var(--brand-cyan) 8%,var(--cd))}.pde{display:none;color:var(--fr)}.pbx.sv:focus-within .pde{display:inline}.pbx.sv:focus-within .pdc{display:none}.pkn2 .pks2{display:block;margin-top:6px}
 .pdone{display:flex;flex-direction:column;gap:6px;padding:16px 20px;border-radius:18px;background:var(--cd);border:2px solid var(--okb);margin-bottom:14px}.pdone b{font-size:1.6rem;color:var(--ok)}.pdone span{color:var(--mut)}.pdone .pbar{justify-content:flex-start}
@@ -398,7 +398,7 @@ tr.cur>td{background:color-mix(in srgb,var(--brand-cyan) 10%,var(--cd))}
 .alk{display:inline;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-underline-offset:3px}.alk span{display:inline-block;margin-left:6px;padding:2px 10px;border-radius:999px;background:var(--alr,#d50f1f);color:#fff;font-size:.8rem;font-weight:800;text-decoration:none}.alb li{margin:6px 0}
 .kpl{cursor:pointer;transition:transform .12s ease}.kpl:hover{filter:brightness(1.05)}.kpl:active{transform:scale(.98)}.kgo{margin-top:6px;font-size:.8667rem;font-weight:800;color:var(--alt,#c8001a)}
 .flash{animation:flash 1.4s ease}@keyframes flash{0%,40%{box-shadow:0 0 0 4px var(--brand-cyan)}100%{box-shadow:0 0 0 0 transparent}}
-.alb.tb{margin-bottom:14px}.wrap>.alb.tb:first-child{margin-top:0}
+.alb.tb{margin-bottom:14px}.syn{display:flex;flex-direction:column;gap:2px;background:var(--in);border:1px solid var(--ln);border-radius:14px;padding:10px 16px;color:var(--ink)}.syn span{color:var(--mut)}.wrap>.alb.tb:first-child{margin-top:0}
 .histb{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:10px 0 4px}
 /* --- Texto grande: que todo se acomode en vez de salirse --- */
 button.chip.chipb{white-space:normal!important;text-align:left;line-height:1.3;max-width:100%}
@@ -478,7 +478,7 @@ body:has(#kpad) #toast{top:calc(var(--pkmt,80px) + 10px);bottom:auto}
 .kpc{grid-area:c;display:grid;grid-template-columns:1fr;gap:8px}
 .kpc button{display:flex;align-items:center;justify-content:center;gap:8px;height:var(--kpk);min-height:48px;padding:0 8px;border-radius:14px;border:2px solid transparent;font:inherit;font-size:1.1rem;font-weight:800;cursor:pointer;touch-action:manipulation;white-space:nowrap}
 .kpc button::before{content:"";width:14px;height:14px;border-radius:50%;flex:none;background:#fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.25)}
-.kpc .kcR{background:#E5484D;color:#fff}.kpc .kcV{background:#2a9a63;color:#fff}.kpc .kcB{background:#fff;color:#0f172a;border-color:#94a3b8}
+.kpc .kcR{background:#E5484D;color:#fff}.kpc .kcV{background:#2a9a63;color:#fff}.kpc .kcB{background:#fff;color:#0f172a;border-color:#94a3b8}.kpc .kcA{background:#F5C518;color:#0f172a}
 .kpc button[aria-pressed=true]{box-shadow:0 0 0 3px var(--cd),0 0 0 6px var(--ink)}
 .kpc button[aria-pressed=true]::after{content:"✓";font-weight:900}
 .kpad button:disabled{opacity:.4;cursor:default}
@@ -489,15 +489,15 @@ body:has(#kpad) #toast{top:calc(var(--pkmt,80px) + 10px);bottom:auto}
 @container kpw (min-width:56rem){
  .kpw{grid-template-columns:minmax(0,1fr) minmax(20rem,26rem)}
  .kpad,.kpdock{position:sticky;top:12px;bottom:auto}
- .kpad{grid-template-columns:1fr;grid-template-areas:"h" "d" "k" "l" "c" "n";--kpk:max(48px,min(4.3rem,calc((100vh - 26rem) / 5)))}
- .kpc{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .kpad{grid-template-columns:1fr;grid-template-areas:"h" "d" "k" "l" "c" "n";--kpk:max(48px,min(4.3rem,calc((100vh - 26rem) / 6)))}
+ .kpc{grid-template-columns:repeat(2,minmax(0,1fr))} /* 4 tallas en 2×2: una fila más de teclas */
  .kpd{min-height:5.2rem}.kpv{font-size:3.2rem}
 }
 /* Vista completa: el teclado y «Guardar cajas» van juntos (a la derecha en pantallas anchas, abajo en las angostas) */
 .kpdock{position:sticky;bottom:10px;z-index:3;display:flex;flex-direction:column;gap:10px}
-.kpdock .kpad{position:static}
+.kpdock .kpad{position:relative}
 .pkx .kpdock .pkb{position:static;margin:0}
-@container kpw (min-width:56rem){.kpf .kpad{--kpk:max(48px,min(3.9rem,calc((100vh - 35rem) / 5)))}.kpf .kpd{min-height:4.4rem}.kpf .kpv{font-size:2.8rem}.pkx .kpdock .pkb{padding:8px 10px 8px 14px;gap:6px 12px}}
+@container kpw (min-width:56rem){.kpf .kpad{--kpk:max(48px,min(3.9rem,calc((100vh - 35rem) / 7)))}.kpf .kpd{min-height:4.4rem}.kpf .kpv{font-size:2.8rem}.pkx .kpdock .pkb{padding:8px 10px 8px 14px;gap:6px 12px}}
 /* Modo piso con teclado: tarjetas compactas */
 .kpp .pbxs{grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:10px}
 .kpp .pbx{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;gap:4px;min-height:8.2rem;padding:10px 12px;cursor:pointer;position:relative}
@@ -531,26 +531,84 @@ body:has(#kpad) #toast{top:calc(var(--pkmt,80px) + 10px);bottom:auto}
  .kpdt{display:block;position:absolute;left:12px;top:50%;transform:translateY(-50%);font-weight:700;color:#475569;font-size:.9333rem}
  .kpd{min-height:3.3rem;border-width:2px}.kpv{font-size:2.2rem}
  .kpk{gap:6px}.kpk button{font-size:1.5rem;border-radius:12px}
- .kpc{grid-template-rows:repeat(3,minmax(0,1fr));gap:6px;align-self:stretch}
+ .kpc{grid-template-rows:repeat(4,minmax(0,1fr));gap:6px;align-self:stretch}
  .kpc button{height:auto;font-size:1rem;flex-direction:column;gap:4px;border-radius:12px;white-space:normal;line-height:1.1}
  .kpc button[aria-pressed=true]::after{position:absolute;top:4px;right:6px;font-size:.9rem}
  .kpc button{position:relative}
  .kpn>button{padding:6px 4px;font-size:.8667rem}
 }
+
+/* Vista completa · v1.5: las cajas son tarjetas como en Modo piso (Caja N, número grande, categoría, estado).
+   Con el teclado abierto la tarjeta solo muestra la categoría elegida; cerrado, trae sus 4 botones de talla. */
+.pkx .pktw .pkt tbody{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:10px;border:0;border-radius:0;overflow:visible}
+.pkx .pktw .pkt tr{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;gap:6px;min-height:8.2rem;padding:10px 12px;border:2px solid var(--ln);border-radius:18px;background:var(--cd);position:relative;text-align:center;box-shadow:none}
+.pkx .pktw .pkt tr:last-child{border-bottom:2px solid var(--ln)}
+.pkx .pktw .pkt td{display:block;padding:0;text-align:center}
+.pkx .pktw .pkt td.pkno{display:contents}
+.pkx .pktw .pkt .pkcj{order:0;text-align:left;font-size:1rem;font-weight:700;color:var(--mut)}
+.pkx .pktw .pkt td.pkno>:not(.pkcj){order:3;align-self:center;font-size:.8rem}
+.pkx .pktw .pkt td.pkpz{order:1}.pkx .pktw .pkt td.pkcat{order:2}
+.pkx .pktw .pkt .pkf{width:100%;justify-content:center;padding:0;border:0;background:transparent;min-height:3rem}
+.pkx .pktw .pkt{display:block}.pkx .pktw .pkt thead{display:none}.pkx .pktw .pkt .pkf input:is(.pkc,.pke):not(.vh):not([type=range]):not([type=file]){text-align:center;font-size:1.9rem;font-weight:800;min-height:3rem;color:var(--ink)}.pkx:not(.kpo) .pktw .pkt .pkf input:is(.pkc,.pke):not(.vh):not([type=range]):not([type=file]){color:#0f172a}.pkx .seg .dot{flex:none}
+.pkx .pktw .pkt .pkf input::placeholder{color:#b6c0cc;opacity:1}
+.pkx .pktw .pkt .pkch{display:none}.pkx .pktw .pkt :is(.pkf,.pkvb){flex-direction:column;gap:0}.pkx .pktw .pkt .pku{font-size:.8rem;line-height:1.1;padding-bottom:4px}
+.pkx:not(.kpo) .pktw .pkt tbody{grid-template-columns:repeat(auto-fill,minmax(12rem,1fr))}.pkx:not(.kpo) .pktw .pkt .pkf{border:1.5px solid #8497b0;background:#fff;border-radius:10px}
+.pkx .pktw .pkt .pkvb{width:100%;justify-content:center;min-height:3rem;padding:0}
+.pkx .pktw .pkt .pkvb .pkv{font-size:1.9rem;font-weight:800;color:var(--mut)}
+.pkx .pktw .pkt .pkcv{justify-content:center;font-size:.9333rem}
+.pkx .pktw .pkt .seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-width:0;width:100%}
+.pkx.kpo .pktw .pkt .seg{display:flex;justify-content:center}
+.pkx .pktw .pkt tr.is-done{background:var(--in);border-color:color-mix(in srgb,var(--okb) 60%,var(--ln))}
+.pkx .pktw .pkt tr.is-done::after{content:"✓";position:absolute;top:-9px;right:-9px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--okb) 75%,#000);color:#fff;font-size:.8rem;font-weight:800}
+.pkx .pktw .pkt tr.is-prog{border-color:var(--brand-cyan)}
+.pkx .pktw .pkt tr.kpon{border-color:var(--brand-cyan);background:color-mix(in srgb,var(--brand-cyan) 9%,var(--cd));box-shadow:0 0 0 4px color-mix(in srgb,var(--brand-cyan) 28%,transparent)}
+.pkx .pktw .pkt tr.kpon .pkcj{color:var(--brand-cyan)}
+.pkx .pktw .pkt tr.kpon .pkf{box-shadow:none}
+.pkx .pktw .pkt tr.is-edit{border-color:var(--pkac);background:color-mix(in srgb,var(--pkac) 6%,var(--cd))}
+.pkx .pktw .pkt tr.pkear{grid-column:1/-1;min-height:0;padding:4px 0 0;border:0;background:none;text-align:left}
+.tqd{margin:0 0 14px}
+.tqmap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);grid-template-areas:"leg t1" "leg t2" "t6 t3" "t5 t4";gap:10px;padding:12px;margin:0 0 12px;border:2px dashed var(--ln);border-radius:18px;background:color-mix(in srgb,var(--in) 55%,transparent)}
+.tqleg{grid-area:leg;display:flex;flex-direction:column;gap:4px;padding:2px 4px;min-width:0}.tqleg h2{margin:0}.tqleg .chip{align-self:flex-start}
+.tqkey{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(6.5rem,1fr));gap:2px 10px;font-size:.8rem;color:var(--mut)}.tqkey li{display:flex;align-items:center;gap:6px;white-space:nowrap}.tqkey .szd,.tqsz .szd{width:12px;height:12px}
+.tqm{display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0;min-height:76px;padding:8px 12px;border:2px solid color-mix(in srgb,var(--brand-cyan) 55%,var(--ln));border-radius:14px;background:color-mix(in srgb,var(--brand-cyan) 10%,var(--cd));color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.tqm.tq0{background:var(--cd);border-color:var(--ln);border-style:dashed}
+.tqm[aria-pressed=true]{border-color:var(--brand-blue);border-style:solid;box-shadow:0 0 0 3px color-mix(in srgb,var(--brand-blue) 35%,transparent)}
+.tqm:focus-visible{outline:3px solid var(--brand-cyan);outline-offset:2px}
+.tqmh{display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-width:0}.tqmh b{font-size:1.0667rem}
+.tqmk{font-size:1.1333rem;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}.tq0 .tqmk{font-size:.8667rem;font-weight:600;color:var(--mut)}
+.tqmf{display:flex;justify-content:space-between;gap:6px;font-size:.8rem;color:var(--mut);white-space:nowrap}.tqmf:empty{display:none}
+.tqm .tqbar{height:10px}
+.tqc{display:flex;flex-direction:column;gap:10px;background:var(--cd);border:1px solid var(--ln);border-top:4px solid var(--brand-blue);border-radius:16px;padding:12px 14px;min-width:0}
+.tqh{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.tqh b{font-size:1.0667rem}
+.tqk{font-size:1.6rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}.tqv{color:var(--mut);font-weight:600}
+.tqbar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--in);box-shadow:inset 0 0 0 1px var(--ln)}.tqbar i{display:block;min-width:4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+.tqdet{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:12px 22px;align-items:start}
+.tqsz{list-style:none;margin:0;padding:0;display:grid;gap:3px;font-size:.8667rem}.tqsz li{display:flex;align-items:center;gap:6px;white-space:nowrap}.tqsz li b{margin-left:auto;font-variant-numeric:tabular-nums}
+.tql{display:flex;flex-direction:column;gap:6px}
+.tqlot{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-height:44px;padding:6px 10px;border:1px solid var(--ln);border-radius:10px;background:var(--in);color:var(--ink);font:inherit;text-align:left;cursor:pointer}.tqlot span{font-size:.8rem;color:var(--mut)}.tqlot:hover{border-color:var(--brand-cyan)}
+.tqtp{display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px 14px;min-height:44px;padding:0;border:0;background:none;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.tqtp span{display:flex;flex-direction:column;font-weight:700;font-variant-numeric:tabular-nums}.tqtp small{font-size:.7333rem;font-weight:500;color:var(--mut)}.tqtp em{font-style:normal;font-size:.8rem;color:var(--mut);flex-basis:100%}
 </style></head>
 <body><div id="app"></div><div id="setp" hidden></div><div id="pmenu" hidden></div><div id="toast" role="status"></div>
 <script>
 const S=['491-610','611-850','851-1220','1221-up'],PAL=['#1c7f9a','#b0793a','#5b6fd0','#2a9d8f','#9a5fb0','#3b87a6'];
-const RC={R:['Rojo','#e5484d'],V:['Verde','#30a46c'],B:['Blanco','#e8f1f5']},ROLE={admin:'Administrador',piso:'Encargado de piso',consulta:'Consulta'};
+/* Categoría de la caja = su talla, con los colores de talla (SZC): Blanco 491-610, Rojo 611-850, Verde 851-1220, Amarillo 1221-UP. */
+const RC={R:['Rojo','#e5484d'],V:['Verde','#30a46c'],B:['Blanco','#e8f1f5'],A:['Amarillo','#F5C518']},ROLE={admin:'Administrador',piso:'Encargado de piso',consulta:'Consulta'};
 const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const f=(m,d=2)=>(m/1000).toFixed(d),cj=m=>(m/16000).toFixed(1),now=()=>new Date().toLocaleString('es-MX',{dateStyle:'short',timeStyle:'short'});
 const TK=['T1','T2','T3','T4','T5','T6'];
 const LGP=[['M37 232C300 440 650 510 1000 497C1150 490 1260 455 1342 424L1272 411C900 480 500 450 195 323C140 290 80 262 37 232ZM195 323C450 380 750 385 1100 357C750 405 450 400 195 323Z','#0a2373'],['M1272 411L1250 400C1215 385 1205 370 1212 335C1218 315 1245 308 1290 288C1360 268 1430 262 1470 265C1480 270 1478 295 1470 330C1462 400 1450 470 1420 495C1395 525 1355 545 1327 555C1365 520 1390 495 1405 435C1415 380 1420 340 1420 302C1360 310 1305 325 1268 347C1258 355 1262 380 1270 388C1290 400 1320 412 1342 424Z','#0a2373'],['M160 405C450 600 900 620 1235 523C1000 565 700 570 480 535C330 505 230 465 160 405Z','#0583c3'],['M758 634C950 640 1150 600 1282 561C1250 590 1200 600 1100 618C1000 640 900 650 758 634Z','#0583c3']],LGW='M240 700Q255 700 266 704Q277 707 283 714Q289 720 291 727Q294 733 294 740Q294 749 291 758Q289 767 283 777Q278 787 270 794Q262 802 249 807Q236 812 221 812H173L159 875H120L160 700ZM220 782Q230 782 237 779Q245 776 248 771Q252 765 253 760Q255 754 255 749Q255 740 249 735Q242 730 232 730H192L180 782ZM411 865Q411 857 416 840Q421 822 421 819Q421 806 399 806H355L339 875H300L340 700H438Q451 700 460 703Q469 707 474 713Q479 719 481 725Q483 730 483 736Q483 746 479 754Q476 763 471 768Q467 774 460 779Q453 784 449 786Q445 788 439 790Q460 797 460 810Q460 818 456 837Q452 856 452 860Q452 865 456 869L455 875H414Q411 869 411 865ZM444 747Q444 730 416 730H372L362 775H409Q419 775 426 772Q434 769 437 765Q441 760 443 755Q444 751 444 747ZM612 697Q648 697 667 715Q687 733 687 766Q687 781 683 796Q679 812 669 827Q660 842 647 854Q634 866 616 873Q597 881 575 881Q540 881 520 862Q500 844 500 812Q500 798 505 782Q509 767 518 752Q527 736 540 724Q553 712 572 704Q591 697 612 697ZM581 850Q595 850 606 845Q617 840 624 833Q631 825 636 816Q641 807 644 798Q646 788 647 781Q649 775 649 770Q649 750 638 739Q627 728 607 728Q594 728 582 732Q571 737 564 745Q557 752 552 761Q547 770 544 779Q541 789 540 796Q539 802 539 807Q539 827 550 838Q562 850 581 850ZM820 700Q835 700 847 704Q858 707 863 714Q869 720 872 727Q874 733 874 740Q874 749 872 758Q869 767 864 777Q858 787 850 794Q842 802 829 807Q817 812 802 812H753L739 875H700L740 700ZM800 782Q810 782 817 779Q825 776 828 771Q832 765 834 760Q835 754 835 749Q835 740 829 735Q823 730 812 730H772L760 782ZM936 800 926 845H1028L1021 875H880L920 700H1057L1050 730H952L943 769H1033L1027 800ZM1078 762Q1078 734 1101 715Q1124 697 1161 697Q1192 697 1209 708Q1227 719 1227 738Q1227 744 1225 753H1188Q1189 749 1189 748Q1189 728 1155 728Q1137 728 1127 734Q1117 741 1117 753Q1117 759 1123 763Q1130 767 1148 770L1176 775Q1196 779 1206 788Q1217 797 1217 811Q1217 820 1214 829Q1212 837 1206 847Q1200 856 1190 864Q1180 871 1164 876Q1148 881 1128 881Q1108 881 1094 876Q1080 872 1072 864Q1065 857 1062 849Q1059 842 1059 833Q1059 829 1060 823H1097Q1097 827 1097 828Q1097 838 1107 844Q1116 850 1134 850Q1154 850 1166 842Q1178 835 1178 823Q1178 815 1171 810Q1165 806 1147 803L1122 798Q1099 794 1088 785Q1078 776 1078 762ZM1356 840H1285L1264 875H1225L1330 700H1375L1400 875H1360ZM1352 810 1343 742 1303 810Z';
 const LG=(o)=>{return `<svg class="lg${o?' o':''}" viewBox="0 205 1500 690" role="img" aria-label="PROPESA">${LGP.map(([d,c])=>`<path d="${d}" fill="${c}"/>`).join('')}<path class="wm" d="${LGW}" fill="#0a2373" stroke="#0a2373" stroke-width="10" stroke-linejoin="round"/></svg>`};
 const IC={ord:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',warn:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4M12 17h.01"/></svg>',cam:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v12H3z"/><circle cx="12" cy="13.5" r="3.5"/></svg>',img:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>',note:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h5"/></svg>',inicio:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',recepcion:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12zM13.5 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',cajas:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg>',embarques:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h18l-2 5H5zM6 13V8h12v5M12 8V3M2 21c2 0 2-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1"/></svg>',cierre:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 14l2 2 4-4"/></svg>',temperatura:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.8V5a2 2 0 10-4 0v9.8a4 4 0 104 0z"/></svg>',admin:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 4.5a3.5 3.5 0 010 7M19.5 14c1.5.8 2.5 2.6 2.5 6"/></svg>'};
-IC.empaque=IC.cajas;IC.ordenes=IC.ord;IC.embarques=IC.recepcion;
+IC.empaque=IC.cajas;IC.ordenes=IC.ord;IC.camion=IC.recepcion;IC.embarques=IC.camion;/* Entrada = la langosta del ícono de la app, en blanco (pedido del usuario) */IC.recepcion='<svg viewBox="61 71 390 390" width="22" height="22" aria-hidden="true"><g transform="translate(256 258) scale(.88) translate(-256 -238)"><path d="M284 200 C312 192 330 178 340 158" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round"/><g transform="translate(340 160) rotate(30)"><path d="M0 4 C-42 -6 -50 -62 -40 -104 C-33 -132 -18 -150 -6 -156 L-3 -100 L5 -100 L12 -160 C32 -146 48 -116 48 -80 C48 -36 34 -2 0 4 Z" fill="currentColor"/></g><path d="M296 238 L346 226 M298 262 L350 262 M294 286 L340 298" stroke="currentColor" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M268 140 C296 96 340 70 400 30" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><g transform="translate(512 0) scale(-1 1)"><path d="M284 200 C312 192 330 178 340 158" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round"/><g transform="translate(340 160) rotate(30)"><path d="M0 4 C-42 -6 -50 -62 -40 -104 C-33 -132 -18 -150 -6 -156 L-3 -100 L5 -100 L12 -160 C32 -146 48 -116 48 -80 C48 -36 34 -2 0 4 Z" fill="currentColor"/></g><path d="M296 238 L346 226 M298 262 L350 262 M294 286 L340 298" stroke="currentColor" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M268 140 C296 96 340 70 400 30" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/></g><path d="M256 130 L268 156 L244 156 Z" fill="currentColor"/><ellipse cx="256" cy="228" rx="46" ry="76" fill="currentColor"/><rect x="218" y="292" width="76" height="30" rx="13" fill="currentColor"/><rect x="222" y="318" width="68" height="28" rx="12" fill="currentColor"/><rect x="226" y="342" width="60" height="26" rx="11" fill="currentColor"/><rect x="230" y="364" width="52" height="24" rx="10" fill="currentColor"/><path d="M256 384 C232 392 200 412 196 446 C214 456 236 452 248 438 L256 452 L264 438 C276 452 298 456 316 446 C312 412 280 392 256 384 Z" fill="currentColor"/></g></svg>';
 const LOGO=LG(0),LOGOD=LG(1);
-const KEY='propesa-v4';let ST,me=null,V={v:'inicio',id:null},form=null,msg='',conf=null,uf=null;
+/* Base compartida: la app guarda en Supabase (todos los equipos ven lo mismo). Modo local SOLO para las pruebas automáticas (localhost?modo=local). */
+const LOCAL=window.PROPESA_LOCAL===true||(/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&/[?&]modo=local\b/.test(location.search)),CLOUD=!LOCAL;
+const SBC=window.PROPESA_SB||{url:'https://lktqwmfmdhusscudgflo.supabase.co',key:'sb_publishable_P4M21JmU4WcoKQbeI-P3Dw_6Rl5opEe'};
+/* Números y claves que no chocan entre equipos (antes eran contadores de cada tablet). */
+let UIDL=0;const uidN=()=>{UIDL=Math.max(Date.now()*1000+Math.floor(Math.random()*1000),UIDL+1);return UIDL},
+ uidS=()=>Date.now().toString(36).padStart(9,'0')+Math.random().toString(36).slice(2,8).padEnd(6,'0'),legU=i=>'000000000'+String(i).padStart(6,'0');
+const KEY=CLOUD?'propesa-c1':'propesa-v4';let ST,me=null,V={v:'inicio',id:null},form=null,msg='',conf=null,uf=null;
 
 let ND=null,evc=null;
 function seedM(){ST.M={}}
@@ -562,7 +620,9 @@ function evid(key,title,noPh){const L=(ST.M||{})[key]||[],ok=me.role!='consulta'
  ${!noPh&&d.imgs.length?`<div class="evq">${d.imgs.map((m,j)=>`<span><img src="${m}" alt=""><button data-ev="rmp:${j}" aria-label="Quitar foto">✕</button></span>`).join('')}</div>`:''}
  <button class="btn" data-ev="save:${key}">Guardar nota</button></div>`:'<p class="mut">Tu rol es de solo consulta: no puedes agregar notas.</p>'}</div>`}
 function evDraft(k){if(!ND||ND.key!=k)ND={key:k,text:'',ref:'',imgs:[]};return ND}
-function shrink(file){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const i=new Image();i.onerror=no;i.onload=()=>{const m=1280,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.72))};i.src=r.result};r.readAsDataURL(file)})}
+/* Fotos chicas: viajan a todos los equipos y se guardan en la memoria de cada uno (~5 millones de caracteres en total).
+   shortcut: cabe el doble (unas 40 fotos en toda la empresa) y se vuelve a llenar; el arreglo de fondo es pasarlas a Supabase Storage. */
+function shrink(file){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const i=new Image();i.onerror=no;i.onload=()=>{const m=800,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.6))};i.src=r.result};r.readAsDataURL(file)})}
 document.addEventListener('input',e=>{const t=e.target;if(t.id=='ntx')evDraft(t.dataset.k).text=t.value;else if(t.id=='nrf')evDraft(t.dataset.k).ref=t.value});
 document.addEventListener('change',async e=>{const t=e.target;if(t.type!='file'||!t.dataset.k)return;const d=evDraft(t.dataset.k);
  for(const f of [...t.files]){if(d.imgs.length>=6){toast('Máximo 6 fotos por nota.');break}try{d.imgs.push(await shrink(f))}catch(x){toast('No se pudo leer la foto.')}}t.value='';render()});
@@ -572,7 +632,7 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-ev]');if(!
  if(a=='del'){evc=+v;return render()}if(a=='no'){evc=null;return render()}
  if(a=='rm'){for(const k in ST.M)ST.M[k]=ST.M[k].filter(n=>n.id!=+v);evc=null;save();toast('Nota eliminada');return render()}
  if(a=='save'){const d=evDraft(v),tx=d.text.trim();if(!tx&&!d.imgs.length){toast('Escribe una nota o agrega una foto.');return}
-  (ST.M[v]=ST.M[v]||[]).unshift({id:Date.now(),t:now(),by:me.name,text:tx,ref:d.ref.trim(),imgs:d.imgs});ND=null;save();toast('✔ Nota guardada');render()}});
+  (ST.M[v]=ST.M[v]||[]).unshift({id:uidN(),t:now(),by:me.name,text:tx,ref:d.ref.trim(),imgs:d.imgs});ND=null;save();toast('✔ Nota guardada');render()}});
 
 const wOk=p=>Math.abs(gross(p)-p.exp)<0.05;
 function shipIssues(i){const p=ST.P[i],g=gross(p),zs=p.z.reduce((a,b)=>a+b,0),sn=sent(i),o=[],E2=k=>(PISO?'pemp:':'empacar:')+k;
@@ -590,7 +650,8 @@ function iconize(root){if(!root||root.closest&&root.closest('textarea,script,sty
 new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)iconize(n.nodeType==1?n:n.nodeType==3?n.parentNode:null)}).observe(document.body,{childList:true,subtree:true});
 
 /* ===== Órdenes de empaque: ciudad destino → consignatario → cliente final ===== */
-const KGN=16,KGB=20,PORTS={PVG:'Shanghái',HKG:'Hong Kong',XMN:'Xiamen',SZX:'Shenzhen',CAN:'Guangzhou',SIN:'Singapur'},XC=['#1c7f9a','#9a5fb0','#3b87a6','#2a9d8f','#b0793a','#5b6fd0'],CLI0=['HXH','ZSM','LHD','RSK','HSF','HYG','HJX','ZYX','LMD','MXH'];
+/* Peso bruto por caja = componentes del embarque (syncShip): 1.4 hielera + 1.5 gel + 16 producto + 0.7 caja de cartón. */
+const KGN=16,KGB=19.6,kb=n=>+(n*KGB).toFixed(1),PORTS={PVG:'Shanghái',HKG:'Hong Kong',XMN:'Xiamen',SZX:'Shenzhen',CAN:'Guangzhou',SIN:'Singapur'},XC=['#1c7f9a','#9a5fb0','#3b87a6','#2a9d8f','#b0793a','#5b6fd0'],CLI0=['HXH','ZSM','LHD','RSK','HSF','HYG','HJX','ZYX','LMD','MXH'];
 const CONS=[
  {k:'YISHUNHAI',n:'Shenzhen Yishunhai Trading Co., Ltd',p:['PVG','SZX','HKG'],a:'Room 502, B Building, Cuifengge Garden, No. 4028 Luosha Road, Luohu District, Shenzhen 518004',c:'Zheng Yunxiong · +86 13601775559',u:'91440300MAD1QU3P96'},
  {k:'XIAMEN COASTAL',n:'Xiamen Coastal Seafood Supply Chain Co., Ltd',p:['XMN'],a:'No. 1451-125 Gangzhong Road, Xiamen (Fujian) Pilot Free Trade Zone 361000',c:'Lin Yun · +86 13696914771',u:'91350212MA8REQL747'},
@@ -616,7 +677,7 @@ function ordAssigned(o,l){const k=lkey(o,l),r=[];if(RX)return(rxLine().get(k)||[
 const ordTot=o=>o.lines.reduce((a,l)=>a+l.boxes,0),ordAsg=o=>o.lines.reduce((a,l)=>a+Math.min(l.boxes,ordAssigned(o,l).length),0);
 /* Un embarque (ST.P[i]) puede juntar varias órdenes: o.sh['CIUDAD|consignatario'] apunta al mismo índice. */
 function shipLinks(i){if(RX)return(rxLinks().get(i)||[]).slice();const r=[];ST.OR.forEach(o=>{const m=o.sh||{};for(const k in m)if(m[k]===i){const q=k.split('|');r.push({o,k,city:q[0],cons:+q[1]})}});return r}
-function newShip(){ST.P.push({n:'',z0:'',col:XC[ST.P.length%XC.length],exp:0,h:0,z:[0,0,0,0],c:[],alive:null,closed:false});return ST.P.length-1}
+function newShip(){ST.P.push({u:uidS(),n:'',z0:'',col:XC[ST.P.length%XC.length],exp:0,h:0,z:[0,0,0,0],c:[],alive:null,closed:false});return ST.P.length-1}
 function shipFor(o,city,cons){o.sh=o.sh||{};const k=city+'|'+cons;if(o.sh[k]!=null&&ST.P[o.sh[k]])return o.sh[k];
  const i=newShip();ST.P[i].n=`${city} · ${CONS[cons].k} · ${fs(o.etd)}`;o.sh[k]=i;return i}
 function syncShipIdx(i){const p=ST.P[i];if(!p||p.closed)return;const lk=shipLinks(i),h=lk.reduce((a,x)=>a+x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons).reduce((b,l)=>b+l.boxes,0),0);
@@ -659,7 +720,7 @@ function cleanOrders(){ST.ORc=1;const dem=ST.OR.filter(o=>o.id==1&&o.etd=='2026-
 function ordenes(){const ed=can('lot'),tm=dLoc(new Date(Date.now()+864e5));
  return `<div class="wrap"><div class="cd head"><div><h1>Órdenes de empaque</h1><p class="mut" style="margin:4px 0 0">Cada orden indica la ciudad destino, el consignatario (a quién se factura) y el cliente final. Las cajas se cuentan y se agregan en el paso Empaque, al preparar cada pedido.</p></div></div>
  ${ST.OR.length?pdfBar('ord'):''}${ed?`<div class="cd"><h2 class="h3">Nueva orden</h2><div class="f"><label>Fecha de empaque (ETD)<input type="date" id="no_etd" value="${tm}"></label><button class="btn" data-oa="new">Crear orden</button></div></div>`:''}
- ${ST.OR.length?'':`<div class="cd how"><b>Para empezar, en 3 pasos:</b><ol><li><b>Crea la orden</b> con la fecha de empaque (arriba).</li><li><b>Agrega líneas</b>: ciudad, consignatario, cliente final y cajas.</li><li><b>Empaca las cajas</b> de cada cliente en el paso Empaque: lote, piezas vivas y categoría.</li></ol></div>`}<h2>Órdenes</h2>${ST.OR.length?(HO=>HO.items.map(o=>{const t=ordTot(o),a=ordAsg(o);return row(cv(fs(o.etd),'#0a7a8d'),`Empaque ${fd(o.etd)}`,`${o.lines.length} líneas · ${t} cajas · ${t*KGN} kg neto · ${t*KGB} kg bruto`,`${a} / ${t} cajas`,a>=t&&t?'Con producto':'', 'orden:'+o.id)}).join('')+HO.bar)(histList('ord',ST.OR.slice().sort((a,b)=>a.etd<b.etd?1:-1),ordActive)):'<p class="mut">Todavía no hay órdenes.</p>'}</div>`}
+ ${ST.OR.length?'':`<div class="cd how"><b>Para empezar, en 3 pasos:</b><ol><li><b>Crea la orden</b> con la fecha de empaque (arriba).</li><li><b>Agrega líneas</b>: ciudad, consignatario, cliente final y cajas.</li><li><b>Empaca las cajas</b> de cada cliente en el paso Empaque: lote, piezas vivas y categoría.</li></ol></div>`}<h2>Órdenes</h2>${ST.OR.length?(HO=>HO.items.map(o=>{const t=ordTot(o),a=ordAsg(o);return row(cv(fs(o.etd),'#0a7a8d'),`Empaque ${fd(o.etd)}`,`${o.lines.length} líneas · ${t} cajas · ${t*KGN} kg neto · ${kb(t)} kg bruto`,`${a} / ${t} cajas`,a>=t&&t?'Con producto':'', 'orden:'+o.id)}).join('')+HO.bar)(histList('ord',ST.OR.slice().sort((a,b)=>a.etd<b.etd?1:-1),ordActive)):'<p class="mut">Todavía no hay órdenes.</p>'}</div>`}
 const ordCard=()=>{if(!ST.OR.length)return'';const PO=histList('pord',ST.OR.slice().sort((a,b)=>a.etd<b.etd?1:-1),ordActive);return `<h2>Órdenes de empaque</h2><div class="cd"><div class="tbl"><table><thead><tr><th>Empaque (ETD)</th><th>Líneas</th><th>Cajas empacadas</th><th aria-label="Acciones"></th></tr></thead><tbody>${PO.items.map(o=>{const t=ordTot(o),a=ordAsg(o);return `<tr><td><b>${fd(o.etd)}</b></td><td>${o.lines.length}</td><td>${a} / ${t} ${!t?`<button class="chip al chipb" data-go="orden:${o.id}">⚠ Sin líneas · Agregar ›</button>`:a>=t?'<span class="chip ok">✔ Completa</span>':goPend(o)&&can('box')?`<button class="chip al chipb" data-go="${goPend(o)}">⚠ Faltan ${t-a} · Empacar ›</button>`:`<span class="chip al">⚠ Faltan ${t-a}</span>`}</td><td><button class="btn s" data-go="orden:${o.id}">Abrir orden</button></td></tr>`}).join('')||'<tr><td colspan="4" class="mut">No hay órdenes abiertas ni recientes.</td></tr>'}</tbody></table></div>${PO.bar}</div>`};
 document.addEventListener('input',e=>{const t=e.target;if(t.id=='ol_cli')OD.cli=t.value.toUpperCase().replace(/[^A-Z0-9]/g,'');else if(t.id=='ol_n')OD.n=t.value});
 document.addEventListener('change',e=>{const t=e.target;if(t.id=='ol_city'){OD.city=t.value;OD.cons=-1;render()}else if(t.id=='ol_cons')OD.cons=+t.value;
@@ -692,7 +753,7 @@ function nxt(){if(!ST.R.length)return['Todavía no hay lotes. Registra la primer
  const i=ST.P.findIndex((p,k)=>!p.closed&&boxesOf(k).length);if(i>=0)return[`El envío ${ST.P[i].n} ya está empacado. Revísalo y ciérralo para mandar el informe por correo.`,'emb:'+i,'Abrir envío'];
  const c=ST.R.filter(r=>!r.closed).find(r=>r.final==null);if(c)return[`Cuenta lo que queda del lote ${c.lot} y captura el conteo final: con eso se calcula la mortalidad.`,'cierre','Ir a mortalidad final'];
  return['Todo al día. Registra la siguiente entrega.','recepcion','Nueva entrada']}
-function inicio(){const n=nxt(),tot=lots().reduce((a,l)=>a+bal(l),0),T=orderedAll(),A=packedAll(),lob=lots().reduce((a,l)=>a+bsum(l).t,0),
+function inicio(){const n=nxt(),tot=lots().filter(l=>!R_(l).closed).reduce((a,l)=>a+bal(l),0),T=orderedAll(),A=packedAll(),lob=lots().reduce((a,l)=>a+bsum(l).t,0),
  kp=(t,v,s,a,go)=>`<div class="cd kp${a?' pn':''}${go?' kpl':''}" ${go?`data-go="${go}" tabindex="0" role="button"`:''}><span class="mut">${t}</span><b>${v}</b><span class="mut">${s}</span>${go?'<span class="kgo">Resolver ›</span>':''}</div>`,
  pendO=ST.OR.find(o=>!o.lines.length||ordAsg(o)<ordTot(o)),openP=ST.P.findIndex((p,i)=>!p.closed&&boxesOf(i).length),openP2=openP>=0?openP:ST.P.findIndex(p=>!p.closed);
  return `<div class="wrap">${guide(0,'Tu siguiente paso',n[0],n[2],n[1])}
@@ -721,24 +782,29 @@ const PKS={pend:'<span class="pkst s-pend">Pendiente</span>',prog:'<span class="
 const pkRowSt=w=>w&&((w.c!=null&&String(w.c).trim()!=='')||(w.k&&!w.auto))?'prog':'pend',
  pkEdOk=w=>!!w&&w.c!=null&&String(w.c).trim()!==''&&Math.round(+w.c)>=1&&!!w.k;
 let PKP={key:'',p:0}; /* último avance mostrado: la barra delgada crece desde ahí (animación suave, sin saltos) */
-const pkSeg=(no,sel,act)=>`<div class="seg" role="group" aria-label="Categoría de la caja ${no}">${['R','V','B'].map(q=>`<button type="button" class="chip pk" aria-pressed="${sel==q}" data-pk="${act}${q}"><span class="dot" style="background:var(--${q})"></span>${RC[q][0]}</button>`).join('')}</div>`;
+const pkSeg=(no,sel,act)=>`<div class="seg" role="group" aria-label="Categoría de la caja ${no}">${Object.keys(RC).map(q=>`<button type="button" class="chip pk" aria-pressed="${sel==q}" data-pk="${act}${q}"><span class="dot" style="background:var(--${q})"></span>${RC[q][0]}</button>`).join('')}</div>`;
+/* Teclado de Empaque abierto o cerrado (se recuerda por equipo). Abierto: es la herramienta principal y las filas solo muestran la
+   categoría ya elegida. Cerrado: cada fila trae sus botones de categoría y el teclado de la tablet. */
+let KPON=(()=>{try{return localStorage.getItem('propesa-kp')!=='0'}catch(e){return true}})();
+document.addEventListener('click',e=>{const b=e.target.closest('[data-kpo]');if(!b)return;KPON=b.dataset.kpo=='1';try{localStorage.setItem('propesa-kp',KPON?'1':'0')}catch(z){}render()});
 function pkGrid(d,o,l,key,bs,all,room,next,open){const multi=open.length>1,lotsE=[...new Set([...open,...bs.map(x=>x.l)])],lc=lotsE.length>1,rows=[];d.rows=d.rows||{};
  const lotSel=(cls,attr,sel,no,blank)=>`<select class="${cls}" ${attr} aria-label="Lote de la caja ${no}">${blank?`<option value="" ${sel?'':'selected'}>Elige lote</option>`:''}${(blank?open:lotsE).map(x=>`<option value="${E(x)}" ${sel==x?'selected':''}>${E(x)}</option>`).join('')}</select>`;
  bs.forEach(x=>{const b=x.b,no=all.findIndex(y=>y.b===b)+1;
   if(d.ed===b.seq){const w=d.ew||{},st=pkEdOk(w)?PKS.edit:PKS.bad;
-   rows.push(`<tr class="pkdn is-edit" id="pkd${b.seq}"><td class="pkno"><span class="pkcj">Caja ${no}</span><span class="pkest">${st}</span></td><td class="pkpz"><label class="pkf"><input class="pke" id="pk_e" data-kpn="${no}" type="number" min="1" inputmode="none" enterkeyhint="done" value="${E(w.c==null?'':w.c)}" aria-label="Piezas vivas de la caja ${no} (corrigiendo)"><span class="pku" aria-hidden="true">piezas</span></label></td><td class="pkcat">${pkSeg(no,w.k,'ek:')}</td>${lc?`<td class="pklot">${lotSel('pkel','id="pk_el"',w.lot||x.l,no,false)}</td>`:''}</tr><tr class="pkdn is-edit pkear"><td colspan="${lc?4:3}"><div class="pkea"><button class="btn" data-pk="upd">Actualizar caja ${no}</button><button class="btn s" data-pk="cancel">Cancelar</button><span class="pkesp"></span>${d.cf==b.seq?`<span class="pkcf"><b class="er">¿Quitar la caja ${no}?</b> <button class="btn d" data-pk="rm:${b.seq}">Sí, quitar</button> <button class="btn s" data-pk="no">No</button></span>`:`<button class="lnk pkrm" data-pk="del:${b.seq}">Quitar caja</button>`}</div></td></tr>`);return}
-  rows.push(`<tr class="pkdn is-done" id="pkd${b.seq}" data-pk="ed:${b.seq}" title="Toca para corregir"><td class="pkno"><span class="pkcj">Caja ${no}</span>${PKS.done}</td><td class="pkpz"><button type="button" class="pkvb pked" data-pk="ed:${b.seq}" aria-label="Corregir la caja ${no}: ${b.c} piezas, ${RC[b.k][0]}"><b class="pkv">${b.c}</b><span class="pku">piezas</span><span class="pkch" aria-hidden="true">›</span></button></td><td class="pkcat"><span class="pkcv"><span class="dot" style="background:var(--${b.k})"></span>${RC[b.k][0]}</span></td>${lc?`<td class="pklot"><span class="pklv">${E(x.l)}</span></td>`:''}</tr>`)});
- for(let r=0;r<room;r++){const w=d.rows[r]||{},lot=w.lot||d.lot||'',k=w.k||'',no=next+r,st=pkRowSt(w);
-  rows.push(`<tr class="pkrow${st=='prog'?' is-prog':''}" id="pkr${r}"><td class="pkno"><span class="pkcj">Caja ${no}</span><span class="pkstw">${PKS[st]}</span></td><td class="pkpz"><label class="pkf"><input class="pkc" id="pk_c${r}" data-row="${r}" data-kpn="${no}" type="number" min="1" inputmode="none" enterkeyhint="next" value="${E(w.c==null?'':w.c)}" aria-label="Piezas vivas de la caja ${no}"><span class="pku" aria-hidden="true">piezas</span></label></td><td class="pkcat">${pkSeg(no,k,`k:${r}:`)}</td>${lc?`<td class="pklot">${multi?lotSel('pkl',`data-row="${r}"`,lot,no,true):`<span class="pklv">${E(lot||open[0]||'')}</span>`}</td>`:''}</tr>`)}
+   rows.push(`<tr class="pkdn is-edit" id="pkd${b.seq}"><td class="pkno"><span class="pkcj">Caja ${no}</span><span class="pkest">${st}</span></td><td class="pkpz"><label class="pkf"><input class="pke" id="pk_e" data-kpn="${no}" type="number" min="1" inputmode="${KPON?'none':'numeric'}" enterkeyhint="done" value="${E(w.c==null?'':w.c)}" aria-label="Piezas vivas de la caja ${no} (corrigiendo)"><span class="pku" aria-hidden="true">piezas</span></label></td><td class="pkcat">${pkSeg(no,w.k,'ek:')}</td></tr><tr class="pkdn is-edit pkear"><td colspan="3"><div class="pkea">${lc?`<label class="pkell">Lote ${lotSel('pkel','id="pk_el"',w.lot||x.l,no,false)}</label>`:''}<button class="btn" data-pk="upd">Actualizar caja ${no}</button><button class="btn s" data-pk="cancel">Cancelar</button><span class="pkesp"></span>${d.cf==b.seq?`<span class="pkcf"><b class="er">¿Quitar la caja ${no}?</b> <button class="btn d" data-pk="rm:${b.seq}">Sí, quitar</button> <button class="btn s" data-pk="no">No</button></span>`:`<button class="lnk pkrm" data-pk="del:${b.seq}">Quitar caja</button>`}</div></td></tr>`);return}
+  rows.push(`<tr class="pkdn is-done" id="pkd${b.seq}" data-pk="ed:${b.seq}" title="Toca para corregir"><td class="pkno"><span class="pkcj">Caja ${no}</span>${PKS.done}</td><td class="pkpz"><button type="button" class="pkvb pked" data-pk="ed:${b.seq}" aria-label="Corregir la caja ${no}: ${b.c} piezas, ${RC[b.k][0]}"><b class="pkv">${b.c}</b><span class="pku">piezas</span><span class="pkch" aria-hidden="true">›</span></button></td><td class="pkcat"><span class="pkcv"><span class="dot" style="background:var(--${b.k})"></span>${RC[b.k][0]}</span></td></tr>`)});
+ /* el lote se elige una vez arriba (PKD.lot) y vale para todas las cajas nuevas: las filas no lo repiten */
+  for(let r=0;r<room;r++){const w=d.rows[r]||{},k=w.k||'',no=next+r,st=pkRowSt(w);
+  rows.push(`<tr class="pkrow${st=='prog'?' is-prog':''}" id="pkr${r}"><td class="pkno"><span class="pkcj">Caja ${no}</span><span class="pkstw">${PKS[st]}</span></td><td class="pkpz"><label class="pkf"><input class="pkc" id="pk_c${r}" data-row="${r}" data-kpn="${no}" type="number" min="1" inputmode="${KPON?'none':'numeric'}" placeholder="—" enterkeyhint="next" value="${E(w.c==null?'':w.c)}" aria-label="Piezas vivas de la caja ${no}"><span class="pku" aria-hidden="true">piezas</span></label></td><td class="pkcat">${pkSeg(no,k,`k:${r}:`)}</td></tr>`)}
  const N=Math.max(1,l.boxes),n=bs.length,p=Math.min(1,n/N),pc=Math.round(p*100),from=PKP.key===key?PKP.p:p;PKP={key,p};
- return `<div class="cd pkx"><h2 class="h3">Cajas de ${E(l.cli)}</h2>
+ return `<div class="cd pkx${KPON?' kpo':''}"><h2 class="h3">Cajas de ${E(l.cli)}</h2>
  <p class="pkhelp">Aparece una fila por cada caja del pedido. Toca una caja, escribe las piezas vivas en el teclado y toca la categoría: pasa sola a la siguiente. Al terminar toca «Guardar cajas»; las filas que dejes en blanco no se guardan. Las cajas guardadas quedan en verde con ✔ Completada: toca una para corregirla.</p>
- ${room?`<p class="pklh">Lote del que sacas las langostas${multi?' · se aplica a todas las filas; puedes cambiarlo en cada una':''}</p>${open.length?`<div class="pklots" role="group" aria-label="Lote del que sacas las langostas">${open.map(x=>`<button type="button" class="pklb" aria-pressed="${d.lot==x}" data-pk="lot:${E(x)}"><b>${E(x)}</b><span>Tanque ${E(String(tk(x)).replace(/^T/,''))} · ${f(bal(x))} kg</span></button>`).join('')}</div>`:'<p class="mut">No hay lotes en tanques. Registra una entrada primero.</p>'}`:''}
- <div class="kpwrap"><div class="kpw kpf"><div class="kpmain"><div class="tbl pktw"><table class="pkt"><thead><tr><th>Caja</th><th>Piezas vivas</th><th>Categoría</th>${lc?'<th>Lote</th>':''}</tr></thead><tbody>${rows.join('')}</tbody></table></div>
+ ${room?`<p class="pklh">Lote del que sacas las langostas${multi?' · se aplica a todas las cajas nuevas; para usar otro lote, guarda y elige el otro':''}</p>${open.length?`<div class="pklots" role="group" aria-label="Lote del que sacas las langostas">${open.map(x=>`<button type="button" class="pklb" aria-pressed="${d.lot==x}" data-pk="lot:${E(x)}"><b>${E(x)}</b><span>Tanque ${E(String(tk(x)).replace(/^T/,''))} · ${f(bal(x))} kg</span></button>`).join('')}</div>`:'<p class="mut">No hay lotes en tanques. Registra una entrada primero.</p>'}`:''}
+ <div class="kpwrap"><div class="kpw kpf${KPON?'':' kpoff'}"><div class="kpmain"><div class="tbl pktw"><table class="pkt"><thead><tr><th>Caja</th><th>Piezas vivas</th><th>Categoría</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>
  ${n?`<p class="pktot">Total: ${bs.reduce((a,x)=>a+x.b.c,0)} piezas vivas en ${n} ${n==1?'caja':'cajas'}.</p>`:''}
- </div><div class="kpdock">${kpPad('full')}<div class="pkb" id="pkb" data-p="${p}" style="--p:${from}"><div class="pkprog"><div class="pksum" id="pksum"><span class="pkc1">✔ ${n} ${n==1?'completada':'completadas'}</span><span class="pksep" aria-hidden="true">·</span><span class="pkpen">${room} ${room==1?'pendiente':'pendientes'}</span><span class="pkpc">${pc}% completado</span></div>
+ </div><div class="kpdock">${KPON?kpPad('full'):''}<div class="pkb" id="pkb" data-p="${p}" style="--p:${from}">${KPON?'':`<button type="button" class="kpfab" data-kpo="1" aria-label="Abrir teclado" title="Abrir teclado"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">${[[5,4],[12,4],[19,4],[5,10],[12,10],[19,10],[5,16],[12,16],[19,16],[12,21.5]].map(([x,y])=>`<rect x="${x-2.4}" y="${y-2.2}" width="4.8" height="4.4" rx="1.4"/>`).join('')}</svg></button>`}<div class="pkprog"><div class="pksum" id="pksum"><span class="pkc1">✔ ${n} ${n==1?'completada':'completadas'}</span><span class="pksep" aria-hidden="true">·</span><span class="pkpen">${room} ${room==1?'pendiente':'pendientes'}</span><span class="pkpc">${pc}% completado</span></div>
  <div class="pkbar" role="progressbar" aria-label="Cajas completadas" aria-valuemin="0" aria-valuemax="${l.boxes}" aria-valuenow="${n}" aria-valuetext="${n} de ${l.boxes}"><i></i></div></div>
- ${room?`<button class="btn pkgo" data-pk="addall" aria-describedby="pksum"><span class="pkn">Guardar cajas</span></button>`:`<span class="pkall">✔ ${l.boxes} de ${l.boxes} cajas completadas</span>`}</div></div></div></div></div>`}
+ ${room?`<span class="pkgos"><button class="btn pkgo" data-pk="addall" aria-describedby="pksum"><span class="pkn">Guardar cajas</span></button></span>`:`<span class="pkall">✔ ${l.boxes} de ${l.boxes} cajas completadas</span>`}</div></div></div></div></div>`}
 /* La barra delgada parte del avance anterior y llega al real (data-p = guardadas ÷ pedidas). También guarda la altura de la barra fija
    para que los avisos (toast) y el desplazamiento al campo no queden tapados. */
 function pkAnim(){const b=document.getElementById('pkb');if(!b)return;const R=document.documentElement.style,m=document.querySelector('main');R.setProperty('--pkbh',b.offsetHeight+'px');if(m)R.setProperty('--pkmt',Math.max(0,Math.round(m.getBoundingClientRect().top))+'px');const p=b.dataset.p;if(b.style.getPropertyValue('--p')===p)return;requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.setProperty('--p',p)))}
@@ -757,12 +823,12 @@ function pkUpd(o,l){const s=PKD.ed;if(s==null)return'none';const w=PKD.ew=PKD.ew
  const ch=b.c!==c||b.k!==w.k||nl!==lt;b.c=c;b.k=w.k;if(nl!==lt){ST.B[lt]=ST.B[lt].filter(z=>z!==b);ST.B[nl].push(b)}
  PKD.ed=null;PKD.ew=null;if(ch){save();toast(`✔ Caja n.º ${no} actualizada: ${c} piezas ${RC[b.k][0]}`)}return'ok'}
 document.addEventListener('input',e=>{const t=e.target;if(!t.classList)return;if(t.classList.contains('pkc')){const r=+t.dataset.row;(PKD.rows[r]=PKD.rows[r]||{}).c=t.value;pkCnt();pkLive(r)}else if(t.classList.contains('pke')&&PKD.ew){PKD.ew.c=t.value;pkEdLive()}});
-document.addEventListener('change',e=>{const t=e.target;if(!t.classList)return;if(t.classList.contains('pkl')){const r=+t.dataset.row;(PKD.rows[r]=PKD.rows[r]||{}).lot=t.value}else if(t.classList.contains('pkel')&&PKD.ew)PKD.ew.lot=t.value});
+document.addEventListener('change',e=>{const t=e.target;if(!t.classList)return;if(t.classList.contains('pkel')&&PKD.ew)PKD.ew.lot=t.value});
 document.addEventListener('keydown',e=>{const t=e.target;if(!t.classList)return;
  if(t.classList.contains('pke')){if(e.key=='Enter'){e.preventDefault();const u=document.querySelector('[data-pk="upd"]');if(u)u.click()}else if(e.key=='Escape'){e.preventDefault();const c=document.querySelector('[data-pk="cancel"]');if(c)c.click()}return}
  if(e.key=='Enter'&&t.classList.contains('pkc')){e.preventDefault();const n=document.getElementById('pk_c'+(+t.dataset.row+1));if(n)n.focus();else t.blur()}});
 document.addEventListener('click',e=>{const x=e.target.closest('[data-pk]');if(!x)return;const P=x.dataset.pk.split(':'),a=P[0],v=P.slice(1).join(':'),[oid,lid]=String(V.id).split('.').map(Number),o=ST.OR.find(q=>q.id===oid),l=o&&o.lines.find(q=>q.id===lid);if(!l)return;
- if(a=='lot'){PKD.lot=v;return render()}
+ if(a=='lot'){if(v!=PKD.lot&&Object.values(PKD.rows||{}).some(w=>w&&String(w.c==null?'':w.c).trim()!='')){toast(`Primero guarda las cajas del lote ${PKD.lot}, luego cambia de lote.`);return}PKD.lot=v;return render()}
  if(a=='k'){const r=+P[1],q=P[2],w=PKD.rows[r]=PKD.rows[r]||{};w.k=w.k==q?'':q;w.auto=false;const row=document.getElementById('pkr'+r);if(row)row.querySelectorAll('[data-pk^="k:"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pk.split(':')[2]==w.k)));pkLive(r);return pkCnt()}
  if(a=='ed'){if(!can('box'))return;const s=+v;if(PKD.ed===s)return;let lt=null,b=null;for(const k in ST.B){const y=ST.B[k].find(z=>z.seq===s);if(y){lt=k;b=y;break}}if(!b)return;
   if(b.d!=null&&ST.P[b.d]&&ST.P[b.d].closed)return toast('No se puede: el empaque de este destino ya está cerrado.');
@@ -776,28 +842,28 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-pk]');if(!
   const u=pkUpd(o,l);if(u=='bad')return; /* si hay una caja en corrección, «Guardar» también la guarda */
   if(room<1){if(u=='ok')return render();return toast('No se agregó: la línea ya tiene todas sus cajas.')}
   for(let r=0;r<room;r++){const w=PKD.rows[r]||{},hasC=w.c!=null&&String(w.c).trim()!=='',c=Math.round(+w.c);if(!hasC&&(!w.k||w.auto))continue;
-   const lot=w.lot||PKD.lot||(open.length==1?open[0]:null),bad=(m,id)=>{toast(`Caja n.º ${base+r+1}: ${m}`);const el=document.getElementById(id);if(el){el.scrollIntoView({block:'center'});try{el.focus({preventScroll:true})}catch(z){}el.setAttribute('aria-invalid','true')}};
-   if(!(c>=1))return bad('escribe las piezas vivas.','pk_c'+r);if(!w.k)return bad('toca la categoría.','pk_c'+r);if(!lot||!ST.B[lot])return bad('elige el lote.',multiLot(open)?'pkr'+r:'pk_c'+r);
+   const lot=PKD.lot||(open.length==1?open[0]:null),bad=(m,id)=>{toast(`Caja n.º ${base+r+1}: ${m}`);const el=document.getElementById(id);if(el){el.scrollIntoView({block:'center'});try{el.focus({preventScroll:true})}catch(z){}el.setAttribute('aria-invalid','true')}};
+   if(!(c>=1))return bad('escribe las piezas vivas.','pk_c'+r);if(!w.k)return bad('toca la categoría.','pk_c'+r);if(!lot||!ST.B[lot])return bad('elige arriba el lote del que sacas las langostas.','pk_c'+r);
    todo.push({c,k:w.k,lot})}
   if(!todo.length){if(u=='ok')return render();return toast('Escribe las piezas vivas y toca la categoría de al menos una caja.')}
   const si=shipFor(o,l.city,l.cons);if(ST.P[si].closed)return toast('No se puede: el empaque de este destino ya está cerrado.');
-  todo.forEach(t=>{ST.BN=(ST.BN||0)+1;ST.B[t.lot].push({c:t.c,k:t.k,d:si,o:lkey(o,l),seq:ST.BN})});save();PKD.rows={};toast(`✔ ${todo.length} ${todo.length==1?'caja completada':'cajas completadas'}`);render()}});
-const multiLot=o=>o.length>1;
+  todo.forEach(t=>{ST.B[t.lot].push({c:t.c,k:t.k,d:si,o:lkey(o,l),seq:uidN()})});save();PKD.rows={};toast(`✔ ${todo.length} ${todo.length==1?'caja completada':'cajas completadas'}`);render()}});
+
 function ordCsv(o){const q=v=>'"'+String(v).replace(/"/g,'""')+'"',r=[['No.','Piezas vivas','Lote','Categoría','Cliente','Destino','Consignatario']];
  ordBoxes(o).forEach((x,i)=>r.push([i+1,x.b.c,x.l,RC[x.b.k][0],x.l2.cli,x.l2.city,CONS[x.l2.cons].n]));
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+r.map(x=>x.map(q).join(',')).join('\n')],{type:'text/csv;charset=utf-8'}));a.download='packing-list-'+o.etd+'.csv';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
 function orden(id){const o=ST.OR.find(x=>x.id==id);if(!o)return `<div class="wrap"><button class="back" data-go="ordenes">‹ Volver a Órdenes</button><div class="cd"><p>Esa orden ya no existe.</p></div></div>`;
  const ed=can('lot'),ab=can('box'),t=ordTot(o),a=ordAsg(o),G={};o.lines.forEach(l=>{const k=l.city+'|'+l.cons;(G[k]=G[k]||{city:l.city,cons:l.cons,ls:[]}).ls.push(l)});
  const opts=consFor(OD.city);if(!opts.some(([,i])=>i==OD.cons))OD.cons=opts.length?opts[0][1]:0;const pk=ordBoxes(o);
- return `<div class="wrap"><button class="back" data-go="ordenes">‹ Volver a Órdenes</button><div class="cd head"><div><h1>Empaque ${fd(o.etd)}</h1><p class="mut" style="margin:4px 0 0">${t} cajas · ${t*KGN} kg neto · ${t*KGB} kg bruto (${KGN} kg netos y ${KGB} kg brutos por caja)</p></div><div class="bar" style="margin:0">${pendChip(o,a,t)}${pk.length?'<button class="btn s" data-oa="csv">Descargar packing list (CSV)</button>':''}</div></div>
+ return `<div class="wrap"><button class="back" data-go="ordenes">‹ Volver a Órdenes</button><div class="cd head"><div><h1>Empaque ${fd(o.etd)}</h1><p class="mut" style="margin:4px 0 0">${t} cajas · ${t*KGN} kg neto · ${kb(t)} kg bruto (${KGN} kg netos y ${KGB} kg brutos por caja)</p></div><div class="bar" style="margin:0">${pendChip(o,a,t)}${pk.length?'<button class="btn s" data-oa="csv">Descargar packing list (CSV)</button>':''}</div></div>
  <div class="pb" style="margin:-4px 0 12px"><i style="width:${t?a/t*100:0}%"></i></div>${pdfBar('ord',o.id,'PDF de esta orden')}
  ${ed?`<div class="cd"><h3>Agregar línea a la orden</h3><div class="f"><label>Ciudad destino<select id="ol_city">${Object.keys(PORTS).map(c=>`<option value="${c}" ${OD.city==c?'selected':''}>${c} · ${PORTS[c]}</option>`).join('')}</select></label><label>Consignatario (se factura a)<select id="ol_cons">${opts.map(([c,i])=>`<option value="${i}" ${OD.cons==i?'selected':''}>${E(c.n)}</option>`).join('')}</select></label><label>Cliente final<input id="ol_cli" list="clis" maxlength="6" value="${E(OD.cli)}" placeholder="Ej. HXH" style="width:110px"><datalist id="clis">${[...new Set([...CLI0,...ST.OR.flatMap(x=>x.lines.map(l=>l.cli))])].map(c=>`<option value="${E(c)}">`).join('')}</datalist></label><label>Cajas<input id="ol_n" type="number" min="1" value="${E(OD.n)}" style="width:90px"></label><button class="btn" data-oa="ln">Agregar</button></div></div>`:''}
- ${Object.values(G).map(g=>{const c=CONS[g.cons],gb=g.ls.reduce((x,l)=>x+l.boxes,0);return `<div class="cd"><div class="head"><div><h3>${g.city} · ${E(c.n)}</h3><p class="mut" style="margin:2px 0">${E(c.a)} · ${E(c.c)}</p></div><div class="chain"><span class="chip">${gb} cajas</span><span class="chip">${gb*KGN} kg neto</span><span class="chip">${gb*KGB} kg bruto</span></div></div>${shipPanel(o,g)}
+ ${Object.values(G).map(g=>{const c=CONS[g.cons],gb=g.ls.reduce((x,l)=>x+l.boxes,0);return `<div class="cd"><div class="head"><div><h3>${g.city} · ${E(c.n)}</h3><p class="mut" style="margin:2px 0">${E(c.a)} · ${E(c.c)}</p></div><div class="chain"><span class="chip">${gb} cajas</span><span class="chip">${gb*KGN} kg neto</span><span class="chip">${kb(gb)} kg bruto</span></div></div>${shipPanel(o,g)}
  <div class="tbl"><table><thead><tr><th>Cliente final</th><th>Cajas</th><th>Empacadas</th><th>Neto kg</th><th>Bruto kg</th><th aria-label="Acciones"></th></tr></thead><tbody>${g.ls.map(l=>{const n=ordAssigned(o,l).length;
-  return `<tr><td><b>${E(l.cli)}</b></td><td>${l.boxes}</td><td>${n} ${lineSt(n,l.boxes,goLine(o,l))}</td><td>${l.boxes*KGN}</td><td>${l.boxes*KGB}</td><td><div class="bar" style="margin:0">${ab?`<button class="btn${n>=l.boxes?' s':''}" data-go="empacar:${o.id}.${l.id}">${n>=l.boxes?'Ver cajas':n?'Seguir empacando':'Empacar cajas'}</button>`:''}${ed&&!n?(OA.cf=='d'+l.id?`<b class="er">¿Eliminar?</b><button class="btn d" data-oa="dl:${l.id}">Sí</button><button class="btn s" data-oa="no">No</button>`:`<button class="lnk" data-oa="dc:${l.id}">Eliminar</button>`):''}</div></td></tr>`}).join('')}</tbody></table></div></div>`}).join('')||'<div class="cd"><p class="mut">La orden no tiene líneas. Agrega la primera arriba.</p></div>'}
+  return `<tr><td><b>${E(l.cli)}</b></td><td>${l.boxes}</td><td>${n} ${lineSt(n,l.boxes,goLine(o,l))}</td><td>${l.boxes*KGN}</td><td>${kb(l.boxes)}</td><td><div class="bar" style="margin:0">${ab?`<button class="btn${n>=l.boxes?' s':''}" data-go="empacar:${o.id}.${l.id}">${n>=l.boxes?'Ver cajas':n?'Seguir empacando':'Empacar cajas'}</button>`:''}${ed&&!n?(OA.cf=='d'+l.id?`<b class="er">¿Eliminar?</b><button class="btn d" data-oa="dl:${l.id}">Sí</button><button class="btn s" data-oa="no">No</button>`:`<button class="lnk" data-oa="dc:${l.id}">Eliminar</button>`):''}</div></td></tr>`}).join('')}</tbody></table></div></div>`}).join('')||'<div class="cd"><p class="mut">La orden no tiene líneas. Agrega la primera arriba.</p></div>'}
  ${pk.length?`<div class="cd"><h3>Packing list · ${pk.length} cajas</h3><div class="tbl"><table><thead><tr><th>No.</th><th>Piezas vivas</th><th>Lote</th><th>Categoría</th><th>Cliente</th><th>Destino</th></tr></thead><tbody>${pk.map((x,i)=>`<tr><td>${i+1}</td><td>${x.b.c}</td><td>${E(x.l)}</td><td>${RC[x.b.k][0]}</td><td><b>${E(x.l2.cli)}</b></td><td>${x.l2.city}</td></tr>`).join('')}</tbody></table></div></div>`:''}</div>`}
 document.addEventListener('click',e=>{const x=e.target.closest('[data-oa]');if(!x)return;const[a,v]=x.dataset.oa.split(':'),o=ST.OR.find(q=>q.id==V.id);
- if(a=='new'){const d=document.getElementById('no_etd').value;if(!d)return toast('Indica la fecha del empaque (ETD).');const id=Math.max(0,...ST.OR.map(q=>q.id))+1;ST.OR.push({id,etd:d,lines:[],sh:{}});save();return go('orden:'+id)}
+ if(a=='new'){const d=document.getElementById('no_etd').value;if(!d)return toast('Indica la fecha del empaque (ETD).');const id=uidN();ST.OR.push({id,etd:d,lines:[],sh:{}});save();return go('orden:'+id)}
  if(!o)return;const L=id=>o.lines.find(l=>l.id==+id);
  if(a=='ln'){const cli=OD.cli.trim(),n=Math.round(+OD.n);if(!cli||!(n>0))return toast('Indica el cliente final y cuántas cajas.');if(!consFor(OD.city).some(([,i])=>i==OD.cons))return toast('Elige un consignatario para esa ciudad.');{const gi=(o.sh||{})[OD.city+'|'+OD.cons];if(gi!=null&&ST.P[gi]&&ST.P[gi].closed)return toast('No se puede: el embarque de ese destino ya está cerrado. Reábrelo en Embarque o crea otra orden para esas cajas.')}
   o.lines.push({id:Math.max(0,...o.lines.map(l=>l.id))+1,city:OD.city,cons:OD.cons,cli,boxes:n});syncShip(o,OD.city,OD.cons);OD.cli='';OD.n='';save();toast('✔ Línea agregada');return render()}
@@ -810,55 +876,225 @@ function saveLot(){const o=g('fo').trim(),t=g('ft'),dt=g('fd'),tt=g('ftt'),de=g(
  else{const l=g('fl').trim().toUpperCase(),ks=S.map((s,i)=>+g('fk'+i)||0);if(!l)return fail('Escribe el lote de recepción.','fl');if(R_(l))return fail('Ese lote ya existe.','fl');if(ks.every(k=>k<=0))return fail('Captura al menos una talla con kg.','fk0');
   const id=newLotId();ST.R.push({id,lot:l,...meta,final:null,closed:false});ST.B[l]=[];ks.forEach((k,i)=>k>0&&post('RECEPCION',l,S[i],k,0,id));V={v:'lote',id:l}}
  form=null;msg='';save();toast('✔ Guardado');render()}
-function migratePK(){ST.PK=1;ST.BN=ST.BN||0;for(const l in ST.B){ST.B[l]=ST.B[l].filter(b=>b.c>0&&b.k);ST.B[l].forEach(b=>{if(!b.seq)b.seq=++ST.BN})}delete ST.cur;save()}
+function migratePK(){ST.PK=1;ST.BN=ST.BN||0;for(const l in ST.B){ST.B[l]=ST.B[l].filter(b=>b.c>0&&b.k);ST.B[l].forEach(b=>{if(!b.seq)b.seq=uidN()})}delete ST.cur;save()}
 function seed(){return {PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,
  T:[],RN:120,U:[]};}
-function load(){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.L){if(!j.E0){Object.assign(j,{L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,cur:null,E0:1})}return j}}catch(e){}return seed()}
+function load(){if(CLOUD){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.L&&j.R)return j}catch(e){}try{localStorage.removeItem(SINCE_KEY)}catch(e){}return seed()}try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.L){if(!j.E0){Object.assign(j,{L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,cur:null,E0:1})}return j}}catch(e){}return seed()}
 /* ===== Seguridad y datos (correcciones del /review) ===== */
-const SK=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0xfc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x6ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2],SH=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
-function sha256(str){const b=new TextEncoder().encode(str),l=b.length,n=((l+9+63)>>6)<<6,m=new Uint8Array(n);m.set(b);m[l]=0x80;const dv=new DataView(m.buffer);dv.setUint32(n-4,(l*8)>>>0);dv.setUint32(n-8,Math.floor(l/0x20000000));
- const w=new Uint32Array(64),H=SH.slice();for(let i=0;i<n;i+=64){for(let t=0;t<16;t++)w[t]=dv.getUint32(i+t*4);for(let t=16;t<64;t++){const a=w[t-15],c=w[t-2],s0=(a>>>7|a<<25)^(a>>>18|a<<14)^(a>>>3),s1=(c>>>17|c<<15)^(c>>>19|c<<13)^(c>>>10);w[t]=(w[t-16]+s0+w[t-7]+s1)|0}
-  let[a,b2,c,d,e,f,g,h]=H;for(let t=0;t<64;t++){const S1=(e>>>6|e<<26)^(e>>>11|e<<21)^(e>>>25|e<<7),ch=(e&f)^(~e&g),t1=(h+S1+ch+SK[t]+w[t])|0,S0=(a>>>2|a<<30)^(a>>>13|a<<19)^(a>>>22|a<<10),mj=(a&b2)^(a&c)^(b2&c),t2=(S0+mj)|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b2;b2=a;a=(t1+t2)|0}
-  H[0]=(H[0]+a)|0;H[1]=(H[1]+b2)|0;H[2]=(H[2]+c)|0;H[3]=(H[3]+d)|0;H[4]=(H[4]+e)|0;H[5]=(H[5]+f)|0;H[6]=(H[6]+g)|0;H[7]=(H[7]+h)|0}
- return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
-const PWD0=['admin123','piso123','ver123','123456','1234567','12345678','123456789','password','contraseña','propesa','propesa1','langosta','qwerty','abc123','111111','000000'],pwHash=(id,pw)=>sha256('propesa:'+id+':'+pw);
-/* Las contraseñas ya no se guardan en texto: solo su huella (hash). Las de prueba quedan marcadas para cambiarlas. */
-function migrateUsers(){let ch=false;(ST.U||[]).forEach(u=>{if(u.pw!=null){u.pwh=pwHash(u.id,String(u.pw));u.dflt=PWD0.includes(String(u.pw));delete u.pw;ch=true}});if(ch)save()}
 /* Fecha local (no UTC): evita que después de las 5 pm en Tijuana salga el día siguiente. */
 const dLoc=(d=new Date())=>{const z=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())};
 /* Número de lote interno que solo crece (no se repite aunque se borren lotes). */
 function newLotId(){ST.RN=Math.max(ST.RN||0,120,...ST.R.map(r=>+String(r.id||'').replace(/\D/g,'')||0))+1;return 'R-'+String(ST.RN).padStart(4,'0')}
 /* Guardado: si la memoria del equipo se llena, se avisa en grande y no se dice "Guardado". */
 let SAVE_ERR=false;
-function save(){try{localStorage.setItem(KEY,JSON.stringify(ST));if(SAVE_ERR){SAVE_ERR=false;setTimeout(()=>{toast('✔ Ya se pudo guardar de nuevo');if(me)render()},0)}return true}
+function save(){if(CLOUD){syncStage();cacheSoon();syncSoon();if(SAVE_ERR&&saveOut()){SAVE_ERR=false}return!SAVE_ERR}try{localStorage.setItem(KEY,JSON.stringify(ST));if(SAVE_ERR){SAVE_ERR=false;setTimeout(()=>{toast('✔ Ya se pudo guardar de nuevo');if(me)render()},0)}return true}
  catch(e){const was=SAVE_ERR;SAVE_ERR=true;setTimeout(()=>{if(me&&!was){render();const m=document.querySelector('main');if(m)m.scrollTop=0}toast('No se guardó en este equipo: la memoria está llena.')},0);return false}}
-function topBanners(){let h='';
+function topBanners(){let h=syncBanners();
+ /* Dos equipos pueden sacar del mismo lote a la vez (cada uno revisa con sus datos): si la existencia queda negativa, se avisa al Administrador. */
+ const ng=me&&me.role=='admin'?ST.R.filter(r=>S.some(z=>bal(r.lot,z)<0)):[];
+ if(ng.length)h+=`<div class="alb tb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>Existencia negativa en ${ng.length==1?'el lote':ng.length+' lotes:'} ${ng.map(r=>E(r.lot)).join(', ')}</b><p style="margin:4px 0 8px">Se registraron salidas en dos equipos al mismo tiempo. Revisa los movimientos del lote y revierte el que sobra.</p><button class="btn d" data-go="lote:${E(ng[0].lot)}">Ver lote ›</button></div></div>`;
  if(SAVE_ERR)h+=`<div class="alb tb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>NO SE PUDO GUARDAR: la memoria de este equipo está llena</b><p style="margin:4px 0 8px">Lo último que capturaste solo está en pantalla y se perderá si cierras la app. Descarga un respaldo ahora y borra fotos de notas antiguas.</p><div class="bar" style="margin:0"><button class="btn d" data-bk="dl">Descargar respaldo</button><button class="btn s" data-retry="1">Reintentar guardar</button></div></div></div>`;
- const df=me&&me.role=='admin'?ST.U.filter(u=>u.dflt):[];if(df.length)h+=`<div class="alb tb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${df.length} ${df.length==1?'usuario tiene':'usuarios tienen'} la contraseña de prueba</b><p style="margin:4px 0 8px">Cualquiera que la conozca puede entrar. Cámbiala antes de compartir el link: ${df.map(u=>E(u.name)).join(', ')}.</p><button class="btn d" data-go="admin">Cambiar contraseñas ›</button></div></div>`;
  return h?`<div class="wrap" style="padding-bottom:0">${h}</div>`:''}
 document.addEventListener('click',e=>{if(e.target.closest('[data-retry]')){if(save())render();}});
 /* Respaldo: se revisa campo por campo antes de cargarlo (evita datos dañados o código escondido). */
-function cleanST(d){const str=(v,m=200)=>String(v==null?'':v).slice(0,m),id=(v,m=60)=>str(v,m).replace(/[<>"'`&\\]/g,''),num=(v,df=0)=>{const n=+v;return isFinite(n)?n:df},nn=v=>v==null||v===''||!isFinite(+v)?null:+v,int=(v,df=0)=>Math.round(num(v,df)),
+function cleanST(d,noU){const str=(v,m=200)=>String(v==null?'':v).slice(0,m),id=(v,m=60)=>str(v,m).replace(/[<>"'`&\\]/g,''),num=(v,df=0)=>{const n=+v;return isFinite(n)?n:df},nn=v=>v==null||v===''||!isFinite(+v)?null:+v,int=(v,df=0)=>Math.round(num(v,df)),
   date=v=>/^\d{4}-\d{2}-\d{2}$/.test(v)?v:'',img=v=>/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(v);
  const lotsOk=new Set(),R=[];(Array.isArray(d.R)?d.R:[]).forEach(r=>{if(!r)return;const lot=id(r.lot);if(!lot||lotsOk.has(lot))return;lotsOk.add(lot);
   R.push({id:id(r.id,20),lot,origin:str(r.origin),tank:TK.includes(r.tank)?r.tank:'T1',rdate:date(r.rdate),time:/^\d{2}:\d{2}$/.test(r.time)?r.time:'',date:id(r.date,12),tempT:nn(r.tempT),tempP:id(r.tempP,20),kgbox:nn(r.kgbox),desp:nn(r.desp),final:nn(r.final),closed:!!r.closed})});
- const P=(Array.isArray(d.P)?d.P:[]).filter(Boolean).map(p=>({n:id(p.n,90),z0:id(p.z0,20),col:/^#[0-9a-fA-F]{3,8}$/.test(p.col)?p.col:XC[0],exp:num(p.exp),h:Math.max(0,int(p.h)),z:[0,1,2,3].map(i=>Math.max(0,int((p.z||[])[i]))),c:(Array.isArray(p.c)?p.c:[]).slice(0,10).map(x=>[id((x||[])[0],40),num((x||[])[1]),int((x||[])[2])]),alive:nn(p.alive),closed:!!p.closed}));
+ const P=(Array.isArray(d.P)?d.P:[]).filter(Boolean).map((p,i)=>({u:/^[0-9a-z]{6,30}$/.test(p.u)?p.u:legU(i),n:id(p.n,90),z0:id(p.z0,20),col:/^#[0-9a-fA-F]{3,8}$/.test(p.col)?p.col:XC[0],exp:num(p.exp),h:Math.max(0,int(p.h)),z:[0,1,2,3].map(i=>Math.max(0,int((p.z||[])[i]))),c:(Array.isArray(p.c)?p.c:[]).slice(0,10).map(x=>[id((x||[])[0],40),num((x||[])[1]),int((x||[])[2])]),alive:nn(p.alive),closed:!!p.closed}));
  const pIdx=v=>{const n=nn(v);return n!=null&&Number.isInteger(n)&&n>=0&&n<P.length?n:null};
- const B={};lotsOk.forEach(l=>{B[l]=((d.B||{})[l]||[]).filter(b=>b&&int(b.c)>=1&&['R','V','B'].includes(b.k)).map(b=>({c:int(b.c),k:b.k,d:pIdx(b.d),o:/^\d+\.\d+$/.test(b.o)?b.o:null,seq:int(b.seq),...(nn(b.ps)!=null?{ps:int(b.ps)}:{})}))});
+ const B={};lotsOk.forEach(l=>{B[l]=((d.B||{})[l]||[]).filter(b=>b&&int(b.c)>=1&&Object.keys(RC).includes(b.k)).map(b=>({c:int(b.c),k:b.k,d:pIdx(b.d),o:/^\d+\.\d+$/.test(b.o)?b.o:null,seq:int(b.seq),...(nn(b.ps)!=null?{ps:int(b.ps)}:{})}))});
  const OR=(Array.isArray(d.OR)?d.OR:[]).filter(Boolean).map(o=>{const sh={};Object.entries(o.sh||{}).forEach(([k,v])=>{if(/^[A-Z]{3}\|\d+$/.test(k)&&pIdx(v)!=null)sh[k]=pIdx(v)});
   return{id:int(o.id),etd:date(o.etd),sh,lines:(Array.isArray(o.lines)?o.lines:[]).filter(l=>l&&PORTS[l.city]&&CONS[int(l.cons,-1)]).map(l=>({id:int(l.id),city:l.city,cons:int(l.cons),cli:str(l.cli,6).toUpperCase().replace(/[^A-Z0-9]/g,'')||'SIN',boxes:Math.max(1,int(l.boxes,1))}))}});
  const L=(Array.isArray(d.L)?d.L:[]).filter(x=>x&&lotsOk.has(id(x.lot))&&S.includes(x.size)&&['RECEPCION','SALIDA_EMBARQUE','REVERSA'].includes(x.type)).map(x=>({id:int(x.id),t:id(x.t,30),type:x.type,lot:id(x.lot),size:x.size,m:int(x.m),rev:nn(x.rev),rc:id(x.rc,20)}));
  const M={};Object.entries(d.M||{}).forEach(([k,arr])=>{if(Array.isArray(arr))M[id(k,90)]=arr.filter(Boolean).map(n=>({id:num(n.id),t:id(n.t,30),by:str(n.by,80),text:str(n.text,3000),ref:str(n.ref,120),imgs:(Array.isArray(n.imgs)?n.imgs:[]).filter(img).slice(0,6)}))});
- const O=(Array.isArray(d.O)?d.O:[]).filter(Boolean).slice(0,200).map(o=>({subject:str(o.subject,200),t:id(o.t,30),to:(Array.isArray(o.to)?o.to:[]).map(x=>str(x,120)),body:str(o.body,20000),...(o.pn?{pn:id(o.pn,90),att:id(o.att,140)}:{})}));
- const U=(Array.isArray(d.U)?d.U:[]).filter(u=>u&&ROLE[u.role]&&(u.pw!=null||/^[0-9a-f]{64}$/.test(u.pwh))).map(u=>({id:int(u.id),name:str(u.name,80),email:str(u.email,120),role:u.role,notify:!!u.notify,...(u.pw!=null?{pw:str(u.pw,100)}:{pwh:u.pwh,dflt:!!u.dflt})}));
- if(!U.some(u=>u.role=='admin'))throw new Error('sin administrador');
+ const O0=(Array.isArray(d.O)?d.O:[]).filter(Boolean).slice(0,200),O=O0.map((o,i)=>({u:/^[0-9a-z]{6,30}$/.test(o.u)?o.u:legU(O0.length-1-i),subject:str(o.subject,200),t:id(o.t,30),to:(Array.isArray(o.to)?o.to:[]).map(x=>str(x,120)),body:str(o.body,20000),...(o.pn?{pn:id(o.pn,90),att:id(o.att,140)}:{})}));
+ const U=(Array.isArray(d.U)?d.U:[]).filter(u=>u&&ROLE[u.role]).map(u=>({id:int(u.id),name:str(u.name,80),email:str(u.email,120),role:u.role,notify:!!u.notify}));
+ if(!noU&&!U.some(u=>u.role=='admin'))throw new Error('sin administrador');
  const Tt=(Array.isArray(d.T)?d.T:[]).filter(x=>x&&TK.includes(x.tank)&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(x.t)).map(x=>({id:num(x.id),t:x.t,tank:x.tank,a:nn(x.a),s:nn(x.s),p:nn(x.p),by:str(x.by,80)}));
  return{T:Tt,PK:1,ORc:1,E0:1,BN:Math.max(int(d.BN),...Object.values(B).flat().map(b=>b.seq),0),N:Math.max(int(d.N),...L.map(x=>x.id),0),RN:int(d.RN),R,L,B,OR,P,O,M,U}}
 
-ST=load();migrateUsers();
+
+/* ===== Base compartida (Supabase) · v1.4.0 =====
+   Todos los equipos y todas las cuentas ven lo mismo. Cada lote, movimiento, caja, orden, embarque, informe, lectura y nota
+   es un registro de public.app_records: 'R/<lote>', 'L/<id>', 'B/<seq>', 'OR/<id>', 'P/<u>', 'O/<u>', 'T/<id>', 'M/<id>'.
+   Local primero: save() guarda en el equipo, syncStage() calcula qué registros cambiaron y flush() los sube; cada pocos segundos
+   pull() baja lo que capturaron otros y decodeST() vuelve a armar ST. Los embarques viajan con un id fijo (p.u) y al armar ST
+   se traducen a índices, así b.d, o.sh y 'emb:<i>' funcionan igual que antes. Lo que no se puede colocar todavía (una caja de
+   un lote que aún no llega) se guarda tal cual en ST._orph y se vuelve a subir igual, para no borrarlo por error. */
+/* Lo que llega de la base es de fuera: se revisa como un respaldo (mismas reglas que cleanST).
+   wp quita el carácter nulo (la base lo rechaza y trabaría la cola). wi además quita < > " ' ` & \ de claves, fechas y nombres
+   que se pintan en pantalla sin escapar; los textos libres (origen, notas, informes) se escapan con E() al pintarse. */
+const wp=v=>v==null?null:typeof v=='number'?(isFinite(v)?v:null):typeof v=='string'?v.replace(/\u0000/g,'').slice(0,20000):typeof v=='boolean'?v:null;
+const wpi=v=>{const n=Math.round(+v);return isFinite(n)?n:0};
+const wi=v=>{v=wp(v);return typeof v=='string'?v.replace(/[<>"'`&\\]/g,''):v},ws=v=>wi(String(v||'')),
+ /* número o null (temperaturas, kg): nunca texto, para no pintar código que llegó de otro equipo */ wnn=v=>{const n=+v;return v===''||v==null||typeof v=='boolean'||!isFinite(n)?null:n},wn0=v=>{const n=+v;return isFinite(n)&&typeof v!='boolean'?n:0},
+ wcolor=v=>/^#[0-9a-fA-F]{3,8}$/.test(v)?v:XC[0],wimg=v=>typeof v=='string'&&/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(v);
+const WN={
+ R:r=>({id:wi(r.id),lot:ws(r.lot),origin:wp(r.origin),tank:wi(r.tank),rdate:wi(r.rdate),time:wi(r.time),date:wi(r.date),tempT:wnn(r.tempT),tempP:wi(r.tempP),kgbox:wnn(r.kgbox),desp:wnn(r.desp),final:wnn(r.final),closed:!!r.closed}),
+ L:x=>({id:wpi(x.id),t:wi(x.t),type:wi(x.type),lot:ws(x.lot),size:wi(x.size),m:wpi(x.m),rev:wnn(x.rev),rc:wi(x.rc)}),
+ B:b=>{const o={lot:ws(b.lot),c:wpi(b.c),k:wi(b.k),d:typeof b.d=='string'?wi(b.d):null,o:wi(b.o),seq:wpi(b.seq)};if(b.ps!=null)o.ps=wpi(b.ps);return o},
+ OR:o=>{const s=o.sh&&typeof o.sh=='object'?o.sh:{},sh={};Object.keys(s).sort().forEach(k=>{if(typeof s[k]=='string')sh[wi(k)]=wi(s[k])});
+  return{id:wpi(o.id),etd:wi(o.etd),lines:(Array.isArray(o.lines)?o.lines:[]).filter(l=>l&&typeof l=='object').map(l=>({id:wpi(l.id),city:wi(l.city),cons:wpi(l.cons),cli:wi(l.cli),boxes:wpi(l.boxes)})),sh}},
+ P:p=>({u:ws(p.u),n:wi(p.n),z0:wi(p.z0),col:wcolor(p.col),exp:wn0(p.exp),h:wpi(p.h),z:[0,1,2,3].map(i=>wpi((Array.isArray(p.z)?p.z:[])[i])),c:(Array.isArray(p.c)?p.c:[]).filter(Array.isArray).map(x=>[wi(x[0]),wnn(x[1]),wnn(x[2])]),alive:wnn(p.alive),closed:!!p.closed}),
+ O:o=>{const r={u:ws(o.u),subject:wp(o.subject),t:wi(o.t),to:(Array.isArray(o.to)?o.to:[]).map(wp),body:wp(o.body)};if(o.pn!=null){r.pn=wi(o.pn);r.att=wi(o.att)}return r},
+ T:x=>({id:wpi(x.id),t:wi(x.t),tank:wi(x.tank),a:wnn(x.a),s:wnn(x.s),p:wnn(x.p),by:wp(x.by)}),
+ M:n=>({key:ws(n.key),id:wpi(n.id),t:wi(n.t),by:wp(n.by),text:wp(n.text),ref:wp(n.ref),imgs:(Array.isArray(n.imgs)?n.imgs:[]).filter(wimg).slice(0,6)})
+};
+const wcol=k=>k.slice(0,k.indexOf('/')),wnorm=(k,v)=>{const f=WN[wcol(k)];return f?f(v):v};
+function ensureIds(){(ST.P||[]).forEach((p,i)=>{if(!p.u)p.u=legU(i)});const n=(ST.O||[]).length;(ST.O||[]).forEach((o,i)=>{if(!o.u)o.u=legU(n-1-i)})}
+let ENC_C=new Map();
+/* ST → Map(clave → [texto JSON, objeto]). Las cajas se recalculan solo en los lotes que cambiaron (ENC_C). */
+function encodeST(){ensureIds();const out=new Map(),put=(k,o)=>out.set(k,[JSON.stringify(o),o]),pu=ST.P.map(p=>p.u),sig=pu.join(',');
+ ST.R.forEach(r=>put('R/'+r.lot,WN.R(r)));
+ ST.L.forEach(x=>put('L/'+x.id,WN.L(x)));
+ const nc=new Map();for(const l in ST.B){const a=ST.B[l]||[],fp=JSON.stringify(a);let c=ENC_C.get(l);
+  if(!c||c.fp!==fp||c.sig!==sig)c={fp,sig,list:a.map(b=>{const o=WN.B({lot:l,c:b.c,k:b.k,d:b.d!=null&&pu[b.d]!=null?pu[b.d]:(b._d||null),o:b.o,seq:b.seq,ps:b.ps});return['B/'+b.seq,JSON.stringify(o),o]})};
+  nc.set(l,c);c.list.forEach(([k,s,o])=>out.set(k,[s,o]))}ENC_C=nc;
+ ST.OR.forEach(o=>{const sh={...(o._sh||{})};for(const k in (o.sh||{})){const u=pu[o.sh[k]];if(u!=null)sh[k]=u}put('OR/'+o.id,WN.OR({...o,sh}))});
+ ST.P.forEach(p=>put('P/'+p.u,WN.P(p)));
+ ST.O.forEach(o=>put('O/'+o.u,WN.O(o)));
+ (ST.T||[]).forEach(x=>put('T/'+x.id,WN.T(x)));
+ const M=ST.M||{};for(const key in M){const m=/^emb:(\d+)$/.exec(key),wk=m&&pu[+m[1]]!=null?'emb:@'+pu[+m[1]]:key;(M[key]||[]).forEach(n=>put('M/'+n.id,WN.M({...n,key:wk})))}
+ const Or=ST._orph||{};for(const k in Or)if(!out.has(k))out.set(k,[JSON.stringify(Or[k]),Or[k]]);
+ return out}
+/* Registros → ST (con el mismo orden en todos los equipos). */
+function decodeST(src){const R=[],L=[],Bx=[],OR=[],P=[],O=[],T=[],Mn=[],orph={};
+ for(const [k,o] of src){if(!o)continue;switch(wcol(k)){case'R':R.push(o);break;case'L':L.push(o);break;case'B':Bx.push(o);break;case'OR':OR.push(o);break;case'P':P.push(o);break;case'O':O.push(o);break;case'T':T.push(o);break;case'M':Mn.push(o);break;default:orph[k]=o}}
+ const rn=r=>+String(r.id||'').replace(/\D/g,'')||0,cmp=(a,b)=>a<b?-1:a>b?1:0;
+ R.sort((a,b)=>rn(a)-rn(b)||cmp(a.lot,b.lot));P.sort((a,b)=>cmp(a.u,b.u));const pix=new Map(P.map((p,i)=>[p.u,i]));
+ const lots=new Set(R.map(r=>r.lot)),B={};R.forEach(r=>B[r.lot]=[]);
+ Bx.forEach(b=>{if(!lots.has(b.lot)){orph['B/'+b.seq]=b;return}const x={c:b.c,k:b.k,d:b.d!=null&&pix.has(b.d)?pix.get(b.d):null,o:b.o,seq:b.seq};if(b.ps!=null)x.ps=b.ps;if(b.d!=null&&!pix.has(b.d))x._d=b.d;B[b.lot].push(x)});
+ for(const l in B)B[l].sort((a,b)=>a.seq-b.seq);
+ const L2=[];L.forEach(x=>{if(!lots.has(x.lot)){orph['L/'+x.id]=x;return}L2.push({...x})});L2.sort((a,b)=>a.id-b.id);
+ const OR2=OR.map(o=>{const sh={},us={};for(const k in o.sh){const i=pix.get(o.sh[k]);if(i!=null)sh[k]=i;else us[k]=o.sh[k]}const r={id:o.id,etd:o.etd,lines:o.lines.map(l=>({...l})),sh};if(Object.keys(us).length)r._sh=us;return r}).sort((a,b)=>a.id-b.id);
+ const M={};Mn.slice().sort((a,b)=>b.id-a.id).forEach(n=>{let key=n.key;const m=/^emb:@(.+)$/.exec(key);if(m&&pix.has(m[1]))key='emb:'+pix.get(m[1]);(M[key]=M[key]||[]).push({id:n.id,t:n.t,by:n.by,text:n.text,ref:n.ref,imgs:n.imgs.slice()})});
+ return{PK:1,ORc:1,E0:1,BN:0,N:0,RN:R.reduce((a,r)=>Math.max(a,rn(r)),120),R:R.map(r=>({...r})),L:L2,B,OR:OR2,P:P.map(p=>({...p,z:p.z.slice(),c:p.c.map(x=>x.slice())})),
+  O:O.map(o=>({...o,to:o.to.slice()})).sort((a,b)=>cmp(b.u,a.u)),T:T.map(x=>({...x})).sort((a,b)=>a.id-b.id),M,U:ST&&ST.U||[],_orph:orph}}
+
+const SB_KEY='propesa-sb',OUT_KEY='propesa-out',OUTB_KEY='propesa-outb',SINCE_KEY='propesa-c1-since';
+let SBS=null,SHW=null,OUT={},OUTB={},NEEDSETUP=false,LOGIN_MSG='',LOGIN_EM='',RFP=null;
+let SYNC_BUSY=false,SYNC_AGAIN=false,SYNC_T=null,FLUSH_T=null,SYNC_OK=0,SYNC_ERR=null,SYNC_FIRST=false,PROF_T=0,SOFT_P=false;
+if(CLOUD){try{SBS=JSON.parse(localStorage.getItem(SB_KEY)||'null')}catch(e){}try{OUT=JSON.parse(localStorage.getItem(OUT_KEY)||'{}')||{};OUTB=JSON.parse(localStorage.getItem(OUTB_KEY)||'{}')||{}}catch(e){OUT={};OUTB={}}}
+function saveOut(){try{localStorage.setItem(OUT_KEY,JSON.stringify(OUT));localStorage.setItem(OUTB_KEY,JSON.stringify(OUTB));return true}catch(e){return false}}
+const outN=()=>Object.keys(OUT).length,hasOwn=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
+/* Compara ST con lo último que se sabe del servidor y anota en OUT lo que cambió (null = borrado).
+   OUTB guarda cómo estaba el registro en la base antes del primer cambio: la base solo acepta el cambio si sigue igual (push).
+   Consulta no anota nada: vuelve a bajar todo para regresar a lo de la base, y no toca lo pendiente de otro usuario. */
+function syncStage(){if(!CLOUD||!SHW)return 0;const enc=encodeST(),ro=me&&me.role=='consulta';let n=0;
+ const put=(k,s,p)=>{n++;if(ro)return;if(!hasOwn(OUT,k))OUTB[k]=p?p[0]:null;OUT[k]=s};
+ for(const [k,v] of enc){const p=SHW.get(k);if(!p||p[0]!==v[0])put(k,v[0],p)}
+ for(const [k,p] of SHW)if(!enc.has(k))put(k,'null',p);
+ SHW=enc;if(ro){if(n)PEND_SINCE=0;return 0}
+ if(n&&!saveOut()&&!navigator.onLine)SAVE_ERR=true;return n}
+let CACHE_T=null,PEND_SINCE=null;
+function cacheSoon(){clearTimeout(CACHE_T);CACHE_T=setTimeout(cacheST,1500)}
+function cacheST(){clearTimeout(CACHE_T);CACHE_T=null;if(PEND_SINCE!=null&&cacheST0()){try{localStorage.setItem(SINCE_KEY,String(PEND_SINCE))}catch(e){}PEND_SINCE=null;return true}return cacheST0()}
+function cacheST0(){try{localStorage.setItem(KEY,JSON.stringify(ST));return true}catch(e){try{localStorage.removeItem(KEY);localStorage.removeItem(SINCE_KEY)}catch(z){}return false}}
+/* Cambios de otros equipos → ST. Lo que este equipo aún no sube (OUT) gana. */
+function applyRows(rows){const diff=()=>{const ch=[];
+ for(const r of rows){if(!r||typeof r.k!='string'||Object.prototype.hasOwnProperty.call(OUT,r.k))continue;
+  const o=r.v==null||typeof r.v!='object'?null:wnorm(r.k,r.v),s=o==null?null:JSON.stringify(o),p=SHW.get(r.k);
+  if(s==null?!p:(p&&p[0]===s))continue;ch.push([r.k,s,o])}return ch};
+ if(!diff().length)return false;syncStage();const ch=diff();if(!ch.length)return false;
+ const pv=V.v=='emb'&&ST.P[+V.id]?ST.P[+V.id].u:null;
+ ch.forEach(([k,s,o])=>{if(s==null)SHW.delete(k);else SHW.set(k,[s,o])});
+ const src=new Map();for(const [k,v] of SHW)src.set(k,v[1]);
+ ST=decodeST(src);if(pv){const i=ST.P.findIndex(p=>p.u===pv);if(i>=0)V.id=String(i)}
+ fixRoute();cacheSoon();return true}
+function fixRoute(){const v=V.v,id=V.id==null?'':String(V.id),p=id.split('.');
+ if(v=='lote'&&!ST.R.some(r=>r.lot===id))V={v:'recepcion',id:null};
+ else if(v=='orden'&&!ST.OR.some(o=>String(o.id)===id))V={v:'ordenes',id:null};
+ else if(v=='emb'&&!ST.P[+id])V={v:'embarques',id:null};
+ else if((v=='empacar'||v=='pemp')&&id){const o=ST.OR.find(o=>String(o.id)===p[0]);if(!o||!o.lines.some(l=>String(l.id)===p[1]))V={v:v=='pemp'?'piso':'empaque',id:null}}}
+
+/* --- Conexión con Supabase (sin librerías) --- */
+function setSes(j){SBS={at:j.access_token,rt:j.refresh_token,exp:j.expires_at?j.expires_at*1000:Date.now()+(j.expires_in||3600)*1000,uid:(j.user&&j.user.id)||(SBS&&SBS.uid)};try{localStorage.setItem(SB_KEY,JSON.stringify(SBS))}catch(e){}}
+async function sbAuth(grant,body){const r=await fetch(SBC.url+'/auth/v1/token?grant_type='+grant,{method:'POST',headers:{apikey:SBC.key,'Content-Type':'application/json'},body:JSON.stringify(body)});
+ const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error_description||j.msg||j.message||j.error||('HTTP '+r.status));e.status=r.status;e.code=j.error_code||j.error||'';throw e}return j}
+async function sbToken(){if(!SBS){const e=new Error('Sin sesión');e.status=401;e.nos=1;throw e}if(Date.now()<SBS.exp-60000)return SBS.at;
+ if(!RFP)RFP=sbAuth('refresh_token',{refresh_token:SBS.rt}).then(setSes).catch(e=>{if(e.status>=400&&e.status<500&&e.status!=429)signOut('Tu sesión venció. Vuelve a entrar.',true);throw e}).finally(()=>{RFP=null});
+ await RFP;return SBS.at}
+async function sbFetch(path,o={},again){const t=await sbToken();let r;
+ try{r=await fetch(SBC.url+path,{...o,headers:{apikey:SBC.key,Authorization:'Bearer '+t,'Content-Type':'application/json',...(o.headers||{})}})}catch(x){const e=new Error('Sin conexión');e.status=null;throw e}
+ if(r.status===401&&!again&&SBS){SBS.exp=0;return sbFetch(path,o,true)}
+ if(!r.ok){const j=await r.json().catch(()=>({}));const e=new Error(j.message||j.msg||j.error||('HTTP '+r.status));e.status=r.status;e.code=j.code||'';throw e}return r}
+const sbPost=async(path,body)=>(await sbFetch(path,{method:'POST',body:JSON.stringify(body)})).json();
+async function fnUsers(action,body,anon){const h={apikey:SBC.key,'Content-Type':'application/json'};if(!anon)h.Authorization='Bearer '+await sbToken();let r;
+ try{r=await fetch(SBC.url+'/functions/v1/usuarios',{method:'POST',headers:h,body:JSON.stringify({action,...body})})}catch(x){const e=new Error('No hay conexión. Inténtalo otra vez cuando haya internet.');e.status=null;throw e}
+ const j=await r.json().catch(()=>({}));if(!r.ok){const e=new Error(j.error||('No se pudo (error '+r.status+').'));e.status=r.status;throw e}return j}
+async function loadProfiles(){const a=await (await sbFetch('/rest/v1/profiles?select=id,name,email,role,notify&order=name.asc')).json();
+ const U=(Array.isArray(a)?a:[]).filter(u=>u&&ROLE[u.role]).map(u=>({id:String(u.id),name:String(u.name||''),email:String(u.email||''),role:u.role,notify:!!u.notify}));
+ const ch=JSON.stringify(U)!==JSON.stringify(ST.U);ST.U=U;
+ if(me){const m=U.find(u=>u.id===me.id);if(!m){signOut('Tu usuario ya no tiene acceso. Habla con el Administrador.',true);return false}if(JSON.stringify(m)!==JSON.stringify(me))me=m}
+ if(ch){cacheST();if(me)softRender()}return true}
+const authMsg=e=>!e||e.status==null?'No hay conexión con la base de datos. Revisa el internet e inténtalo otra vez.':/invalid|credentials/i.test(e.code+' '+e.message)?'Correo o contraseña incorrectos.':/confirm/i.test(e.code+' '+e.message)?'Tu correo no está confirmado. Pide al Administrador que te vuelva a dar de alta.':e.status==429?'Demasiados intentos. Espera un minuto e inténtalo otra vez.':'No se pudo entrar: '+e.message;
+async function cloudLogin(){const em=g('le').trim().toLowerCase(),pw=g('lp'),m=document.getElementById('lm'),b=document.querySelector('[data-a=lg]');LOGIN_EM=em;
+ if(!em||!pw){m.textContent='Escribe tu correo y tu contraseña.';return}if(b.disabled)return;b.disabled=true;const bt=b.textContent;b.textContent='Entrando…';m.textContent='';
+ try{let j;try{j=await sbAuth('password',{email:em,password:pw})}catch(x){if(x.status==null||x instanceof TypeError){x.status=null}throw x}
+  setSes(j);await loadProfiles();const u=ST.U.find(x=>x.id===SBS.uid);
+  if(!u){signOut('Tu cuenta todavía no tiene acceso. Pide al Administrador que te dé de alta en la plataforma.',true);return}
+  me=u;LOGIN_MSG='';setPiso(u.role=='piso');PEN=null;V={v:PISO?'piso':'inicio',id:null};LAST_ACT=Date.now();render();startSync()}
+ catch(e){if(!b.isConnected)return;b.disabled=false;b.textContent=bt;m.textContent=authMsg(e)}}
+async function cloudSetup(n,e,pw){const m=document.getElementById('lm'),b=document.querySelector('[data-a=s0]');b.disabled=true;
+ try{await fnUsers('setup',{name:n,email:e,password:pw},true);setSes(await sbAuth('password',{email:e,password:pw}));await loadProfiles();
+  me=ST.U.find(x=>x.id===SBS.uid)||null;NEEDSETUP=false;setPiso(false);V={v:'inicio',id:null};toast('✔ Administrador creado');render();if(me)startSync()}
+ catch(x){b.disabled=false;m.textContent=x.message||authMsg(x)}}
+async function checkSetup(){if(!CLOUD||me)return;try{const r=await fetch(SBC.url+'/rest/v1/rpc/has_admin',{method:'POST',headers:{apikey:SBC.key,'Content-Type':'application/json'},body:'{}'});if(r.ok&&(await r.json())===false&&!me){NEEDSETUP=true;render()}}catch(e){}}
+function dropSes(){const s=SBS;SBS=null;try{localStorage.removeItem(SB_KEY)}catch(e){}if(s&&s.at)fetch(SBC.url+'/auth/v1/logout',{method:'POST',headers:{apikey:SBC.key,Authorization:'Bearer '+s.at}}).catch(()=>{})}
+/* Cerrar sesión (también la usa el modo local de pruebas). */
+function signOut(t,quiet){if(CLOUD&&!quiet&&outN()){if(!confirm(`Hay ${outN()} ${outN()==1?'cambio que todavía no se sube':'cambios que todavía no se suben'} a la base compartida (falta internet). Se quedan guardados en este equipo y se suben cuando alguien vuelva a entrar aquí. ¿Cerrar sesión?`))return}
+ const go2=()=>{if(CLOUD)dropSes();clearTimeout(SYNC_T);clearTimeout(FLUSH_T);closePmenu(false);closeSettings();me=null;PEN=null;LOGIN_MSG=t||'';render();if(CLOUD)checkSetup()};
+ if(CLOUD&&SBS&&outN()&&!quiet)flush().catch(()=>{}).finally(go2);else go2()}
+
+/* Subir lo pendiente (en tandas) y bajar lo nuevo. */
+/* Devuelve true si otro equipo había cambiado algo antes: ese registro se queda como está en la base.
+   shortcut: si el envío se corta después de guardar y el registro se vuelve a cambiar antes de reintentar, el reintento choca y gana la base; es raro. */
+async function flush(){if(!me||me.role=='consulta')return false;const ks=Object.keys(OUT);let i=0,lost=[];
+ while(i<ks.length){const batch=[],sent=[];let sz=0;
+  while(i<ks.length&&(!batch.length||(sz<1.5e6&&batch.length<500))){const k=ks[i++],s=OUT[k];if(s==null)continue;const r={k,v:JSON.parse(s)};
+   if(hasOwn(OUTB,k))r.b=OUTB[k]==null?null:JSON.parse(OUTB[k]);batch.push(r);sent.push([k,s]);sz+=s.length+k.length+(OUTB[k]||'').length}
+  if(!batch.length)continue;
+  let l;try{l=await sbPost('/rest/v1/rpc/push',{rows:batch})}
+  catch(e){if(e.status!==404)throw e;// shortcut: base sin la migración 20261014b_sin_pisar (sube sin revisar, como la v1.4.0); quitar cuando ya esté aplicada
+   await sbFetch('/rest/v1/app_records?on_conflict=k',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(batch.map(({k,v})=>({k,v})))});l=[]}
+  sent.forEach(([k,s])=>{if(OUT[k]===s){delete OUT[k];delete OUTB[k]}});saveOut();if(Array.isArray(l))lost=lost.concat(l)}
+ if(!lost.length)return false;applyRows(lost);toast('No se guardó tu cambio: otro equipo lo cambió antes. Revisa y vuelve a capturarlo si hace falta.');return true}
+async function pull(){let since=0;try{since=PEND_SINCE!=null?PEND_SINCE:+(localStorage.getItem(SINCE_KEY)||0)||0}catch(e){}let cur=since,safe=since,young=false;const all=[];
+ for(let n=0;n<500;n++){const rows=await sbPost('/rest/v1/rpc/pull',{since:cur,lim:1000});if(!Array.isArray(rows))break;
+  for(const r of rows){all.push(r);if(!young&&r.age>8)safe=r.rev;else young=true}
+  if(rows.length<1000)break;cur=rows[rows.length-1].rev}
+ const ch=all.length?applyRows(all):false;if(safe!==since){PEND_SINCE=safe;cacheSoon()}SYNC_FIRST=true;return ch}
+const offline=()=>!navigator.onLine||!!(SYNC_ERR&&(SYNC_ERR.status==null||SYNC_ERR.status>=500));
+const syncState=()=>[SYNC_FIRST,offline(),!!SYNC_ERR,outN()>0].join();
+async function syncNow(full=true){if(!CLOUD||!SBS||!me)return;if(SYNC_BUSY){SYNC_AGAIN=true;return}SYNC_BUSY=true;const before=syncState();let ch=false;
+ try{let fe=null;try{ch=await flush()}catch(e){if(e&&e.nos)throw e;fe=e}/* aunque no se pueda subir, se sigue bajando lo de los demás */if(full||!SYNC_FIRST)ch=await pull()||ch;if(fe)throw fe;if(full&&me&&Date.now()-PROF_T>60000){PROF_T=Date.now();await loadProfiles()}SYNC_OK=Date.now();SYNC_ERR=null}
+ catch(e){if(e&&e.nos)return;SYNC_ERR=e;if(e&&(e.status===403||e.code==='42501')){OUT={};OUTB={};saveOut();PEND_SINCE=0;toast('No tienes permiso para guardar ese cambio. Se dejó como estaba en la base compartida.')}}
+ finally{SYNC_BUSY=false;if(me&&(ch||syncState()!==before))softRender();if(SYNC_AGAIN){SYNC_AGAIN=false;syncNow(full)}}}
+function syncSoon(){clearTimeout(FLUSH_T);FLUSH_T=setTimeout(()=>syncNow(false),250)}
+function syncLoop(){clearTimeout(SYNC_T);SYNC_T=setTimeout(async()=>{await syncNow(true);if(me&&SBS)syncLoop()},document.visibilityState=='hidden'?30000:4000)}
+function startSync(){syncNow(true);syncLoop()}
+if(CLOUD){const cacheNow=()=>{if(CACHE_T)cacheST()};window.addEventListener('pagehide',cacheNow);document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden')cacheNow()});window.addEventListener('online',()=>{if(me)syncNow(true)});document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='visible'&&me){syncNow(true);syncLoop()}})}
+/* Volver a dibujar por un cambio de otro equipo sin borrar lo que se está escribiendo. Si hay un campo con el cursor, espera. */
+function busyField(){const a=document.activeElement;return!!(a&&a.closest&&a.closest('#app')&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&!/^(button|submit|checkbox|radio|file)$/.test(a.type))}
+function softRender(){if(!me)return render();if(busyField()){SOFT_P=true;return}SOFT_P=false;const dr=[];
+ document.querySelectorAll('#app input,#app textarea,#app select').forEach(el=>{if(el.type=='file'||el.disabled)return;const k=uiKey(el);if(!k)return;
+  if(el.type=='checkbox'||el.type=='radio'){if(el.checked!==el.defaultChecked)dr.push([k,{c:el.checked}])}else if(el.tagName=='SELECT'?[...el.options].some(o=>o.selected!==o.defaultSelected):el.value!==el.defaultValue)dr.push([k,el.value])});
+ render();dr.forEach(([k,v])=>{let el;try{el=document.querySelector('#app '+k)}catch(e){return}if(!el)return;if(v&&typeof v=='object')el.checked=v.c;else el.value=v})}
+document.addEventListener('focusout',()=>{if(SOFT_P)setTimeout(()=>{if(SOFT_P&&!busyField())softRender()},400)});
+document.addEventListener('click',e=>{if(e.target.closest('[data-sync]')){SYNC_ERR=null;syncNow(true)}});
+function syncBanners(){if(!CLOUD||!me)return'';const n=outN();let h='';
+ if(!SYNC_FIRST&&!ST.R.length&&!ST.OR.length&&!ST.P.length)h+=`<div class="syn tb" role="status"><b>Descargando los datos compartidos…</b><span>En un momento ves lo mismo que los demás equipos.</span></div>`;
+ if(n&&SYNC_ERR&&SYNC_ERR.status!==403)h+=`<div class="alb tb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${offline()?'Sin conexión':'No se pudo subir'}: lo último que capturaste está guardado solo en este equipo</b><p style="margin:4px 0 8px">${offline()?'Los demás equipos todavía no lo ven. Se sube solo cuando regrese el internet; no cierres sesión ni borres los datos del navegador mientras tanto.':'La base compartida respondió: '+E(SYNC_ERR.message)}</p><button class="btn d" data-sync="1">Reintentar ahora</button></div></div>`;
+ else if(offline()&&SYNC_FIRST)h+=`<div class="syn tb" role="status"><b>Sin conexión</b><span>Lo que captures se guarda en este equipo y se sube solo cuando regrese el internet. Puede que no veas lo último de otros equipos.</span></div>`;
+ return h}
+
+ST=load();if(CLOUD){if(!ST.T)ST.T=[];SHW=encodeST()}
 const can=a=>me&&(me.role=='admin'||(me.role=='piso'&&['box','fin','ent'].includes(a)));
 const rvd=()=>RX?rxRvd():new Set(ST.L.filter(x=>x.rev).map(x=>x.rev));
-function post(type,lot,size,kg,rev,rc){ST.L.push({id:++ST.N,t:now(),type,lot,size,m:Math.round(kg*1000),rev,rc});}
+/* Número de movimiento dentro de su lote (1, 2, 3…): los ids internos ya no son contadores cortos. */
+function mvNo(id){const x=ST.L.find(y=>y.id===id);if(!x)return id;return ST.L.filter(y=>y.lot===x.lot&&y.id<=id).length}
+function post(type,lot,size,kg,rev,rc){ST.L.push({id:uidN(),t:now(),type,lot,size,m:Math.round(kg*1000),rev,rc});}
 const bal=(l,s)=>RX?((m=>m?(s==null?m.t:(m.s[s]||0)):0)(rxMov().get(l))):ST.L.filter(x=>x.lot===l&&(s==null||x.size===s)).reduce((a,x)=>a+x.m,0);
 const lots=()=>ST.R.map(r=>r.lot),R_=l=>RX?rxLot().get(l):ST.R.find(r=>r.lot===l),tk=l=>(R_(l)||{}).tank||'—',col=l=>PAL[lots().indexOf(l)%PAL.length];
 const gross=p=>p.c.reduce((a,[,u,q])=>a+Math.round(u*10)*q,0)/10;
@@ -890,20 +1126,39 @@ function lotForm(){const e=form.edit?R_(form.edit):null,td=new Date(),dv=e?(e.rd
  <label>Temp. °F del tanque<input id="ftt" type="number" step="0.1" value="${e&&e.tempT!=null?e.tempT:''}" style="width:110px"></label><label>Temp. °F del producto<input id="ftp" value="${E(e?e.tempP||'':'')}" placeholder="59-62" style="width:110px"></label><label>Lote de recepción<input id="fl" value="${E(e?e.lot:'')}" ${e?'disabled':''} placeholder="WLRCO051026" autocapitalize="characters" autocomplete="off" spellcheck="false" style="text-transform:uppercase"></label><label>Kg por caja en tanque<input id="fkb" type="number" min="0" step="0.01" value="${e&&e.kgbox!=null?e.kgbox:''}" style="width:150px"></label>
  ${e?'':SL.map((s,i)=>`<label class="sz sz${i}"><span>${szDot(i)} ${s} kg</span><input id="fk${i}" type="number" min="0" step="0.01" style="width:105px"></label>`).join('')}<label>Kg total<output id="ftot" class="tot">${e?f(rcv(e.lot))+' kg':'0.00 kg'}</output></label><label>Kg desperdicio<input id="fdes" type="number" min="0" step="0.01" value="${e&&e.desp!=null?e.desp:''}" style="width:110px"></label>
  <button class="btn" data-a="sv">${e?'Guardar cambios':'Guardar entrada'}</button><button class="btn s" data-a="nf">Cancelar</button></div><p class="er">${E(msg)}</p></div>`}
-function recepcion(){const HL=histList('rec',ST.R.slice().reverse(),lotActive);return `<div class="wrap">${guide(1,'Entrada de producto','Registra cada entrada como un lote con los datos del formato de recepción: fecha, hora, proveedor, tanque, temperaturas, kg por caja en tanque y kg por talla. Aquí no se cuentan ni se numeran cajas: las langostas se cuentan hasta que se empaca cada pedido.','Siguiente: órdenes','ordenes')}${ST.R.length?pdfBar('ent'):''}
+/* Tablero de tanques (Entrada): mapa del piso como está en la planta (T1–T4 a la derecha, de arriba abajo; T6 y T5 a la izquierda,
+   a la altura de T3 y T4). Cada tanque muestra kg, tallas en colores, lotes y temperatura del agua; al tocarlo, abajo sale su detalle.
+   Cuenta los lotes abiertos con existencia. Se actualiza solo: la base compartida trae lo de los demás equipos cada pocos segundos. */
+let TQSEL=null;
+document.addEventListener('click',e=>{const b=e.target.closest('[data-tq]');if(!b)return;TQSEL=b.dataset.tq;render()});
+function tanques(){const hoy=dLoc(),dias=r=>{if(!r.rdate)return'';const d=Math.round((new Date(hoy+'T12:00')-new Date(r.rdate+'T12:00'))/864e5);return d<=0?'hoy':d==1?'1 día':d+' días'},
+ ult=t=>(ST.T||[]).filter(x=>x.tank===t).reduce((a,x)=>!a||x.t>a.t?x:a,null),v=x=>x==null?'—':x+'°',all=[],
+ bar=kz=>`<div class="tqbar" aria-hidden="true">${kz.map((g,i)=>g?`<i style="flex:${g};background:${SZC[i][1]}"></i>`:'').join('')}</div>`,
+ I={};TK.forEach(t=>{const ls=ST.R.filter(r=>r.tank===t&&!r.closed&&bal(r.lot)>0),kz=S.map(z=>ls.reduce((a,r)=>a+Math.max(0,bal(r.lot,z)),0));I[t]={ls,kz,tot:kz.reduce((a,b)=>a+b,0),tp:ult(t),n:t.replace(/^T/,'')};all.push(...ls)});
+ const sel=TK.includes(TQSEL)?TQSEL:(TK.find(t=>I[t].tot)||TK[0]),sum=all.reduce((a,r)=>a+bal(r.lot),0),
+  live=CLOUD?(offline()?'<span class="chip al">Sin conexión</span>':'<span class="chip ok tqlive">● En vivo</span>'):'',
+  tank=t=>{const{ls,kz,tot,tp,n}=I[t],nl=ls.length;return `<button type="button" class="tqm${tot?'':' tq0'}" style="grid-area:${t.toLowerCase()}" data-tq="${t}" aria-pressed="${t==sel}" aria-label="Tanque ${n}: ${tot?f(tot,1)+' kg, '+nl+(nl==1?' lote':' lotes'):'vacío'}"><span class="tqmh"><b>T${n}</b><span class="tqmk">${tot?f(tot,1)+' kg':'Vacío'}</span></span>${tot?bar(kz):''}<span class="tqmf"><span>${tot?nl+(nl==1?' lote':' lotes'):''}</span>${tp&&tp.a!=null?`<span>Agua ${tp.a}°</span>`:''}</span></button>`},
+  {ls,kz,tot,tp,n}=I[sel],
+  det=`<section class="tqc" aria-label="Tanque ${n}" aria-live="polite"><div class="tqh"><b>Tanque ${n}</b>${tot?`<span class="tqk">${f(tot,1)} kg</span>`:'<span class="tqv">Vacío</span>'}</div>${tot?bar(kz):''}
+  <div class="tqdet">${tot?`<ul class="tqsz">${kz.map((g,i)=>`<li>${szDot(i)}<span>${S[i]}</span><b>${f(g,1)}</b></li>`).join('')}</ul>
+  <div class="tql">${ls.map(r=>`<button type="button" class="tqlot" data-go="lote:${E(r.lot)}"><b>${E(r.lot)}</b><span>${E(r.origin||'')}${r.rdate?' · '+dias(r):''}</span></button>`).join('')}</div>`:''}
+  <button type="button" class="tqtp" data-go="temperatura" aria-label="Temperatura del tanque ${n}">${tp?`<span><small>Agua</small>${v(tp.a)}</span><span><small>Superficie</small>${v(tp.s)}</span><span><small>Producto</small>${v(tp.p)}</span><em>${tp.t.slice(0,10)==hoy?'Hoy':fd(tp.t.slice(0,10))} ${E(tp.t.slice(11,16))} ›</em>`:'<em>Sin lectura de temperatura ›</em>'}</button></div></section>`;
+ return `<div class="tqd"><div class="tqmap" role="group" aria-label="Mapa de tanques"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(sum,1)} kg en ${all.length} ${all.length==1?'lote':'lotes'}</span>${live}
+  <ul class="tqkey" aria-label="Colores de talla">${S.map((z,i)=>`<li>${szDot(i)}${z}</li>`).join('')}</ul></div>${TK.map(tank).join('')}</div>${det}</div>`}
+function recepcion(){const HL=histList('rec',ST.R.slice().reverse(),lotActive);return `<div class="wrap">${guide(1,'Entrada de producto','Registra cada entrada como un lote con los datos del formato de recepción: fecha, hora, proveedor, tanque, temperaturas, kg por caja en tanque y kg por talla. Aquí no se cuentan ni se numeran cajas: las langostas se cuentan hasta que se empaca cada pedido.','Siguiente: órdenes','ordenes')}${tanques()}${ST.R.length?pdfBar('ent'):''}
  <div class="bar"><button class="btn" data-a="nf" ${can('ent')?'':'disabled'}>+ Nueva entrada</button>${can('ent')?'':'<span class="mut">Tu rol no puede registrar entradas.</span>'}</div>${form&&form.t=='lot'?lotForm():''}
  <div class="cd tbl"><table class="lf ent"><thead><tr><th>Fecha</th><th>Hora</th><th class="c-prov">Proveedor</th><th>Tanque</th><th class="num">T°F<br>tanque</th><th class="num">T°F<br>producto</th><th class="c-lot">Lote de recepción</th><th class="num">Kg por caja<br>en tanque</th>${S.map((z,i)=>`<th class="szh">${szHead(i)}</th>`).join('')}<th class="num">Kg total</th><th class="num">Kg<br>desperdicio</th><th class="c-etp">Etapa</th><th aria-label="Acciones"></th></tr></thead><tbody>${HL.items.map(r=>`<tr><td>${E(r.date||'')}</td><td>${E(r.time||'—')}</td><td>${E(r.origin)}</td><td>${E(r.tank)}</td><td class="num">${r.tempT!=null?r.tempT:'—'}</td><td class="num">${E(r.tempP||'—')}</td><td><b>${E(r.lot)}</b></td><td class="num">${r.kgbox!=null?r.kgbox:'—'}</td>${S.map(z=>`<td class="szv">${f(rcv(r.lot,z))}</td>`).join('')}<td class="num"><b>${f(rcv(r.lot))}</b></td><td class="num">${r.desp!=null?r.desp:'—'}</td><td>${stc(r.lot)}</td><td><button class="lnk" data-go="lote:${E(r.lot)}">Abrir</button></td></tr>`).join('')||`<tr><td colspan="16" class="mut">${ST.R.length?'No hay lotes abiertos ni recientes.':'Todavía no hay entradas. Pulsa “+ Nueva entrada”.'}</td></tr>`}</tbody></table></div>${HL.bar}${evid('recepcion','Fotos y notas de la entrada')}</div>`}
 function lote(l){const r=R_(l);if(!r)return recepcion();const c=calc(l),rows=ST.L.filter(x=>x.lot===l).slice().reverse(),rv=rvd(),bs=ST.B[l],ds=ST.P.map((p,i)=>({p,x:bs.map((b,n)=>({b,n})).filter(o=>o.b.d===i&&o.b.c>0)})).filter(o=>o.x.length);
  return `<div class="wrap"><button class="back" data-go="recepcion">‹ Volver a Entrada</button>
  <div class="cd head"><div><h1>${E(l)}</h1><p class="mut" style="margin:4px 0 0">${E(r.origin)} · Tanque ${E(r.tank)} · ${f(bal(l))} kg (${cj(bal(l))} cajas eq.)</p><p class="mut" style="margin:2px 0 0">Recibido ${E(r.date||'')} ${E(r.time||'')} · Temp. tanque ${r.tempT!=null?r.tempT+' °F':'—'} · Temp. producto ${E(r.tempP||'—')} °F · ${r.kgbox!=null?r.kgbox+' kg por caja en tanque':'kg por caja en tanque: —'} · Desperdicio ${r.desp!=null?r.desp+' kg':'—'}</p></div><div class="bar" style="margin:0">${stc(l)}<button class="btn" data-go="empaque">Ir a Empaque</button>${can('lot')?`<button class="btn s" data-a="el">Editar</button>${conf=='lot'?'<button class="btn d" data-a="dl2">Confirmar eliminar</button>':'<button class="btn d" data-a="dl">Eliminar</button>'}`:''}</div></div>${form&&form.t=='lot'?lotForm():''}
- <div class="g2"><div class="cd"><h3>Trazabilidad por destino</h3>${ds.length?`<div class="tbl"><table><thead><tr><th>Destino</th><th>Cajas</th><th>Langostas</th><th>Rojo</th><th>Verde</th><th>Blanco</th></tr></thead><tbody>${ds.map(o=>`<tr><td>${o.p.n}</td><td>${o.x.length}</td><td>${o.x.reduce((a,y)=>a+y.b.c,0)}</td>${['R','V','B'].map(k=>`<td>${o.x.filter(y=>y.b.k==k).reduce((a,y)=>a+y.b.c,0)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p class="mut">Todavía no se han empacado cajas de este lote.</p>'}</div>
+ <div class="g2"><div class="cd"><h3>Trazabilidad por destino</h3>${ds.length?`<div class="tbl"><table><thead><tr><th>Destino</th><th>Cajas</th><th>Langostas</th><th>Rojo</th><th>Verde</th><th>Blanco</th><th>Amarillo</th></tr></thead><tbody>${ds.map(o=>`<tr><td>${o.p.n}</td><td>${o.x.length}</td><td>${o.x.reduce((a,y)=>a+y.b.c,0)}</td>${Object.keys(RC).map(k=>`<td>${o.x.filter(y=>y.b.k==k).reduce((a,y)=>a+y.b.c,0)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p class="mut">Todavía no se han empacado cajas de este lote.</p>'}</div>
  <div class="cd"><h3>Existencia por talla</h3><div class="tbl"><table><thead><tr><th>Talla</th><th>Kg</th><th>Cajas eq.</th></tr></thead><tbody>${S.map(s=>`<tr><td>${s}</td><td>${f(bal(l,s))}</td><td>${cj(bal(l,s))}</td></tr>`).join('')}</tbody></table></div></div></div>
  <div class="cd"><h3>Cierre del lote y mortalidad (se calcula al final)</h3><p class="mut">Mortalidad = kg esperados en tanque − kg contados al final. No se captura: el sistema la calcula con el conteo final.</p>
  <div class="f"><label>Conteo final (kg)<input type="number" min="0" step="0.01" value="${r.final??''}" data-fin="${E(l)}" aria-label="Kg final del lote ${E(l)}" ${can('fin')&&!r.closed?'':'disabled'} style="width:130px"></label>
  <div>${c?`<span class="chip ok">Mortalidad ${f(c.dead)} kg · ${c.p.toFixed(2)}%</span><br><span class="mut">Esperado ${f(c.ex)} kg − contado ${f(Math.round(r.final*1000))} kg</span>`:'<span class="mut">Captura el conteo final para calcularla.</span>'}</div>
  ${can('lot')?(r.closed?'<button class="btn s" data-a="ol">Reabrir lote</button>':`<button class="btn" data-a="cl" ${c?'':'disabled'}>Cerrar lote</button>`):'<span class="mut">Solo el Administrador cierra el lote.</span>'}</div></div>
  <div class="cd"><h3>Movimientos de inventario</h3>${can('mv')?`<div class="f"><label>Tipo<select id="ty"><option>SALIDA_EMBARQUE</option><option>RECEPCION</option></select></label><label>Talla<select id="sz">${S.map(s=>`<option>${s}</option>`).join('')}</select></label><label>Kg<input id="kg" type="number" min="0" step="0.01" style="width:110px"></label><button class="btn" data-a="mv">Registrar</button></div><p class="${msg[0]=='✔'?'ok':'er'}">${E(msg)}</p>`:'<p class="mut">Solo el Administrador registra movimientos.</p>'}
- <div class="tbl"><table class="lf"><thead><tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Talla</th><th>Kg</th><th aria-label="Acciones"></th></tr></thead><tbody>${rows.map(x=>`<tr style="${rv.has(x.id)?'opacity:.5;text-decoration:line-through':''}"><td>${x.id}</td><td>${x.t}</td><td>${x.type.replace('_',' ')}${x.rev?` (#${x.rev})`:''}</td><td>${x.size}</td><td>${x.m>0?'+':''}${f(x.m)}</td><td>${can('mv')&&x.type!=='REVERSA'&&!rv.has(x.id)?`<button class="lnk" data-r="${x.id}">Revertir</button>`:can('mv')&&x.type==='REVERSA'?`<button class="lnk" data-ur="${x.id}">Anular reversa</button>`:''}</td></tr>`).join('')}</tbody></table></div></div>${evid('lote:'+l,'Fotos y notas del lote')}</div>`}
+ <div class="tbl"><table class="lf"><thead><tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Talla</th><th>Kg</th><th aria-label="Acciones"></th></tr></thead><tbody>${rows.map(x=>`<tr style="${rv.has(x.id)?'opacity:.5;text-decoration:line-through':''}"><td>${mvNo(x.id)}</td><td>${x.t}</td><td>${x.type.replace('_',' ')}${x.rev?` (#${mvNo(x.rev)})`:''}</td><td>${x.size}</td><td>${x.m>0?'+':''}${f(x.m)}</td><td>${can('mv')&&x.type!=='REVERSA'&&!rv.has(x.id)?`<button class="lnk" data-r="${x.id}">Revertir</button>`:can('mv')&&x.type==='REVERSA'?`<button class="lnk" data-ur="${x.id}">Anular reversa</button>`:''}</td></tr>`).join('')}</tbody></table></div></div>${evid('lote:'+l,'Fotos y notas del lote')}</div>`}
 function bsum(l){const o={n:0,t:0,R:0,V:0,B:0};ST.B[l].forEach(b=>{if(b.c>0&&b.k){o.n++;o.t+=b.c;o[b.k]+=b.c}});return o}
 function truckPlan(){const TP=ST.P.filter(p=>!p.closed),cap=[15,20,20,25,25],slot={};let k=0;const rem=TP.map(p=>p.h);
  for(let i=4;i>=0;i--)for(let r=0;r<2;r++){while(k<rem.length&&rem[k]<=0)k++;if(k<rem.length){const v=Math.min(cap[i],rem[k]);rem[k]-=v;slot[i+'.'+r]={v,col:TP[k].col}}}
@@ -925,9 +1180,9 @@ function ordsInShip(i){const lk=shipLinks(i),p=ST.P[i],ed=can('lot')&&!p.closed,
  return `<div class="cd"><h2 class="h3">Órdenes en este embarque</h2>${lk.length?`<div class="tbl"><table class="pkt"><thead><tr><th>Orden (empaque)</th><th>Clientes</th><th>Cajas pedidas</th><th>Empacadas</th><th aria-label="Acciones"></th></tr></thead><tbody>${lk.map(x=>{const ls=x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons),t=ls.reduce((a,l)=>a+l.boxes,0),n=ls.reduce((a,l)=>a+Math.min(l.boxes,ordAssigned(x.o,l).length),0);
   return `<tr><td><b>${fd(x.o.etd)}</b></td><td>${ls.map(l=>E(l.cli)).join(', ')}</td><td>${t}</td><td>${n} ${lineSt(n,t,(pl=>pl?goLine(x.o,pl):null)(ls.find(l=>ordAssigned(x.o,l).length<l.boxes)))}</td><td><div class="bar" style="margin:0"><button class="btn s" data-go="orden:${x.o.id}">Abrir orden</button>${ed&&lk.length>1?`<button class="lnk" data-sh="sep:${x.o.id}:${x.k}">Separar</button>`:''}</div></td></tr>`}).join('')}</tbody></table></div>`:'<p class="mut">Sin órdenes.</p>'}
  ${ed?(jn.length?`<div class="shp"><label>Agregar otra orden a este embarque<select id="sh_add">${jn.map(x=>{const ls=x.o.lines.filter(l=>l.city+'|'+l.cons==x.k),t=ls.reduce((a,l)=>a+l.boxes,0);return `<option value="${x.o.id}/${E(x.k)}">Empaque ${fd(x.o.etd)} · ${t} cajas (hoy en: ${E(ST.P[x.j].n)})</option>`}).join('')}</select></label><button class="btn" data-sh="add:${i}">Agregar al embarque</button></div>`:'<p class="mut">Para juntar otra orden aquí, créala con el mismo destino y consignatario; luego aparecerá en esta lista.</p>'):''}</div>`}
-function emb(i){const p=ST.P[i];if(!p)return `<div class="wrap"><button class="back" data-go="embarques">‹ Volver a Embarque</button><div class="cd"><p>Esa consignación no existe.</p></div></div>`;const g=gross(p),nm=['Chica','Mediana','Grande','Jumbo'],zs=p.z.reduce((a,b)=>a+b,0),bs=boxesOf(i),by={R:0,V:0,B:0};bs.forEach(x=>by[x.b.k||'B']+=x.b.c);const ed=!p.closed&&can('lot'),sn=sent(i);
+function emb(i){const p=ST.P[i];if(!p)return `<div class="wrap"><button class="back" data-go="embarques">‹ Volver a Embarque</button><div class="cd"><p>Esa consignación no existe.</p></div></div>`;const g=gross(p),nm=['Chica','Mediana','Grande','Jumbo'],zs=p.z.reduce((a,b)=>a+b,0),bs=boxesOf(i),by={R:0,V:0,B:0,A:0};bs.forEach(x=>by[x.b.k||'B']+=x.b.c);const ed=!p.closed&&can('lot'),sn=sent(i);
  return `<div class="wrap"><button class="back" data-go="embarques">‹ Volver a Embarques</button><div class="cd head"><div><h1><span class="cs" style="--c:${p.col}" aria-hidden="true"></span>${p.n}</h1><p class="mut" style="margin:4px 0 0">${p.h} hieleras · ${g.toFixed(1)} kg de peso bruto</p></div><div class="bar" style="margin:0">${p.closed?`<span class="chip ok">Empaque cerrado</span>${can('lot')?'<button class="btn s" data-a="op">Reabrir</button>':''}`:`<button class="btn" data-a="cp" ${can('lot')?'':'disabled'}>Cerrar empaque y enviar informe</button>${can('lot')?'':'<span class="mut">Solo el Administrador cierra empaques</span>'}`}</div></div>
- ${shipAlert(i)}${pdfBar('emb',i,'Informe de este embarque')}${ordsInShip(i)}<div class="g2"><div class="cd"><h2 class="h3">Cajas de este envío</h2><div class="chain"><span class="chip ok">${bs.length} cajas</span><span class="chip">${sn} langostas</span>${['R','V','B'].map(k=>`<span class="chip" data-k="${k}">${RC[k][0]} ${by[k]}</span>`).join('')}</div><p class="mut">Lotes: ${[...new Set(bs.map(x=>x.l))].map(E).join(', ')||'—'}. Las cajas se empacan en el paso Empaque.</p>
+ ${shipAlert(i)}${pdfBar('emb',i,'Informe de este embarque')}${ordsInShip(i)}<div class="g2"><div class="cd"><h2 class="h3">Cajas de este envío</h2><div class="chain"><span class="chip ok">${bs.length} cajas</span><span class="chip">${sn} langostas</span>${Object.keys(RC).map(k=>`<span class="chip" data-k="${k}">${RC[k][0]} ${by[k]}</span>`).join('')}</div><p class="mut">Lotes: ${[...new Set(bs.map(x=>x.l))].map(E).join(', ')||'—'}. Las cajas se empacan en el paso Empaque.</p>
  <h3 style="margin-top:14px">Distribución por talla</h3><div class="chain" id="emb_tallas">${p.z.map((z,k)=>`<label class="zin">${nm[k]}<input type="number" min="0" value="${z}" data-zs="${i}:${k}" ${ed?'':'disabled'} aria-label="Hieleras talla ${nm[k]}"></label>`).join('')}${zs===p.h?`<span class="chip ok">✔ suma ${p.h} hieleras</span>`:`<button class="chip al chipb" data-jump="#emb_tallas">⚠ NO SUMA: tallas ${zs}, hieleras ${p.h} · Corregir ›</button>`}</div></div>
  <div class="cd"><h3>Langostas vivas al llegar al destino</h3><p class="mut">Se captura al final. La mortalidad de este envío se calcula: enviadas − vivas.</p><div class="f"><label>Vivas al llegar<input type="number" min="0" max="${sn}" value="${p.alive??''}" data-alive="${i}" style="width:120px" ${can('fin')?'':'disabled'}></label>${p.alive!=null&&sn?`<span class="chip ok">Mortalidad ${sn-p.alive} de ${sn} · ${pct(sn-p.alive,sn).toFixed(2)}%</span>`:'<span class="chip">'+(sn?'Se captura al final':'Asigna cajas primero')+'</span>'}</div></div></div>
  <div class="cd" id="emb_peso"><h3>Peso bruto: cantidad × peso unitario</h3><div class="tbl"><table><thead><tr><th>Componente</th><th>Kg unit.</th><th>Cantidad</th><th>Subtotal kg</th></tr></thead><tbody>${p.c.map((c,k)=>`<tr><td>${c[0]}</td><td><input type="number" step="0.1" min="0" value="${c[1]}" data-k="1" data-j="${k}" ${ed?'':'disabled'} aria-label="Peso ${c[0]}"></td><td><input type="number" step="1" min="0" value="${c[2]}" data-k="2" data-j="${k}" ${ed?'':'disabled'} aria-label="Cantidad ${c[0]}"></td><td>${(Math.round(c[1]*10)*c[2]/10).toFixed(1)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="3">Peso bruto total</td><td>${g.toFixed(1)}</td></tr></tfoot></table></div><div class="bar">${wOk(p)?`<span class="chip ok">✔ coincide con el formato (${p.exp} kg)</span>`:`<button class="chip al chipb" data-jump="#emb_peso">⚠ DISCREPANCIA: el formato dice ${p.exp} kg · diferencia ${g-p.exp>0?'+':''}${(g-p.exp).toFixed(1)} kg · Corregir ›</button>`}</div></div>${evid('emb:'+i,'Fotos y notas del embarque')}</div>`}
@@ -947,23 +1202,34 @@ function temperatura(){if(!ST.T)ST.T=[];const ed=can('fin'),HT=histList('temp',S
 function saveTemp(){const n=id=>{const v=g(id);return v===''?null:Math.round(+v*10)/10},a=n('tq_a'),sv=n('tq_s'),pv=n('tq_p'),d=g('tq_d');
  if(!d)return fail('Indica la fecha y hora de la lectura.','tq_d');if(a==null&&sv==null&&pv==null)return fail('Captura al menos una temperatura.','tq_a');
  for(const[x,id]of[[a,'tq_a'],[sv,'tq_s'],[pv,'tq_p']])if(x!=null&&(x<20||x>110))return fail('Revisa la temperatura: debe estar entre 20 y 110 °F.',id);
- ST.T=ST.T||[];ST.T.push({id:Date.now(),t:d,tank:g('tq_t'),a,s:sv,p:pv,by:me.name});msg='';save();toast('✔ Lectura guardada');render()}
+ ST.T=ST.T||[];ST.T.push({id:uidN(),t:d,tank:g('tq_t'),a,s:sv,p:pv,by:me.name});msg='';save();toast('✔ Lectura guardada');render()}
 document.addEventListener('click',e=>{const x=e.target.closest('[data-tqdel]');if(!x||me.role!='admin')return;if(!confirm('¿Eliminar esta lectura?'))return;ST.T=(ST.T||[]).filter(t=>t.id!=+x.dataset.tqdel);save();toast('Lectura eliminada');render()});
+/* Estado de la base compartida (Administración). */
+function syncInfo(){const n=outN(),t=SYNC_OK?new Date(SYNC_OK).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit',second:'2-digit'}):null;
+ return (t?`✔ Última actualización con la base compartida: ${t}`+(/\.$/.test(t)?'':'.'):'Todavía no se conecta con la base compartida.')+(n?` <b class="er">${n} ${n==1?'cambio pendiente':'cambios pendientes'} de subir.</b>`:' Todo lo de este equipo ya está arriba.')}
+/* Datos que este equipo tenía guardados solo en la tablet antes de la base compartida (versión 1.3 o anterior). */
+function oldDataCard(){if(!CLOUD)return'';let d=null;try{d=JSON.parse(localStorage.getItem('propesa-v4')||'null')}catch(e){}
+ if(!d||!Array.isArray(d.R)||!(d.R.length||(d.OR||[]).length||(d.P||[]).length))return'';
+ return `<div class="cd"><h3>Datos viejos de este equipo</h3><p class="mut">Antes de la base compartida, este equipo guardaba sus propios datos (${d.R.length} lotes, ${(d.OR||[]).length} órdenes). No se mezclaron con los compartidos. Si los necesitas, descárgalos y súbelos con «Restaurar respaldo»; si eran de prueba, bórralos.</p><div class="bar"><button class="btn s" data-old="dl">Descargar datos viejos (.json)</button><button class="btn s" data-old="rm">Borrar datos viejos de este equipo</button></div></div>`}
+document.addEventListener('click',e=>{const x=e.target.closest('[data-old]');if(!x)return;const raw=localStorage.getItem('propesa-v4');if(!raw)return render();
+ if(x.dataset.old=='dl'){const u=URL.createObjectURL(new Blob([raw],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=`PROPESA_datos_viejos_${ymd()}.json`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500);return toast('✔ Datos viejos descargados')}
+ if(confirm('¿Borrar de este equipo los datos viejos? Los datos compartidos no se tocan.')){localStorage.removeItem('propesa-v4');toast('Datos viejos borrados de este equipo');render()}});
 function admin(){const u=uf?(ST.U.find(x=>x.id==uf.id)||{}):null,yes=(a,b,c)=>`<tr><td>${a}</td><td>✔</td><td>${b?'✔':'—'}</td><td>${c?'✔':'—'}</td></tr>`;
  return `<div class="wrap">${guide(0,'Administración','Gestiona usuarios y permisos, revisa los correos automáticos y consulta dónde se guarda cada dato.','','')}
  <div class="cd"><div class="bar" style="margin-top:0"><h3 style="margin:0">Usuarios</h3><button class="btn" data-a="nu">+ Nuevo usuario</button></div>
  ${uf?`<div class="panel"><div class="f"><label>Nombre<input id="un" value="${E(u.name||'')}"></label><label>Correo<input id="ue" value="${E(u.email||'')}"></label><label>${u.id?'Nueva contraseña':'Contraseña'}<input id="up" type="password" autocomplete="new-password" placeholder="${u.id?'Vacío = no cambiarla':'Mínimo 6 caracteres'}"></label><label>Rol<select id="ur">${Object.entries(ROLE).map(([k,v])=>`<option value="${k}" ${u.role==k?'selected':''}>${v}</option>`).join('')}</select></label><label>Recibe informes<span style="padding-top:6px">${sw(u.notify!==false&&(u.notify||!u.id),'un')}</span></label><button class="btn" data-a="su">Guardar</button><button class="btn s" data-a="cu">Cancelar</button></div><p class="er">${E(msg)}</p></div>`:''}
- <div class="tbl"><table class="lf"><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Informes</th><th aria-label="Acciones"></th></tr></thead><tbody>${ST.U.map(x=>`<tr><td>${E(x.name)}${x.dflt?' <span class="chip al">⚠ Contraseña de prueba</span>':''}</td><td>${E(x.email)}</td><td>${ROLE[x.role]}</td><td>${x.notify?'Sí':'No'}</td><td><button class="lnk" data-eu="${x.id}">Editar</button> ${x.id==me.id?'':conf=='u'+x.id?`<button class="btn d" data-du2="${x.id}">Confirmar</button>`:`<button class="lnk" data-du="${x.id}">Eliminar</button>`}</td></tr>`).join('')}</tbody></table></div></div>
+ <div class="tbl"><table class="lf"><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Informes</th><th aria-label="Acciones"></th></tr></thead><tbody>${ST.U.map(x=>`<tr><td>${E(x.name)}</td><td>${E(x.email)}</td><td>${ROLE[x.role]}</td><td>${x.notify?'Sí':'No'}</td><td><button class="lnk" data-eu="${x.id}">Editar</button> ${x.id==me.id?'':conf=='u'+x.id?`<button class="btn d" data-du2="${x.id}">Confirmar</button>`:`<button class="lnk" data-du="${x.id}">Eliminar</button>`}</td></tr>`).join('')}</tbody></table></div></div>
  <div class="g2"><div class="cd"><h3>Qué puede hacer cada rol</h3><div class="tbl"><table><thead><tr><th>Acción</th><th>Admin</th><th>Piso</th><th>Consulta</th></tr></thead><tbody>${yes('Ver todo',1,1)}${yes('Empacar cajas y capturar conteos finales',1,0)}${yes('Registrar entradas (lotes nuevos)',1,0)}${yes('Editar / eliminar lotes',0,0)}${yes('Cerrar lotes y empaques',0,0)}${yes('Gestionar usuarios',0,0)}</tbody></table></div></div>
  <div class="cd"><h3>Informes de cierre (${ST.O.length})</h3><p class="mut">Al cerrar un empaque se guarda aquí su informe. Mándalo por correo con su PDF; los destinatarios sugeridos son los usuarios con “Recibe informes”.</p>${ST.O.map(o=>`<details><summary>${E(o.subject)} · ${o.t}</summary><p class="mut">Destinatarios sugeridos: ${o.to.map(E).join(', ')||'—'}</p><pre>${E(o.body)}</pre>${o.pn&&ST.P.some(p=>p.n===o.pn)?`<button class="btn s" data-pdf="dl:embn:${E(o.pn)}">${IC.pdf} Descargar PDF</button> <button class="btn" data-pdf="mail:embn:${E(o.pn)}">${IC.mail} Enviar por correo</button>`:''}</details>`).join('')||'<p class="mut">Aún no hay informes.</p>'}</div></div>
- <div class="cd"><h3>Datos y respaldo</h3><p>Los datos se guardan en este equipo y la plataforma funciona sin internet.</p><p class="mut">Descarga un respaldo con frecuencia (por ejemplo, al terminar cada día) y guárdalo fuera de la tablet. Para pasar los datos a otro equipo, restaura ahí el respaldo; una restauración reemplaza todo lo que haya en ese equipo.</p><div class="bar"><button class="btn s" data-bk="dl">${IC.pdf} Descargar respaldo (.json)</button><label class="btn s" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></div></div>
- <div class="cd"><h3>Borrar los datos de este equipo</h3><p class="mut">Elimina lotes, órdenes, embarques, notas y usuarios de esta tablet y vuelve a la configuración inicial. Descarga antes un respaldo. No se puede deshacer.</p><div class="bar"><button class="btn d" data-a="rst">Borrar todos los datos</button></div></div><p class="mut" style="text-align:right">PROPESA · Plataforma marítima · versión 1.1.0</p></div>`}
-function setupView(){return `<div class="login"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><h2 style="margin:4px 0 2px">Configuración inicial</h2><p class="mut">Crea la cuenta del Administrador de este equipo. Después podrás agregar a los demás usuarios en Administración.</p>
- <div class="f" style="flex-direction:column;align-items:stretch"><label>Nombre<input id="s0n" autocomplete="name"></label><label>Correo<input id="s0e" type="email" autocomplete="username"></label><label>Contraseña (mínimo 6)<input id="s0p" type="password" autocomplete="new-password"></label><label>Repite la contraseña<input id="s0q" type="password" autocomplete="new-password"></label><button class="btn" data-a="s0">Crear Administrador y entrar</button></div><p class="er" id="lm"></p><p class="mut" style="margin:6px 0 0">¿Ya tienes un respaldo? <label class="lnk" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></p></div></div>`}
+ <div class="cd"><h3>Datos y respaldo</h3>${CLOUD?`<p>Los datos se guardan en la base compartida: todos los equipos y todas las cuentas ven lo mismo. Si un equipo se queda sin internet, guarda lo que captures y lo sube solo cuando regresa la conexión.</p><p class="mut">${syncInfo()}</p><p class="mut">Descarga un respaldo de vez en cuando (por ejemplo, al terminar cada semana). Restaurar un respaldo reemplaza los datos de <b>todos</b> los equipos; los usuarios no cambian.</p>`:`<p>Los datos se guardan en este equipo y la plataforma funciona sin internet.</p><p class="mut">Descarga un respaldo con frecuencia (por ejemplo, al terminar cada día) y guárdalo fuera de la tablet. Para pasar los datos a otro equipo, restaura ahí el respaldo; una restauración reemplaza todo lo que haya en ese equipo.</p>`}<div class="bar"><button class="btn s" data-bk="dl">${IC.pdf} Descargar respaldo (.json)</button><label class="btn s" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></div></div>
+ ${oldDataCard()}<div class="cd"><h3>${CLOUD?'Borrar todos los datos':'Borrar los datos de este equipo'}</h3><p class="mut">${CLOUD?'Elimina lotes, órdenes, embarques, notas y lecturas de temperatura en <b>todos</b> los equipos. Los usuarios se conservan. Descarga antes un respaldo. No se puede deshacer.':'Elimina lotes, órdenes, embarques, notas y usuarios de esta tablet y vuelve a la configuración inicial. Descarga antes un respaldo. No se puede deshacer.'}</p><div class="bar"><button class="btn d" data-a="rst">Borrar todos los datos</button></div></div><p class="mut" style="text-align:right">PROPESA · Plataforma marítima · versión 1.5.0</p></div>`}
+function setupView(){return `<div class="login"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><h2 style="margin:4px 0 2px">Configuración inicial</h2><p class="mut">Crea la cuenta del Administrador${CLOUD?'':' de este equipo'}. Después podrás agregar a los demás usuarios en Administración.</p>
+ <div class="f" style="flex-direction:column;align-items:stretch"><label>Nombre<input id="s0n" autocomplete="name"></label><label>Correo<input id="s0e" type="email" autocomplete="username"></label><label>Contraseña (mínimo 6)<input id="s0p" type="password" autocomplete="new-password"></label><label>Repite la contraseña<input id="s0q" type="password" autocomplete="new-password"></label><button class="btn" data-a="s0">Crear Administrador y entrar</button></div><p class="er" id="lm"></p>${CLOUD?'':`<p class="mut" style="margin:6px 0 0">¿Ya tienes un respaldo? <label class="lnk" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></p>`}</div></div>`}
 function setupSave(){const n=g('s0n').trim(),e=g('s0e').trim(),pw=g('s0p'),pq=g('s0q'),m=document.getElementById('lm'),bad=(t,id)=>{m.textContent=t;const el=document.getElementById(id);if(el){el.setAttribute('aria-invalid','true');el.focus()}};
- if(!n)return bad('Escribe tu nombre.','s0n');if(!/.+@.+\..+/.test(e))return bad('Escribe un correo válido.','s0e');if(pw.length<6)return bad('La contraseña debe tener al menos 6 caracteres.','s0p');if(PWD0.includes(pw.toLowerCase()))return bad('Elige una contraseña más segura.','s0p');if(pw!==pq)return bad('Las contraseñas no coinciden.','s0q');
- ST.U=[{id:1,name:n,email:e,pwh:pwHash(1,pw),dflt:false,role:'admin',notify:true}];save();me=ST.U[0];setPiso(false);V={v:'inicio'};toast('✔ Administrador creado');render()}
-function loginView(){return `<div class="login"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><p class="mut">Plataforma marítima · acceso por rol</p><div class="f" style="flex-direction:column;align-items:stretch"><label>Correo<input id="le" autocomplete="username"></label><label>Contraseña<input id="lp" type="password" autocomplete="current-password"></label><button class="btn" data-a="lg">Entrar</button></div><p class="er" id="lm"></p></div></div>`}
+ if(!n)return bad('Escribe tu nombre.','s0n');if(!/.+@.+\..+/.test(e))return bad('Escribe un correo válido.','s0e');if(pw.length<6)return bad('La contraseña debe tener al menos 6 caracteres.','s0p');if(pw!==pq)return bad('Las contraseñas no coinciden.','s0q');
+ if(CLOUD)return cloudSetup(n,e.toLowerCase(),pw);
+ ST.U=[{id:1,name:n,email:e,role:'admin',notify:true}];save();me=ST.U[0];setPiso(false);V={v:'inicio'};toast('✔ Administrador creado');render()}
+function loginView(){return `<div class="login"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><p class="mut">Plataforma marítima · acceso por rol</p><div class="f" style="flex-direction:column;align-items:stretch"><label>Correo<input id="le" autocomplete="username" value="${E(LOGIN_EM)}"></label><label>Contraseña<input id="lp" type="password" autocomplete="current-password"></label><button class="btn" data-a="lg">Entrar</button></div><p class="er" id="lm">${E(LOGIN_MSG)}</p></div></div>`}
 /* ===== PDF de cada paso: se genera aquí mismo, sin librerías ni internet. Es el mismo archivo que se descarga y el que se manda por correo. ===== */
 const PW={h:[278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584,761,556,556,222,556,333,1000,556,556,333,1000,667,333,1000,556,611,556,556,222,222,333,333,350,556,1000,333,1000,500,333,944,556,500,667,278,333,556,556,556,556,260,556,333,737,370,556,584,333,737,333,400,584,333,333,333,556,537,278,333,333,365,556,834,834,834,611,667,667,667,667,667,667,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,500,556,556,556,556,278,278,278,278,556,556,556,556,556,556,556,584,611,556,556,556,556,500,556,500],b:[278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584,761,556,611,278,556,500,1000,556,556,333,1000,667,333,1000,611,611,611,611,278,278,500,500,350,556,1000,333,1000,556,333,944,611,500,667,278,333,556,556,556,556,280,556,333,737,370,556,584,333,737,333,400,584,333,333,333,611,556,278,333,333,365,556,834,834,834,611,722,722,722,722,722,722,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,556,556,556,556,556,278,278,278,278,611,611,611,611,611,611,611,584,611,611,611,611,611,556,611,556]};
 const PWIN={'–':150,'—':151,'‘':145,'’':146,'“':147,'”':148,'•':149,'…':133,'→':62,'−':45};
@@ -1044,12 +1310,12 @@ async function pdfEntrada(){const R=PdfRep({title:'Registro de recepción',sub:'
  R.notes('recepcion','Notas de Entrada');return{u8:R.build(),name:pdfName('Entrada'),title:'Registro de recepción'}}
 function consBlock(R,city,cons){const c=CONS[cons];R.p(`${city} · ${PORTS[city]||''} — ${c.n}`,{b:1,sz:10,gap:1});R.p(`${c.a}${c.c?' · '+c.c:''}${c.u?' · ID '+c.u:''}`,{sz:8,c:MUT,gap:5})}
 async function pdfOrdenes(id){const os=(id?ST.OR.filter(o=>o.id==id):ST.OR.slice().sort((a,b)=>a.etd<b.etd?1:-1)),R=PdfRep({title:'Órdenes de empaque',sub:id&&os[0]?'Empaque '+fd(os[0].etd):'Paso 2 · Órdenes',logo:await pdfLogo()}),T_=os.reduce((a,o)=>a+ordTot(o),0);
- R.stats([['Órdenes',os.length],['Cajas pedidas',T_],['Kg neto',T_*KGN],['Kg bruto',T_*KGB]]);
+ R.stats([['Órdenes',os.length],['Cajas pedidas',T_],['Kg neto',T_*KGN],['Kg bruto',kb(T_)]]);
  if(!os.length)R.p('Todavía no hay órdenes.',{c:MUT});
  os.forEach(o=>{R.h2(`Empaque ${fd(o.etd)} · ${ordTot(o)} cajas`);const G={};o.lines.forEach(l=>{const k=l.city+'|'+l.cons;(G[k]=G[k]||{city:l.city,cons:l.cons,ls:[]}).ls.push(l)});
   if(!o.lines.length)R.p('Esta orden todavía no tiene líneas.',{c:MUT});
   Object.values(G).forEach(g=>{const gb=g.ls.reduce((a,l)=>a+l.boxes,0),si=(o.sh||{})[g.city+'|'+g.cons];consBlock(R,g.city,g.cons);if(si!=null&&ST.P[si])R.p('Embarque: '+ST.P[si].n,{sz:8.5,c:MUT,gap:3});
-   R.table([{h:'Cliente final',w:2},{h:'Cajas pedidas',w:1,al:'r'},{h:'Neto kg',w:1,al:'r'},{h:'Bruto kg',w:1,al:'r'},{h:'Cajas empacadas',w:1.2,al:'r'}],g.ls.map(l=>{const n=ordAssigned(o,l).length;return[{t:l.cli,b:1},l.boxes,l.boxes*KGN,l.boxes*KGB,{t:`${n} de ${l.boxes}`,c:n>=l.boxes?GRN:RED,b:1}]}),{foot:['Total',gb,gb*KGN,gb*KGB,'']})})});
+   R.table([{h:'Cliente final',w:2},{h:'Cajas pedidas',w:1,al:'r'},{h:'Neto kg',w:1,al:'r'},{h:'Bruto kg',w:1,al:'r'},{h:'Cajas empacadas',w:1.2,al:'r'}],g.ls.map(l=>{const n=ordAssigned(o,l).length;return[{t:l.cli,b:1},l.boxes,l.boxes*KGN,kb(l.boxes),{t:`${n} de ${l.boxes}`,c:n>=l.boxes?GRN:RED,b:1}]}),{foot:['Total',gb,gb*KGN,kb(gb),'']})})});
  R.p(`Peso por caja: ${KGN} kg netos y ${KGB} kg brutos.`,{sz:8,c:MUT});return{u8:R.build(),name:pdfName('Ordenes',id&&os[0]?os[0].etd:''),title:'Órdenes de empaque'}}
 async function pdfEmpaque(id){const os=(id?ST.OR.filter(o=>o.id==id):ST.OR.slice().sort((a,b)=>a.etd<b.etd?1:-1)),R=PdfRep({title:'Packing list',sub:id&&os[0]?'Empaque '+fd(os[0].etd):'Paso 3 · Empaque',logo:await pdfLogo()});
  const T_=os.reduce((a,o)=>a+ordTot(o),0),A=os.reduce((a,o)=>a+ordAsg(o),0),bx=os.flatMap(o=>ordBoxes(o)),pz=bx.reduce((a,x)=>a+x.b.c,0);
@@ -1063,14 +1329,14 @@ async function pdfEmpaque(id){const os=(id?ST.OR.filter(o=>o.id==id):ST.OR.slice
   o.lines.forEach(l=>R.notes('emp:'+lkey(o,l),`Notas · ${l.cli}`))});
  return{u8:R.build(),name:pdfName('Empaque',id&&os[0]?os[0].etd:''),title:'Packing list'}}
 function shipCons(i){const c=shipCC(i);return c}
-async function pdfEmbarque(i){const p=ST.P[i];if(!p)throw new Error('ese embarque ya no existe');const R=PdfRep({title:'Informe de embarque',sub:p.n,logo:await pdfLogo()}),bs=boxesOf(i),sn=sent(i),g=gross(p),by={R:0,V:0,B:0},lk=shipLinks(i),is=shipIssues(i).map(x=>x.t);bs.forEach(x=>by[x.b.k||'B']+=x.b.c);
+async function pdfEmbarque(i){const p=ST.P[i];if(!p)throw new Error('ese embarque ya no existe');const R=PdfRep({title:'Informe de embarque',sub:p.n,logo:await pdfLogo()}),bs=boxesOf(i),sn=sent(i),g=gross(p),by={R:0,V:0,B:0,A:0},lk=shipLinks(i),is=shipIssues(i).map(x=>x.t);bs.forEach(x=>by[x.b.k||'B']+=x.b.c);
  R.stats([['Hieleras',p.h],['Peso bruto kg',g.toFixed(1)],['Cajas empacadas',bs.length],['Langostas',sn],['Estado',p.closed?'Cerrado':'Abierto',p.closed?GRN:AMB]]);
  if(is.length)R.alert(`ATENCIÓN: ${is.length} ${is.length==1?'pendiente o discrepancia':'pendientes o discrepancias'}`,is);else R.alert('Sin pendientes ni discrepancias',['Peso, tallas y cajas coinciden con el formato.'],GRN,'#e9f6ef');
  const c=shipCC(i);if(c){R.h2('Destino');consBlock(R,c.city,c.cons)}
  R.h2('Órdenes en este embarque');
  R.table([{h:'Orden (empaque)',w:1.3},{h:'Clientes',w:2.5},{h:'Cajas pedidas',w:1,al:'r'},{h:'Cajas empacadas',w:1.1,al:'r'}],lk.map(x=>{const ls=x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons),t=ls.reduce((a,l)=>a+l.boxes,0),n=ls.reduce((a,l)=>a+Math.min(l.boxes,ordAssigned(x.o,l).length),0);return[{t:fd(x.o.etd),b:1},ls.map(l=>l.cli).join(', '),t,{t:`${n} de ${t}`,b:1,c:n>=t?GRN:RED}]}));
  R.h2('Producto');
- R.kv([['Lotes',[...new Set(bs.map(x=>x.l))].join(', ')],['Rojo / Verde / Blanco',`${by.R} / ${by.V} / ${by.B} langostas`]]);
+ R.kv([['Lotes',[...new Set(bs.map(x=>x.l))].join(', ')],['Rojo / Verde / Blanco / Amarillo',`${by.R} / ${by.V} / ${by.B} / ${by.A} langostas`]]);
  R.h2('Distribución por talla (hieleras)');const zs=p.z.reduce((a,b)=>a+b,0);
  R.table(['Chica','Mediana','Grande','Jumbo'].map(h=>({h,w:1,al:'r'})).concat([{h:'Suma',w:1,al:'r'},{h:'Hieleras',w:1,al:'r'}]),[[...p.z,{t:zs,b:1,c:zs===p.h?GRN:RED},p.h]]);
  R.h2('Peso bruto');
@@ -1111,8 +1377,9 @@ document.addEventListener('click',async e=>{const x=e.target.closest('[data-pdf]
 
 document.addEventListener('click',e=>{const x=e.target.closest('button[data-bk=dl]');if(!x)return;const u=URL.createObjectURL(new Blob([JSON.stringify(ST)],{type:'application/json'})),a=document.createElement('a');a.href=u;a.download=`PROPESA_respaldo_${ymd()}.json`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500);toast('✔ Respaldo descargado')});
 document.addEventListener('change',async e=>{const t=e.target;if(!(t.dataset&&t.dataset.bk=='up')||!t.files[0])return;try{const d=JSON.parse(await t.files[0].text());if(!d||!Array.isArray(d.R)||!Array.isArray(d.OR)||!d.B||!Array.isArray(d.P)||!Array.isArray(d.U))throw 0;
+ if(CLOUD){if(!me||me.role!='admin'){t.value='';return}if(!confirm('Esto reemplaza TODOS los datos compartidos (los ven todos los equipos) con el respaldo ('+d.R.length+' lotes, '+d.OR.length+' órdenes). Los usuarios no cambian. ¿Continuar?')){t.value='';return}const U=ST.U;ST={...cleanST(d,true),U};ST.T=ST.T||[];save();V={v:'inicio',id:null};toast('✔ Respaldo restaurado en la base compartida');render();t.value='';return}
  if(!confirm('Esto reemplaza TODO lo que hay en este equipo con el respaldo ('+d.R.length+' lotes, '+d.OR.length+' órdenes). ¿Continuar?')){t.value='';return}
- const keep=me&&me.email;if(!me&&!confirm('¿Cargar este respaldo en el equipo?')){t.value='';return}let c;try{c=cleanST(d)}catch(z){toast('No se pudo cargar: el respaldo no tiene un Administrador válido.');t.value='';return}ST=c;migrateUsers();save();me=ST.U.find(u=>u.email==keep)||ST.U.find(u=>u.role=='admin')||null;V={v:'inicio'};toast('✔ Respaldo restaurado');render()}catch(x){toast('No se pudo leer ese archivo: no parece un respaldo de PROPESA.')}t.value=''});
+ const keep=me&&me.email;if(!me&&!confirm('¿Cargar este respaldo en el equipo?')){t.value='';return}let c;try{c=cleanST(d)}catch(z){toast('No se pudo cargar: el respaldo no tiene un Administrador válido.');t.value='';return}ST=c;save();me=ST.U.find(u=>u.email==keep)||ST.U.find(u=>u.role=='admin')||null;V={v:'inicio'};toast('✔ Respaldo restaurado');render()}catch(x){toast('No se pudo leer ese archivo: no parece un respaldo de PROPESA.')}t.value=''});
 const pendKey=(o,after)=>{let past=!after;for(const l of o.lines){const k=o.id+'.'+l.id;if(!past){if(k===after)past=true;continue}if(ordAssigned(o,l).length<l.boxes)return k}return after?pendKey(o):null};
 const goPend=(o,after)=>{const k=pendKey(o,after);return k?(PISO?'pemp:':'empacar:')+k:null};
 function pendChip(o,a,t){if(!t)return V.v=='orden'&&can('lot')?`<button class="chip al chipb" data-jump="#ol_cli">⚠ Sin líneas · Agregar línea ›</button>`:`<button class="chip al chipb" data-go="orden:${o.id}">⚠ Sin líneas · Agregar líneas ›</button>`;const g=t&&a<t&&can('box')?goPend(o):null;return g?`<button class="chip al chipb" data-go="${g}" title="Ir a empacar lo que falta">⚠ ${a} de ${t} cajas empacadas · Empacar lo que falta ›</button>`:`<span class="chip ${a>=t&&t?'ok':'al'}">${a>=t&&t?'✔ ':'⚠ '}${a} de ${t} cajas empacadas</span>`}
@@ -1157,12 +1424,12 @@ function pisoEmp(key){if(!key){const pl=pendLines();PE={key:null,lot:PE.lot,chg:
   const w=PE.rows[no]||{};return `<div class="pbx${pkRowSt(w)=='prog'?' ip':''}" id="pps${no}" data-kps="${no}"><b class="pbn">Caja ${no}</b><input class="ppc" data-slot="${no}" data-kpn="${no}" type="number" min="1" inputmode="none" enterkeyhint="next" placeholder="—" aria-label="Piezas vivas de la caja ${no}" value="${E(w.c==null?'':w.c)}" ${dis}><span class="pcv">${peCv(w)}</span></div>`}).join('');
  return `<div class="pw pkw${closed?'':' kpon2'}">${closed?'':'<div class="kpwrap"><div class="kpw kpp"><div class="kpmain">'}<div class="pkh"><div><span class="mut2">Empacando</span><b class="cli">${E(l.cli)}</b><span class="mut2">${l.city} · ${E(CONS[l.cons].k)}</span></div><div class="pkn2"><span class="mut2">Completadas</span><b>${n}<small> de ${l.boxes}</small></b><div class="pb"><i style="width:${n/l.boxes*100}%"></i></div><span class="mut2 pks2">${l.boxes-n} ${l.boxes-n==1?'pendiente':'pendientes'} · ${Math.round(n/l.boxes*100)}% completado</span></div>${closed?'<span class="chip ok">Embarque cerrado</span>':`<button class="plot" data-pe="chg">Lote <b>${E(PE.lot||'—')}</b><span>Cambiar</span></button>`}</div>
  ${done?`<div class="pdone"><b>✔ ${E(l.cli)} completo · ${l.boxes} de ${l.boxes}</b><span>Puedes corregir cualquier caja abajo.</span><div class="pbar">${pendKey(o,key)&&pendKey(o,key)!==key?`<button class="pbtn" data-go="pemp:${pendKey(o,key)}">Siguiente cliente que falta ›</button>`:`<button class="pbtn" data-go="pemp">Empacar otro cliente</button>`}<button class="pbtn s" data-go="piso">Inicio</button></div></div>`:closed?'<p class="pcx">Este embarque ya se cerró: las cajas solo se pueden ver.</p>':`<p class="pcx" style="margin:0 0 10px">Escribe las piezas en el teclado y <b>toca la categoría: la caja se guarda y pasa sola a la siguiente.</b> Para corregir, toca cualquier caja.</p>
- <div class="pall"><span class="mut2">Poner a todas las vacías:</span>${['R','V','B'].map(q=>`<button class="chip pk pc${q}" data-pe="all:${q}">${RC[q][0]}</button>`).join('')}</div>`}
+ <div class="pall"><span class="mut2">Poner a todas las vacías:</span>${Object.keys(RC).map(q=>`<button class="chip pk pc${q}" data-pe="all:${q}">${RC[q][0]}</button>`).join('')}</div>`}
  <div class="pbxs">${cards}</div>${closed?'':`</div>${kpPad('piso')}</div></div>`}</div>`}
 function peTry(no,quiet){const{o,l}=peLine();if(!l)return;const w=PE.rows[no]||{},c=Math.round(+w.c);if(!(c>=1)||!w.k)return false;
  if(!PE.lot||!ST.B[PE.lot]){toast('Elige el lote.');return false}const sl=peSlots(o,l);if(sl[no-1])return false;
  const si=shipFor(o,l.city,l.cons);if(ST.P[si].closed){toast('No se puede: el embarque de este destino ya está cerrado.');return false}
- ST.BN=(ST.BN||0)+1;ST.B[PE.lot].push({c,k:w.k,d:si,o:lkey(o,l),seq:ST.BN,ps:no});delete PE.rows[no];Object.keys(PE.rows).forEach(k=>{if(peSlots(o,l)[k-1])delete PE.rows[k]});save();toast(`✔ Caja ${no} guardada: ${c} piezas ${RC[w.k][0]}`);quiet?render():peRender(no);return true}
+ ST.B[PE.lot].push({c,k:w.k,d:si,o:lkey(o,l),seq:uidN(),ps:no});delete PE.rows[no];Object.keys(PE.rows).forEach(k=>{if(peSlots(o,l)[k-1])delete PE.rows[k]});save();toast(`✔ Caja ${no} guardada: ${c} piezas ${RC[w.k][0]}`);quiet?render():peRender(no);return true}
 function peRender(no){render();const nx=[...document.querySelectorAll('.ppc')].find(e=>+e.dataset.slot>no&&!e.value)||document.querySelector('.ppc:placeholder-shown');if(nx){try{nx.focus({preventScroll:false})}catch(z){}}}
 const peBox=seq=>{for(const lt in ST.B){const b=ST.B[lt].find(x=>x.seq===seq);if(b)return b}return null};
 document.addEventListener('click',e=>{const x=e.target.closest('[data-pe]');if(!x)return;const P=x.dataset.pe.split(':'),a=P[0],v=P.slice(1).join(':');
@@ -1192,10 +1459,10 @@ let KPT={k:'',t:null,fresh:true};
 const catLbl=k=>k&&RC[k]?`<span class="dot" style="background:var(--${k})"></span>${RC[k][0]}`:'',
  peCv=w=>w&&w.k?catLbl(w.k):w&&String(w.c==null?'':w.c).trim()!==''?'<span class="pcx2">Falta categoría</span>':'<span class="pcx2">Pendiente</span>';
 const DEL_IC='<svg width="30" height="22" viewBox="0 0 34 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M11 2h19a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H11L2 13z"/><path d="M16 8l10 10M26 8L16 18"/></svg>';
-function kpPad(mode){return `<aside class="kpad" id="kpad" data-kpm="${mode}" aria-label="Teclado para capturar piezas"><div class="kph"><b id="kpt">Caja</b><span id="kps"></span></div>
+function kpPad(mode){return `<aside class="kpad" id="kpad" data-kpm="${mode}" aria-label="Teclado para capturar piezas">${mode=='full'?'<button type="button" class="kpclose" data-kpo="0" aria-label="Cerrar teclado" title="Cerrar teclado"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>':''}<div class="kph"><b id="kpt">Caja</b><span id="kps"></span></div>
  <div class="kpd" id="kpd"><span class="kpdt" id="kpdt" aria-hidden="true"></span><span class="kpv" id="kpv" aria-live="polite">—</span><span class="kpu">piezas vivas</span></div>
  <div class="kpk">${[1,2,3,4,5,6,7,8,9].map(d=>`<button type="button" data-kp="d:${d}">${d}</button>`).join('')}<button type="button" class="f" data-kp="clr">Borrar</button><button type="button" data-kp="d:0">0</button><button type="button" class="f" data-kp="bk" aria-label="Borrar un número">${DEL_IC}</button></div>
- <p class="kpcl" id="kpcl"></p><div class="kpc" role="group" aria-label="Categoría">${['R','V','B'].map(q=>`<button type="button" class="kc${q}" data-kp="k:${q}" aria-pressed="false">${RC[q][0]}</button>`).join('')}</div>
+ <p class="kpcl" id="kpcl"></p><div class="kpc" role="group" aria-label="Categoría">${Object.keys(RC).map(q=>`<button type="button" class="kc${q}" data-kp="k:${q}" aria-pressed="false">${RC[q][0]}</button>`).join('')}</div>
  <div class="kpn"><button type="button" data-kp="prev">‹ Caja anterior</button><span id="kpx"></span><button type="button" data-kp="next">Siguiente caja ›</button></div></aside>`}
 const kpEl=t=>{t=t||KPT.t;if(!t)return null;const[a,b]=t.split(':');if(a=='slot'){const c=document.getElementById('pps'+b);return c&&c.querySelector('input.ppc,input.psc')}if(a=='row')return document.getElementById('pk_c'+b);if(a=='ed')return document.getElementById('pk_e');return null};
 const kpOf=el=>{if(!el||!el.classList)return null;if(el.classList.contains('ppc')||el.classList.contains('psc')){const c=el.closest('[data-kps]');return c?'slot:'+c.dataset.kps:null}if(el.classList.contains('pkc'))return 'row:'+el.dataset.row;if(el.classList.contains('pke'))return 'ed';return null};
@@ -1401,7 +1668,7 @@ function pmenuHTML(){return `<div class="pmscrim" data-pmclose="1"></div><div cl
  <div class="pmsep"></div>
  ${me.role=='admin'?`<button role="menuitem" class="pmi" data-pm="users">${IC.admin}<span>Administración</span><small>Usuarios, permisos, correos y respaldo</small></button>
  <div class="pmsep"></div>`:''}
- <button role="menuitem" class="pmi out" data-pm="logout">${IC.logout}<span>Cerrar sesión</span></button><p class="pmver">Versión 1.3.0</p></div>`}
+ <button role="menuitem" class="pmi out" data-pm="logout">${IC.logout}<span>Cerrar sesión</span></button><p class="pmver">Versión 1.5.0</p></div>`}
 function placePmenu(){const c=document.getElementById('pmenu'),b=PMRET&&PMRET.isConnected?PMRET:document.querySelector('[data-avatar]'),m=c&&c.querySelector('.pmbox');if(!m||!b)return;
  const r=b.getBoundingClientRect(),W=document.documentElement.clientWidth;m.style.top=Math.round(r.bottom+8)+'px';m.style.right=Math.max(8,Math.round(W-r.right))+'px'}
 function openPmenu(btn){PMRET=btn;PMOPEN=true;const c=document.getElementById('pmenu');c.hidden=false;c.innerHTML=pmenuHTML();placePmenu();syncAv();const f=c.querySelector('[role=menuitem]');if(f)f.focus({preventScroll:true})}
@@ -1411,7 +1678,7 @@ document.addEventListener('click',e=>{const t=e.target,av=t.closest('[data-avata
  if(t.closest('[data-pmclose]')){closePmenu();return}
  const it=t.closest('[data-pm]');if(!it)return;const a=it.dataset.pm,btn=PMRET;closePmenu(false);
  if(a=='users')return go('admin');
- if(a=='logout'){closeSettings();me=null;PEN=null;return render()}});
+ if(a=='logout')return signOut();});
 document.addEventListener('keydown',e=>{if(!PMOPEN)return;const its=[...document.querySelectorAll('#pmenu [role=menuitem]')],i=its.indexOf(document.activeElement);
  if(e.key=='Escape'){e.preventDefault();closePmenu();return}
  if(e.key=='ArrowDown'||e.key=='ArrowUp'){e.preventDefault();const n=its[(i+(e.key=='ArrowDown'?1:-1)+its.length)%its.length];if(n)n.focus();return}
@@ -1422,8 +1689,10 @@ window.addEventListener('resize',()=>{if(PMOPEN)placePmenu()});
 /* ---------- NÚCLEO ---------- */
 /* Nombre de la sección actual en la barra de arriba del celular (el menú lateral está escondido ahí). Mismo ícono y nombre que en el menú. */
 function hdTitle(steps,s){const x=s?steps.find(z=>z[1]==s):null,O={inicio:['inicio','Panel'],temperatura:['temperatura','Temperatura'],admin:['admin','Administración'],buscar:['','Buscar']}[V.v],
- ic=x?IC[x[0]]:O&&O[0]?IC[O[0]]:'',t=x?x[2]:O?O[1]:'';if(!t)return'';
- return `<div class="hdt"><span class="hdti" aria-hidden="true">${ic}</span><span class="hdtt"><b>${t}</b></span></div>`}
+ ic=x?IC[x[0]]:O&&O[0]?IC[O[0]]:'',t=x?x[2]:O?O[1]:'';if(!t)return'';let sub='';
+ if(V.v=='empacar'){const[oid,lid]=String(V.id).split('.').map(Number),o=ST.OR.find(z=>z.id===oid),l=o&&o.lines.find(z=>z.id===lid);
+  if(l){const op=lots().filter(z=>!R_(z).closed),lt=PKD.key==V.id&&PKD.lot||(op.length==1?op[0]:'');sub=E(l.cli)+(lt?' · Lote '+E(lt):'')}}
+ return `<div class="hdt"><span class="hdti" aria-hidden="true">${ic}</span><span class="hdtt"><b>${t}</b>${sub?`<small id="hdsub">${sub}</small>`:''}</span></div>`}
 const PG={piso:pisoHome,pemp:pisoEmp,pent:pisoEnt,inicio,recepcion,lote,empaque,empacar,embarques,emb:i=>emb(+i),ordenes,orden:i=>orden(+i),cierre,temperatura,admin,buscar},STEP={recepcion:1,lote:1,ordenes:2,orden:2,empaque:3,empacar:3,embarques:4,emb:4,cierre:5};
 function render(){RX={};try{render0()}finally{RX=null}uiSoon()}
 /* --- Recargar sin perder nada: la sesión, la pantalla y lo que se estaba escribiendo sobreviven al refresh.
@@ -1437,7 +1706,7 @@ function uiSave(){try{if(!me){localStorage.removeItem(SES_KEY);localStorage.remo
   localStorage.setItem(SES_KEY,JSON.stringify({u:me.id,exp:LAST_ACT+SES_H*36e5}));
   const m=document.querySelector('main');localStorage.setItem(UI_KEY,JSON.stringify({u:me.id,V,form,uf,PKD,PE,PEN:PEN&&{...PEN,busy:false},OD,OA,HIST,KPT,ND:ND&&{key:ND.key,text:ND.text,ref:ND.ref,imgs:[]},sc:m?m.scrollTop:0,f:uiFields()}))}catch(e){}}
 function uiSoon(){if(UI_REST)return;clearTimeout(UI_T);UI_T=setTimeout(uiSave,150)}
-function uiRestore(){try{const s=JSON.parse(localStorage.getItem(SES_KEY)||'null');if(!s||!(s.exp>Date.now())){localStorage.removeItem(SES_KEY);localStorage.removeItem(UI_KEY);return false}
+function uiRestore(){try{const s=JSON.parse(localStorage.getItem(SES_KEY)||'null');if(!s||!(s.exp>Date.now())||(CLOUD&&!(SBS&&SBS.uid===s.u))){localStorage.removeItem(SES_KEY);localStorage.removeItem(UI_KEY);if(CLOUD&&s)dropSes();return false}
   const u=(ST.U||[]).find(x=>x.id===s.u);if(!u)return false;me=u;LAST_ACT=s.exp-SES_H*36e5;const ui=JSON.parse(localStorage.getItem(UI_KEY)||'null');if(!ui||ui.u!==u.id||!ui.V||!PG[ui.V.v]){V={v:PISO?'piso':'inicio',id:null};return false}
   V={v:ui.V.v,id:ui.V.id==null?null:String(ui.V.id)};form=ui.form||null;uf=ui.uf||null;if(ui.PKD)PKD=ui.PKD;if(ui.PE)PE=ui.PE;PEN=ui.PEN||null;if(ui.OD)OD=ui.OD;OA=ui.OA||{};HIST=ui.HIST||{};ND=ui.ND||null;if(ui.KPT&&typeof ui.KPT.k=='string')KPT=ui.KPT;
   UI_REST=true;try{render();const f=ui.f||{};for(const k in f){let el;try{el=document.querySelector('#app '+k)}catch(z){continue}if(!el||uiSkip(el))continue;const v=f[k];if(v&&typeof v=='object')el.checked=!!v.c;else if(el.value!==v)el.value=v}
@@ -1445,7 +1714,7 @@ function uiRestore(){try{const s=JSON.parse(localStorage.getItem(SES_KEY)||'null
 const uiAct=()=>{LAST_ACT=Date.now();uiSoon()};['input','change','click','keydown'].forEach(t=>document.addEventListener(t,uiAct));
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden'){clearTimeout(UI_T);uiSave()}});
 window.addEventListener('pagehide',()=>{clearTimeout(UI_T);uiSave()});
-function render0(){const A=document.getElementById('app');if(ST.U&&ST.U.some(u=>u.pw!=null))migrateUsers();if(!me){A.innerHTML=ST.U&&ST.U.length?loginView():setupView();return}if(!ST.M)seedM();if(!ST.OR)seedOR();if(!ST.ORc)cleanOrders();if(!ST.PK)migratePK();
+function render0(){const A=document.getElementById('app');if(!me){A.innerHTML=(CLOUD?NEEDSETUP:!(ST.U&&ST.U.length))?setupView():loginView();return}if(!ST.M)seedM();if(!ST.OR)seedOR();if(!ST.ORc)cleanOrders();if(!ST.PK)migratePK();
  if(V.v=='admin'&&me.role!='admin')V={v:'inicio'};const o=document.querySelector('main'),sc=o?o.scrollTop:0,s=STEP[V.v]||0,T=orderedAll(),PA=packedAll();
  const steps=[['recepcion',1,'Entrada',`${ST.R.length} lotes`],['ordenes',2,'Órdenes',ST.OR.length?`${ST.OR.length} ${ST.OR.length==1?'orden':'órdenes'}`:'Sin órdenes'],['empaque',3,'Empaque',T?`${PA}/${T} cajas`:'Sin cajas pedidas',T>PA],['embarques',4,'Embarque',`${ST.P.filter(p=>p.closed).length}/${ST.P.length} cerrados`,ST.P.some(p=>!p.closed)],['cierre',5,'Mortalidad final',`${ST.R.filter(r=>r.closed).length}/${ST.R.length} lotes`,false]];
  if(PISO)A.innerHTML=pisoShell(topBanners()+PG[V.v](V.id));else A.innerHTML=`<div class="shell"><a class="skip" href="#main">Saltar al contenido</a><aside class="sb" aria-label="Menú principal"><button class="lt lgb" data-go="inicio" aria-label="PROPESA · ir al inicio" title="Ir al inicio">${LOGOD}</button><h4>Operación</h4><button class="iosrow" role="switch" aria-checked="false" data-mode="piso"><span class="iosic">${IC.cajas}</span><span class="iostx"><b>Modo piso</b><small>Botones grandes</small></span><span class="iossw" aria-hidden="true"><i></i></span></button><button class="fs ${V.v=='inicio'?'on':''}" data-go="inicio" ${V.v=='inicio'?'aria-current="page"':''}><i>${IC.inicio}</i><span><b>Panel</b><small>Siguiente paso</small></span></button>${steps.map(([k,n,t,sub,pn])=>`<button class="fs ${s==n?'on':''}${pn?' pn':''}" data-go="${k}" ${s==n?'aria-current="page"':''}><i>${IC[k]}<em>${n}</em></i><span><b>${t}</b><small>${pn?'⚠ ':''}${sub}</small></span></button>`).join('')}<span class="sp"></span><h4>Sistema</h4><button class="fs sm ${V.v=='temperatura'?'on':''}" data-go="temperatura" ${V.v=='temperatura'?'aria-current="page"':''}><i>${IC.temperatura}</i><span><b>Temperatura</b></span></button>${me.role=='admin'?`<button class="fs sm ${V.v=='admin'?'on':''}" data-go="admin" ${V.v=='admin'?'aria-current="page"':''}><i>${IC.admin}</i><span><b>Administración</b></span></button>`:''}<div style="height:12px"></div></aside><div class="scr" data-sb="0"></div><div class="ct"><header class="hd"><button class="mb" data-sb="1" aria-label="Menú">☰</button>${hdTitle(steps,s)}<input id="sq" type="search" placeholder="Buscar lote o envío" aria-label="Buscar"><div class="usr">${setBtn(false)}${avatarBtn(false)}</div></header><main id="main" tabindex="-1">${topBanners()}${PG[V.v](V.id)}</main></div></div>`;
@@ -1455,35 +1724,38 @@ const g=i=>document.getElementById(i).value;
 function mv(){const ty=g('ty'),s=g('sz'),k=+g('kg'),l=V.id;if(!(k>0))return fail('Ingresa una cantidad mayor a 0.','kg');
  const d=Math.round((ty=='RECEPCION'?k:-k)*1000);if(bal(l,s)+d<0)return fail(`Existencia insuficiente: hay ${f(bal(l,s))} kg en ${s}.`,'kg');
  post(ty,l,s,d/1000);save();msg=`✔ ${ty.replace('_',' ')} registrado: ${d>0?'+':''}${f(d)} kg en ${s}.`;render()}
-function rev(id){const x=ST.L.find(y=>y.id===id);if(!x||x.type==='REVERSA'||rvd().has(id))return;if(bal(x.lot,x.size)-x.m<0){msg='No se puede revertir: dejaría existencia negativa.';return render()}post('REVERSA',x.lot,x.size,-x.m/1000,id);save();msg=`✔ Movimiento #${id} revertido.`;render()}
+function rev(id){const x=ST.L.find(y=>y.id===id);if(!x||x.type==='REVERSA'||rvd().has(id))return;if(bal(x.lot,x.size)-x.m<0){msg='No se puede revertir: dejaría existencia negativa.';return render()}post('REVERSA',x.lot,x.size,-x.m/1000,id);save();msg=`✔ Movimiento #${mvNo(id)} revertido.`;render()}
 function delLot(){const l=V.id;if(ST.B[l].some(b=>b.d!=null)){conf=null;toast('No se puede eliminar: tiene cajas empacadas para envíos.');return render()}
  ST.R=ST.R.filter(r=>r.lot!==l);delete ST.B[l];ST.L=ST.L.filter(x=>x.lot!==l);save();conf=null;toast('Lote eliminado');go('recepcion')}
 function closeLot(l){const r=R_(l),c=calc(l);if(!c)return toast('Captura primero el conteo final.');r.closed=true;save();toast(`✔ Lote cerrado. Mortalidad calculada: ${f(c.dead)} kg (${c.p.toFixed(2)}%).`);render()}
 function closeP(i){const p=ST.P[i],bad=[];for(const l in ST.B)ST.B[l].forEach((b,n)=>{if(b.d===i&&!(b.c>0&&b.k))bad.push(`${l} #${n+1}`)});
  if(bad.length)return toast('Faltan datos en cajas: '+bad.slice(0,4).join(', '));if(!boxesOf(i).length)return toast('Empaca cajas para este envío antes de cerrar.');
- p.closed=true;const x=boxesOf(i),by={R:0,V:0,B:0};x.forEach(o=>by[o.b.k]+=o.b.c);const to=ST.U.filter(u=>u.notify).map(u=>u.email);
+ p.closed=true;const x=boxesOf(i),by={R:0,V:0,B:0,A:0};x.forEach(o=>by[o.b.k]+=o.b.c);const to=ST.U.filter(u=>u.notify).map(u=>u.email);
  const body=`Empaque cerrado: ${p.n}\nFecha: ${now()}\nCerrado por: ${me.name}\n\nÓrdenes de empaque: ${[...new Set(shipLinks(i).map(z=>fd(z.o.etd)))].join(', ')}\nHieleras: ${p.h}\nPeso bruto: ${gross(p).toFixed(1)} kg\nLotes: ${[...new Set(x.map(o=>o.l))].join(', ')}\nCajas empacadas: ${x.length}\nLangostas: ${sent(i)} (Rojo ${by.R} · Verde ${by.V} · Blanco ${by.B})\n\nDetalle por caja:\n`+x.map(o=>`  ${o.l}: ${o.b.c} piezas ${RC[o.b.k][0]}`).join('\n');
- const pdfn=pdfName('Embarque',p.n);ST.O.unshift({subject:`[PROPESA] Informe de empaque ${p.n}`,t:now(),to,body:body+`\n\nAdjunto: ${pdfn}`,pn:p.n,att:pdfn});save();toast('✔ Empaque cerrado. Manda el informe con «Enviar por correo».');render()}
+ const pdfn=pdfName('Embarque',p.n);ST.O.unshift({u:uidS(),subject:`[PROPESA] Informe de empaque ${p.n}`,t:now(),to,body:body+`\n\nAdjunto: ${pdfn}`,pn:p.n,att:pdfn});save();toast('✔ Empaque cerrado. Manda el informe con «Enviar por correo».');render()}
+async function saveUCloud(n,e,pw,r,nt,isNew){const b=document.querySelector('[data-a=su]');if(b)b.disabled=true;
+ try{await fnUsers(isNew?'create':'update',{id:uf.id,name:n,email:e.toLowerCase(),password:pw||undefined,role:r,notify:nt});uf=null;msg='';await loadProfiles();toast('✔ Usuario guardado');render()}
+ catch(x){if(b)b.disabled=false;fail(x.message||'No se pudo guardar.','un')}}
 function saveU(){const n=g('un').trim(),e=g('ue').trim(),pw=g('up'),r=g('ur'),nt=document.querySelector('[data-a=un]').getAttribute('aria-checked')=='true',isNew=!uf.id;
  if(!n)return fail('Escribe el nombre.','un');if(!/.+@.+\..+/.test(e))return fail('Escribe un correo válido.','ue');
  if((isNew||pw)&&pw.length<6)return fail(isNew?'La contraseña debe tener al menos 6 caracteres.':'La nueva contraseña debe tener al menos 6 caracteres (o deja el campo vacío para no cambiarla).','up');
- if(pw&&PWD0.includes(pw))return fail('Esa contraseña es muy fácil de adivinar. Elige otra.','up');
  if(ST.U.some(u=>String(u.email).toLowerCase()==e.toLowerCase()&&u.id!=uf.id))return fail('Ese correo ya existe.','ue');
- if(!isNew){const u=ST.U.find(u=>u.id==uf.id);if(u.role=='admin'&&r!='admin'&&ST.U.filter(x=>x.role=='admin').length<2)return fail('Debe quedar al menos un Administrador.','ur');Object.assign(u,{name:n,email:e,role:r,notify:nt});if(pw){u.pwh=pwHash(u.id,pw);u.dflt=false}}
- else{const id=Math.max(0,...ST.U.map(u=>u.id))+1;ST.U.push({id,name:n,email:e,pwh:pwHash(id,pw),dflt:false,role:r,notify:nt})}
+ if(CLOUD)return saveUCloud(n,e,pw,r,nt,isNew);
+ if(!isNew){const u=ST.U.find(u=>u.id==uf.id);if(u.role=='admin'&&r!='admin'&&ST.U.filter(x=>x.role=='admin').length<2)return fail('Debe quedar al menos un Administrador.','ur');Object.assign(u,{name:n,email:e,role:r,notify:nt})}
+ else{const id=Math.max(0,...ST.U.map(u=>u.id))+1;ST.U.push({id,name:n,email:e,role:r,notify:nt})}
  uf=null;msg='';save();toast('✔ Usuario guardado');render()}
 document.addEventListener('click',e=>{const sbx=e.target.closest('[data-sb]'),A_=document.getElementById('app');if(sbx)A_.classList.toggle('sbo',sbx.dataset.sb=='1');else if(e.target.closest('[data-go]'))A_.classList.remove('sbo');
 const t=e.target,q=s=>t.closest(s);let x;
  if(x=q('[data-q]')){const[a,b]=x.dataset.q.split(',');document.getElementById('le').value=a;document.getElementById('lp').value=b;return}
  if(x=q('button[data-r]'))return rev(+x.dataset.r);
- if(x=q('button[data-ur]')){const id=+x.dataset.ur,m=ST.L.find(y=>y.id===id&&y.type==='REVERSA');if(m&&confirm('¿Anular la reversa #'+id+'? El movimiento #'+m.rev+' vuelve a contar en el inventario.')){ST.L=ST.L.filter(y=>y!==m);save();msg='✔ Reversa #'+id+' anulada.';render()}return}
- if(x=q('[data-eu]')){uf={id:+x.dataset.eu};msg='';return render()}
+ if(x=q('button[data-ur]')){const id=+x.dataset.ur,m=ST.L.find(y=>y.id===id&&y.type==='REVERSA');if(m&&confirm('¿Anular la reversa #'+mvNo(id)+'? El movimiento #'+mvNo(m.rev)+' vuelve a contar en el inventario.')){ST.L=ST.L.filter(y=>y!==m);save();msg='✔ Reversa #'+id+' anulada.';render()}return}
+ if(x=q('[data-eu]')){uf={id:CLOUD?x.dataset.eu:+x.dataset.eu};msg='';return render()}
  if(x=q('[data-du]')){conf='u'+x.dataset.du;return render()}
- if(x=q('[data-du2]')){ST.U=ST.U.filter(u=>u.id!=x.dataset.du2);conf=null;save();toast('Usuario eliminado');return render()}
+ if(x=q('[data-du2]')){if(CLOUD){x.disabled=true;fnUsers('delete',{id:x.dataset.du2}).then(loadProfiles).then(()=>{conf=null;toast('Usuario eliminado');render()}).catch(z=>{conf=null;toast('No se pudo eliminar: '+z.message);render()});return}ST.U=ST.U.filter(u=>u.id!=x.dataset.du2);conf=null;save();toast('Usuario eliminado');return render()}
  if(x=q('[data-a]')){const k=x.dataset.a;
   if(k=='s0')return setupSave();
-  if(k=='lg'){migrateUsers();const em=g('le').trim().toLowerCase(),pw=g('lp'),u=ST.U.find(u=>String(u.email).toLowerCase()==em&&u.pwh===pwHash(u.id,pw));if(!u){document.getElementById('lm').textContent='Correo o contraseña incorrectos.';return}me=u;setPiso(u.role=='piso');PEN=null;V={v:PISO?'piso':'inicio'};return render()}
-  if(k=='lo'){closePmenu(false);closeSettings();me=null;return render()}if(k=='pison')return switchMode(true);if(k=='pisoff')return switchMode(false);
+  if(k=='lg'){if(CLOUD)return cloudLogin();/* modo local (solo pruebas en localhost): entra con el correo; las contraseñas las revisa Supabase */const em=g('le').trim().toLowerCase(),u=ST.U.find(u=>String(u.email).toLowerCase()==em);if(!u){document.getElementById('lm').textContent='Correo o contraseña incorrectos.';return}me=u;setPiso(u.role=='piso');PEN=null;V={v:PISO?'piso':'inicio'};return render()}
+  if(k=='lo')return signOut();if(k=='pison')return switchMode(true);if(k=='pisoff')return switchMode(false);
   if(k=='nf'){form=form?null:{t:'lot'};msg='';return render()}if(k=='el'){form={t:'lot',edit:V.id};msg='';return render()}
   if(k=='tq')return saveTemp();if(k=='sv')return saveLot();if(k=='mv')return mv();if(k=='dl'){conf='lot';return render()}if(k=='dl2')return delLot();
   if(k=='cl')return closeLot(x.dataset.lot||V.id);if(k=='ol'){R_(V.id).closed=false;save();return render()}
@@ -1491,7 +1763,7 @@ const t=e.target,q=s=>t.closest(s);let x;
   if(k=='cp')return closeP(+V.id);if(k=='op'){ST.P[+V.id].closed=false;save();return render()}
   if(k=='nu'){uf={};msg='';return render()}if(k=='cu'){uf=null;return render()}if(k=='su')return saveU();
   if(k=='un'){x.setAttribute('aria-checked',x.getAttribute('aria-checked')!='true');return}
-  if(k=='rst'){const w=prompt('Esto borra TODOS los datos de este equipo. Para confirmar escribe BORRAR');if((w||'').trim().toUpperCase()!=='BORRAR')return toast('No se borró nada.');ST=seed();save();me=null;closePmenu(false);closeSettings();toast('Datos borrados');return render()}return}
+  if(k=='rst'){if(CLOUD){const w=prompt('Esto borra TODOS los datos de TODOS los equipos (lotes, órdenes, embarques, notas y temperatura). Los usuarios se conservan. Para confirmar escribe BORRAR');if((w||'').trim().toUpperCase()!=='BORRAR')return toast('No se borró nada.');const U=ST.U;ST={...seed(),U};save();V={v:'inicio',id:null};toast('Datos borrados en todos los equipos');return render()}const w=prompt('Esto borra TODOS los datos de este equipo. Para confirmar escribe BORRAR');if((w||'').trim().toUpperCase()!=='BORRAR')return toast('No se borró nada.');ST=seed();save();me=null;closePmenu(false);closeSettings();toast('Datos borrados');return render()}return}
  if(x=q('[data-go]'))go(x.dataset.go)});
 document.addEventListener('keydown',e=>{if(e.key=='Enter'){const d=e.target.dataset||{};if(d.go)go(d.go);else if(e.target.id=='lp')document.querySelector('[data-a=lg]').click();else if(e.target.id=='s0q')document.querySelector('[data-a=s0]').click();else if(e.target.id=='sq'){V={v:'buscar',id:e.target.value};render()}}});
 document.addEventListener('change',e=>{const t=e.target,d=t.dataset||{};
@@ -1500,5 +1772,6 @@ document.addEventListener('change',e=>{const t=e.target,d=t.dataset||{};
  if(d.k&&d.j!=null){ST.P[+V.id].c[+d.j][+d.k]=Math.max(0,+t.value||0);save();return render()}
  if(d.alive!=null){const i=+d.alive,n=sent(i);ST.P[i].alive=t.value===''?null:Math.min(n,Math.max(0,Math.floor(+t.value)||0));save();return render()}
  if(d.fin!=null){const r=R_(d.fin),v=t.value===''?null:+t.value;if(v!=null&&(v<0||Math.round(v*1000)>bal(r.lot))){toast(`El conteo final no puede ser mayor al esperado (${f(bal(r.lot))} kg).`);render();const q=document.querySelector(`[data-fin="${d.fin}"]`);if(q){q.value=t.value;q.setAttribute('aria-invalid','true');q.focus({preventScroll:true})}return}r.final=v;save();return render()}});
-if(!uiRestore())render();
+if(!uiRestore()){if(CLOUD&&SBS&&!me){const u=ST.U.find(x=>x.id===SBS.uid);if(u){me=u;V={v:PISO?'piso':'inicio',id:null}}else dropSes()}render()}
+if(CLOUD){if(me)startSync();else checkSetup()}
 </script></body></html>

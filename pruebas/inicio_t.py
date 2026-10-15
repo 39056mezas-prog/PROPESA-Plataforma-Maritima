@@ -16,14 +16,14 @@ with sync_playwright() as p:
     pg.fill('#s0p','Langosta2026');pg.fill('#s0q','otra');pg.click('[data-a=s0]');chk('coinciden' in pg.inner_text('#lm'),'valida que coincidan')
     pg.fill('#s0q','Langosta2026');pg.press('#s0q','Enter');chk(pg.locator('.sb').count()==1,'crea el Administrador y entra')
     chk(pg.locator('#app [data-avatar]').inner_text().strip()=='M','el círculo muestra su inicial')
-    st=pg.evaluate("JSON.parse(localStorage.getItem('propesa-v4')).U");chk(len(st)==1 and st[0]['role']=='admin' and 'pw' not in st[0] and len(st[0]['pwh'])==64,'un solo usuario, Administrador, contraseña cifrada')
+    st=pg.evaluate("JSON.parse(localStorage.getItem('propesa-v4')).U");chk(len(st)==1 and st[0]['role']=='admin' and 'pw' not in st[0] and 'pwh' not in st[0],'un solo usuario, Administrador, sin contraseña guardada en el equipo')
     chk('contraseña de prueba' not in pg.inner_text('#app').lower(),'sin aviso de contraseña de prueba')
     seen=[]
     for r in ['inicio','recepcion','ordenes','empaque','embarques','cierre','temperatura','admin']:
         pg.evaluate(f"go('{r}')");tx=pg.inner_text('#app')
         if DEMO.search(tx):seen.append((r,DEMO.search(tx).group(0)))
     pg.locator('#app [data-avatar]').click();tx=pg.inner_text('#pmenu');pg.keyboard.press('Escape')
-    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.3.0' in tx,'el menú de perfil muestra la versión 1.3.0')
+    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.5.0' in tx,'el menú de perfil muestra la versión 1.5.0')
     # temperatura real
     pg.evaluate("go('temperatura')");chk('Todavía no hay lecturas' in pg.inner_text('#app'),'temperatura empieza vacía (sin datos inventados)')
     pg.select_option('#tq_t','T2');pg.fill('#tq_a','150');pg.click('[data-a=tq]');chk('20 y 110' in pg.inner_text('#app'),'valida el rango de temperatura')

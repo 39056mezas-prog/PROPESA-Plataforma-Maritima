@@ -22,15 +22,22 @@ with sync_playwright() as p:
         for r,name,step in EXP:
             pg.evaluate(f"go('{r}')")
             vis=pg.evaluate("(()=>{const h=document.querySelector('.hdt');return !!h&&getComputedStyle(h).display!='none'})()")
-            if w>700:
-                chk(not vis,f'{tag} {r}: sin título (se ve el menú lateral)');continue
-            txt=pg.inner_text('.hdt')
+            txt=pg.inner_text('.hdt') if vis else ''
+            if w>700:  # v1.5: también en tablet y computadora, entre el buscador y Ajustes (pedido del usuario)
+                ok=pg.evaluate("(()=>{const q=document.querySelector('#sq').getBoundingClientRect(),c=document.querySelector('.usr').getBoundingClientRect(),t=document.querySelector('.hdt').getBoundingClientRect();return t.left>=q.right-1&&t.right<=c.left+1&&Math.abs(t.top+t.height/2-(c.top+c.height/2))<12})()")
+                chk(vis and name in txt and ok,f'{tag} {r}: dice «{name}» entre el buscador y Ajustes ({txt!r})')
+                chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth"),f'{tag} {r}: sin desborde');continue
             chk(vis and name in txt,f'{tag} {r}: dice «{name}» ({txt!r})')
             chk('Paso' not in txt,f'{tag} {r}: solo el nombre, sin «Paso N de 5»')
             chk(pg.locator('.hdt .hdti svg').count()==1,f'{tag} {r}: lleva el ícono del menú')
             one=pg.evaluate("(()=>{const a=document.querySelector('.mb').getBoundingClientRect(),c=document.querySelector('.usr').getBoundingClientRect(),t=document.querySelector('.hdt').getBoundingClientRect();return Math.abs(a.top-c.top)<4&&t.right<=c.left+1&&t.left>=a.right-1})()")
             chk(one,f'{tag} {r}: ☰, título y botones en un solo renglón, sin encimarse')
             chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth"),f'{tag} {r}: sin desborde')
+        # en Empaque dice el cliente y el lote que se está empacando
+        key=pg.evaluate("(ST.OR.push({id:99,etd:'2026-10-14',lines:[{id:1,city:'HKG',cons:0,cli:'LHD',boxes:2}],sh:{}}),save(),'99.1')");pg.evaluate(f"go('empacar:{key}')");lt=pg.evaluate("lots().filter(z=>!R_(z).closed)[0]")
+        if pg.locator('.pklb').count():pg.click(f'.pklb[data-pk="lot:{lt}"]')
+        sub=pg.inner_text('#hdsub') if pg.locator('#hdsub').count() else ''
+        chk(f'Lote {lt}' in sub and pg.evaluate(f"ST.OR.find(o=>o.id=={key.split('.')[0]}).lines.find(l=>l.id=={key.split('.')[1]}).cli") in sub,f'{tag} empacar: la barra dice cliente y lote ({sub!r})')
         pg.close()
     b.close()
 chk(not errs,'sin errores '+str(errs))

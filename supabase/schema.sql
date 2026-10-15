@@ -1,4 +1,6 @@
--- PROPESA · Esquema de Supabase (PREPARADO, NO APLICADO)
+-- PROPESA · Primer esquema de Supabase (aplicado el 12/oct/2026 en el proyecto propesa_bc).
+-- Desde la v1.4.0 la app NO usa estas tablas: guarda todo en public.app_records (ver migrations/20261014_sincronizacion.sql y docs/SUPABASE.md).
+-- Las reglas "ver" y "perfil propio o admin" de aquí se ajustaron en esa migración.
 -- Todavía no se ha conectado ninguna cuenta. Este archivo se revisa y se aplica cuando se decida activar la sincronización.
 -- Pesos de existencia en gramos (igual que la app). Las llaves son UUID para que varias tablets puedan crear datos sin chocar.
 

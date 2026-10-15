@@ -1,15 +1,15 @@
 # ROADMAP.md · Lo que sigue
 
-Estado: **v1.0.0** lista para uso diario en cada equipo. Pregunta antes de implementar cualquier punto que dependa de una **pregunta abierta**.
+Estado: **v1.4.0** con base compartida (todos los equipos ven lo mismo). Pregunta antes de implementar cualquier punto que dependa de una **pregunta abierta**.
 
 ## 1. Preguntas abiertas (contestarlas con el usuario)
 
 | # | Pregunta | Afecta |
 |---|---|---|
-| 1 | **Peso bruto:** la orden usa 20 kg/caja y la consignación 19.6 kg/hielera. ¿Cuál se usa y cómo se compone? | Órdenes, Embarque |
-| 2 | **Categorías:** la app usa Rojo/Verde/Blanco por caja; el packing list en papel muestra R/V/A y D (despatada) ligadas a la talla. ¿La categoría es en realidad la talla? ¿Existe «Azul»? | Empaque, modelo de datos |
-| 3 | **Inventario:** empacar no descuenta kilos del tanque. ¿Debe descontar? Exige capturar la talla (y quizá el peso) de cada caja | Existencias, Mortalidad |
-| 4 | **Desperdicio:** ¿resta existencia o es informativo? | Existencias |
+| 1 | ~~Peso bruto~~ **Resuelto 14/oct:** 19.6 kg en todos lados | Órdenes, Embarque |
+| 2 | **Resuelto 14/oct: la categoría es la talla** (Blanco/Rojo/Verde/Amarillo). Antes: **Categorías:** la app usa Rojo/Verde/Blanco por caja; el packing list en papel muestra R/V/A y D (despatada) ligadas a la talla. ¿La categoría es en realidad la talla? ¿Existe «Azul»? | Empaque, modelo de datos |
+| 3 | **Resuelto 14/oct: no descuenta**, salidas a mano. Antes: **Inventario:** empacar no descuenta kilos del tanque. ¿Debe descontar? Exige capturar la talla (y quizá el peso) de cada caja | Existencias, Mortalidad |
+| 4 | **Resuelto 14/oct: resta del total del lote.** Antes: **Desperdicio:** ¿resta existencia o es informativo? | Existencias |
 | 5 | **Varios tanques por lote** (en papel «1/2», «3 y 1»). Hoy es uno | Entrada |
 | 6 | **Lotes mezclados en un envío:** ya se permite al empacar; ¿se necesita verlo por envío? | Embarque |
 | 7 | **Cajas = hieleras:** ¿siempre? | Embarque |
@@ -21,7 +21,8 @@ Estado: **v1.0.0** lista para uso diario en cada equipo. Pregunta antes de imple
 | 13 | ¿Versión en inglés o chino para los socios? | Todo |
 | 14 | **Logo oficial:** subir el archivo para reemplazar la recreación | Marca |
 | 15 | Modo piso: ¿«Cerrar embarque» y «Conteo final» necesitan su propio asistente paso a paso? | Modo piso |
-| 16 | Supabase: ver preguntas en `SUPABASE.md` | Sincronización |
+| 16 | Supabase: remitente y dominio del correo con PDF; ¿fotos a Storage?; ¿quitar las tablas viejas sin uso? (ver `SUPABASE.md` §6) | Base compartida |
+| 17 | **Capacidad de cada tanque** (kg o cajas): para mostrar en el tablero de Entrada qué tan lleno está cada uno | Entrada |
 
 ## 2. Prioridades
 

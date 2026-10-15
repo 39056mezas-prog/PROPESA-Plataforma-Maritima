@@ -1,7 +1,7 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.3.0** (13 de octubre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.5.0** (14 de octubre de 2026).
 
 ## Qué es
 
@@ -29,7 +29,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 | `docs/DATOS.md` | Modelo de datos `ST`, migraciones, respaldo |
 | `docs/DECISIONES.md` | Decisiones tomadas y por qué (no las deshagas sin preguntar) |
 | `docs/ROADMAP.md` | Preguntas abiertas y lo que sigue |
-| `docs/PRUEBAS.md` · `docs/SEGURIDAD.md` · `docs/SUPABASE.md` | Calidad, seguridad y la base compartida futura |
+| `docs/PRUEBAS.md` · `docs/SEGURIDAD.md` · `docs/SUPABASE.md` | Calidad, seguridad y la base compartida (Supabase, conectada desde la v1.4.0) |
 | `docs/FLUJO_DE_TRABAJO.md` | Cómo trabajar: un cambio a la vez, comandos del plugin agent-skills, publicar |
 | `docs/HISTORIAL.md` | Bitácora completa, ronda por ronda |
 | `docs/referencias/` | Formatos en papel (PDF) y documentos que el usuario compartió |
@@ -41,10 +41,10 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 1. **No cambies el flujo, los textos de pantalla, ni el layout** sin confirmarlo con el usuario. Mejora; no rediseñes.
 2. **Un cambio a la vez**, con su prueba, y avisa qué cambió.
 3. **No inventes reglas de negocio.** Si falta un dato, pregunta (ver `docs/ROADMAP.md` → Preguntas abiertas).
-4. **No conectes Supabase ni ninguna cuenta** del usuario hasta que lo pida explícitamente. El esquema está preparado en `supabase/schema.sql`, sin aplicar.
-5. **Sin dependencias ni paso de compilación.** Todo vive en `index.html` (HTML + CSS + JS vanilla). Nada de CDN, fuentes externas ni `fetch` a otros dominios: la CSP de `vercel.json` los bloquea.
+4. **La app ya usa Supabase** (proyecto `propesa_bc`, ver `docs/SUPABASE.md`): todos los equipos comparten los datos. **No cambies el esquema, las reglas de seguridad ni la función `usuarios` sin preguntar**, y no conectes otras cuentas del usuario (correo, Drive…) sin que lo pida. Las pruebas nunca tocan la base real: usan `pruebas/supabase_falso.py` o el modo local.
+5. **Sin dependencias ni paso de compilación.** Todo vive en `index.html` (HTML + CSS + JS vanilla, la conexión con Supabase está hecha a mano con `fetch`). Nada de CDN ni fuentes externas; el único dominio externo permitido en la CSP es el de Supabase.
 6. **Escapa todo texto del usuario con `E()`** antes de meterlo en HTML.
-7. **Cualquier cambio a la estructura de `ST` lleva migración** y su limpieza en `cleanST()` (si no, se rompen los datos que ya viven en las tablets).
+7. **Cualquier cambio a la estructura de `ST` lleva migración**, su limpieza en `cleanST()` **y su lugar en `WN` / `encodeST` / `decodeST`** (lo que no esté ahí no se comparte entre equipos). Los ids nuevos se hacen con `uidN()` / `uidS()`, nunca con contadores ni `max+1`.
 8. **No borres lo que el usuario escribió** cuando hay un error (`renderKeep` / `fail`).
 9. **Los avisos rojos siempre llevan a donde se resuelven** (botón o chip con destino).
 10. **Accesibilidad:** objetivos táctiles de 44 px o más (48 px en botones, ~60 px en Modo piso), contraste AA, foco visible, campos de captura de 16 px o más.
@@ -55,7 +55,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 
 ```bash
 python3 -m http.server 8765                 # servir en http://localhost:8765
-sh pruebas/correr_todo.sh                   # 18 grupos de pruebas, debe terminar en «TODO BIEN»
+sh pruebas/correr_todo.sh                   # 20 grupos de pruebas, debe terminar en «TODO BIEN»
 python3 -I pruebas/rendimiento_t.py         # rendimiento con un año de datos
 node pruebas/accesibilidad.mjs pruebas/datos/backup.json   # Lighthouse (npm i lighthouse puppeteer-core)
 ```

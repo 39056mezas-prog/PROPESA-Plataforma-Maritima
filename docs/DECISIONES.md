@@ -4,6 +4,20 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 
 | Fecha | Decisión | Por qué / quién |
 |---|---|---|
+| 14/10/2026 | **Auditoría:** (1) `WN` valida números con `wnn`/`wn0` (antes texto → riesgo de código en el tablero de tanques); (2) «En tanques» del Panel solo cuenta lotes abiertos (como el mapa); (3) cambiar de pestaña de lote con cajas sin guardar avisa en vez de moverlas de lote | `/ponytail-audit` |
+| 14/10/2026 | **Tablero de tanques arriba de Entrada como el plano del piso** (dibujo del usuario: T1–T4 a la derecha de arriba abajo, T6 junto a T3 y T5 junto a T4 a la izquierda; `tanques()`, `.tqmap`, `TQSEL`). Al tocar un tanque sale su detalle. Por tanque: kg (lotes abiertos con existencia), kg por talla, lotes y última temperatura; «● En vivo» con la base compartida. Sin nivel de llenado hasta saber la capacidad de cada tanque | Usuario: «ver todos mis tanques y en vivo lo que tienen» |
+| 14/10/2026 | **Ícono de Entrada = langosta blanca** (silueta del ícono de la app, `IC.recepcion`); Embarque conserva el camión (`IC.camion`). Antes Entrada y Embarque compartían el camión | Usuario |
+| 14/10/2026 | **Empaque (vista completa) con tarjetas como Modo piso** y **teclado que se abre y se cierra** (`KPON`, `propesa-kp`, por equipo; abierto por omisión). Abierto: las tarjetas no repiten las categorías. Cerrado: cada tarjeta trae sus botones y el teclado de la tablet (`inputmode` numérico). Se cierra con una **X** en la esquina del teclado y se abre con un **botón flotante con ícono de teclado numérico** sobre la barra de «Guardar cajas» | Usuario (capturas: «se mira muy repetitivo»; «quiero que las cajas se miren así») |
+| 14/10/2026 | **Empaque sin lote en cada caja:** el lote se elige una vez con **pestañas por lote** (como Chrome) arriba de las cajas; en tablet y computadora se quedan a la vista al bajar. Las cajas no repiten el lote; al corregir una caja se puede cambiar su lote junto a «Actualizar caja» | Usuario (captura con el lote subrayado) |
+| 14/10/2026 | **La barra de arriba dice dónde estás en todos los tamaños** (antes solo en celular), entre el buscador y Ajustes; en Empaque agrega cliente y lote: «Empaque · LHD · Lote WLRCO051026A» | Usuario (recuadro amarillo en la captura) |
+| 14/10/2026 | Teclado de Empaque: las 4 tallas en 2×2 en tablet horizontal y computadora (en fila no cabían bien con guantes) | Ajuste al agregar Amarillo |
+| 14/10/2026 | **Peso bruto = 19.6 kg por caja/hielera en todos lados** (1.4 hielera + 1.5 gel + 16 producto + 0.7 caja de cartón). La orden usaba 20 kg; ahora usa lo mismo que el embarque (`KGB=19.6`, `kb()` redondea a 1 decimal) | Usuario (pregunta abierta 1) |
+| 14/10/2026 | **Categoría de la caja = su talla**, con los colores de talla: Blanco 491-610, Rojo 611-850, Verde 851-1220 y **Amarillo 1221-UP** (nuevo) | Usuario (pregunta abierta 2) |
+| 14/10/2026 | **Empacar NO resta kilos**: las salidas se siguen registrando a mano en el lote | Usuario (pregunta abierta 3) |
+| 14/10/2026 | **El desperdicio resta del total del lote** (kilos en tanque y mortalidad), no de cada talla | Usuario (pregunta abierta 4) |
+| 14/10/2026 | **Respaldo:** aviso rojo al Administrador si pasan 7 días sin descargar respaldo (Supabase sigue en plan gratis, sin respaldos automáticos) | Usuario |
+| 14/10/2026 | **Entrega:** el alcance es lo que ya funciona (Formato 02, encabezado del packing list, correo automático y servidor local = fase 2). Supabase en plan gratis y cuentas (Supabase, Vercel, GitHub) a nombre del desarrollador. Piloto de 1–2 semanas con el papel en paralelo. Logo oficial: se pide al cliente | Usuario |
+| 14/10/2026 | **Servidor local en la oficina a futuro**; por ahora Supabase. No usar más funciones propias de Supabase para no complicar la mudanza | Usuario |
 | 13/10/2026 | **v1.1.0 · Entrada en Modo piso = hoja de varias entradas** (una fila por lote, «+ Agregar entrada», «Guardar entradas» guarda cada fila por separado, errores junto al campo). Sustituye al asistente de una entrada a la vez | Usuario: el operador recibe varios lotes a la vez y abrir una ventana por entrada lo frena |
 | 12/10/2026 | **v1.0.0 sin rastros de demo**: sin usuarios precargados; primer uso = Configuración inicial; temperatura real; «Informes de cierre»; «Borrar los datos de este equipo» | Usuario: «como si ya fuera versión final» (/ship) |
 | 12/10/2026 | Cabeceras de seguridad (CSP estricta, HSTS, Permissions-Policy) y `no-cache` para `index.html` | /ship, revisión de seguridad |
@@ -31,6 +45,11 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 | oct 2026 | Entrada rehecha con los campos del formato en papel | Usuario (`PROPESA_Control_Recepcion.pdf`) |
 | oct 2026 | Módulo de Órdenes con consignatarios oficiales y clientes finales | Usuario |
 | oct 2026 | Una sola página HTML sin dependencias hasta tener backend; despliegue GitHub + Vercel | Simplicidad |
+| 14 oct 2026 | **Base compartida en Supabase (`propesa_bc`)**: todos los equipos y cuentas ven lo mismo | El usuario no quería que cada equipo tuviera sus propios datos |
+| 14 oct 2026 | Los datos viajan como **registros por cosa** (`app_records`) y la app sigue usando `ST` igual; no se usaron las tablas normalizadas de `schema.sql` | Mantener intacta la app (flujo, pantallas y reglas) y que no choquen dos tablets; las tablas normalizadas quedan para reportes |
+| 14 oct 2026 | Sin librería de Supabase: conexión con `fetch` (acceso, registros, función) | Regla de cero dependencias; CSP simple |
+| 14 oct 2026 | «Último que guarda gana» por registro; lo pendiente del equipo gana sobre lo que llega mientras no se suba | Simple y suficiente: cada caja, movimiento y nota es su propio registro |
+| 14 oct 2026 | Los datos viejos de cada tablet **no se mezclan** con la base; se pueden descargar o borrar desde Administración | Eran de prueba y cada tablet tenía otros |
 
 ## Rechazadas (no repetir sin preguntar)
 
