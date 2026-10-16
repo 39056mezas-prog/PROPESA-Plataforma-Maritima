@@ -1,7 +1,9 @@
 -- PROPESA · Primer esquema de Supabase (aplicado el 12/oct/2026 en el proyecto propesa_bc).
 -- Desde la v1.4.0 la app NO usa estas tablas: guarda todo en public.app_records (ver migrations/20261014_sincronizacion.sql y docs/SUPABASE.md).
 -- Las reglas "ver" y "perfil propio o admin" de aquí se ajustaron en esa migración.
--- Todavía no se ha conectado ninguna cuenta. Este archivo se revisa y se aplica cuando se decida activar la sincronización.
+-- 15/oct/2026: las tablas lots, movements, orders, order_lines, shipments, shipment_orders, boxes, notes y reports ya se borraron de la base
+-- (migrations/20261014d_quitar_tablas_viejas.sql). Este archivo se queda como primer paso para reconstruir la base desde cero:
+-- schema.sql → 20261012b → 20261014 → 20261014b → 20261014c → 20261014d.
 -- Pesos de existencia en gramos (igual que la app). Las llaves son UUID para que varias tablets puedan crear datos sin chocar.
 
 create table public.profiles (

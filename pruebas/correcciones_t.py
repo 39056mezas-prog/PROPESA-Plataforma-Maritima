@@ -2,7 +2,7 @@
 import json,datetime
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)
@@ -57,5 +57,15 @@ with sync_playwright() as p:
     dp=T+'rescue.json';d.value.save_as(dp);chk('PRUEBA' in open(dp).read(),'#1 backup download rescues unsaved data')
     pg.evaluate("for(let i=0;i<200;i++)localStorage.removeItem('pad'+i)");pg.click('[data-retry]');pg.wait_for_timeout(100)
     chk('NO SE PUDO GUARDAR' not in pg.inner_text('#app') and pg.evaluate("localStorage.getItem('propesa-v4').includes('PRUEBA')"),'#1 retry saves and clears banner')
+    # auditoría #9: «Anular reversa» no puede dejar la existencia en negativo, y el mensaje usa el número corto del movimiento
+    l='WLRCO061026B'; q=pg.evaluate(f"bal('{l}',S[0])/1000")
+    r1=pg.evaluate(f"(()=>{{post('SALIDA_EMBARQUE','{l}',S[0],-{q});const s=ST.L[ST.L.length-1].id;rev(s);const r=ST.L[ST.L.length-1].id;post('SALIDA_EMBARQUE','{l}',S[0],-{q});save();go('lote:{l}');return r}})()")
+    chk(pg.evaluate(f"bal('{l}',S[0])")==0,'salida → revertir → otra salida: existencia 0')
+    pg.evaluate("document.querySelectorAll('#app details').forEach(d=>d.open=true)"); pg.click(f'button[data-ur="{r1}"]')
+    chk(pg.evaluate(f"bal('{l}',S[0])")==0 and pg.evaluate(f"ST.L.some(x=>x.id==={r1})"),'anular esa reversa se bloquea: la existencia no queda en negativo')
+    chk('No se puede anular la reversa: dejaría existencia negativa.' in pg.inner_text('#app'),'mensaje «No se puede anular la reversa…»')
+    r2=pg.evaluate(f"(()=>{{const s=ST.L.filter(x=>x.lot=='{l}'&&x.type=='SALIDA_EMBARQUE').pop().id;rev(s);save();go('lote:{l}');return ST.L[ST.L.length-1].id}})()")
+    no=pg.evaluate(f"mvNo({r2})"); pg.evaluate("document.querySelectorAll('#app details').forEach(d=>d.open=true)"); pg.click(f'button[data-ur="{r2}"]')
+    chk(not pg.evaluate(f"ST.L.some(x=>x.id==={r2})") and f'Reversa #{no} anulada.' in pg.inner_text('#app') and str(r2) not in pg.inner_text('#app'),f'una reversa que sí se puede anular se anula y el mensaje dice #{no}, no el número interno')
     b.close()
 print('ERRS',errs)

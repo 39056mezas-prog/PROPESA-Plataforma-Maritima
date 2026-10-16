@@ -1,7 +1,7 @@
 """Primer uso, sin rastros de demo, temperatura y borrado de datos. Uso: python3 -I pruebas/inicio_t.py"""
 import os,sys,re
 from playwright.sync_api import sync_playwright
-BASE=os.environ.get('BASE','http://localhost:8765/index.html');fails=[];errs=[]
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local');fails=[];errs=[]  # modo local: nunca toca la base real
 def chk(c,m):
     print(('PASS ' if c else 'FAIL ')+m)
     if not c:fails.append(m)
@@ -12,7 +12,7 @@ with sync_playwright() as p:
     chk(pg.locator('#s0n').count()==1 and 'Configuración inicial' in pg.inner_text('#app'),'equipo nuevo: pide crear el Administrador (sin usuarios de demostración)')
     chk(not DEMO.search(pg.inner_text('body')),'pantalla inicial sin textos de demostración')
     pg.click('[data-a=s0]');chk('nombre' in pg.inner_text('#lm'),'valida el nombre')
-    pg.fill('#s0n','María López');pg.fill('#s0e','maria@propesa.com.mx');pg.fill('#s0p','corto');pg.click('[data-a=s0]');chk('6' in pg.inner_text('#lm'),'pide contraseña de 6+')
+    pg.fill('#s0n','María López');pg.fill('#s0e','maria@propesa.com.mx');pg.fill('#s0p','corto');pg.click('[data-a=s0]');chk('8 caracteres' in pg.inner_text('#lm'),'pide contraseña de 8+ (auditoría #20)')
     pg.fill('#s0p','Langosta2026');pg.fill('#s0q','otra');pg.click('[data-a=s0]');chk('coinciden' in pg.inner_text('#lm'),'valida que coincidan')
     pg.fill('#s0q','Langosta2026');pg.press('#s0q','Enter');chk(pg.locator('.sb').count()==1,'crea el Administrador y entra')
     chk(pg.locator('#app [data-avatar]').inner_text().strip()=='M','el círculo muestra su inicial')
@@ -23,7 +23,7 @@ with sync_playwright() as p:
         pg.evaluate(f"go('{r}')");tx=pg.inner_text('#app')
         if DEMO.search(tx):seen.append((r,DEMO.search(tx).group(0)))
     pg.locator('#app [data-avatar]').click();tx=pg.inner_text('#pmenu');pg.keyboard.press('Escape')
-    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.5.0' in tx,'el menú de perfil muestra la versión 1.5.0')
+    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.8.0' in tx,'el menú de perfil muestra la versión 1.8.0')
     # temperatura real
     pg.evaluate("go('temperatura')");chk('Todavía no hay lecturas' in pg.inner_text('#app'),'temperatura empieza vacía (sin datos inventados)')
     pg.select_option('#tq_t','T2');pg.fill('#tq_a','150');pg.click('[data-a=tq]');chk('20 y 110' in pg.inner_text('#app'),'valida el rango de temperatura')

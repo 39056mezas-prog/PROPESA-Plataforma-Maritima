@@ -2,7 +2,7 @@
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/recarga_t.py"""
 import json,os
 from playwright.sync_api import sync_playwright
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 seed=open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos','seed.json')).read()
 errs=[]
 def chk(c,m):print(('PASS ' if c else 'FAIL ')+m)

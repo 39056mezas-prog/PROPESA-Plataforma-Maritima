@@ -21,7 +21,7 @@ Estado: **v1.4.0** con base compartida (todos los equipos ven lo mismo). Pregunt
 | 13 | ¿Versión en inglés o chino para los socios? | Todo |
 | 14 | **Logo oficial:** subir el archivo para reemplazar la recreación | Marca |
 | 15 | Modo piso: ¿«Cerrar embarque» y «Conteo final» necesitan su propio asistente paso a paso? | Modo piso |
-| 16 | Supabase: remitente y dominio del correo con PDF; ¿fotos a Storage?; ¿quitar las tablas viejas sin uso? (ver `SUPABASE.md` §6) | Base compartida |
+| 16 | Supabase: remitente y dominio del correo con PDF; (ver `SUPABASE.md` §6; fotos en Storage desde la v1.8.0; tablas viejas quitadas el 15/oct) | Base compartida |
 | 17 | **Capacidad de cada tanque** (kg o cajas): para mostrar en el tablero de Entrada qué tan lleno está cada uno | Entrada |
 
 ## 2. Prioridades
@@ -35,7 +35,7 @@ Estado: **v1.4.0** con base compartida (todos los equipos ven lo mismo). Pregunt
 ### P1 · Datos compartidos (cuando el usuario lo autorice)
 - [ ] IDs estables (UUID) con migración → requisito para sincronizar.
 - [ ] Conectar Supabase: Auth, tablas, RLS, Realtime (ver `SUPABASE.md`). Agregar tabla de temperatura.
-- [ ] Fotos a Storage o IndexedDB.
+- [x] Fotos a Supabase Storage (v1.8.0).
 - [ ] Correo real con el PDF (Edge Function + Resend/SMTP).
 - [ ] Importar datos históricos (PDF/Excel y respaldos de las tablets).
 - [ ] Bitácora de auditoría.

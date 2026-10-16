@@ -64,12 +64,12 @@ table.ent th.szh{position:relative}
 .szh2{color:var(--mut);font-weight:500;font-size:.9333rem;white-space:nowrap}tfoot td{font-weight:700;border-top:1px solid var(--ln)}
 input,select{font:inherit;color:#0a2147;background:#fff;border:1px solid #b8c2cc;border-radius:10px;padding:10px;min-height:44px}td input{width:84px;text-align:right;min-height:36px;padding:4px 8px}
 .f{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.f label{display:flex;flex-direction:column;gap:4px;color:var(--mut);font-size:.8rem}.panel{background:var(--in);border-radius:14px;padding:14px;margin:10px 0}
-.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+
 .bt{background:var(--cd);border:1px solid var(--ln);border-top:6px solid var(--ln);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px}
 .bt[data-col=R]{border-top-color:var(--R)}.bt[data-col=V]{border-top-color:var(--V)}.bt[data-col=B]{border-top-color:var(--B)}.bt .no{font-weight:800;font-size:1.2rem}
-.qty{display:flex;align-items:center;justify-content:space-between;gap:6px;background:var(--in);border-radius:14px;padding:4px}
-.qty button{width:48px;height:48px;border-radius:50%;border:0;background:var(--cd);color:var(--ink);font-size:1.6rem;cursor:pointer;box-shadow:0 1px 3px #0003}
-.qty input{width:80px;text-align:center;font-size:1.6rem;font-weight:800;border:1px solid #b8c2cc;background:#fff;border-radius:10px;padding:0}
+
+
+
 .seg{display:flex;background:var(--in);border-radius:12px;padding:3px;gap:2px}
 .seg button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:0;background:none;color:var(--mut);font:inherit;font-weight:600;min-height:44px;border-radius:10px;cursor:pointer;transition:background .2s,color .2s}
 .seg button[aria-pressed=true]{background:var(--cd);color:var(--ink);box-shadow:0 2px 8px #0003}.seg i{width:12px;height:12px;border-radius:50%;display:inline-block;border:1px solid #0005}
@@ -80,7 +80,7 @@ input,select{font:inherit;color:#0a2147;background:#fff;border:1px solid #b8c2cc
 .bp .big{font-size:2.2667rem;line-height:1;display:block;font-weight:800}.bp small{color:var(--mut);display:block}
 .hb{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;margin:8px 0}.hb .tr{height:14px;border-radius:999px;background:var(--in);overflow:hidden}.hb .fl{height:100%;border-radius:999px;background:var(--cor)}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.legend{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0;color:var(--mut);font-size:.8rem}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
-.tw{max-width:900px}.tw svg{width:100%;height:auto}.sticky{position:sticky;top:0;z-index:3;background:var(--bg);padding:6px 0}
+.tw{max-width:900px}.tw svg{width:100%;height:auto}
 #toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:#1c2733;color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;z-index:9;display:none;max-width:90vw}
 .login{display:grid;place-items:center;height:100%;background:radial-gradient(circle at 50% 0,#087DBA,#0B1D59 55%,#07123a)}input:focus,select:focus{outline:2px solid var(--ac);outline-offset:1px}.login .cd{width:min(380px,92vw)}
 details{background:var(--in);border-radius:12px;padding:10px 14px;margin:6px 0}pre{white-space:pre-wrap;font:.8rem/1.5 ui-monospace,monospace}
@@ -89,30 +89,30 @@ details{background:var(--in);border-radius:12px;padding:10px 14px;margin:6px 0}p
 
 .fs i{width:38px;height:38px;border-radius:11px;position:relative}.fs em{position:absolute;right:-5px;top:-5px;min-width:17px;height:17px;border-radius:9px;background:#fff;color:#0B1D59;font:800 10px/17px system-ui;text-align:center;font-style:normal}.fs.on i em{background:#0B1D59;color:#fff}.fs b{font-size:1rem}
 html{-webkit-text-size-adjust:100%}button,.fs,.kd,.bp{touch-action:manipulation;-webkit-tap-highlight-color:transparent}main{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
-@media(min-width:701px) and (max-width:1100px){.sb{width:216px}.sb .lt{margin:14px 14px 8px}.fs{padding:9px 10px;gap:9px}.fs small{font-size:.7rem}.wrap{padding:16px 16px 40px;max-width:none}.hd{padding:10px 14px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}.bgrid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}.hb{grid-template-columns:120px 1fr 64px}}
+@media(min-width:701px) and (max-width:1100px){.sb{width:216px}.sb .lt{margin:14px 14px 8px}.fs{padding:9px 10px;gap:9px}.fs small{font-size:.7rem}.wrap{padding:16px 16px 40px;max-width:none}.hd{padding:10px 14px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}.hb{grid-template-columns:120px 1fr 64px}}
 @media(min-width:1101px){.wrap{max-width:1280px}}
-@media(pointer:coarse){input,select{font-size:max(16px,1.0667rem);min-height:48px}td input{width:100px;min-height:44px}.btn{min-height:48px}.lnk{min-height:44px;padding:6px 16px}.back{min-height:44px}.kd{padding:14px}.seg button{min-height:52px}.qty button{width:56px;height:56px}.qty input{min-height:56px}.fs{min-height:54px}.sw{width:56px;height:34px}.sw::after{width:30px;height:30px}.sw[aria-checked=true]::after{transform:translateX(22px)}th,td{padding-top:12px;padding-bottom:12px}.chip{padding:5px 12px}}
+@media(pointer:coarse){input,select{font-size:max(16px,1.0667rem);min-height:48px}td input{width:100px;min-height:44px}.btn{min-height:48px}.lnk{min-height:44px;padding:6px 16px}.back{min-height:44px}.kd{padding:14px}.seg button{min-height:52px}.fs{min-height:54px}.sw{width:56px;height:34px}.sw::after{width:30px;height:30px}.sw[aria-checked=true]::after{transform:translateX(22px)}th,td{padding-top:12px;padding-bottom:12px}.chip{padding:5px 12px}}
 @media(orientation:portrait) and (min-width:701px){.g4{grid-template-columns:repeat(2,1fr)}}
 
 textarea{font:inherit;font-size:1.0667rem;color:#1c2733;background:#fff;border:1px solid #b8c2cc;border-radius:10px;padding:10px;width:100%;resize:vertical;min-height:84px}textarea:focus{outline:2px solid var(--ac);outline-offset:1px}
 .ev h3 svg{color:var(--brand-cyan)}.evg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:10px 0}
-.evi{border:1px solid var(--ln);border-radius:14px;overflow:hidden;background:var(--cd);display:flex;flex-direction:column}.evp{display:grid;grid-template-columns:1fr}.evp.m{grid-template-columns:1fr 1fr;gap:2px}.evp img{width:100%;height:170px;object-fit:cover;display:block;cursor:zoom-in}
+.evi{border:1px solid var(--ln);border-radius:14px;overflow:hidden;background:var(--cd);display:flex;flex-direction:column}.evp{display:grid;grid-template-columns:1fr}.evp.m{grid-template-columns:1fr 1fr;gap:2px}.evp img{width:100%;height:170px;object-fit:cover;display:block;cursor:zoom-in}.evp img[data-fp]{background:var(--in)}
 .evt{padding:10px 12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}.evt p{margin:0}.evb{background:#fff!important;border:1px solid #b8c2cc;color:#1c2733;display:inline-flex;align-items:center;gap:8px;position:relative;cursor:pointer}.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
 .evq{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.evq span{position:relative}.evq img{width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--ln);display:block}.evq button{position:absolute;top:-8px;right:-8px;width:30px;height:30px;border-radius:50%;border:0;background:var(--cor);color:#fff;font-size:.9333rem;cursor:pointer}
 .lbx{position:fixed;inset:0;background:#000d;z-index:50;display:grid;place-items:center;padding:16px}.lbx img{max-width:100%;max-height:100%;border-radius:8px}.lbx button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px;width:48px;height:48px;border-radius:50%;border:0;background:#fff;color:#1c2733;font-size:1.3333rem;cursor:pointer}
 
 .skip{position:absolute;left:-999px;top:8px;z-index:60;background:#fff;color:#0B1D59;padding:12px 18px;border-radius:10px;font-weight:700}.skip:focus{left:8px}
 :focus-visible{outline:3px solid var(--fr);outline-offset:2px}.sb :focus-visible{outline-color:#fff}main:focus{outline:none}
-.zs{display:inline-flex;gap:4px}.zs .lnk{min-width:44px;padding:2px 10px;font-weight:700}.zs .lnk[aria-pressed=true]{background:#0B1D59;color:#fff;border-color:#0B1D59}.zb0{font-size:.9333rem}.zb1{font-size:1.2rem}.zb2{font-size:1.4667rem}
+.zs{display:inline-flex;gap:4px}.zs .lnk{min-width:44px;padding:2px 10px;font-weight:700}.zs .lnk[aria-pressed=true]{background:#0B1D59;color:#fff;border-color:#0B1D59}
 html{font-size:var(--app-font-size,15px)}:root[data-theme="dark"]{color-scheme:dark}:root[data-theme="light"]{color-scheme:light}
-.ctxi{display:flex;align-items:center;gap:10px 24px;flex-wrap:wrap;padding:10px 16px;background:var(--cd);border-bottom:1px solid var(--ln)}
-.cl{display:flex;align-items:baseline;gap:4px 10px;flex-wrap:wrap}.cl .t{color:var(--mut);font-size:.9333rem;font-weight:600}.cs{width:14px;height:14px;border-radius:4px;background:var(--c);align-self:center;flex:none}.cn{font-size:1.7333rem;line-height:1.1;overflow-wrap:anywhere;letter-spacing:-.01em}
-.cm{display:flex;flex-direction:column;color:var(--mut);font-size:.8667rem}.cm b{color:var(--ink);font-size:1rem}.cp{min-width:180px;flex:1;max-width:340px}.cp .pb{height:10px}.ca{display:flex;gap:8px;margin-left:auto;align-items:center;flex-wrap:wrap}
+
+.cl{display:flex;align-items:baseline;gap:4px 10px;flex-wrap:wrap}.cl .t{color:var(--mut);font-size:.9333rem;font-weight:600}.cs{width:14px;height:14px;border-radius:4px;background:var(--c);align-self:center;flex:none}
+.cm{display:flex;flex-direction:column;color:var(--mut);font-size:.8667rem}.cm b{color:var(--ink);font-size:1rem}.cp{min-width:180px;flex:1;max-width:340px}.cp .pb{height:10px}
 .bt.nx{outline:3px solid var(--ac);outline-offset:2px}.bt.nx .no::after{content:" · Siguiente";color:var(--ac);font-size:.8667rem;font-weight:700}.bt.fl{animation:fl 1.6s cubic-bezier(.16,1,.3,1)}@keyframes fl{0%,60%{background:var(--hl)}}
 .st{font-weight:700;font-size:.8667rem}.st.ok{color:#1d7a4c}.st.no{color:var(--cor)}.cur td{background:var(--hl)}
 .how summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center;font-size:1rem}.how ol{margin:4px 0 0 22px;padding:0}.how li{margin:8px 0;font-size:1rem}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-@media(max-width:700px){.hd .zs{display:none}.cn{font-size:1.4667rem}.ca{margin-left:0;width:100%}}
+@media(max-width:700px){.hd .zs{display:none}}
 
 :root{--alr:#d50f1f;--alt:#c8001a;--alb:#fff0f1}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--alt:#ff7b82;--alb:#3a0d12}}:root[data-theme="dark"]{--alt:#ff7b82;--alb:#3a0d12}
@@ -121,7 +121,7 @@ html{font-size:var(--app-font-size,15px)}:root[data-theme="dark"]{color-scheme:d
 .alb{display:flex;gap:14px;align-items:flex-start;background:var(--alb);border:2px solid var(--alr);border-radius:14px;padding:12px 16px;margin-bottom:14px;color:var(--alt)}.alb b{font-size:1.1333rem;display:block;text-transform:uppercase}.alb ul{margin:6px 0 0 18px;padding:0;font-weight:700;font-size:1rem}.alb .ai{background:var(--alr);color:#fff;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none;animation:bk 2.4s cubic-bezier(.16,1,.3,1) infinite}.alb .ai svg{width:26px;height:26px}
 @keyframes bk{0%,60%,100%{transform:scale(1)}30%{transform:scale(1.12)}}
 .kp.pn,.kd.pn{border:2px solid var(--alr)}.kp.pn b{color:var(--alt)}.kp.pn>span:last-child{color:var(--alt);font-weight:700}
-.bt.pd{background:var(--alb);border-left-color:var(--alr);border-right-color:var(--alr);border-bottom-color:var(--alr)}.bt.pd2{border-left-width:3px;border-right-width:3px;border-bottom-width:3px}
+.bt.pd{background:var(--alb);border-left-color:var(--alr);border-right-color:var(--alr);border-bottom-color:var(--alr)}
 .st.no{background:var(--alr);color:#fff;padding:5px 10px;border-radius:8px;align-self:flex-start;font-size:.8667rem}.st.pend{color:var(--alt);border:2px solid var(--alr);padding:3px 9px;border-radius:8px;align-self:flex-start;font-size:.8667rem}
 .fs.pn em{background:var(--alr);color:#fff;outline:2px solid #fff}.fs.pn small{color:#ffb3b8;font-weight:700}
 #toast.bad{background:var(--alr);border:2px solid #fff;font-size:1.0667rem}
@@ -138,15 +138,14 @@ a,.lnk{text-underline-offset:3px}
 .ev .evi{border:0;border-radius:0;background:none}.ev .evp img{border-radius:12px}.ev .evt{padding:8px 2px 0}
 .ev .panel{background:none;border-top:1px solid var(--ln);border-radius:0;padding:16px 0 0;margin-top:8px}
 .evb{background:var(--cd)!important}
-.ctxi .cn{font-variant-numeric:tabular-nums}
+
 
 .chip[data-k]::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:var(--k);box-shadow:inset 0 0 0 1px #0003}
 .chip[data-k=R]{--k:var(--R)}.chip[data-k=V]{--k:var(--V)}.chip[data-k=B]{--k:var(--B)}.chip[data-k=A]{--k:var(--A)}
 .head h1{display:flex;align-items:center;gap:10px}.head h1 .cs{width:18px;height:18px;border-radius:5px}
 .gi{margin-right:.45em}
-.ctxi{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px 22px}.ctxi .cl{grid-area:1/1}.ctxi .cm{grid-area:1/2}.ctxi .ca{grid-area:1/3;margin-left:0}
-.ctxi .cp{grid-column:1/-1;grid-row:2;max-width:none;min-width:0;display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap}.ctxi .cp .pb{flex:1 1 160px;margin:0;height:10px}
-@media(max-width:700px){.ctxi{grid-template-columns:1fr}.ctxi .cl,.ctxi .cm,.ctxi .ca,.ctxi .cp{grid-area:auto;grid-column:1}.ctxi .ca{width:100%}}
+
+
 .sb .lt{margin:18px 18px 8px;padding-bottom:14px}.sb .lt .lg{width:128px;max-width:100%}
 
 button.chip.pk{border:1px solid var(--ln);cursor:pointer;min-height:44px;padding:8px 14px;font:inherit;font-weight:600;color:var(--ink)}
@@ -246,8 +245,7 @@ main:has(#pkb){scroll-padding-bottom:calc(var(--pkbh,90px) + 12px)}
  .pkx .pkt select{max-width:100%;width:100%}
  .pkx .pkt tr.is-edit{background:color-mix(in srgb,var(--pkac) 4%,transparent);box-shadow:inset 1.5px 0 0 var(--pkac),inset -1.5px 0 0 var(--pkac),inset 0 1.5px 0 var(--pkac);border-bottom:0}
  .pkx .pkt tr.pkear td{box-shadow:none!important}
- .pkx .pkt tr.pkear{display:block;padding:2px 14px 12px;box-shadow:inset 1.5px 0 0 var(--pkac),inset -1.5px 0 0 var(--pkac),inset 0 -1.5px 0 var(--pkac);border-bottom:1px solid var(--pkln)}
-}
+ .pkx .pkt tr.pkear{display:block;padding:2px 14px 12px;box-shadow:inset 1.5px 0 0 var(--pkac),inset -1.5px 0 0 var(--pkac),inset 0 -1.5px 0 var(--pkac);border-bottom:1px solid var(--pkln)}}
 @container (max-width:23.9375rem){
  .pkx .pkt tr{padding:12px}
  .pkx .pkt tr.is-done{row-gap:4px}
@@ -255,8 +253,7 @@ main:has(#pkb){scroll-padding-bottom:calc(var(--pkbh,90px) + 12px)}
  .pkx .pkt tr.is-done td.pkcat{grid-column:1;grid-row:2}
  .pkx .pkt tr.is-done td.pkpz{grid-column:2;grid-row:1/span 2}
  
- .pkx .seg .chip.pk{padding:0 4px;gap:5px}
-}
+ .pkx .seg .chip.pk{padding:0 4px;gap:5px}}
 @media(max-width:640px){.pkx .pkgo{flex:1 1 100%}}
 select,input{max-width:100%}.shp select{max-width:100%}
 @media(max-width:640px){.f>label{min-width:0;max-width:100%;flex:1 1 100%}.f select{width:100%}}
@@ -270,7 +267,7 @@ input:hover:not(:disabled),select:hover:not(:disabled),textarea:hover:not(:disab
 input:focus,select:focus,textarea:focus{outline:3px solid var(--fr);outline-offset:1px;border-color:#0B1D59}
 input:disabled,select:disabled,textarea:disabled{background-color:#e8edf4;color:#5d6f88;-webkit-text-fill-color:#5d6f88;border-style:dashed;cursor:not-allowed;opacity:1}
 label,.f label{font-size:.9333rem;font-weight:600;gap:6px}
-.qty input{border-width:1.5px}
+
 input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{border-color:#d93f45!important;box-shadow:0 0 0 3px #d93f4540}
 
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;box-shadow:inset 0 0 0 1px #0003;vertical-align:-1px}
@@ -283,41 +280,41 @@ input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{b
 :root[data-theme="dark"] .hdti{background:var(--brand-blue)}:root[data-theme="dark"] .hd{background:var(--cd);color:var(--ink);border-bottom-color:var(--brand-blue)}:root[data-theme="dark"] .hd b{color:var(--ink)}:root[data-theme="dark"] .hd .lnk.w,:root[data-theme="dark"] .hd .mb{color:var(--ink);border-color:var(--ln)}:root[data-theme="dark"] .zs [aria-pressed=true]{background:var(--brand-blue);color:#fff;border-color:var(--brand-blue)}
 .szd{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;box-shadow:0 0 0 1.5px #64748b;flex:none}
 .sz input{border-width:4px!important;border-style:solid!important}.sz0 input{border-color:#b8c4d0!important;box-shadow:inset 0 0 0 1px #fff}.sz1 input{border-color:#E5484D!important}.sz2 input{border-color:#30A46C!important}.sz3 input{border-color:#F5C518!important}
-.pshell{display:flex;flex-direction:column;height:100%;background:var(--bg)}.phd{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--brand-navy);color:#fff;flex-wrap:wrap}.plg{width:120px}.ptit{font-size:1.3333rem}.pus{color:#c9d6f0;font-size:.9333rem}
-.pbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:12px 22px;border-radius:14px;border:0;background:var(--brand-blue);color:#fff;font:inherit;font-size:1.2rem;font-weight:800;cursor:pointer}.pbtn.s{background:var(--in);color:var(--ink);border:1px solid var(--ln)}.phd .pbtn.s{background:#ffffff1a;color:#fff;border-color:#ffffff33;min-height:48px;font-size:1rem;padding:8px 14px}.pbtn.big{min-height:68px;font-size:1.4667rem;padding:14px 34px}.pbtn.sm2{min-height:40px;font-size:.9333rem;padding:6px 12px}.pbtn:disabled{opacity:.4}
+.pshell{display:flex;flex-direction:column;height:100%;background:var(--bg)}.phd{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--brand-navy);color:#fff;flex-wrap:wrap}.plg{width:120px}.ptit{font-size:1.3333rem}
+.pbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:12px 22px;border-radius:14px;border:0;background:var(--brand-blue);color:#fff;font:inherit;font-size:1.2rem;font-weight:800;cursor:pointer}.pbtn.s{background:var(--in);color:var(--ink);border:1px solid var(--ln)}.phd .pbtn.s{background:#ffffff1a;color:#fff;border-color:#ffffff33;min-height:48px;font-size:1rem;padding:8px 14px}.pbtn.big{min-height:68px;font-size:1.4667rem;padding:14px 34px}.pbtn:disabled{opacity:.4}
 .pw{max-width:1100px;margin:auto;padding:20px 16px 40px}.ph{font-size:2rem;margin:6px 0 18px}
 .pg{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.pt{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:6px;min-height:200px;padding:22px;border-radius:20px;border:2px solid var(--ln);background:var(--cd);color:var(--ink);font:inherit;text-align:left;cursor:pointer}.pt i{width:56px;height:56px;margin-bottom:auto}.pt i svg{width:56px;height:56px}.pt b{font-size:1.8667rem;line-height:1.1}.pt span{font-size:1.0667rem;color:var(--mut)}
 .pt.p1{background:var(--brand-blue);border-color:var(--brand-blue);color:#fff;min-height:260px}.pt.p2{background:#1B3680;border-color:#1B3680;color:#fff;min-height:260px}.pt.p1 span,.pt.p2 span{color:#e3eefc}.pt.p3{min-height:150px}.pt:disabled{opacity:.4;cursor:not-allowed}
-.pt:active{transform:scale(.98)}.pc{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.pt.pk2{min-height:150px;justify-content:center}.pt.pk2.on{border-color:var(--brand-cyan);box-shadow:inset 0 0 0 2px var(--brand-cyan)}.cli{font-size:2.6667rem!important;letter-spacing:.02em}.big2{font-size:1.6rem!important;color:var(--ink)!important;font-weight:800}
-.pt6{grid-template-columns:repeat(3,1fr)}.pt.tk{align-items:center;min-height:130px}
-.pmsg{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:40px 16px;background:var(--cd);border:1px solid var(--ln);border-radius:20px}.pmsg svg{width:64px;height:64px}.pmsg b{font-size:1.8667rem}.pmsg span{color:var(--mut);font-size:1.1333rem}.pmsg.ok2 svg,.pmsg.ok2 b{color:var(--ok)}.pbar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.pt:active{transform:scale(.98)}.pc{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.pt.pk2{min-height:150px;justify-content:center;min-width:0;container-type:inline-size}.pk2 .cli{font-size:clamp(1.3rem,10cqi,2.6667rem)!important;max-width:100%;overflow-wrap:anywhere}/* el código del lote se ajusta al ancho de su tarjeta: puede ser de cualquier largo según la Entrada */.pt.pk2.on{border-color:var(--brand-cyan);box-shadow:inset 0 0 0 2px var(--brand-cyan)}.cli{font-size:2.6667rem!important;letter-spacing:.02em}.big2{font-size:1.6rem!important;color:var(--ink)!important;font-weight:800}
+.pt.tk{align-items:center;min-height:130px}
+.pmsg{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:40px 16px;background:var(--cd);border:1px solid var(--ln);border-radius:20px}.pmsg svg{width:64px;height:64px}.pmsg b{font-size:1.8667rem}.pmsg span{color:var(--mut);font-size:1.1333rem}.pbar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
 .pcx{font-size:1.2rem;margin:0 0 4px;color:var(--mut)}.mut2{color:var(--mut);font-size:.9333rem;display:block}
 .pkh{display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:center;background:var(--cd);border:1px solid var(--ln);border-radius:20px;padding:16px 20px;margin-bottom:16px}.pkh .cli{display:block}.pkn2 b{font-size:2.6667rem;line-height:1}.pkn2 small{font-size:1.3333rem;color:var(--mut)}.pkn2 .pb{height:10px}
-.plot{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:64px;padding:10px 16px;border-radius:14px;border:1px solid var(--ln);background:var(--in);color:var(--ink);font:inherit;cursor:pointer}.plot span{color:var(--brand-cyan);font-weight:700;font-size:.9333rem}
-.pkb2{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}.kp{background:var(--cd);border:1px solid var(--ln);border-radius:20px;padding:16px}.kd2{text-align:center;padding:6px 0 12px}.kd2 b{display:block;font-size:4.2667rem;line-height:1.1;font-weight:800}
-.kg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.key{min-height:76px;border-radius:16px;border:1px solid var(--ln);background:var(--in);color:var(--ink);font:inherit;font-size:2.1333rem;font-weight:800;cursor:pointer}.key.fn{font-size:1.6rem;color:var(--mut)}.key:active{background:var(--hl)}
-.cats{display:flex;flex-direction:column;gap:12px}.cat{flex:1;min-height:110px;border-radius:20px;border:3px solid transparent;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.cat span{font-size:2.2667rem;font-weight:900;letter-spacing:.04em}.cat small{font-size:1rem;font-weight:600;opacity:.85}
-.cat.cR{background:#E5484D;color:#fff}.cat.cV{background:#2a9a63;color:#fff}.cat.cB{background:#fff;color:#1c2733;border-color:#cbd5e1}.cat.cA{background:#F5C518;color:#1c2733}.cat:active{transform:scale(.98)}
-.plast{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-radius:14px;background:var(--cd);border:1px solid var(--ln);font-weight:700;color:var(--ok)}
-.chipb{border:0;cursor:pointer;font:inherit;font-size:.8rem;font-weight:700;min-height:34px;padding:6px 12px}.chipb:hover{filter:brightness(1.1)}
+.plot{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-height:64px;padding:10px 16px;border-radius:14px;border:1px solid var(--ln);background:var(--in);color:var(--ink);font:inherit;cursor:pointer}.plot span{color:var(--plk);font-weight:700;font-size:.9333rem}:root{--plk:var(--brand-navy)}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--plk:var(--brand-cyan)}}:root[data-theme="dark"]{--plk:var(--brand-cyan)}
+.kp{background:var(--cd);border:1px solid var(--ln);border-radius:20px;padding:16px}
+.kg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.key{min-height:76px;border-radius:16px;border:1px solid var(--ln);background:var(--in);color:var(--ink);font:inherit;font-size:2.1333rem;font-weight:800;cursor:pointer}.key:active{background:var(--hl)}
+
+
+
+.chipb{border:0;cursor:pointer;font:inherit;font-size:.8rem;font-weight:700;min-height:44px;padding:6px 12px}/* v1.7.0 (auditoría #19): avisos de 44 px para tocar con guantes */.chipb:hover{filter:brightness(1.1)}
 .pbxs{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}.pbx{display:grid;grid-template-columns:auto 1fr;gap:10px 12px;align-items:center;background:var(--cd);border:2px solid var(--ln);border-radius:18px;padding:14px}.pbn{font-size:1.3333rem;white-space:nowrap}
-.pbx input.pkc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pcat{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pcat .chip.pk,.pall .chip.pk{min-height:58px;font-size:1.2rem;font-weight:800;justify-content:center;border:2px solid var(--ln);display:flex;align-items:center;gap:8px}.pall .chip.pk{min-height:46px;padding:6px 18px;font-size:1.0667rem}
+.pbx input.pkc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}
+.pall .chip.pk{min-height:58px;font-size:1.2rem;font-weight:800;justify-content:center;border:2px solid var(--ln);display:flex;align-items:center;gap:8px}.pall .chip.pk{min-height:46px;padding:6px 18px;font-size:1.0667rem}
 .pcR::before,.pcV::before,.pcB::before,.pcA::before{content:"";width:14px;height:14px;border-radius:50%;box-shadow:0 0 0 1.5px #64748b}.pcR::before{background:#E5484D}.pcV::before{background:#2a9a63}.pcB::before{background:#fff}.pcA::before{background:#F5C518}
 button.chip.pk.pcR[aria-pressed=true]{background:#E5484D;border-color:#E5484D;color:#fff}button.chip.pk.pcV[aria-pressed=true]{background:#2a9a63;border-color:#2a9a63;color:#fff}button.chip.pk.pcB[aria-pressed=true]{background:#fff;border-color:#1c2733;color:#1c2733}button.chip.pk.pcA[aria-pressed=true]{background:#F5C518;border-color:#F5C518;color:#1c2733}
-.pbx.sv{background:var(--in);border-color:var(--ln);position:relative;opacity:.62;transition:opacity .15s}.pbx.sv:focus-within,.pbx.sv:hover{opacity:1}.pbx.sv input.psc{background:#eef2f5;color:#334155}.pok{position:absolute;top:-10px;right:-10px;width:34px;height:34px;border-radius:50%;background:var(--okb);color:var(--okf);display:grid;place-items:center;font-weight:900;font-size:1.2rem;box-shadow:0 0 0 3px var(--bg)}
+/* v1.7.0 (auditoría #17): la caja guardada ya no es transparente (el texto quedaba en 2.4:1); se distingue por el fondo gris, el borde verde y «✔ Completada» */.pbx.sv{background:var(--in);border-color:var(--ln);position:relative}.pbx.sv input.psc{background:#eef2f5;color:#334155}.pok{position:absolute;top:-10px;right:-10px;width:34px;height:34px;border-radius:50%;background:var(--okb);color:var(--okf);display:grid;place-items:center;font-weight:900;font-size:1.2rem;box-shadow:0 0 0 3px var(--bg)}
 .pbx input.psc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pbx input.ppc{min-height:60px;font-size:1.8667rem;font-weight:800;width:100%;text-align:center}.pft{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;font-size:.9333rem;font-weight:700;color:var(--ok)}.pft .lnk{font-size:.9333rem}.pbx.sv{border-color:color-mix(in srgb,var(--okb) 60%,var(--ln))}.pbx.sv:focus-within{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 30%,transparent)}.pbx.ip{border-color:var(--brand-cyan);background:color-mix(in srgb,var(--brand-cyan) 8%,var(--cd))}.pde{display:none;color:var(--fr)}.pbx.sv:focus-within .pde{display:inline}.pbx.sv:focus-within .pdc{display:none}.pkn2 .pks2{display:block;margin-top:6px}
 .pdone{display:flex;flex-direction:column;gap:6px;padding:16px 20px;border-radius:18px;background:var(--cd);border:2px solid var(--okb);margin-bottom:14px}.pdone b{font-size:1.6rem;color:var(--ok)}.pdone span{color:var(--mut)}.pdone .pbar{justify-content:flex-start}
 .pall{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
-.shk{animation:shk .35s}@keyframes shk{0%,100%{transform:none}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-.psteps{display:flex;gap:6px;list-style:none;padding:0;margin:0 0 14px;flex-wrap:wrap}.psteps li{padding:6px 14px;border-radius:999px;background:var(--in);color:var(--mut);font-weight:700;font-size:.9333rem}.psteps li.cur{background:var(--brand-blue);color:#fff}.psteps li.dn{color:var(--ok)}
-.pfs{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:12px}.pf{display:flex;flex-direction:column;gap:6px;font-size:1.0667rem;font-weight:700}.pf input{min-height:60px;font-size:1.6rem;padding:8px 14px}.pf small{font-weight:600;color:var(--mut)}
-.pf.sz>span{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ptot{font-size:1.3333rem;margin:4px 0 14px}.ptot b{font-size:2rem;margin-left:8px}
+@keyframes shk{0%,100%{transform:none}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+
+
+
 .prev{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px}.prev div{background:var(--cd);border:1px solid var(--ln);border-radius:14px;padding:10px 14px}.prev span{display:block;color:var(--mut);font-size:.8667rem}.prev b{font-size:1.3333rem}
 .pnav{display:flex;justify-content:space-between;gap:12px;margin-top:20px;position:sticky;bottom:0;padding:12px 0;background:var(--bg)}
-.pon{display:flex;align-items:center;gap:10px;margin:6px 8px 0;padding:10px 14px;border-radius:12px;border:1px solid #ffffff33;background:#ffffff14;color:#fff;font:inherit;font-weight:700;cursor:pointer;width:calc(100% - 16px);min-height:48px}
-@media(max-width:760px){.pg{grid-template-columns:1fr}.pt.p1,.pt.p2{min-height:170px}.pt{min-height:120px}.pt6{grid-template-columns:repeat(3,1fr)}.pkh{grid-template-columns:1fr 1fr}.plot{grid-column:1/-1}.pkb2{grid-template-columns:1fr}.cats{flex-direction:row;flex-wrap:wrap}.cat{min-height:90px;flex:1 1 30%}.cats p,.plast{flex-basis:100%}.key{min-height:64px}.kd2 b{font-size:3.4667rem}.ph{font-size:1.6rem}.plg{width:90px}.pus{display:none}}
+
+@media(max-width:760px){.pg{grid-template-columns:1fr}.pt.p1,.pt.p2{min-height:170px}.pt{min-height:120px}.pkh{grid-template-columns:1fr 1fr}.plot{grid-column:1/-1}.key{min-height:64px}.ph{font-size:1.6rem}.plg{width:90px}}
 
 /* --- Logo como botón de inicio --- */
 .lgb{display:block;background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:left;-webkit-tap-highlight-color:transparent}
@@ -386,16 +383,14 @@ tr.cur>td{background:color-mix(in srgb,var(--brand-cyan) 10%,var(--cd))}
  .pnt-t input:disabled,.pnt-t select:disabled{text-align:left!important;padding-left:2px}
  .pnt-t tr.per>.c-no{grid-area:no;display:flex;align-items:center;gap:10px}.pnt-t .c-no .chip{margin:0}.pnt-t .c-or{grid-area:or}.pnt-t .c-tk{grid-area:tk}.pnt-t .c-lo{grid-area:lo}
  .pnt-t .sz0{grid-area:k0}.pnt-t .sz1{grid-area:k1}.pnt-t .sz2{grid-area:k2}.pnt-t .sz3{grid-area:k3}
- .pnt-t tr.per>.c-tot{grid-area:tot;display:flex;flex-direction:column;align-items:flex-end}.pnt-t .c-tot .pel{margin:0}.c-tot>b{padding:0}.pnt-t .c-ac{grid-area:ac}
-}
+ .pnt-t tr.per>.c-tot{grid-area:tot;display:flex;flex-direction:column;align-items:flex-end}.pnt-t .c-tot .pel{margin:0}.c-tot>b{padding:0}.pnt-t .c-ac{grid-area:ac}}
 @container pent (max-width:34rem){
  .pnt-t tr.per{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"no ac" "or or" "tk lo" "k0 k1" "k2 k3" "tot tot"}
  .pnt-t tr.per>.c-tot{flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:wrap}
  .pdg{grid-template-columns:1fr 1fr}
- .pebar{flex-wrap:wrap;gap:8px;padding:8px 0}.pebar .pbtn{flex:1 1 0;min-width:0;padding:10px 12px;font-size:1.0667rem}.pecnt{order:-1;flex-basis:100%;font-size:.9333rem}
-}
+ .pebar{flex-wrap:wrap;gap:8px;padding:8px 0}.pebar .pbtn{flex:1 1 0;min-width:0;padding:10px 12px;font-size:1.0667rem}.pecnt{order:-1;flex-basis:100%;font-size:.9333rem}}
 
-.alk{display:inline;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-underline-offset:3px}.alk span{display:inline-block;margin-left:6px;padding:2px 10px;border-radius:999px;background:var(--alr,#d50f1f);color:#fff;font-size:.8rem;font-weight:800;text-decoration:none}.alb li{margin:6px 0}
+.alk{display:inline-block;min-height:44px;background:none;border:0;padding:10px 0;font:inherit;color:inherit;text-align:left;cursor:pointer;text-decoration:underline;text-underline-offset:3px}.alk span{display:inline-block;margin-left:6px;padding:2px 10px;border-radius:999px;background:var(--alr,#d50f1f);color:#fff;font-size:.8rem;font-weight:800;text-decoration:none}.alb li{margin:6px 0}
 .kpl{cursor:pointer;transition:transform .12s ease}.kpl:hover{filter:brightness(1.05)}.kpl:active{transform:scale(.98)}.kgo{margin-top:6px;font-size:.8667rem;font-weight:800;color:var(--alt,#c8001a)}
 .flash{animation:flash 1.4s ease}@keyframes flash{0%,40%{box-shadow:0 0 0 4px var(--brand-cyan)}100%{box-shadow:0 0 0 0 transparent}}
 .alb.tb{margin-bottom:14px}.syn{display:flex;flex-direction:column;gap:2px;background:var(--in);border:1px solid var(--ln);border-radius:14px;padding:10px 16px;color:var(--ink)}.syn span{color:var(--mut)}.wrap>.alb.tb:first-child{margin-top:0}
@@ -491,8 +486,7 @@ body:has(#kpad) #toast{top:calc(var(--pkmt,80px) + 10px);bottom:auto}
  .kpad,.kpdock{position:sticky;top:12px;bottom:auto}
  .kpad{grid-template-columns:1fr;grid-template-areas:"h" "d" "k" "l" "c" "n";--kpk:max(48px,min(4.3rem,calc((100vh - 26rem) / 6)))}
  .kpc{grid-template-columns:repeat(2,minmax(0,1fr))} /* 4 tallas en 2×2: una fila más de teclas */
- .kpd{min-height:5.2rem}.kpv{font-size:3.2rem}
-}
+ .kpd{min-height:5.2rem}.kpv{font-size:3.2rem}}
 /* Vista completa: el teclado y «Guardar cajas» van juntos (a la derecha en pantallas anchas, abajo en las angostas) */
 .kpdock{position:sticky;bottom:10px;z-index:3;display:flex;flex-direction:column;gap:10px}
 .kpdock .kpad{position:relative}
@@ -591,7 +585,7 @@ body:has(#kpad) #toast{top:calc(var(--pkmt,80px) + 10px);bottom:auto}
 </style></head>
 <body><div id="app"></div><div id="setp" hidden></div><div id="pmenu" hidden></div><div id="toast" role="status"></div>
 <script>
-const S=['491-610','611-850','851-1220','1221-up'],PAL=['#1c7f9a','#b0793a','#5b6fd0','#2a9d8f','#9a5fb0','#3b87a6'];
+const S=['491-610','611-850','851-1220','1221-up'];
 /* Categoría de la caja = su talla, con los colores de talla (SZC): Blanco 491-610, Rojo 611-850, Verde 851-1220, Amarillo 1221-UP. */
 const RC={R:['Rojo','#e5484d'],V:['Verde','#30a46c'],B:['Blanco','#e8f1f5'],A:['Amarillo','#F5C518']},ROLE={admin:'Administrador',piso:'Encargado de piso',consulta:'Consulta'};
 const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -611,34 +605,83 @@ let UIDL=0;const uidN=()=>{UIDL=Math.max(Date.now()*1000+Math.floor(Math.random(
 const KEY=CLOUD?'propesa-c1':'propesa-v4';let ST,me=null,V={v:'inicio',id:null},form=null,msg='',conf=null,uf=null;
 
 let ND=null,evc=null;
-function seedM(){ST.M={}}
 function evid(key,title,noPh){const L=(ST.M||{})[key]||[],ok=me.role!='consulta',d=ND&&ND.key==key?ND:{text:'',ref:'',imgs:[]};
  return `<div class="cd ev"><div class="head"><h3 style="display:flex;gap:8px;align-items:center">${IC.note} ${title}</h3><span class="chip">${L.length} ${L.length==1?'nota':'notas'}</span></div>
- ${L.length?`<div class="evg">${L.map(n=>`<div class="evi">${n.imgs.length?`<div class="evp${n.imgs.length>1?' m':''}">${n.imgs.map((m,j)=>`<img src="${m}" alt="Foto ${j+1}" data-ev="zoom">`).join('')}</div>`:''}<div class="evt">${n.ref?`<span class="chip">${E(n.ref)}</span>`:''}${n.text?`<p>${E(n.text).replace(/\n/g,'<br>')}</p>`:''}<span class="mut">${E(n.by)} · ${n.t}</span>${ok&&(me.role=='admin'||n.by==me.name)?(evc==n.id?`<div class="bar" style="margin:4px 0 0"><b class="er">¿Eliminar?</b><button class="btn d" data-ev="rm:${n.id}">Sí</button><button class="btn s" data-ev="no">No</button></div>`:`<button class="lnk" data-ev="del:${n.id}">Eliminar</button>`):''}</div></div>`).join('')}</div>`:`<p class="mut">${noPh?'Sin notas todavía.':'Sin fotos ni notas todavía.'}</p>`}
+ ${L.length?`<div class="evg">${L.map(n=>`<div class="evi">${n.imgs.length?`<div class="evp${n.imgs.length>1?' m':''}">${n.imgs.map((m,j)=>fImg(m,`alt="Foto ${j+1}" data-ev="zoom"`)).join('')}</div>`:''}<div class="evt">${n.ref?`<span class="chip">${E(n.ref)}</span>`:''}${n.text?`<p>${E(n.text).replace(/\n/g,'<br>')}</p>`:''}<span class="mut">${E(n.by)} · ${n.t}</span>${ok&&(me.role=='admin'||n.by==me.name)?(evc==n.id?`<div class="bar" style="margin:4px 0 0"><b class="er">¿Eliminar?</b><button class="btn d" data-ev="rm:${n.id}">Sí</button><button class="btn s" data-ev="no">No</button></div>`:`<button class="lnk" data-ev="del:${n.id}">Eliminar</button>`):''}</div></div>`).join('')}</div>`:`<p class="mut">${noPh?'Sin notas todavía.':'Sin fotos ni notas todavía.'}</p>`}
  ${ok?`<div class="panel"><div class="f" style="flex-direction:column;align-items:stretch"><label>Nota<textarea id="ntx" data-k="${key}" rows="3" placeholder="Escribe una observación…">${E(d.text)}</textarea></label><label>Referencia (opcional)<input id="nrf" data-k="${key}" placeholder="Ej. Caja 12, Tarima 3" value="${E(d.ref)}"></label></div>
  ${noPh?'':`<div class="bar"><label class="btn s evb">${IC.cam} Tomar foto<input class="vh" data-k="${key}" type="file" accept="image/*" capture="environment"></label><label class="btn s evb">${IC.img} Galería<input class="vh" data-k="${key}" type="file" accept="image/*" multiple></label></div>`}
  ${!noPh&&d.imgs.length?`<div class="evq">${d.imgs.map((m,j)=>`<span><img src="${m}" alt=""><button data-ev="rmp:${j}" aria-label="Quitar foto">✕</button></span>`).join('')}</div>`:''}
  <button class="btn" data-ev="save:${key}">Guardar nota</button></div>`:'<p class="mut">Tu rol es de solo consulta: no puedes agregar notas.</p>'}</div>`}
 function evDraft(k){if(!ND||ND.key!=k)ND={key:k,text:'',ref:'',imgs:[]};return ND}
-/* Fotos chicas: viajan a todos los equipos y se guardan en la memoria de cada uno (~5 millones de caracteres en total).
-   shortcut: cabe el doble (unas 40 fotos en toda la empresa) y se vuelve a llenar; el arreglo de fondo es pasarlas a Supabase Storage. */
+/* Fotos chicas (800 px, JPEG 0.6, ~90 KB). Con la base compartida (v1.8.0) cada foto vive en el espacio de archivos
+   privado «fotos» de Supabase y la nota solo guarda su referencia «sb:notas/<nota>/<n>.jpg». En modo local (pruebas)
+   siguen dentro de la nota, como antes. */
 function shrink(file){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const i=new Image();i.onerror=no;i.onload=()=>{const m=800,k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',.6))};i.src=r.result};r.readAsDataURL(file)})}
+/* --- v1.8.0 · Fotos en Supabase Storage ---
+   FQ: fotos por subir (ruta → dataURL), guardadas en IndexedDB ('fotos-cola'): se suben antes que los registros, así los
+   demás equipos ya las encuentran; sin internet esperan como los demás cambios (cuentan en outN). FC: fotos listas para
+   mostrar (ruta → dataURL); las bajadas se guardan en IndexedDB ('F/<ruta>') para verlas otra vez sin internet.
+   Una foto que llega todavía dentro de una nota (respaldo restaurado, versión vieja) se pasa sola al espacio de archivos.
+   La ruta se arma con el id de la nota y el número de foto: dos equipos que pasan la misma nota suben el mismo archivo. */
+const FBK='fotos',FREF=/^sb:notas\/\d{1,20}\/[0-5]\.(jpg|png|webp|gif)$/,FDATA=/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/,
+ FEXT={jpeg:'jpg',jpg:'jpg',png:'png',webp:'webp',gif:'gif'},FMIME={jpg:'image/jpeg',png:'image/png',webp:'image/webp',gif:'image/gif'},
+ FGRIS='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+const isFRef=v=>typeof v=='string'&&FREF.test(v);
+let FQ=new Map(),FC=new Map(),FL=new Map();
+function fPath(id,j,d){const m=/^data:image\/(\w+);/.exec(d);return`notas/${id}/${j}.${FEXT[m&&m[1]]||'jpg'}`}
+function fBlob(d){const i=d.indexOf(','),t=/^data:([^;]+);/.exec(d)[1],b=atob(d.slice(i+1)),a=new Uint8Array(b.length);for(let k=0;k<b.length;k++)a[k]=b.charCodeAt(k);return new Blob([a],{type:t})}
+const fData=b=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=()=>no(r.error);r.readAsDataURL(b)});
+function saveFQ(){if(!CLOUD)return Promise.resolve();const o={};for(const [k,v] of FQ)o[k]=v;return idbPut('fotos-cola',o).catch(e=>console.error('No se pudo guardar la cola de fotos',e))}
+async function loadFQ(){try{const o=await idbGet('fotos-cola');if(o&&typeof o=='object')for(const k in o)if(isFRef('sb:'+k)&&FDATA.test(o[k]))FQ.set(k,o[k])}catch(e){console.error(e)}}
+/* src de una foto para <img>: dataURL (modo local o foto vieja), o la de la ruta si ya está en el equipo; si no, gris mientras se baja. */
+function fotoSrc(m){if(!isFRef(m))return FDATA.test(m)?m:FGRIS;const p=m.slice(3),s=FC.get(p)||FQ.get(p);if(s)return s;fotoLoad(p);return FGRIS}
+const fImg=(m,a)=>`<img src="${fotoSrc(m)}" ${a}${isFRef(m)?` data-fp="${m.slice(3)}"`:''}>`;
+function fotoShow(p,d){document.querySelectorAll(`img[data-fp="${p}"]`).forEach(i=>{i.src=d})}
+function fotoLoad(p){if(FL.has(p))return;FL.set(p,1);
+ (async()=>{let d=null;try{d=await idbGet('F/'+p)}catch(e){}
+  if(!(typeof d=='string'&&FDATA.test(d))){d=null;if(CLOUD&&SBS){try{const r=await sbFetch('/storage/v1/object/authenticated/'+FBK+'/'+p,{method:'GET'});d=await fData(await r.blob());if(!FDATA.test(d))d=null;else idbPut('F/'+p,d).catch(()=>{})}catch(e){}}}
+  if(d){FC.set(p,d);fotoShow(p,d);FL.delete(p);return}
+  /* todavía no se sube (el otro equipo sin internet) o no hay conexión: se vuelve a intentar mientras se vea en pantalla */
+  setTimeout(()=>{FL.delete(p);if(document.querySelector(`img[data-fp="${p}"]`))fotoLoad(p)},15000)})()}
+/* Fotos que todavía vienen dentro de una nota → cola, y la nota se queda solo con la referencia. */
+function fotoMigra(){if(!CLOUD||!me||me.role=='consulta')return 0;let n=0;
+ for(const k in ST.M)for(const nt of ST.M[k]||[])if(nt.imgs.some(m=>FDATA.test(m))){nt.imgs=nt.imgs.map((m,j)=>{if(!FDATA.test(m))return m;const p=fPath(nt.id,j,m);FQ.set(p,m);FC.set(p,m);return'sb:'+p});n++}
+ return n}
+/* Subir la cola. Solo lanza error si no hay conexión o la base falla (se reintenta); una foto que la base rechaza se quita de su nota. */
+async function upFotos(){if(!CLOUD||!SBS||!me||me.role=='consulta')return;if(fotoMigra()){await saveFQ();syncStage();cacheSoon()}if(!FQ.size)return;let bad=0;
+ for(const [p,d] of [...FQ]){let r;
+  for(let k=0;k<2;k++){const t=await sbToken();try{r=await fetch(SBC.url+'/storage/v1/object/'+FBK+'/'+p,{method:'POST',headers:{apikey:SBC.key,Authorization:'Bearer '+t,'Content-Type':FMIME[p.split('.').pop()]||'image/jpeg'},body:fBlob(d)})}catch(x){const e=new Error('Sin conexión');e.status=null;throw e}
+   if(r.status===401&&SBS){SBS.exp=0;continue}break}
+  let ok=r.ok;if(!ok){const j=await r.json().catch(()=>({}));if(r.status==409||/already exists|duplicate/i.test((j.error||'')+' '+(j.message||'')))ok=true;
+   else if(r.status>=500||r.status==429||r.status==401){const e=new Error('No se pudo subir una foto ('+r.status+')');e.status=r.status>=500?r.status:null;throw e}}
+  FQ.delete(p);if(ok){FC.set(p,d);idbPut('F/'+p,d).catch(()=>{})}
+  else{bad++;const ref='sb:'+p;for(const k in ST.M)for(const nt of ST.M[k]||[])if(nt.imgs.includes(ref))nt.imgs=nt.imgs.filter(x=>x!==ref)}
+  await saveFQ()}
+ if(bad){syncStage();cacheSoon();if(me)softRender();toast(bad==1?'No se pudo subir una foto: se quitó de su nota.':`No se pudieron subir ${bad} fotos: se quitaron de sus notas.`)}}
+/* Borrar archivos (al eliminar una nota o borrar todos los datos). Si falla, quedan sin uso en el espacio de archivos. */
+function fotoDel(refs){const ps=refs.filter(isFRef).map(m=>m.slice(3));if(!ps.length)return;let q=false;
+ ps.forEach(p=>{if(FQ.delete(p))q=true;FC.delete(p)});if(q)saveFQ();if(!CLOUD||!SBS)return;
+ for(let i=0;i<ps.length;i+=100)sbFetch('/storage/v1/object/'+FBK,{method:'DELETE',body:JSON.stringify({prefixes:ps.slice(i,i+100)})}).catch(()=>{})}
 document.addEventListener('input',e=>{const t=e.target;if(t.id=='ntx')evDraft(t.dataset.k).text=t.value;else if(t.id=='nrf')evDraft(t.dataset.k).ref=t.value});
 document.addEventListener('change',async e=>{const t=e.target;if(t.type!='file'||!t.dataset.k)return;const d=evDraft(t.dataset.k);
  for(const f of [...t.files]){if(d.imgs.length>=6){toast('Máximo 6 fotos por nota.');break}try{d.imgs.push(await shrink(f))}catch(x){toast('No se pudo leer la foto.')}}t.value='';render()});
 document.addEventListener('click',e=>{const x=e.target.closest('[data-ev]');if(!x)return;const P=x.dataset.ev.split(':'),a=P[0],v=P.slice(1).join(':');
- if(a=='zoom'){const o=document.createElement('div');o.className='lbx';o.innerHTML=`<img src="${x.src}" alt=""><button aria-label="Cerrar">✕</button>`;o.onclick=()=>o.remove();document.body.appendChild(o);return}
+ if(a=='zoom'){if(x.src===FGRIS)return toast('La foto todavía se está bajando. Espera unos segundos.');const o=document.createElement('div');o.className='lbx';o.innerHTML=`<img src="${x.src}" alt=""><button aria-label="Cerrar">✕</button>`;o.onclick=()=>o.remove();document.body.appendChild(o);return}
  if(a=='rmp'){ND.imgs.splice(+v,1);return render()}
  if(a=='del'){evc=+v;return render()}if(a=='no'){evc=null;return render()}
- if(a=='rm'){for(const k in ST.M)ST.M[k]=ST.M[k].filter(n=>n.id!=+v);evc=null;save();toast('Nota eliminada');return render()}
+ if(a=='rm'){const fs=[];for(const k in ST.M)ST.M[k]=ST.M[k].filter(n=>{if(n.id!=+v)return true;fs.push(...n.imgs);return false});fotoDel(fs);evc=null;save();toast('Nota eliminada');return render()}
  if(a=='save'){const d=evDraft(v),tx=d.text.trim();if(!tx&&!d.imgs.length){toast('Escribe una nota o agrega una foto.');return}
-  (ST.M[v]=ST.M[v]||[]).unshift({id:uidN(),t:now(),by:me.name,text:tx,ref:d.ref.trim(),imgs:d.imgs});ND=null;save();toast('✔ Nota guardada');render()}});
+  const id=uidN();let imgs=d.imgs.filter(m=>FDATA.test(m));
+  if(CLOUD){imgs=imgs.map((m,j)=>{const p=fPath(id,j,m);FQ.set(p,m);FC.set(p,m);return'sb:'+p});if(imgs.length)saveFQ()}
+  (ST.M[v]=ST.M[v]||[]).unshift({id,t:now(),by:me.name,text:tx,ref:d.ref.trim(),imgs});ND=null;save();toast('✔ Nota guardada');render()}});
 
 const wOk=p=>Math.abs(gross(p)-p.exp)<0.05;
 function shipIssues(i){const p=ST.P[i],g=gross(p),zs=p.z.reduce((a,b)=>a+b,0),sn=sent(i),o=[],E2=k=>(PISO?'pemp:':'empacar:')+k;
  if(!wOk(p))o.push({t:`Peso bruto ${g.toFixed(1)} kg no coincide con el formato (${p.exp} kg): diferencia ${g-p.exp>0?'+':''}${(g-p.exp).toFixed(1)} kg`,jump:'#emb_peso'});
  if(zs!==p.h)o.push({t:`Las tallas suman ${zs} y deberían sumar ${p.h} hieleras`,jump:'#emb_tallas'});
  let bad=0,bk=null;for(const l in ST.B)ST.B[l].forEach(b=>{if(b.d===i&&!(b.c>0&&b.k)){bad++;bk=bk||b.o}});if(bad)o.push({t:`${bad} ${bad==1?'caja asignada sin':'cajas asignadas sin'} cantidad o categoría`,go:bk?E2(bk):'empaque'});
+ /* Dos tablets guardando el último lugar casi al mismo tiempo pueden dejar una caja de más: se avisa y se lleva a la vista completa, donde se ve y se quita. */
+ for(const x of shipLinks(i))x.o.lines.forEach(l=>{if(l.city!=x.city||l.cons!=x.cons)return;const n=ordAssigned(x.o,l).length;if(n>l.boxes)o.push({t:`${E(l.cli)} tiene ${n} cajas y la orden pide ${l.boxes}`,go:'empacar:'+x.o.id+'.'+l.id})});
  if(!sn){let k=null;for(const x of shipLinks(i)){const l=x.o.lines.find(l=>l.city==x.city&&l.cons==x.cons&&ordAssigned(x.o,l).length<l.boxes);if(l){k=x.o.id+'.'+l.id;break}}o.push({t:'No hay cajas empacadas para este envío',go:k?E2(k):'empaque'})}
  return o}
 function shipAlert(i){const o=shipIssues(i);if(!o.length)return'';return `<div class="alb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>ATENCIÓN: ${o.length} ${o.length==1?'pendiente o discrepancia':'pendientes o discrepancias'}</b><ul>${o.map(x=>`<li><button class="alk" ${x.go?`data-go="${x.go}"`:`data-jump="${x.jump}"`}>${x.t} <span>Resolver ›</span></button></li>`).join('')}</ul></div></div>`}
@@ -677,6 +720,8 @@ function ordAssigned(o,l){const k=lkey(o,l),r=[];if(RX)return(rxLine().get(k)||[
 const ordTot=o=>o.lines.reduce((a,l)=>a+l.boxes,0),ordAsg=o=>o.lines.reduce((a,l)=>a+Math.min(l.boxes,ordAssigned(o,l).length),0);
 /* Un embarque (ST.P[i]) puede juntar varias órdenes: o.sh['CIUDAD|consignatario'] apunta al mismo índice. */
 function shipLinks(i){if(RX)return(rxLinks().get(i)||[]).slice();const r=[];ST.OR.forEach(o=>{const m=o.sh||{};for(const k in m)if(m[k]===i){const q=k.split('|');r.push({o,k,city:q[0],cons:+q[1]})}});return r}
+/* Embarque por su id fijo (p.u): la posición en ST.P cambia si otro equipo quita o une un embarque. */
+const pIx=u=>ST.P.findIndex(p=>p.u===u);
 function newShip(){ST.P.push({u:uidS(),n:'',z0:'',col:XC[ST.P.length%XC.length],exp:0,h:0,z:[0,0,0,0],c:[],alive:null,closed:false});return ST.P.length-1}
 function shipFor(o,city,cons){o.sh=o.sh||{};const k=city+'|'+cons;if(o.sh[k]!=null&&ST.P[o.sh[k]])return o.sh[k];
  const i=newShip();ST.P[i].n=`${city} · ${CONS[cons].k} · ${fs(o.etd)}`;o.sh[k]=i;return i}
@@ -703,20 +748,16 @@ const shipCands=(city,cons,except)=>ST.P.map((p,j)=>j).filter(j=>j!==except&&!ST
 function joinable(i){const c=shipCC(i),r=[];if(!c)return r;ST.OR.forEach(o=>{const k=c.city+'|'+c.cons,j=(o.sh||{})[k];if(j!=null&&j!==i&&ST.P[j]&&!ST.P[j].closed)r.push({o,k,j})});return r}
 function shipPanel(o,g){const k=g.city+'|'+g.cons,i=(o.sh||{})[k];if(i==null||!ST.P[i])return'';const p=ST.P[i],lk=shipLinks(i),ed=can('lot')&&!p.closed,cand=shipCands(g.city,g.cons,i),sid='sh_j_'+g.cons+'_'+g.city;
  return `<div class="shp"><span class="chip">Embarque: <b>${E(p.n)}</b></span>${lk.length>1?`<span class="chip ok">${lk.length} órdenes en este embarque</span>`:''}${p.closed?'<span class="chip ok">Empaque cerrado</span>':''}
- ${ed&&cand.length?`<label>Unir a otro embarque<select id="${sid}">${cand.map(j=>`<option value="${j}">${E(ST.P[j].n)} · ${ST.P[j].h} hieleras</option>`).join('')}</select></label><button class="btn s" data-sh="join:${o.id}:${k}:${sid}">Unir</button>`:''}
+ ${ed&&cand.length?`<label>Unir a otro embarque<select id="${sid}">${cand.map(j=>`<option value="${E(ST.P[j].u)}">${E(ST.P[j].n)} · ${ST.P[j].h} hieleras</option>`).join('')}</select></label><button class="btn s" data-sh="join:${o.id}:${k}:${sid}">Unir</button>`:''}
  ${ed&&lk.length>1?`<button class="btn s" data-sh="split:${o.id}:${k}">Separar en su propio embarque</button>`:''}</div>`}
 document.addEventListener('click',e=>{const x=e.target.closest('[data-sh]');if(!x)return;const P=x.dataset.sh.split(':'),a=P[0];if(!can('lot'))return;
  if(a=='join'||a=='split'||a=='sep'){const o=ST.OR.find(q=>q.id==+P[1]),k=P[2];if(!o||!o.sh||o.sh[k]==null)return;if(ST.P[o.sh[k]]&&ST.P[o.sh[k]].closed)return toast('No se puede: ese empaque ya está cerrado.');
-  let j=-1;if(a=='join'){const el=document.getElementById(P[3]);j=el?+el.value:-1;if(!ST.P[j]||ST.P[j].closed)return toast('No se puede: ese embarque ya está cerrado.')}
+  let j=-1;if(a=='join'){const el=document.getElementById(P[3]);j=el?pIx(el.value):-1;if(!ST.P[j]||ST.P[j].closed)return toast('No se puede: ese embarque ya está cerrado.')}
   moveGroup(o,k,j);save();toast(a=='join'?'✔ Orden unida al embarque':'Orden separada en su propio embarque');return render()}
  if(a=='add'){const i=+P[1],el=document.getElementById('sh_add');if(!el||!el.value||!ST.P[i]||ST.P[i].closed)return toast('Elige la orden que quieres agregar.');
   const q=el.value.indexOf('/'),o=ST.OR.find(z=>z.id==+el.value.slice(0,q)),k=el.value.slice(q+1);if(!o||!o.sh||o.sh[k]==null)return;
   const ni=moveGroup(o,k,i);save();toast('✔ Orden agregada al embarque');return go('emb:'+ni)}});
-function seedOR(){ST.OR=[];ST.ORc=1}
 /* Quita la orden de ejemplo (07/10) y sus consignaciones de los datos que ya estaban guardados en el navegador. */
-function cleanOrders(){ST.ORc=1;const dem=ST.OR.filter(o=>o.id==1&&o.etd=='2026-10-07'&&o.lines.length>=5&&o.lines.slice(0,5).map(l=>l.cli).join()=='HXH,ZSM,ZYX,RSK,ZYX');if(!dem.length)return save();
- dem.forEach(o=>{for(const l in ST.B)ST.B[l].forEach(b=>{if(b.o&&String(b.o).split('.')[0]==o.id){b.o=null;b.d=null}})});ST.OR=ST.OR.filter(o=>!dem.includes(o));
- const idx=new Set(dem.flatMap(o=>Object.values(o.sh||{})));while(ST.P.length&&idx.has(ST.P.length-1)&&!Object.values(ST.B).some(bs=>bs.some(b=>b.d===ST.P.length-1)))ST.P.pop();save()}
 function ordenes(){const ed=can('lot'),tm=dLoc(new Date(Date.now()+864e5));
  return `<div class="wrap"><div class="cd head"><div><h1>Órdenes de empaque</h1><p class="mut" style="margin:4px 0 0">Cada orden indica la ciudad destino, el consignatario (a quién se factura) y el cliente final. Las cajas se cuentan y se agregan en el paso Empaque, al preparar cada pedido.</p></div></div>
  ${ST.OR.length?pdfBar('ord'):''}${ed?`<div class="cd"><h2 class="h3">Nueva orden</h2><div class="f"><label>Fecha de empaque (ETD)<input type="date" id="no_etd" value="${tm}"></label><button class="btn" data-oa="new">Crear orden</button></div></div>`:''}
@@ -724,7 +765,7 @@ function ordenes(){const ed=can('lot'),tm=dLoc(new Date(Date.now()+864e5));
 const ordCard=()=>{if(!ST.OR.length)return'';const PO=histList('pord',ST.OR.slice().sort((a,b)=>a.etd<b.etd?1:-1),ordActive);return `<h2>Órdenes de empaque</h2><div class="cd"><div class="tbl"><table><thead><tr><th>Empaque (ETD)</th><th>Líneas</th><th>Cajas empacadas</th><th aria-label="Acciones"></th></tr></thead><tbody>${PO.items.map(o=>{const t=ordTot(o),a=ordAsg(o);return `<tr><td><b>${fd(o.etd)}</b></td><td>${o.lines.length}</td><td>${a} / ${t} ${!t?`<button class="chip al chipb" data-go="orden:${o.id}">⚠ Sin líneas · Agregar ›</button>`:a>=t?'<span class="chip ok">✔ Completa</span>':goPend(o)&&can('box')?`<button class="chip al chipb" data-go="${goPend(o)}">⚠ Faltan ${t-a} · Empacar ›</button>`:`<span class="chip al">⚠ Faltan ${t-a}</span>`}</td><td><button class="btn s" data-go="orden:${o.id}">Abrir orden</button></td></tr>`}).join('')||'<tr><td colspan="4" class="mut">No hay órdenes abiertas ni recientes.</td></tr>'}</tbody></table></div>${PO.bar}</div>`};
 document.addEventListener('input',e=>{const t=e.target;if(t.id=='ol_cli')OD.cli=t.value.toUpperCase().replace(/[^A-Z0-9]/g,'');else if(t.id=='ol_n')OD.n=t.value});
 document.addEventListener('change',e=>{const t=e.target;if(t.id=='ol_city'){OD.city=t.value;OD.cons=-1;render()}else if(t.id=='ol_cons')OD.cons=+t.value;
- else if(t.dataset&&t.dataset.zs){const[i,k]=t.dataset.zs.split(':').map(Number);ST.P[i].z[k]=Math.max(0,Math.round(+t.value||0));save();render()}});
+ else if(t.dataset&&t.dataset.zs){const q=t.dataset.zs.split(':'),i=pIx(q[0]),k=+q[1];if(i<0){toast('Ese embarque ya no existe: otro equipo lo quitó o lo unió.');return render()}ST.P[i].z[k]=Math.max(0,Math.round(+t.value||0));save();render()}});
 
 /* Campos numéricos: teclado numérico en la tablet y texto seleccionado al tocar, para escribir encima sin borrar. */
 /* Seleccionar el número al enfocar (el siguiente número lo reemplaza). En las cajas del teclado fijo, en pantallas táctiles no se selecciona:
@@ -873,13 +914,12 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-oa]');if(!
 function saveLot(){const o=g('fo').trim(),t=g('ft'),dt=g('fd'),tt=g('ftt'),de=g('fdes'),kb=g('fkb');if(!dt)return fail('Elige la fecha de recepción.','fd');if(!o)return fail('Escribe el proveedor.','fo');
  const meta={origin:o,tank:t,rdate:dt,time:g('fh'),date:fd(dt),tempT:tt===''?null:+tt,tempP:g('ftp').trim(),kgbox:kb===''?null:+kb,desp:de===''?null:+de};
  if(form.edit){Object.assign(R_(form.edit),meta)}
- else{const l=g('fl').trim().toUpperCase(),ks=S.map((s,i)=>+g('fk'+i)||0);if(!l)return fail('Escribe el lote de recepción.','fl');if(R_(l))return fail('Ese lote ya existe.','fl');if(ks.every(k=>k<=0))return fail('Captura al menos una talla con kg.','fk0');
-  const id=newLotId();ST.R.push({id,lot:l,...meta,final:null,closed:false});ST.B[l]=[];ks.forEach((k,i)=>k>0&&post('RECEPCION',l,S[i],k,0,id));V={v:'lote',id:l}}
+ else{const d={lot:g('fl'),origin:o,tank:t,rdate:dt,time:g('fh'),tempT:tt,tempP:g('ftp'),kgbox:kb,desp:de};S.forEach((s,i)=>d['k'+i]=g('fk'+i));
+  const er=lotErr(d),k=Object.keys(LOT_F).find(k=>er[k]);if(k)return fail(er[k],LOT_F[k]);V={v:'lote',id:addLot(d)}}
  form=null;msg='';save();toast('✔ Guardado');render()}
-function migratePK(){ST.PK=1;ST.BN=ST.BN||0;for(const l in ST.B){ST.B[l]=ST.B[l].filter(b=>b.c>0&&b.k);ST.B[l].forEach(b=>{if(!b.seq)b.seq=uidN()})}delete ST.cur;save()}
-function seed(){return {PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,
+function seed(){return {L:[],R:[],B:{},P:[],O:[],M:{},OR:[],E0:1,
  T:[],RN:120,U:[]};}
-function load(){if(CLOUD){try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.L&&j.R)return j}catch(e){}try{localStorage.removeItem(SINCE_KEY)}catch(e){}return seed()}try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.L){if(!j.E0){Object.assign(j,{L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,cur:null,E0:1})}return j}}catch(e){}return seed()}
+function load(){if(CLOUD)return seed();/* con la base compartida, la copia del equipo se lee de IndexedDB al arrancar (loadCache) */try{const j=JSON.parse(localStorage.getItem(KEY));if(j&&j.L){if(!j.E0){Object.assign(j,{L:[],R:[],B:{},P:[],O:[],M:{},OR:[],E0:1})}return{...seed(),...j}}}catch(e){}return seed()}
 /* ===== Seguridad y datos (correcciones del /review) ===== */
 /* Fecha local (no UTC): evita que después de las 5 pm en Tijuana salga el día siguiente. */
 const dLoc=(d=new Date())=>{const z=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())};
@@ -898,7 +938,7 @@ function topBanners(){let h=syncBanners();
 document.addEventListener('click',e=>{if(e.target.closest('[data-retry]')){if(save())render();}});
 /* Respaldo: se revisa campo por campo antes de cargarlo (evita datos dañados o código escondido). */
 function cleanST(d,noU){const str=(v,m=200)=>String(v==null?'':v).slice(0,m),id=(v,m=60)=>str(v,m).replace(/[<>"'`&\\]/g,''),num=(v,df=0)=>{const n=+v;return isFinite(n)?n:df},nn=v=>v==null||v===''||!isFinite(+v)?null:+v,int=(v,df=0)=>Math.round(num(v,df)),
-  date=v=>/^\d{4}-\d{2}-\d{2}$/.test(v)?v:'',img=v=>/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(v);
+  date=v=>/^\d{4}-\d{2}-\d{2}$/.test(v)?v:'',img=v=>/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(v)||isFRef(v);
  const lotsOk=new Set(),R=[];(Array.isArray(d.R)?d.R:[]).forEach(r=>{if(!r)return;const lot=id(r.lot);if(!lot||lotsOk.has(lot))return;lotsOk.add(lot);
   R.push({id:id(r.id,20),lot,origin:str(r.origin),tank:TK.includes(r.tank)?r.tank:'T1',rdate:date(r.rdate),time:/^\d{2}:\d{2}$/.test(r.time)?r.time:'',date:id(r.date,12),tempT:nn(r.tempT),tempP:id(r.tempP,20),kgbox:nn(r.kgbox),desp:nn(r.desp),final:nn(r.final),closed:!!r.closed})});
  const P=(Array.isArray(d.P)?d.P:[]).filter(Boolean).map((p,i)=>({u:/^[0-9a-z]{6,30}$/.test(p.u)?p.u:legU(i),n:id(p.n,90),z0:id(p.z0,20),col:/^#[0-9a-fA-F]{3,8}$/.test(p.col)?p.col:XC[0],exp:num(p.exp),h:Math.max(0,int(p.h)),z:[0,1,2,3].map(i=>Math.max(0,int((p.z||[])[i]))),c:(Array.isArray(p.c)?p.c:[]).slice(0,10).map(x=>[id((x||[])[0],40),num((x||[])[1]),int((x||[])[2])]),alive:nn(p.alive),closed:!!p.closed}));
@@ -906,13 +946,13 @@ function cleanST(d,noU){const str=(v,m=200)=>String(v==null?'':v).slice(0,m),id=
  const B={};lotsOk.forEach(l=>{B[l]=((d.B||{})[l]||[]).filter(b=>b&&int(b.c)>=1&&Object.keys(RC).includes(b.k)).map(b=>({c:int(b.c),k:b.k,d:pIdx(b.d),o:/^\d+\.\d+$/.test(b.o)?b.o:null,seq:int(b.seq),...(nn(b.ps)!=null?{ps:int(b.ps)}:{})}))});
  const OR=(Array.isArray(d.OR)?d.OR:[]).filter(Boolean).map(o=>{const sh={};Object.entries(o.sh||{}).forEach(([k,v])=>{if(/^[A-Z]{3}\|\d+$/.test(k)&&pIdx(v)!=null)sh[k]=pIdx(v)});
   return{id:int(o.id),etd:date(o.etd),sh,lines:(Array.isArray(o.lines)?o.lines:[]).filter(l=>l&&PORTS[l.city]&&CONS[int(l.cons,-1)]).map(l=>({id:int(l.id),city:l.city,cons:int(l.cons),cli:str(l.cli,6).toUpperCase().replace(/[^A-Z0-9]/g,'')||'SIN',boxes:Math.max(1,int(l.boxes,1))}))}});
- const L=(Array.isArray(d.L)?d.L:[]).filter(x=>x&&lotsOk.has(id(x.lot))&&S.includes(x.size)&&['RECEPCION','SALIDA_EMBARQUE','REVERSA'].includes(x.type)).map(x=>({id:int(x.id),t:id(x.t,30),type:x.type,lot:id(x.lot),size:x.size,m:int(x.m),rev:nn(x.rev),rc:id(x.rc,20)}));
+ const L=(Array.isArray(d.L)?d.L:[]).filter(x=>x&&lotsOk.has(id(x.lot))&&S.includes(x.size)&&LTYPES.includes(x.type)).map(x=>({id:int(x.id),t:id(x.t,30),type:x.type,lot:id(x.lot),size:x.size,m:int(x.m),rev:nn(x.rev),rc:id(x.rc,20)}));
  const M={};Object.entries(d.M||{}).forEach(([k,arr])=>{if(Array.isArray(arr))M[id(k,90)]=arr.filter(Boolean).map(n=>({id:num(n.id),t:id(n.t,30),by:str(n.by,80),text:str(n.text,3000),ref:str(n.ref,120),imgs:(Array.isArray(n.imgs)?n.imgs:[]).filter(img).slice(0,6)}))});
- const O0=(Array.isArray(d.O)?d.O:[]).filter(Boolean).slice(0,200),O=O0.map((o,i)=>({u:/^[0-9a-z]{6,30}$/.test(o.u)?o.u:legU(O0.length-1-i),subject:str(o.subject,200),t:id(o.t,30),to:(Array.isArray(o.to)?o.to:[]).map(x=>str(x,120)),body:str(o.body,20000),...(o.pn?{pn:id(o.pn,90),att:id(o.att,140)}:{})}));
+ const O0=(Array.isArray(d.O)?d.O:[]).filter(Boolean).slice(0,200),O=O0.map((o,i)=>({u:/^[0-9a-z]{6,30}$/.test(o.u)?o.u:legU(O0.length-1-i),subject:str(o.subject,200),t:id(o.t,30),to:(Array.isArray(o.to)?o.to:[]).map(x=>str(x,120)),body:str(o.body,20000),...(o.pn?{pn:id(o.pn,90),att:id(o.att,140)}:{}),...(/^[0-9a-z]{6,30}$/.test(o.pu)?{pu:o.pu}:{})}));
  const U=(Array.isArray(d.U)?d.U:[]).filter(u=>u&&ROLE[u.role]).map(u=>({id:int(u.id),name:str(u.name,80),email:str(u.email,120),role:u.role,notify:!!u.notify}));
  if(!noU&&!U.some(u=>u.role=='admin'))throw new Error('sin administrador');
  const Tt=(Array.isArray(d.T)?d.T:[]).filter(x=>x&&TK.includes(x.tank)&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(x.t)).map(x=>({id:num(x.id),t:x.t,tank:x.tank,a:nn(x.a),s:nn(x.s),p:nn(x.p),by:str(x.by,80)}));
- return{T:Tt,PK:1,ORc:1,E0:1,BN:Math.max(int(d.BN),...Object.values(B).flat().map(b=>b.seq),0),N:Math.max(int(d.N),...L.map(x=>x.id),0),RN:int(d.RN),R,L,B,OR,P,O,M,U}}
+ return{T:Tt,E0:1,RN:int(d.RN),R,L,B,OR,P,O,M,U}}
 
 
 /* ===== Base compartida (Supabase) · v1.4.0 =====
@@ -925,31 +965,36 @@ function cleanST(d,noU){const str=(v,m=200)=>String(v==null?'':v).slice(0,m),id=
 /* Lo que llega de la base es de fuera: se revisa como un respaldo (mismas reglas que cleanST).
    wp quita el carácter nulo (la base lo rechaza y trabaría la cola). wi además quita < > " ' ` & \ de claves, fechas y nombres
    que se pintan en pantalla sin escapar; los textos libres (origen, notas, informes) se escapan con E() al pintarse. */
-const wp=v=>v==null?null:typeof v=='number'?(isFinite(v)?v:null):typeof v=='string'?v.replace(/\u0000/g,'').slice(0,20000):typeof v=='boolean'?v:null;
+/* v1.5.1: además de limpiar el texto, se revisa que los valores tengan sentido (mismas reglas que cleanST). Un registro
+   que no se puede usar (caja sin piezas o con categoría que no existe, movimiento de otra talla o tipo, lectura sin fecha)
+   se ignora en este equipo (WN devuelve null): no se sube ni se borra, solo no se dibuja. Lo válido queda igual que antes. */
+const wp=v=>v==null?null:typeof v=='number'?(isFinite(v)?String(v):null):typeof v=='string'?v.replace(/\u0000/g,'').slice(0,20000):null;
 const wpi=v=>{const n=Math.round(+v);return isFinite(n)?n:0};
-const wi=v=>{v=wp(v);return typeof v=='string'?v.replace(/[<>"'`&\\]/g,''):v},ws=v=>wi(String(v||'')),
+const wi=v=>{v=wp(v);return typeof v=='string'?v.replace(/[<>"'`&\\]/g,''):v},ws=v=>wi(String(v||'')),wt=v=>wi(v)||'',
+ wd=v=>typeof v=='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)?v:'',
  /* número o null (temperaturas, kg): nunca texto, para no pintar código que llegó de otro equipo */ wnn=v=>{const n=+v;return v===''||v==null||typeof v=='boolean'||!isFinite(n)?null:n},wn0=v=>{const n=+v;return isFinite(n)&&typeof v!='boolean'?n:0},
  wcolor=v=>/^#[0-9a-fA-F]{3,8}$/.test(v)?v:XC[0],wimg=v=>typeof v=='string'&&/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(v);
+const LTYPES=['RECEPCION','SALIDA_EMBARQUE','REVERSA'];
 const WN={
- R:r=>({id:wi(r.id),lot:ws(r.lot),origin:wp(r.origin),tank:wi(r.tank),rdate:wi(r.rdate),time:wi(r.time),date:wi(r.date),tempT:wnn(r.tempT),tempP:wi(r.tempP),kgbox:wnn(r.kgbox),desp:wnn(r.desp),final:wnn(r.final),closed:!!r.closed}),
- L:x=>({id:wpi(x.id),t:wi(x.t),type:wi(x.type),lot:ws(x.lot),size:wi(x.size),m:wpi(x.m),rev:wnn(x.rev),rc:wi(x.rc)}),
- B:b=>{const o={lot:ws(b.lot),c:wpi(b.c),k:wi(b.k),d:typeof b.d=='string'?wi(b.d):null,o:wi(b.o),seq:wpi(b.seq)};if(b.ps!=null)o.ps=wpi(b.ps);return o},
+ R:r=>!ws(r.lot)?null:({id:wi(r.id),lot:ws(r.lot),origin:wp(r.origin),tank:wi(r.tank),rdate:wd(r.rdate),time:wi(r.time),date:wi(r.date),tempT:wnn(r.tempT),tempP:wi(r.tempP),kgbox:wnn(r.kgbox),desp:wnn(r.desp),final:wnn(r.final),closed:!!r.closed}),
+ L:x=>!S.includes(x.size)||!LTYPES.includes(x.type)?null:({id:wpi(x.id),t:wt(x.t),type:wi(x.type),lot:ws(x.lot),size:wi(x.size),m:wpi(x.m),rev:wnn(x.rev),rc:wi(x.rc)}),
+ B:b=>{if(wpi(b.c)<1||!hasOwn(RC,b.k))return null;const o={lot:ws(b.lot),c:wpi(b.c),k:b.k,d:typeof b.d=='string'?wi(b.d):null,o:typeof b.o=='string'&&/^\d+\.\d+$/.test(b.o)?b.o:null,seq:wpi(b.seq)};if(b.ps!=null)o.ps=wpi(b.ps);return o},
  OR:o=>{const s=o.sh&&typeof o.sh=='object'?o.sh:{},sh={};Object.keys(s).sort().forEach(k=>{if(typeof s[k]=='string')sh[wi(k)]=wi(s[k])});
-  return{id:wpi(o.id),etd:wi(o.etd),lines:(Array.isArray(o.lines)?o.lines:[]).filter(l=>l&&typeof l=='object').map(l=>({id:wpi(l.id),city:wi(l.city),cons:wpi(l.cons),cli:wi(l.cli),boxes:wpi(l.boxes)})),sh}},
- P:p=>({u:ws(p.u),n:wi(p.n),z0:wi(p.z0),col:wcolor(p.col),exp:wn0(p.exp),h:wpi(p.h),z:[0,1,2,3].map(i=>wpi((Array.isArray(p.z)?p.z:[])[i])),c:(Array.isArray(p.c)?p.c:[]).filter(Array.isArray).map(x=>[wi(x[0]),wnn(x[1]),wnn(x[2])]),alive:wnn(p.alive),closed:!!p.closed}),
- O:o=>{const r={u:ws(o.u),subject:wp(o.subject),t:wi(o.t),to:(Array.isArray(o.to)?o.to:[]).map(wp),body:wp(o.body)};if(o.pn!=null){r.pn=wi(o.pn);r.att=wi(o.att)}return r},
- T:x=>({id:wpi(x.id),t:wi(x.t),tank:wi(x.tank),a:wnn(x.a),s:wnn(x.s),p:wnn(x.p),by:wp(x.by)}),
- M:n=>({key:ws(n.key),id:wpi(n.id),t:wi(n.t),by:wp(n.by),text:wp(n.text),ref:wp(n.ref),imgs:(Array.isArray(n.imgs)?n.imgs:[]).filter(wimg).slice(0,6)})
+  return{id:wpi(o.id),etd:wd(o.etd),lines:(Array.isArray(o.lines)?o.lines:[]).filter(l=>l&&typeof l=='object'&&typeof l.city=='string'&&hasOwn(PORTS,l.city)&&Number.isInteger(l.cons)&&CONS[l.cons]).map(l=>({id:wpi(l.id),city:l.city,cons:l.cons,cli:wt(l.cli),boxes:Math.max(1,wpi(l.boxes))})),sh}},
+ P:p=>({u:ws(p.u),n:wt(p.n),z0:wt(p.z0),col:wcolor(p.col),exp:wn0(p.exp),h:Math.max(0,wpi(p.h)),z:[0,1,2,3].map(i=>Math.max(0,wpi((Array.isArray(p.z)?p.z:[])[i]))),c:(Array.isArray(p.c)?p.c:[]).filter(Array.isArray).map(x=>[wi(x[0]),wnn(x[1]),wnn(x[2])]),alive:wnn(p.alive),closed:!!p.closed}),
+ O:o=>{const r={u:ws(o.u),subject:wp(o.subject),t:wt(o.t),to:(Array.isArray(o.to)?o.to:[]).map(wp),body:wp(o.body)};if(o.pn!=null){r.pn=wi(o.pn);r.att=wi(o.att)}if(o.pu!=null)r.pu=ws(o.pu);return r},
+ T:x=>!TK.includes(x.tank)||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(x.t)?null:({id:wpi(x.id),t:x.t,tank:x.tank,a:wnn(x.a),s:wnn(x.s),p:wnn(x.p),by:wp(x.by)}),
+ M:n=>({key:ws(n.key),id:wpi(n.id),t:wt(n.t),by:wp(n.by),text:wp(n.text),ref:wp(n.ref),imgs:(Array.isArray(n.imgs)?n.imgs:[]).filter(v=>wimg(v)||isFRef(v)).slice(0,6)})
 };
 const wcol=k=>k.slice(0,k.indexOf('/')),wnorm=(k,v)=>{const f=WN[wcol(k)];return f?f(v):v};
 function ensureIds(){(ST.P||[]).forEach((p,i)=>{if(!p.u)p.u=legU(i)});const n=(ST.O||[]).length;(ST.O||[]).forEach((o,i)=>{if(!o.u)o.u=legU(n-1-i)})}
 let ENC_C=new Map();
 /* ST → Map(clave → [texto JSON, objeto]). Las cajas se recalculan solo en los lotes que cambiaron (ENC_C). */
-function encodeST(){ensureIds();const out=new Map(),put=(k,o)=>out.set(k,[JSON.stringify(o),o]),pu=ST.P.map(p=>p.u),sig=pu.join(',');
+function encodeST(){ensureIds();const out=new Map(),put=(k,o)=>{if(o)out.set(k,[JSON.stringify(o),o])},pu=ST.P.map(p=>p.u),sig=pu.join(',');
  ST.R.forEach(r=>put('R/'+r.lot,WN.R(r)));
  ST.L.forEach(x=>put('L/'+x.id,WN.L(x)));
  const nc=new Map();for(const l in ST.B){const a=ST.B[l]||[],fp=JSON.stringify(a);let c=ENC_C.get(l);
-  if(!c||c.fp!==fp||c.sig!==sig)c={fp,sig,list:a.map(b=>{const o=WN.B({lot:l,c:b.c,k:b.k,d:b.d!=null&&pu[b.d]!=null?pu[b.d]:(b._d||null),o:b.o,seq:b.seq,ps:b.ps});return['B/'+b.seq,JSON.stringify(o),o]})};
+  if(!c||c.fp!==fp||c.sig!==sig)c={fp,sig,list:a.map(b=>{const o=WN.B({lot:l,c:b.c,k:b.k,d:b.d!=null&&pu[b.d]!=null?pu[b.d]:(b._d||null),o:b.o,seq:b.seq,ps:b.ps});return o&&['B/'+b.seq,JSON.stringify(o),o]}).filter(Boolean)};
   nc.set(l,c);c.list.forEach(([k,s,o])=>out.set(k,[s,o]))}ENC_C=nc;
  ST.OR.forEach(o=>{const sh={...(o._sh||{})};for(const k in (o.sh||{})){const u=pu[o.sh[k]];if(u!=null)sh[k]=u}put('OR/'+o.id,WN.OR({...o,sh}))});
  ST.P.forEach(p=>put('P/'+p.u,WN.P(p)));
@@ -969,7 +1014,7 @@ function decodeST(src){const R=[],L=[],Bx=[],OR=[],P=[],O=[],T=[],Mn=[],orph={};
  const L2=[];L.forEach(x=>{if(!lots.has(x.lot)){orph['L/'+x.id]=x;return}L2.push({...x})});L2.sort((a,b)=>a.id-b.id);
  const OR2=OR.map(o=>{const sh={},us={};for(const k in o.sh){const i=pix.get(o.sh[k]);if(i!=null)sh[k]=i;else us[k]=o.sh[k]}const r={id:o.id,etd:o.etd,lines:o.lines.map(l=>({...l})),sh};if(Object.keys(us).length)r._sh=us;return r}).sort((a,b)=>a.id-b.id);
  const M={};Mn.slice().sort((a,b)=>b.id-a.id).forEach(n=>{let key=n.key;const m=/^emb:@(.+)$/.exec(key);if(m&&pix.has(m[1]))key='emb:'+pix.get(m[1]);(M[key]=M[key]||[]).push({id:n.id,t:n.t,by:n.by,text:n.text,ref:n.ref,imgs:n.imgs.slice()})});
- return{PK:1,ORc:1,E0:1,BN:0,N:0,RN:R.reduce((a,r)=>Math.max(a,rn(r)),120),R:R.map(r=>({...r})),L:L2,B,OR:OR2,P:P.map(p=>({...p,z:p.z.slice(),c:p.c.map(x=>x.slice())})),
+ return{E0:1,RN:R.reduce((a,r)=>Math.max(a,rn(r)),120),R:R.map(r=>({...r})),L:L2,B,OR:OR2,P:P.map(p=>({...p,z:p.z.slice(),c:p.c.map(x=>x.slice())})),
   O:O.map(o=>({...o,to:o.to.slice()})).sort((a,b)=>cmp(b.u,a.u)),T:T.map(x=>({...x})).sort((a,b)=>a.id-b.id),M,U:ST&&ST.U||[],_orph:orph}}
 
 const SB_KEY='propesa-sb',OUT_KEY='propesa-out',OUTB_KEY='propesa-outb',SINCE_KEY='propesa-c1-since';
@@ -977,7 +1022,7 @@ let SBS=null,SHW=null,OUT={},OUTB={},NEEDSETUP=false,LOGIN_MSG='',LOGIN_EM='',RF
 let SYNC_BUSY=false,SYNC_AGAIN=false,SYNC_T=null,FLUSH_T=null,SYNC_OK=0,SYNC_ERR=null,SYNC_FIRST=false,PROF_T=0,SOFT_P=false;
 if(CLOUD){try{SBS=JSON.parse(localStorage.getItem(SB_KEY)||'null')}catch(e){}try{OUT=JSON.parse(localStorage.getItem(OUT_KEY)||'{}')||{};OUTB=JSON.parse(localStorage.getItem(OUTB_KEY)||'{}')||{}}catch(e){OUT={};OUTB={}}}
 function saveOut(){try{localStorage.setItem(OUT_KEY,JSON.stringify(OUT));localStorage.setItem(OUTB_KEY,JSON.stringify(OUTB));return true}catch(e){return false}}
-const outN=()=>Object.keys(OUT).length,hasOwn=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
+const outN=()=>Object.keys(OUT).length+FQ.size,hasOwn=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 /* Compara ST con lo último que se sabe del servidor y anota en OUT lo que cambió (null = borrado).
    OUTB guarda cómo estaba el registro en la base antes del primer cambio: la base solo acepta el cambio si sigue igual (push).
    Consulta no anota nada: vuelve a bajar todo para regresar a lo de la base, y no toca lo pendiente de otro usuario. */
@@ -987,10 +1032,25 @@ function syncStage(){if(!CLOUD||!SHW)return 0;const enc=encodeST(),ro=me&&me.rol
  for(const [k,p] of SHW)if(!enc.has(k))put(k,'null',p);
  SHW=enc;if(ro){if(n)PEND_SINCE=0;return 0}
  if(n&&!saveOut()&&!navigator.onLine)SAVE_ERR=true;return n}
-let CACHE_T=null,PEND_SINCE=null;
+let CACHE_T=null,PEND_SINCE=null,SINCE=0,CACHE_ERR=false,CACHE_W=Promise.resolve();
+/* v1.6.0 (auditoría #7): la copia de cada equipo vive en IndexedDB, que aguanta cientos de MB; localStorage (5 MB, y la
+   mitad en iPad) ya se llenaba con unas 40 fotos y la copia se borraba sin aviso. Se guarda la copia junto con hasta dónde
+   se bajó de la base (since) en un solo registro, así siempre coinciden. La cola de cambios por subir (OUT) se queda en
+   localStorage, que se escribe al instante. Si no se puede guardar la copia, se avisa (CACHE_ERR); los datos siguen en la base. */
+const IDB_NAME='propesa',IDB_ST='kv';let IDBP=null;
+function idb(){if(!IDBP)IDBP=new Promise((ok,no)=>{try{const r=indexedDB.open(IDB_NAME,1);r.onupgradeneeded=()=>r.result.createObjectStore(IDB_ST);r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);r.onblocked=()=>no(new Error('blocked'))}catch(e){no(e)}}).catch(e=>{IDBP=null;throw e});return IDBP}
+async function idbGet(k){const db=await idb();return new Promise((ok,no)=>{const q=db.transaction(IDB_ST).objectStore(IDB_ST).get(k);q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})}
+async function idbPut(k,v){const db=await idb();return new Promise((ok,no)=>{const t=db.transaction(IDB_ST,'readwrite');t.objectStore(IDB_ST).put(v,k);t.oncomplete=()=>ok();t.onerror=t.onabort=()=>no(t.error||new Error('abort'))})}
 function cacheSoon(){clearTimeout(CACHE_T);CACHE_T=setTimeout(cacheST,1500)}
-function cacheST(){clearTimeout(CACHE_T);CACHE_T=null;if(PEND_SINCE!=null&&cacheST0()){try{localStorage.setItem(SINCE_KEY,String(PEND_SINCE))}catch(e){}PEND_SINCE=null;return true}return cacheST0()}
-function cacheST0(){try{localStorage.setItem(KEY,JSON.stringify(ST));return true}catch(e){try{localStorage.removeItem(KEY);localStorage.removeItem(SINCE_KEY)}catch(z){}return false}}
+function cacheST(){clearTimeout(CACHE_T);CACHE_T=null;if(!CLOUD)return;const since=PEND_SINCE!=null?PEND_SINCE:SINCE,st=JSON.stringify(ST);
+ CACHE_W=CACHE_W.then(()=>idbPut(KEY,{st,since})).then(()=>{SINCE=since;if(PEND_SINCE===since)PEND_SINCE=null;if(CACHE_ERR){CACHE_ERR=false;if(me)softRender()}},
+  e=>{console.error('No se pudo guardar la copia del equipo',e);if(!CACHE_ERR){CACHE_ERR=true;if(me)softRender()}});return CACHE_W}
+/* Al arrancar: copia de IndexedDB; si no hay, la vieja de localStorage (v1.5 y antes), que se pasa a IndexedDB y se borra. */
+async function loadCache(){let rec=null,old=false;await loadFQ();try{rec=await idbGet(KEY)}catch(e){console.error(e)}
+ if(!rec){try{const st=localStorage.getItem(KEY);if(st){rec={st,since:+(localStorage.getItem(SINCE_KEY)||0)||0};old=true}}catch(e){}}
+ let j=null;try{j=rec&&typeof rec.st=='string'?JSON.parse(rec.st):null}catch(e){}
+ if(j&&j.L&&j.R){ST=j;ensureIds();if(!ST.T)ST.T=[];SINCE=+rec.since||0;SHW=encodeST()}
+ if(old){try{await cacheST();if(!CACHE_ERR){localStorage.removeItem(KEY);localStorage.removeItem(SINCE_KEY)}}catch(e){}}}
 /* Cambios de otros equipos → ST. Lo que este equipo aún no sube (OUT) gana. */
 function applyRows(rows){const diff=()=>{const ch=[];
  for(const r of rows){if(!r||typeof r.k!='string'||Object.prototype.hasOwnProperty.call(OUT,r.k))continue;
@@ -1045,22 +1105,33 @@ function dropSes(){const s=SBS;SBS=null;try{localStorage.removeItem(SB_KEY)}catc
 /* Cerrar sesión (también la usa el modo local de pruebas). */
 function signOut(t,quiet){if(CLOUD&&!quiet&&outN()){if(!confirm(`Hay ${outN()} ${outN()==1?'cambio que todavía no se sube':'cambios que todavía no se suben'} a la base compartida (falta internet). Se quedan guardados en este equipo y se suben cuando alguien vuelva a entrar aquí. ¿Cerrar sesión?`))return}
  const go2=()=>{if(CLOUD)dropSes();clearTimeout(SYNC_T);clearTimeout(FLUSH_T);closePmenu(false);closeSettings();me=null;PEN=null;LOGIN_MSG=t||'';render();if(CLOUD)checkSetup()};
- if(CLOUD&&SBS&&outN()&&!quiet)flush().catch(()=>{}).finally(go2);else go2()}
+ if(CLOUD&&SBS&&outN()&&!quiet)upFotos().catch(()=>{}).then(()=>flush()).catch(()=>{}).finally(go2);else go2()}
 
 /* Subir lo pendiente (en tandas) y bajar lo nuevo. */
 /* Devuelve true si otro equipo había cambiado algo antes: ese registro se queda como está en la base.
+   v1.5.1: si el mismo registro se volvió a cambiar mientras el primer cambio subía, el «antes» del segundo cambio pasa a ser
+   lo que se acaba de subir (antes salía con el «antes» viejo y la base lo rechazaba con un aviso falso).
+   Si la base lo rechaza pero tiene lo mismo, solo escrito distinto (un registro viejo que WN arregló al bajarlo), no es un
+   choque: se vuelve a subir una vez contra lo que hay de verdad en la base, y así queda arreglado también allá.
    shortcut: si el envío se corta después de guardar y el registro se vuelve a cambiar antes de reintentar, el reintento choca y gana la base; es raro. */
-async function flush(){if(!me||me.role=='consulta')return false;const ks=Object.keys(OUT);let i=0,lost=[];
+async function flush(){if(!me||me.role=='consulta')return false;let lost=[];
+ for(let pass=0,redo=null;pass<2;pass++){const ks=redo||Object.keys(OUT);redo=[];let i=0;
  while(i<ks.length){const batch=[],sent=[];let sz=0;
-  while(i<ks.length&&(!batch.length||(sz<1.5e6&&batch.length<500))){const k=ks[i++],s=OUT[k];if(s==null)continue;const r={k,v:JSON.parse(s)};
-   if(hasOwn(OUTB,k))r.b=OUTB[k]==null?null:JSON.parse(OUTB[k]);batch.push(r);sent.push([k,s]);sz+=s.length+k.length+(OUTB[k]||'').length}
+  while(i<ks.length&&(!batch.length||(sz<1.5e6&&batch.length<500))){const k=ks[i++],s=OUT[k];if(s==null)continue;const r={k,v:JSON.parse(s)},b=hasOwn(OUTB,k)?OUTB[k]:undefined;
+   if(b!==undefined)r.b=b==null?null:JSON.parse(b);batch.push(r);sent.push([k,s,b]);sz+=s.length+k.length+(b||'').length}
   if(!batch.length)continue;
-  let l;try{l=await sbPost('/rest/v1/rpc/push',{rows:batch})}
-  catch(e){if(e.status!==404)throw e;// shortcut: base sin la migración 20261014b_sin_pisar (sube sin revisar, como la v1.4.0); quitar cuando ya esté aplicada
-   await sbFetch('/rest/v1/app_records?on_conflict=k',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(batch.map(({k,v})=>({k,v})))});l=[]}
-  sent.forEach(([k,s])=>{if(OUT[k]===s){delete OUT[k];delete OUTB[k]}});saveOut();if(Array.isArray(l))lost=lost.concat(l)}
+  const l=await sbPost('/rest/v1/rpc/push',{rows:batch});/* v1.6.0: ya no hay camino que suba sin revisar choques; si push falla, se marca error y se reintenta */
+  const lk=new Map();(Array.isArray(l)?l:[]).forEach(x=>{if(x&&typeof x.k=='string')lk.set(x.k,x)});
+  sent.forEach(([k,s,b])=>{const x=lk.get(k);
+   if(x&&!pass&&b!==undefined&&x.v!=null&&typeof x.v=='object'){const n=wnorm(k,x.v);if(n&&JSON.stringify(n)===b){
+    lk.delete(k);if(!hasOwn(OUT,k))OUT[k]=s;OUTB[k]=JSON.stringify(x.v);redo.push(k);return}}
+   if(OUT[k]===s){delete OUT[k];delete OUTB[k]}
+   else if(!x){if(hasOwn(OUT,k))OUTB[k]=s==='null'?null:s}
+   else{delete OUT[k];delete OUTB[k]}});// choque de verdad: gana la base también sobre lo que se cambió mientras tanto
+  saveOut();lost=lost.concat([...lk.values()])}
+ if(!redo.length)break}
  if(!lost.length)return false;applyRows(lost);toast('No se guardó tu cambio: otro equipo lo cambió antes. Revisa y vuelve a capturarlo si hace falta.');return true}
-async function pull(){let since=0;try{since=PEND_SINCE!=null?PEND_SINCE:+(localStorage.getItem(SINCE_KEY)||0)||0}catch(e){}let cur=since,safe=since,young=false;const all=[];
+async function pull(){const since=PEND_SINCE!=null?PEND_SINCE:SINCE;let cur=since,safe=since,young=false;const all=[];
  for(let n=0;n<500;n++){const rows=await sbPost('/rest/v1/rpc/pull',{since:cur,lim:1000});if(!Array.isArray(rows))break;
   for(const r of rows){all.push(r);if(!young&&r.age>8)safe=r.rev;else young=true}
   if(rows.length<1000)break;cur=rows[rows.length-1].rev}
@@ -1068,11 +1139,11 @@ async function pull(){let since=0;try{since=PEND_SINCE!=null?PEND_SINCE:+(localS
 const offline=()=>!navigator.onLine||!!(SYNC_ERR&&(SYNC_ERR.status==null||SYNC_ERR.status>=500));
 const syncState=()=>[SYNC_FIRST,offline(),!!SYNC_ERR,outN()>0].join();
 async function syncNow(full=true){if(!CLOUD||!SBS||!me)return;if(SYNC_BUSY){SYNC_AGAIN=true;return}SYNC_BUSY=true;const before=syncState();let ch=false;
- try{let fe=null;try{ch=await flush()}catch(e){if(e&&e.nos)throw e;fe=e}/* aunque no se pueda subir, se sigue bajando lo de los demás */if(full||!SYNC_FIRST)ch=await pull()||ch;if(fe)throw fe;if(full&&me&&Date.now()-PROF_T>60000){PROF_T=Date.now();await loadProfiles()}SYNC_OK=Date.now();SYNC_ERR=null}
+ try{let fe=null;try{await upFotos()}catch(e){if(e&&e.nos)throw e;fe=e}/* v1.8.0: las fotos van antes que las notas que las nombran; si una foto no subió por falta de internet, la nota espera a la siguiente vuelta (si el espacio de archivos falla, la nota sí se sube) */if(!fe||fe.status!=null){try{ch=await flush()}catch(e){if(e&&e.nos)throw e;fe=fe||e}}/* aunque no se pueda subir, se sigue bajando lo de los demás */if(full||!SYNC_FIRST)ch=await pull()||ch;if(fe)throw fe;if(full&&me&&Date.now()-PROF_T>60000){PROF_T=Date.now();await loadProfiles()}SYNC_OK=Date.now();SYNC_ERR=null}
  catch(e){if(e&&e.nos)return;SYNC_ERR=e;if(e&&(e.status===403||e.code==='42501')){OUT={};OUTB={};saveOut();PEND_SINCE=0;toast('No tienes permiso para guardar ese cambio. Se dejó como estaba en la base compartida.')}}
  finally{SYNC_BUSY=false;if(me&&(ch||syncState()!==before))softRender();if(SYNC_AGAIN){SYNC_AGAIN=false;syncNow(full)}}}
 function syncSoon(){clearTimeout(FLUSH_T);FLUSH_T=setTimeout(()=>syncNow(false),250)}
-function syncLoop(){clearTimeout(SYNC_T);SYNC_T=setTimeout(async()=>{await syncNow(true);if(me&&SBS)syncLoop()},document.visibilityState=='hidden'?30000:4000)}
+function syncLoop(){clearTimeout(SYNC_T);SYNC_T=setTimeout(async()=>{try{await syncNow(true)}catch(e){console.error(e)}/* si una pantalla falla, se sigue sincronizando */if(me&&SBS)syncLoop()},document.visibilityState=='hidden'?30000:4000)}
 function startSync(){syncNow(true);syncLoop()}
 if(CLOUD){const cacheNow=()=>{if(CACHE_T)cacheST()};window.addEventListener('pagehide',cacheNow);document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden')cacheNow()});window.addEventListener('online',()=>{if(me)syncNow(true)});document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='visible'&&me){syncNow(true);syncLoop()}})}
 /* Volver a dibujar por un cambio de otro equipo sin borrar lo que se está escribiendo. Si hay un campo con el cursor, espera. */
@@ -1086,24 +1157,23 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-sync]')){SYNC_E
 function syncBanners(){if(!CLOUD||!me)return'';const n=outN();let h='';
  if(!SYNC_FIRST&&!ST.R.length&&!ST.OR.length&&!ST.P.length)h+=`<div class="syn tb" role="status"><b>Descargando los datos compartidos…</b><span>En un momento ves lo mismo que los demás equipos.</span></div>`;
  if(n&&SYNC_ERR&&SYNC_ERR.status!==403)h+=`<div class="alb tb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${offline()?'Sin conexión':'No se pudo subir'}: lo último que capturaste está guardado solo en este equipo</b><p style="margin:4px 0 8px">${offline()?'Los demás equipos todavía no lo ven. Se sube solo cuando regrese el internet; no cierres sesión ni borres los datos del navegador mientras tanto.':'La base compartida respondió: '+E(SYNC_ERR.message)}</p><button class="btn d" data-sync="1">Reintentar ahora</button></div></div>`;
+ if(CACHE_ERR)h+=`<div class="syn tb" role="status"><b>No se pudo guardar la copia de este equipo</b><span>La memoria del navegador está llena. Lo que capturas sí se sube a la base compartida, pero al abrir la app va a tardar más en cargar.</span></div>`;
  else if(offline()&&SYNC_FIRST)h+=`<div class="syn tb" role="status"><b>Sin conexión</b><span>Lo que captures se guarda en este equipo y se sube solo cuando regrese el internet. Puede que no veas lo último de otros equipos.</span></div>`;
  return h}
 
-ST=load();if(CLOUD){if(!ST.T)ST.T=[];SHW=encodeST()}
+ST=load();ensureIds();if(CLOUD){if(!ST.T)ST.T=[];SHW=encodeST()}
 const can=a=>me&&(me.role=='admin'||(me.role=='piso'&&['box','fin','ent'].includes(a)));
 const rvd=()=>RX?rxRvd():new Set(ST.L.filter(x=>x.rev).map(x=>x.rev));
 /* Número de movimiento dentro de su lote (1, 2, 3…): los ids internos ya no son contadores cortos. */
 function mvNo(id){const x=ST.L.find(y=>y.id===id);if(!x)return id;return ST.L.filter(y=>y.lot===x.lot&&y.id<=id).length}
 function post(type,lot,size,kg,rev,rc){ST.L.push({id:uidN(),t:now(),type,lot,size,m:Math.round(kg*1000),rev,rc});}
 const bal=(l,s)=>RX?((m=>m?(s==null?m.t:(m.s[s]||0)):0)(rxMov().get(l))):ST.L.filter(x=>x.lot===l&&(s==null||x.size===s)).reduce((a,x)=>a+x.m,0);
-const lots=()=>ST.R.map(r=>r.lot),R_=l=>RX?rxLot().get(l):ST.R.find(r=>r.lot===l),tk=l=>(R_(l)||{}).tank||'—',col=l=>PAL[lots().indexOf(l)%PAL.length];
+const lots=()=>ST.R.map(r=>r.lot),R_=l=>RX?rxLot().get(l):ST.R.find(r=>r.lot===l),tk=l=>(R_(l)||{}).tank||'—';
 const gross=p=>p.c.reduce((a,[,u,q])=>a+Math.round(u*10)*q,0)/10;
 const boxesOf=i=>{if(RX)return(rxShip().get(i)||[]).slice();const o=[];for(const l in ST.B)ST.B[l].forEach((b,n)=>{if(b.d===i&&b.c>0)o.push({l,n,b})});return o};
 const sent=i=>boxesOf(i).reduce((a,x)=>a+x.b.c,0);
 const cv=(t,c,x='')=>`<div class="cv" style="background:linear-gradient(135deg,${c},#06202c)${x?';'+x:''}">${t}</div>`;
 const row=(c,t,s,r,chip,go)=>`<div class="rw" tabindex="0" data-go="${go}">${c}<div class="tx"><b>${t}</b><span>${s}</span></div><div class="rt">${r}</div>${chip?`<span class="chip ${chip=='Cerrado'||chip=='Con producto'?'ok':''}">${chip}</span>`:'<span></span>'}</div>`;
-const hero=(c,k,t,s,color)=>`<div class="hero" style="--h:${color}">${c}<div><small>${k}</small><h1>${t}</h1><p>${s}</p></div></div>`;
-const tl=s=>`<div class="tile" tabindex="0" data-go="${s[0]}">${cv(s[1],s[2])}<div><b>${s[3]}</b><span>${s[4]}</span></div></div>`;
 const sw=(on,a)=>`<button class="sw" role="switch" aria-checked="${on}" data-a="${a}"></button>`;
 function toast(t){if(SAVE_ERR&&/^✔/.test(t))t='No se guardó en este equipo: la memoria está llena.';const e=document.getElementById('toast'),bad=/^(No |Faltan|Falta|Captura primero|El conteo|Escribe|Ingresa|Ese lote|Asigna|Existencia|Indica|Elige|Toca|Empaca)/.test(t);e.className=bad?'bad':'';if(bad)t='⚠ '+t;e.textContent=t;e.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>e.style.display='none',4000)}
 const pct=(a,b)=>b>0?(a/b*100):0;
@@ -1115,9 +1185,9 @@ const filled=l=>ST.B[l].length;
 const stage=l=>R_(l).closed?2:filled(l)?1:0;
 function calc(l){const r=R_(l);if(r.final==null)return null;const rec=RX?((rxMov().get(l)||{}).rec||0):(rv=>ST.L.filter(x=>x.lot===l&&x.type=='RECEPCION'&&!rv.has(x.id)).reduce((a,x)=>a+x.m,0))(rvd()),ex=bal(l),dead=ex-Math.round(r.final*1000);return{rec,ex,dead,p:pct(dead,rec)}}
 const guide=(n,t,x,b,g)=>`<div class="gd"><span class="bd">${n?'Paso '+n+' de 5':'Guía'}</span><div class="gt"><b>${t}</b><span>${x}</span></div>${b?`<button class="btn w" data-go="${g}">${b} →</button>`:''}</div>`;
-function buscar(q){q=(q||'').trim();const m=null,lq=q.toLowerCase();let h='';
+function buscar(q){q=(q||'').trim();const lq=q.toLowerCase();let h='';
  const rl=q?lots().filter(l=>l.toLowerCase().includes(lq)):[],rs=q?ST.P.map((p,i)=>[p,i]).filter(([p])=>p.n.toLowerCase().includes(lq)):[];
- h+=rl.length||rs.length?`<div class="cd"><h3>Coincidencias</h3>${rl.map(l=>`<p><button class="lnk" data-go="lote:${E(l)}">Lote ${E(l)}</button></p>`).join('')}${rs.map(([p,i])=>`<p><button class="lnk" data-go="emb:${i}">Envío ${p.n}</button></p>`).join('')}</div>`:(m?'':'<div class="cd"><p class="mut">Escribe el nombre de un lote o de un envío.</p></div>');
+ h+=rl.length||rs.length?`<div class="cd"><h3>Coincidencias</h3>${rl.map(l=>`<p><button class="lnk" data-go="lote:${E(l)}">Lote ${E(l)}</button></p>`).join('')}${rs.map(([p,i])=>`<p><button class="lnk" data-go="emb:${i}">Envío ${p.n}</button></p>`).join('')}</div>`:'<div class="cd"><p class="mut">Escribe el nombre de un lote o de un envío.</p></div>';
  return `<div class="wrap">${guide(0,'Búsqueda y trazabilidad',`Resultados para “${E(q)}”`,'','')}${h}</div>`}
 const SL=['0-650 / 491-610','651-850 / 611-850','851-1250 / 851-1220','1251-UP / 1221-UP'];
 const rcv=(l,sz)=>RX?((m=>m?(sz==null?m.rt:(m.rs[sz]||0)):0)(rxMov().get(l))):ST.L.filter(x=>x.lot===l&&x.type==='RECEPCION'&&(sz==null||x.size===sz)&&!x.rev).reduce((a,x)=>a+x.m,0);
@@ -1151,7 +1221,7 @@ function recepcion(){const HL=histList('rec',ST.R.slice().reverse(),lotActive);r
 function lote(l){const r=R_(l);if(!r)return recepcion();const c=calc(l),rows=ST.L.filter(x=>x.lot===l).slice().reverse(),rv=rvd(),bs=ST.B[l],ds=ST.P.map((p,i)=>({p,x:bs.map((b,n)=>({b,n})).filter(o=>o.b.d===i&&o.b.c>0)})).filter(o=>o.x.length);
  return `<div class="wrap"><button class="back" data-go="recepcion">‹ Volver a Entrada</button>
  <div class="cd head"><div><h1>${E(l)}</h1><p class="mut" style="margin:4px 0 0">${E(r.origin)} · Tanque ${E(r.tank)} · ${f(bal(l))} kg (${cj(bal(l))} cajas eq.)</p><p class="mut" style="margin:2px 0 0">Recibido ${E(r.date||'')} ${E(r.time||'')} · Temp. tanque ${r.tempT!=null?r.tempT+' °F':'—'} · Temp. producto ${E(r.tempP||'—')} °F · ${r.kgbox!=null?r.kgbox+' kg por caja en tanque':'kg por caja en tanque: —'} · Desperdicio ${r.desp!=null?r.desp+' kg':'—'}</p></div><div class="bar" style="margin:0">${stc(l)}<button class="btn" data-go="empaque">Ir a Empaque</button>${can('lot')?`<button class="btn s" data-a="el">Editar</button>${conf=='lot'?'<button class="btn d" data-a="dl2">Confirmar eliminar</button>':'<button class="btn d" data-a="dl">Eliminar</button>'}`:''}</div></div>${form&&form.t=='lot'?lotForm():''}
- <div class="g2"><div class="cd"><h3>Trazabilidad por destino</h3>${ds.length?`<div class="tbl"><table><thead><tr><th>Destino</th><th>Cajas</th><th>Langostas</th><th>Rojo</th><th>Verde</th><th>Blanco</th><th>Amarillo</th></tr></thead><tbody>${ds.map(o=>`<tr><td>${o.p.n}</td><td>${o.x.length}</td><td>${o.x.reduce((a,y)=>a+y.b.c,0)}</td>${Object.keys(RC).map(k=>`<td>${o.x.filter(y=>y.b.k==k).reduce((a,y)=>a+y.b.c,0)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:'<p class="mut">Todavía no se han empacado cajas de este lote.</p>'}</div>
+ <div class="g2"><div class="cd"><h3>Trazabilidad por destino</h3>${ds.length?`<div class="tbl"><table><thead><tr><th>Destino</th><th>Cajas</th><th>Langostas</th>${Object.keys(RC).map(k=>`<th>${RC[k][0]}</th>`).join('')}</tr></thead><tbody>${ds.map(o=>`<tr><td>${o.p.n}</td><td>${o.x.length}</td><td>${o.x.reduce((a,y)=>a+y.b.c,0)}</td>${(c=>Object.keys(RC).map(k=>`<td>${c[k]}</td>`).join(''))(byCat(o.x.map(y=>y.b)))}</tr>`).join('')}</tbody></table></div>`:'<p class="mut">Todavía no se han empacado cajas de este lote.</p>'}</div>
  <div class="cd"><h3>Existencia por talla</h3><div class="tbl"><table><thead><tr><th>Talla</th><th>Kg</th><th>Cajas eq.</th></tr></thead><tbody>${S.map(s=>`<tr><td>${s}</td><td>${f(bal(l,s))}</td><td>${cj(bal(l,s))}</td></tr>`).join('')}</tbody></table></div></div></div>
  <div class="cd"><h3>Cierre del lote y mortalidad (se calcula al final)</h3><p class="mut">Mortalidad = kg esperados en tanque − kg contados al final. No se captura: el sistema la calcula con el conteo final.</p>
  <div class="f"><label>Conteo final (kg)<input type="number" min="0" step="0.01" value="${r.final??''}" data-fin="${E(l)}" aria-label="Kg final del lote ${E(l)}" ${can('fin')&&!r.closed?'':'disabled'} style="width:130px"></label>
@@ -1159,7 +1229,10 @@ function lote(l){const r=R_(l);if(!r)return recepcion();const c=calc(l),rows=ST.
  ${can('lot')?(r.closed?'<button class="btn s" data-a="ol">Reabrir lote</button>':`<button class="btn" data-a="cl" ${c?'':'disabled'}>Cerrar lote</button>`):'<span class="mut">Solo el Administrador cierra el lote.</span>'}</div></div>
  <div class="cd"><h3>Movimientos de inventario</h3>${can('mv')?`<div class="f"><label>Tipo<select id="ty"><option>SALIDA_EMBARQUE</option><option>RECEPCION</option></select></label><label>Talla<select id="sz">${S.map(s=>`<option>${s}</option>`).join('')}</select></label><label>Kg<input id="kg" type="number" min="0" step="0.01" style="width:110px"></label><button class="btn" data-a="mv">Registrar</button></div><p class="${msg[0]=='✔'?'ok':'er'}">${E(msg)}</p>`:'<p class="mut">Solo el Administrador registra movimientos.</p>'}
  <div class="tbl"><table class="lf"><thead><tr><th>#</th><th>Fecha</th><th>Tipo</th><th>Talla</th><th>Kg</th><th aria-label="Acciones"></th></tr></thead><tbody>${rows.map(x=>`<tr style="${rv.has(x.id)?'opacity:.5;text-decoration:line-through':''}"><td>${mvNo(x.id)}</td><td>${x.t}</td><td>${x.type.replace('_',' ')}${x.rev?` (#${mvNo(x.rev)})`:''}</td><td>${x.size}</td><td>${x.m>0?'+':''}${f(x.m)}</td><td>${can('mv')&&x.type!=='REVERSA'&&!rv.has(x.id)?`<button class="lnk" data-r="${x.id}">Revertir</button>`:can('mv')&&x.type==='REVERSA'?`<button class="lnk" data-ur="${x.id}">Anular reversa</button>`:''}</td></tr>`).join('')}</tbody></table></div></div>${evid('lote:'+l,'Fotos y notas del lote')}</div>`}
-function bsum(l){const o={n:0,t:0,R:0,V:0,B:0};ST.B[l].forEach(b=>{if(b.c>0&&b.k){o.n++;o.t+=b.c;o[b.k]+=b.c}});return o}
+/* Piezas por categoría (Rojo, Verde, Blanco, Amarillo…), siempre recorriendo RC: una categoría nueva sale sola en pantallas, PDF e informes. */
+function byCat(bs){const o={};for(const k in RC)o[k]=0;bs.forEach(b=>{if(b&&b.c>0&&hasOwn(o,b.k))o[b.k]+=b.c});return o}
+const catTxt=o=>Object.keys(RC).map(k=>`${RC[k][0]} ${o[k]}`).join(' · ');
+function bsum(l){const bs=ST.B[l].filter(b=>b.c>0&&b.k);return{n:bs.length,t:bs.reduce((a,b)=>a+b.c,0),...byCat(bs)}}
 function truckPlan(){const TP=ST.P.filter(p=>!p.closed),cap=[15,20,20,25,25],slot={};let k=0;const rem=TP.map(p=>p.h);
  for(let i=4;i>=0;i--)for(let r=0;r<2;r++){while(k<rem.length&&rem[k]<=0)k++;if(k<rem.length){const v=Math.min(cap[i],rem[k]);rem[k]-=v;slot[i+'.'+r]={v,col:TP[k].col}}}
  return{TP,cap,slot,over:rem.reduce((x,y)=>x+Math.max(0,y),0)}}
@@ -1180,11 +1253,11 @@ function ordsInShip(i){const lk=shipLinks(i),p=ST.P[i],ed=can('lot')&&!p.closed,
  return `<div class="cd"><h2 class="h3">Órdenes en este embarque</h2>${lk.length?`<div class="tbl"><table class="pkt"><thead><tr><th>Orden (empaque)</th><th>Clientes</th><th>Cajas pedidas</th><th>Empacadas</th><th aria-label="Acciones"></th></tr></thead><tbody>${lk.map(x=>{const ls=x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons),t=ls.reduce((a,l)=>a+l.boxes,0),n=ls.reduce((a,l)=>a+Math.min(l.boxes,ordAssigned(x.o,l).length),0);
   return `<tr><td><b>${fd(x.o.etd)}</b></td><td>${ls.map(l=>E(l.cli)).join(', ')}</td><td>${t}</td><td>${n} ${lineSt(n,t,(pl=>pl?goLine(x.o,pl):null)(ls.find(l=>ordAssigned(x.o,l).length<l.boxes)))}</td><td><div class="bar" style="margin:0"><button class="btn s" data-go="orden:${x.o.id}">Abrir orden</button>${ed&&lk.length>1?`<button class="lnk" data-sh="sep:${x.o.id}:${x.k}">Separar</button>`:''}</div></td></tr>`}).join('')}</tbody></table></div>`:'<p class="mut">Sin órdenes.</p>'}
  ${ed?(jn.length?`<div class="shp"><label>Agregar otra orden a este embarque<select id="sh_add">${jn.map(x=>{const ls=x.o.lines.filter(l=>l.city+'|'+l.cons==x.k),t=ls.reduce((a,l)=>a+l.boxes,0);return `<option value="${x.o.id}/${E(x.k)}">Empaque ${fd(x.o.etd)} · ${t} cajas (hoy en: ${E(ST.P[x.j].n)})</option>`}).join('')}</select></label><button class="btn" data-sh="add:${i}">Agregar al embarque</button></div>`:'<p class="mut">Para juntar otra orden aquí, créala con el mismo destino y consignatario; luego aparecerá en esta lista.</p>'):''}</div>`}
-function emb(i){const p=ST.P[i];if(!p)return `<div class="wrap"><button class="back" data-go="embarques">‹ Volver a Embarque</button><div class="cd"><p>Esa consignación no existe.</p></div></div>`;const g=gross(p),nm=['Chica','Mediana','Grande','Jumbo'],zs=p.z.reduce((a,b)=>a+b,0),bs=boxesOf(i),by={R:0,V:0,B:0,A:0};bs.forEach(x=>by[x.b.k||'B']+=x.b.c);const ed=!p.closed&&can('lot'),sn=sent(i);
+function emb(i){const p=ST.P[i];if(!p)return `<div class="wrap"><button class="back" data-go="embarques">‹ Volver a Embarque</button><div class="cd"><p>Esa consignación no existe.</p></div></div>`;const g=gross(p),nm=['Chica','Mediana','Grande','Jumbo'],zs=p.z.reduce((a,b)=>a+b,0),bs=boxesOf(i),by=byCat(bs.map(x=>x.b));const ed=!p.closed&&can('lot'),sn=sent(i);
  return `<div class="wrap"><button class="back" data-go="embarques">‹ Volver a Embarques</button><div class="cd head"><div><h1><span class="cs" style="--c:${p.col}" aria-hidden="true"></span>${p.n}</h1><p class="mut" style="margin:4px 0 0">${p.h} hieleras · ${g.toFixed(1)} kg de peso bruto</p></div><div class="bar" style="margin:0">${p.closed?`<span class="chip ok">Empaque cerrado</span>${can('lot')?'<button class="btn s" data-a="op">Reabrir</button>':''}`:`<button class="btn" data-a="cp" ${can('lot')?'':'disabled'}>Cerrar empaque y enviar informe</button>${can('lot')?'':'<span class="mut">Solo el Administrador cierra empaques</span>'}`}</div></div>
  ${shipAlert(i)}${pdfBar('emb',i,'Informe de este embarque')}${ordsInShip(i)}<div class="g2"><div class="cd"><h2 class="h3">Cajas de este envío</h2><div class="chain"><span class="chip ok">${bs.length} cajas</span><span class="chip">${sn} langostas</span>${Object.keys(RC).map(k=>`<span class="chip" data-k="${k}">${RC[k][0]} ${by[k]}</span>`).join('')}</div><p class="mut">Lotes: ${[...new Set(bs.map(x=>x.l))].map(E).join(', ')||'—'}. Las cajas se empacan en el paso Empaque.</p>
- <h3 style="margin-top:14px">Distribución por talla</h3><div class="chain" id="emb_tallas">${p.z.map((z,k)=>`<label class="zin">${nm[k]}<input type="number" min="0" value="${z}" data-zs="${i}:${k}" ${ed?'':'disabled'} aria-label="Hieleras talla ${nm[k]}"></label>`).join('')}${zs===p.h?`<span class="chip ok">✔ suma ${p.h} hieleras</span>`:`<button class="chip al chipb" data-jump="#emb_tallas">⚠ NO SUMA: tallas ${zs}, hieleras ${p.h} · Corregir ›</button>`}</div></div>
- <div class="cd"><h3>Langostas vivas al llegar al destino</h3><p class="mut">Se captura al final. La mortalidad de este envío se calcula: enviadas − vivas.</p><div class="f"><label>Vivas al llegar<input type="number" min="0" max="${sn}" value="${p.alive??''}" data-alive="${i}" style="width:120px" ${can('fin')?'':'disabled'}></label>${p.alive!=null&&sn?`<span class="chip ok">Mortalidad ${sn-p.alive} de ${sn} · ${pct(sn-p.alive,sn).toFixed(2)}%</span>`:'<span class="chip">'+(sn?'Se captura al final':'Asigna cajas primero')+'</span>'}</div></div></div>
+ <h3 style="margin-top:14px">Distribución por talla</h3><div class="chain" id="emb_tallas">${p.z.map((z,k)=>`<label class="zin">${nm[k]}<input type="number" min="0" value="${z}" data-zs="${E(p.u)}:${k}" ${ed?'':'disabled'} aria-label="Hieleras talla ${nm[k]}"></label>`).join('')}${zs===p.h?`<span class="chip ok">✔ suma ${p.h} hieleras</span>`:`<button class="chip al chipb" data-jump="#emb_tallas">⚠ NO SUMA: tallas ${zs}, hieleras ${p.h} · Corregir ›</button>`}</div></div>
+ <div class="cd"><h3>Langostas vivas al llegar al destino</h3><p class="mut">Se captura al final. La mortalidad de este envío se calcula: enviadas − vivas.</p><div class="f"><label>Vivas al llegar<input type="number" min="0" max="${sn}" value="${p.alive??''}" data-alive="${E(p.u)}" style="width:120px" ${can('fin')?'':'disabled'}></label>${p.alive!=null&&sn?`<span class="chip ok">Mortalidad ${sn-p.alive} de ${sn} · ${pct(sn-p.alive,sn).toFixed(2)}%</span>`:'<span class="chip">'+(sn?'Se captura al final':'Asigna cajas primero')+'</span>'}</div></div></div>
  <div class="cd" id="emb_peso"><h3>Peso bruto: cantidad × peso unitario</h3><div class="tbl"><table><thead><tr><th>Componente</th><th>Kg unit.</th><th>Cantidad</th><th>Subtotal kg</th></tr></thead><tbody>${p.c.map((c,k)=>`<tr><td>${c[0]}</td><td><input type="number" step="0.1" min="0" value="${c[1]}" data-k="1" data-j="${k}" ${ed?'':'disabled'} aria-label="Peso ${c[0]}"></td><td><input type="number" step="1" min="0" value="${c[2]}" data-k="2" data-j="${k}" ${ed?'':'disabled'} aria-label="Cantidad ${c[0]}"></td><td>${(Math.round(c[1]*10)*c[2]/10).toFixed(1)}</td></tr>`).join('')}</tbody><tfoot><tr><td colspan="3">Peso bruto total</td><td>${g.toFixed(1)}</td></tr></tfoot></table></div><div class="bar">${wOk(p)?`<span class="chip ok">✔ coincide con el formato (${p.exp} kg)</span>`:`<button class="chip al chipb" data-jump="#emb_peso">⚠ DISCREPANCIA: el formato dice ${p.exp} kg · diferencia ${g-p.exp>0?'+':''}${(g-p.exp).toFixed(1)} kg · Corregir ›</button>`}</div></div>${evid('emb:'+i,'Fotos y notas del embarque')}</div>`}
 function cierre(){const HC=histList('cie',ST.R.slice().reverse(),lotActive),ls=ST.R.map(r=>({r,c:calc(r.lot)})),done=ls.filter(x=>x.c),D=done.reduce((a,x)=>a+x.c.dead,0),Rc=done.reduce((a,x)=>a+x.c.rec,0),srcs=[...new Set(done.map(x=>x.r.origin))];
  const bySrc=srcs.map(o=>{const z=done.filter(x=>x.r.origin==o),d=z.reduce((a,x)=>a+x.c.dead,0),r=z.reduce((a,x)=>a+x.c.rec,0);return[o,pct(d,r),pct(d,r).toFixed(2)+'%']}),byLot=done.slice(-20).map(x=>[x.r.lot,x.c.p,x.c.p.toFixed(2)+'%']),byShip=ST.P.map((p,i)=>[p,i]).filter(([p,i])=>p.alive!=null).slice(-20).map(([p,i])=>[p.n,p.alive!=null&&sent(i)?pct(sent(i)-p.alive,sent(i)):0,p.alive!=null&&sent(i)?pct(sent(i)-p.alive,sent(i)).toFixed(2)+'%':'—']);
@@ -1217,19 +1290,19 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-old]');if(
 function admin(){const u=uf?(ST.U.find(x=>x.id==uf.id)||{}):null,yes=(a,b,c)=>`<tr><td>${a}</td><td>✔</td><td>${b?'✔':'—'}</td><td>${c?'✔':'—'}</td></tr>`;
  return `<div class="wrap">${guide(0,'Administración','Gestiona usuarios y permisos, revisa los correos automáticos y consulta dónde se guarda cada dato.','','')}
  <div class="cd"><div class="bar" style="margin-top:0"><h3 style="margin:0">Usuarios</h3><button class="btn" data-a="nu">+ Nuevo usuario</button></div>
- ${uf?`<div class="panel"><div class="f"><label>Nombre<input id="un" value="${E(u.name||'')}"></label><label>Correo<input id="ue" value="${E(u.email||'')}"></label><label>${u.id?'Nueva contraseña':'Contraseña'}<input id="up" type="password" autocomplete="new-password" placeholder="${u.id?'Vacío = no cambiarla':'Mínimo 6 caracteres'}"></label><label>Rol<select id="ur">${Object.entries(ROLE).map(([k,v])=>`<option value="${k}" ${u.role==k?'selected':''}>${v}</option>`).join('')}</select></label><label>Recibe informes<span style="padding-top:6px">${sw(u.notify!==false&&(u.notify||!u.id),'un')}</span></label><button class="btn" data-a="su">Guardar</button><button class="btn s" data-a="cu">Cancelar</button></div><p class="er">${E(msg)}</p></div>`:''}
+ ${uf?`<div class="panel"><div class="f"><label>Nombre<input id="un" value="${E(u.name||'')}"></label><label>Correo<input id="ue" value="${E(u.email||'')}"></label><label>${u.id?'Nueva contraseña':'Contraseña'}<input id="up" type="password" autocomplete="new-password" placeholder="${u.id?'Vacío = no cambiarla':'Mínimo 8 caracteres'}"></label><label>Rol<select id="ur">${Object.entries(ROLE).map(([k,v])=>`<option value="${k}" ${u.role==k?'selected':''}>${v}</option>`).join('')}</select></label><label>Recibe informes<span style="padding-top:6px">${sw(u.notify!==false&&(u.notify||!u.id),'un')}</span></label><button class="btn" data-a="su">Guardar</button><button class="btn s" data-a="cu">Cancelar</button></div><p class="er">${E(msg)}</p></div>`:''}
  <div class="tbl"><table class="lf"><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Informes</th><th aria-label="Acciones"></th></tr></thead><tbody>${ST.U.map(x=>`<tr><td>${E(x.name)}</td><td>${E(x.email)}</td><td>${ROLE[x.role]}</td><td>${x.notify?'Sí':'No'}</td><td><button class="lnk" data-eu="${x.id}">Editar</button> ${x.id==me.id?'':conf=='u'+x.id?`<button class="btn d" data-du2="${x.id}">Confirmar</button>`:`<button class="lnk" data-du="${x.id}">Eliminar</button>`}</td></tr>`).join('')}</tbody></table></div></div>
  <div class="g2"><div class="cd"><h3>Qué puede hacer cada rol</h3><div class="tbl"><table><thead><tr><th>Acción</th><th>Admin</th><th>Piso</th><th>Consulta</th></tr></thead><tbody>${yes('Ver todo',1,1)}${yes('Empacar cajas y capturar conteos finales',1,0)}${yes('Registrar entradas (lotes nuevos)',1,0)}${yes('Editar / eliminar lotes',0,0)}${yes('Cerrar lotes y empaques',0,0)}${yes('Gestionar usuarios',0,0)}</tbody></table></div></div>
- <div class="cd"><h3>Informes de cierre (${ST.O.length})</h3><p class="mut">Al cerrar un empaque se guarda aquí su informe. Mándalo por correo con su PDF; los destinatarios sugeridos son los usuarios con “Recibe informes”.</p>${ST.O.map(o=>`<details><summary>${E(o.subject)} · ${o.t}</summary><p class="mut">Destinatarios sugeridos: ${o.to.map(E).join(', ')||'—'}</p><pre>${E(o.body)}</pre>${o.pn&&ST.P.some(p=>p.n===o.pn)?`<button class="btn s" data-pdf="dl:embn:${E(o.pn)}">${IC.pdf} Descargar PDF</button> <button class="btn" data-pdf="mail:embn:${E(o.pn)}">${IC.mail} Enviar por correo</button>`:''}</details>`).join('')||'<p class="mut">Aún no hay informes.</p>'}</div></div>
+ <div class="cd"><h3>Informes de cierre (${ST.O.length})</h3><p class="mut">Al cerrar un empaque se guarda aquí su informe. Mándalo por correo con su PDF; los destinatarios sugeridos son los usuarios con “Recibe informes”.</p>${ST.O.map(o=>`<details><summary>${E(o.subject)} · ${o.t}</summary><p class="mut">Destinatarios sugeridos: ${o.to.map(E).join(', ')||'—'}</p><pre>${E(o.body)}</pre>${(q=>q?`<button class="btn s" data-pdf="dl:${q}">${IC.pdf} Descargar PDF</button> <button class="btn" data-pdf="mail:${q}">${IC.mail} Enviar por correo</button>`:'')(o.pu?(pIx(o.pu)>=0?'embu:'+E(o.pu):''):o.pn&&ST.P.some(p=>p.n===o.pn)?'embn:'+E(o.pn):'')}</details>`).join('')||'<p class="mut">Aún no hay informes.</p>'}</div></div>
  <div class="cd"><h3>Datos y respaldo</h3>${CLOUD?`<p>Los datos se guardan en la base compartida: todos los equipos y todas las cuentas ven lo mismo. Si un equipo se queda sin internet, guarda lo que captures y lo sube solo cuando regresa la conexión.</p><p class="mut">${syncInfo()}</p><p class="mut">Descarga un respaldo de vez en cuando (por ejemplo, al terminar cada semana). Restaurar un respaldo reemplaza los datos de <b>todos</b> los equipos; los usuarios no cambian.</p>`:`<p>Los datos se guardan en este equipo y la plataforma funciona sin internet.</p><p class="mut">Descarga un respaldo con frecuencia (por ejemplo, al terminar cada día) y guárdalo fuera de la tablet. Para pasar los datos a otro equipo, restaura ahí el respaldo; una restauración reemplaza todo lo que haya en ese equipo.</p>`}<div class="bar"><button class="btn s" data-bk="dl">${IC.pdf} Descargar respaldo (.json)</button><label class="btn s" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></div></div>
  ${oldDataCard()}<div class="cd"><h3>${CLOUD?'Borrar todos los datos':'Borrar los datos de este equipo'}</h3><p class="mut">${CLOUD?'Elimina lotes, órdenes, embarques, notas y lecturas de temperatura en <b>todos</b> los equipos. Los usuarios se conservan. Descarga antes un respaldo. No se puede deshacer.':'Elimina lotes, órdenes, embarques, notas y usuarios de esta tablet y vuelve a la configuración inicial. Descarga antes un respaldo. No se puede deshacer.'}</p><div class="bar"><button class="btn d" data-a="rst">Borrar todos los datos</button></div></div><p class="mut" style="text-align:right">PROPESA · Plataforma marítima · versión 1.5.0</p></div>`}
-function setupView(){return `<div class="login"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><h2 style="margin:4px 0 2px">Configuración inicial</h2><p class="mut">Crea la cuenta del Administrador${CLOUD?'':' de este equipo'}. Después podrás agregar a los demás usuarios en Administración.</p>
- <div class="f" style="flex-direction:column;align-items:stretch"><label>Nombre<input id="s0n" autocomplete="name"></label><label>Correo<input id="s0e" type="email" autocomplete="username"></label><label>Contraseña (mínimo 6)<input id="s0p" type="password" autocomplete="new-password"></label><label>Repite la contraseña<input id="s0q" type="password" autocomplete="new-password"></label><button class="btn" data-a="s0">Crear Administrador y entrar</button></div><p class="er" id="lm"></p>${CLOUD?'':`<p class="mut" style="margin:6px 0 0">¿Ya tienes un respaldo? <label class="lnk" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></p>`}</div></div>`}
+function setupView(){return `<div class="login" role="main"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><h2 style="margin:4px 0 2px">Configuración inicial</h2><p class="mut">Crea la cuenta del Administrador${CLOUD?'':' de este equipo'}. Después podrás agregar a los demás usuarios en Administración.</p>
+ <div class="f" style="flex-direction:column;align-items:stretch"><label>Nombre<input id="s0n" autocomplete="name"></label><label>Correo<input id="s0e" type="email" autocomplete="username"></label><label>Contraseña (mínimo 8)<input id="s0p" type="password" autocomplete="new-password"></label><label>Repite la contraseña<input id="s0q" type="password" autocomplete="new-password"></label><button class="btn" data-a="s0">Crear Administrador y entrar</button></div><p class="er" id="lm"></p>${CLOUD?'':`<p class="mut" style="margin:6px 0 0">¿Ya tienes un respaldo? <label class="lnk" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></p>`}</div></div>`}
 function setupSave(){const n=g('s0n').trim(),e=g('s0e').trim(),pw=g('s0p'),pq=g('s0q'),m=document.getElementById('lm'),bad=(t,id)=>{m.textContent=t;const el=document.getElementById(id);if(el){el.setAttribute('aria-invalid','true');el.focus()}};
- if(!n)return bad('Escribe tu nombre.','s0n');if(!/.+@.+\..+/.test(e))return bad('Escribe un correo válido.','s0e');if(pw.length<6)return bad('La contraseña debe tener al menos 6 caracteres.','s0p');if(pw!==pq)return bad('Las contraseñas no coinciden.','s0q');
+ if(!n)return bad('Escribe tu nombre.','s0n');if(!/.+@.+\..+/.test(e))return bad('Escribe un correo válido.','s0e');if(pw.length<8)return bad('La contraseña debe tener al menos 8 caracteres.','s0p');if(pw!==pq)return bad('Las contraseñas no coinciden.','s0q');
  if(CLOUD)return cloudSetup(n,e.toLowerCase(),pw);
  ST.U=[{id:1,name:n,email:e,role:'admin',notify:true}];save();me=ST.U[0];setPiso(false);V={v:'inicio'};toast('✔ Administrador creado');render()}
-function loginView(){return `<div class="login"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><p class="mut">Plataforma marítima · acceso por rol</p><div class="f" style="flex-direction:column;align-items:stretch"><label>Correo<input id="le" autocomplete="username" value="${E(LOGIN_EM)}"></label><label>Contraseña<input id="lp" type="password" autocomplete="current-password"></label><button class="btn" data-a="lg">Entrar</button></div><p class="er" id="lm">${E(LOGIN_MSG)}</p></div></div>`}
+function loginView(){return `<div class="login" role="main"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><p class="mut">Plataforma marítima · acceso por rol</p><div class="f" style="flex-direction:column;align-items:stretch"><label>Correo<input id="le" autocomplete="username" value="${E(LOGIN_EM)}"></label><label>Contraseña<input id="lp" type="password" autocomplete="current-password"></label><button class="btn" data-a="lg">Entrar</button></div><p class="er" id="lm">${E(LOGIN_MSG)}</p></div></div>`}
 /* ===== PDF de cada paso: se genera aquí mismo, sin librerías ni internet. Es el mismo archivo que se descarga y el que se manda por correo. ===== */
 const PW={h:[278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584,761,556,556,222,556,333,1000,556,556,333,1000,667,333,1000,556,611,556,556,222,222,333,333,350,556,1000,333,1000,500,333,944,556,500,667,278,333,556,556,556,556,260,556,333,737,370,556,584,333,737,333,400,584,333,333,333,556,537,278,333,333,365,556,834,834,834,611,667,667,667,667,667,667,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,500,556,556,556,556,278,278,278,278,556,556,556,556,556,556,556,584,611,556,556,556,556,500,556,500],b:[278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584,761,556,611,278,556,500,1000,556,556,333,1000,667,333,1000,611,611,611,611,278,278,500,500,350,556,1000,333,1000,556,333,944,611,500,667,278,333,556,556,556,556,280,556,333,737,370,556,584,333,737,333,400,584,333,333,333,611,556,278,333,333,365,556,834,834,834,611,722,722,722,722,722,722,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,556,556,556,556,556,278,278,278,278,611,611,611,611,611,611,611,584,611,611,611,611,611,556,611,556]};
 const PWIN={'–':150,'—':151,'‘':145,'’':146,'“':147,'”':148,'•':149,'…':133,'→':62,'−':45};
@@ -1319,24 +1392,23 @@ async function pdfOrdenes(id){const os=(id?ST.OR.filter(o=>o.id==id):ST.OR.slice
  R.p(`Peso por caja: ${KGN} kg netos y ${KGB} kg brutos.`,{sz:8,c:MUT});return{u8:R.build(),name:pdfName('Ordenes',id&&os[0]?os[0].etd:''),title:'Órdenes de empaque'}}
 async function pdfEmpaque(id){const os=(id?ST.OR.filter(o=>o.id==id):ST.OR.slice().sort((a,b)=>a.etd<b.etd?1:-1)),R=PdfRep({title:'Packing list',sub:id&&os[0]?'Empaque '+fd(os[0].etd):'Paso 3 · Empaque',logo:await pdfLogo()});
  const T_=os.reduce((a,o)=>a+ordTot(o),0),A=os.reduce((a,o)=>a+ordAsg(o),0),bx=os.flatMap(o=>ordBoxes(o)),pz=bx.reduce((a,x)=>a+x.b.c,0);
- R.stats([['Cajas empacadas',`${A} de ${T_}`,A<T_?RED:GRN],['Langostas vivas',pz],['Rojo',bx.filter(x=>x.b.k=='R').reduce((a,x)=>a+x.b.c,0)],['Verde',bx.filter(x=>x.b.k=='V').reduce((a,x)=>a+x.b.c,0)],['Blanco',bx.filter(x=>x.b.k=='B').reduce((a,x)=>a+x.b.c,0)]]);
+ R.stats([['Cajas empacadas',`${A} de ${T_}`,A<T_?RED:GRN],['Langostas vivas',pz],...(c=>Object.keys(RC).map(k=>[RC[k][0],c[k]]))(byCat(bx.map(x=>x.b)))]);
  if(!os.length)R.p('Todavía no hay órdenes.',{c:MUT});
  os.forEach(o=>{const t=ordTot(o),a=ordAsg(o),bs=ordBoxes(o);R.h2(`Empaque ${fd(o.etd)} · ${a} de ${t} cajas`);
   const pend=o.lines.filter(l=>ordAssigned(o,l).length<l.boxes);if(pend.length)R.alert('PENDIENTE: faltan cajas por empacar',pend.map(l=>`${l.cli} (${l.city}): van ${ordAssigned(o,l).length} de ${l.boxes}`));
-  R.table([{h:'Cliente final',w:1.6},{h:'Destino',w:2},{h:'Pedidas',w:.9,al:'r'},{h:'Empacadas',w:1.15,al:'r'},{h:'Piezas vivas',w:1,al:'r'},{h:'Rojo',w:.7,al:'r'},{h:'Verde',w:.7,al:'r'},{h:'Blanco',w:.7,al:'r'}],
-   o.lines.map(l=>{const as=ordAssigned(o,l),s=k=>as.filter(x=>x.b.k==k).reduce((a,x)=>a+x.b.c,0);return[{t:l.cli,b:1},`${l.city} · ${CONS[l.cons].k}`,l.boxes,{t:as.length,c:as.length>=l.boxes?GRN:RED,b:1},as.reduce((a,x)=>a+x.b.c,0),s('R'),s('V'),s('B')]}),{fs:8.5});
+  R.table([{h:'Cliente final',w:1.6},{h:'Destino',w:2},{h:'Pedidas',w:.9,al:'r'},{h:'Empacadas',w:1.15,al:'r'},{h:'Piezas vivas',w:1,al:'r'},...Object.keys(RC).map(k=>({h:RC[k][0],w:.8,al:'r'}))],
+   o.lines.map(l=>{const as=ordAssigned(o,l),c=byCat(as.map(x=>x.b));return[{t:l.cli,b:1},`${l.city} · ${CONS[l.cons].k}`,l.boxes,{t:as.length,c:as.length>=l.boxes?GRN:RED,b:1},as.reduce((a,x)=>a+x.b.c,0),...Object.keys(RC).map(k=>c[k])]}),{fs:8.5});
   if(bs.length){R.p('Detalle por caja',{b:1,sz:9.5,gap:3});R.table([{h:'No.',w:.6},{h:'Cliente',w:1.3},{h:'Destino',w:1.2},{h:'Lote',w:2},{h:'Piezas vivas',w:1,al:'r'},{h:'Categoría',w:1}],bs.map((x,i)=>[{t:i+1,b:1},x.l2.cli,x.l2.city,x.l,x.b.c,{t:RC[x.b.k][0],b:1,c:x.b.k=='R'?RED:x.b.k=='V'?GRN:MUT}]),{foot:['Total',`${bs.length} cajas`,'','',pz?bs.reduce((a,x)=>a+x.b.c,0):0,'']})}
   o.lines.forEach(l=>R.notes('emp:'+lkey(o,l),`Notas · ${l.cli}`))});
  return{u8:R.build(),name:pdfName('Empaque',id&&os[0]?os[0].etd:''),title:'Packing list'}}
-function shipCons(i){const c=shipCC(i);return c}
-async function pdfEmbarque(i){const p=ST.P[i];if(!p)throw new Error('ese embarque ya no existe');const R=PdfRep({title:'Informe de embarque',sub:p.n,logo:await pdfLogo()}),bs=boxesOf(i),sn=sent(i),g=gross(p),by={R:0,V:0,B:0,A:0},lk=shipLinks(i),is=shipIssues(i).map(x=>x.t);bs.forEach(x=>by[x.b.k||'B']+=x.b.c);
+async function pdfEmbarque(i){const p=ST.P[i];if(!p)throw new Error('ese embarque ya no existe');const R=PdfRep({title:'Informe de embarque',sub:p.n,logo:await pdfLogo()}),bs=boxesOf(i),sn=sent(i),g=gross(p),by=byCat(bs.map(x=>x.b)),lk=shipLinks(i),is=shipIssues(i).map(x=>x.t);
  R.stats([['Hieleras',p.h],['Peso bruto kg',g.toFixed(1)],['Cajas empacadas',bs.length],['Langostas',sn],['Estado',p.closed?'Cerrado':'Abierto',p.closed?GRN:AMB]]);
  if(is.length)R.alert(`ATENCIÓN: ${is.length} ${is.length==1?'pendiente o discrepancia':'pendientes o discrepancias'}`,is);else R.alert('Sin pendientes ni discrepancias',['Peso, tallas y cajas coinciden con el formato.'],GRN,'#e9f6ef');
  const c=shipCC(i);if(c){R.h2('Destino');consBlock(R,c.city,c.cons)}
  R.h2('Órdenes en este embarque');
  R.table([{h:'Orden (empaque)',w:1.3},{h:'Clientes',w:2.5},{h:'Cajas pedidas',w:1,al:'r'},{h:'Cajas empacadas',w:1.1,al:'r'}],lk.map(x=>{const ls=x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons),t=ls.reduce((a,l)=>a+l.boxes,0),n=ls.reduce((a,l)=>a+Math.min(l.boxes,ordAssigned(x.o,l).length),0);return[{t:fd(x.o.etd),b:1},ls.map(l=>l.cli).join(', '),t,{t:`${n} de ${t}`,b:1,c:n>=t?GRN:RED}]}));
  R.h2('Producto');
- R.kv([['Lotes',[...new Set(bs.map(x=>x.l))].join(', ')],['Rojo / Verde / Blanco / Amarillo',`${by.R} / ${by.V} / ${by.B} / ${by.A} langostas`]]);
+ R.kv([['Lotes',[...new Set(bs.map(x=>x.l))].join(', ')],[Object.keys(RC).map(k=>RC[k][0]).join(' / '),`${Object.keys(RC).map(k=>by[k]).join(' / ')} langostas`]]);
  R.h2('Distribución por talla (hieleras)');const zs=p.z.reduce((a,b)=>a+b,0);
  R.table(['Chica','Mediana','Grande','Jumbo'].map(h=>({h,w:1,al:'r'})).concat([{h:'Suma',w:1,al:'r'},{h:'Hieleras',w:1,al:'r'}]),[[...p.z,{t:zs,b:1,c:zs===p.h?GRN:RED},p.h]]);
  R.h2('Peso bruto');
@@ -1364,7 +1436,7 @@ async function pdfMort(){const R=PdfRep({title:'Mortalidad final',sub:'Paso 5 ·
  R.table([{h:'Embarque',w:3},{h:'Langostas enviadas',w:1.2,al:'r'},{h:'Vivas al llegar',w:1.1,al:'r'},{h:'Mortalidad',w:1,al:'r'},{h:'%',w:.8,al:'r'}],ST.P.map((p,i)=>{const sn=sent(i),ok=p.alive!=null&&sn;return[{t:p.n,b:1},sn,dash(p.alive),ok?sn-p.alive:'—',ok?{t:pct(sn-p.alive,sn).toFixed(2)+'%',b:1}:'—']}));
  R.p('Cómo se calcula: lote = (esperado − contado) ÷ recibido; envío = (enviadas − vivas) ÷ enviadas.',{sz:8,c:MUT});
  R.notes('cierre','Notas de Mortalidad final');return{u8:R.build(),name:pdfName('Mortalidad_final'),title:'Mortalidad final'}}
-function pdfMake(k,arg){return k=='ent'?pdfEntrada():k=='ord'?pdfOrdenes(arg):k=='emp'?pdfEmpaque(arg):k=='emb'?pdfEmbarque(+arg):k=='embn'?pdfEmbarque(ST.P.findIndex(p=>p.n===arg)):k=='embs'?pdfEmbarques():pdfMort()}
+function pdfMake(k,arg){return k=='ent'?pdfEntrada():k=='ord'?pdfOrdenes(arg):k=='emp'?pdfEmpaque(arg):k=='emb'?pdfEmbarque(+arg):k=='embu'?pdfEmbarque(pIx(arg)):k=='embn'?pdfEmbarque(ST.P.findIndex(p=>p.n===arg)):k=='embs'?pdfEmbarques():pdfMort()}
 function pdfSave(d){const u=URL.createObjectURL(new Blob([d.u8],{type:'application/pdf'})),a=document.createElement('a');a.href=u;a.download=d.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1500);toast('✔ PDF descargado: '+d.name)}
 async function pdfMail(d){const file=new File([d.u8],d.name,{type:'application/pdf'}),to=ST.U.filter(u=>u.notify).map(u=>u.email).join(','),body=`Se adjunta el PDF: ${d.title}.\nGenerado desde la plataforma PROPESA el ${now()}.`;
  try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'[PROPESA] '+d.title,text:body});return}}catch(e){if(e&&e.name=='AbortError')return}
@@ -1434,11 +1506,8 @@ function peRender(no){render();const nx=[...document.querySelectorAll('.ppc')].f
 const peBox=seq=>{for(const lt in ST.B){const b=ST.B[lt].find(x=>x.seq===seq);if(b)return b}return null};
 document.addEventListener('click',e=>{const x=e.target.closest('[data-pe]');if(!x)return;const P=x.dataset.pe.split(':'),a=P[0],v=P.slice(1).join(':');
  if(a=='chg'){PE.chg=true;return render()}if(a=='lot'){PE.lot=v;PE.chg=false;return render()}
- if(a=='k'){const no=+P[1],q=P[2],w=PE.rows[no]=PE.rows[no]||{},inp=document.querySelector(`.ppc[data-slot="${no}"]`);if(inp)w.c=inp.value;w.k=w.k==q?'':q;w.auto=false;
-  if(peTry(no))return;peLive(no);const card=document.getElementById('pps'+no);if(card)card.querySelectorAll('[data-pe^="k:"]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pe.split(':')[2]==w.k)));if(w.k&&inp&&!inp.value)inp.focus();return}
  if(a=='all'){const{o,l}=peLine();if(!l)return;const sl=peSlots(o,l);sl.forEach((s,i)=>{if(!s){const w=PE.rows[i+1]=PE.rows[i+1]||{};if(!w.k){w.k=v;w.auto=true}}});
   const saved=Object.keys(PE.rows).map(Number).filter(no=>{const w=PE.rows[no];return +w.c>=1&&w.k}).map(no=>peTry(no));if(!saved.length)render();return}
- if(a=='sk'){const b=peBox(+P[1]);if(!b)return;b.k=P[2];save();toast('✔ Caja corregida: '+RC[b.k][0]);return render()}
  if(a=='cf'){PE.cf=+v;return render()}if(a=='no'){PE.cf=null;return render()}
  if(a=='rm'){const s=+v,bx=peBox(s);if(bx&&bx.ps)delete PE.rows[bx.ps];for(const lt in ST.B)ST.B[lt]=ST.B[lt].filter(b=>b.seq!==s);PE.cf=null;save();toast('Caja quitada: el lugar quedó libre');return render()}});
 const peLive=no=>{const c=document.getElementById('pps'+no);if(c&&!c.classList.contains('sv'))c.classList.toggle('ip',pkRowSt(PE.rows[no])=='prog')};
@@ -1532,13 +1601,20 @@ const penR=u=>PEN&&PEN.rows.find(r=>r.u===u),penFull=r=>PNK.some(k=>String(r.d[k
  penChip=r=>({ok:'<span class="chip ok">✔ Guardada</span>',bad:'<span class="chip al">⚠ Revisar</span>',pnd:'<span class="chip pnd">Sin guardar</span>',new:'<span class="chip pnw">Vacía</span>'})[penState(r)],
  penPend=()=>PEN?PEN.rows.filter(r=>r.st!='ok'&&penFull(r)):[],
  penMore=r=>PNX.filter(k=>String(r.d[k]).trim()!=='').length;
-/* Mismas reglas que la Entrada de la vista completa: proveedor, tanque, lote único, al menos una talla con kg y fecha. */
-function penVal(r){const d=r.d,er={},l=d.lot.trim().toUpperCase();
- if(!d.origin.trim())er.origin='Escribe el proveedor.';if(!d.tank)er.tank='Elige el tanque.';
- if(!l)er.lot='Escribe el lote.';else if(R_(l))er.lot='Ese lote ya existe.';else{const i=PEN.rows.indexOf(r),o=PEN.rows.findIndex((x,j)=>j<i&&x.st!='ok'&&x.d.lot.trim().toUpperCase()==l);if(o>=0)er.lot=`Repetido en la fila ${o+1}.`}
+/* v1.6.0 (auditoría #10): una sola regla y una sola forma de crear un lote, para la vista completa (saveLot) y Modo piso (penSave).
+   d trae los campos como texto: lot, origin, tank, rdate, time, tempT, tempP, kgbox, desp, k0…k3 (kg por talla). */
+function lotErr(d){const er={},l=String(d.lot||'').trim().toUpperCase();
+ if(!String(d.origin||'').trim())er.origin='Escribe el proveedor.';if(!d.tank)er.tank='Elige el tanque.';
+ if(!l)er.lot='Escribe el lote.';else if(R_(l))er.lot='Ese lote ya existe.';
  [0,1,2,3].forEach(i=>{if(+d['k'+i]<0)er['k'+i]='No puede ser negativo.'});
  if(![0,1,2,3].some(i=>+d['k'+i]>0)&&![0,1,2,3].some(i=>er['k'+i]))er.kg='Captura al menos una talla con kg.';
  if(!d.rdate)er.rdate='Indica la fecha de recepción.';return er}
+const LOT_F={rdate:'fd',origin:'fo',tank:'ft',lot:'fl',k0:'fk0',k1:'fk1',k2:'fk2',k3:'fk3',kg:'fk0'};/* campo de la vista completa para cada error */
+function addLot(d){const l=String(d.lot).trim().toUpperCase(),id=newLotId(),nv=v=>v===''||v==null?null:+v;
+ ST.R.push({id,lot:l,origin:String(d.origin).trim(),tank:d.tank,rdate:d.rdate,time:d.time||'',date:fd(d.rdate),tempT:nv(d.tempT),tempP:String(d.tempP??'').trim(),kgbox:nv(d.kgbox),desp:nv(d.desp),final:null,closed:false});
+ ST.B[l]=[];S.forEach((s,i)=>{const k=+d['k'+i]||0;if(k>0)post('RECEPCION',l,s,k,0,id)});return l}
+function penVal(r){const er=lotErr(r.d),l=r.d.lot.trim().toUpperCase();
+ if(l&&!er.lot){const i=PEN.rows.indexOf(r),o=PEN.rows.findIndex((x,j)=>j<i&&x.st!='ok'&&x.d.lot.trim().toUpperCase()==l);if(o>=0)er.lot=`Repetido en la fila ${o+1}.`}return er}
 function penTr(r,i){const u=r.u,ok=r.st=='ok',er=r.er,n=i+1,cf=PEN.cf===u,
  bad=k=>er[k]||(/^k\d$/.test(k)&&er.kg),
  at=(k,al)=>`data-pr="${u}:${k}" aria-label="${al} · entrada ${n}"${bad(k)?` aria-invalid="true" aria-describedby="pe_${u}_${er[k]?k:'kg'}"`:''}${ok?' disabled':''}`,
@@ -1570,9 +1646,7 @@ function penJump(){const r=PEN&&PEN.rows.find(x=>x.st!='ok'&&Object.keys(x.er).l
 function penSave(){if(!PEN||PEN.busy)return;const todo=penPend();if(!todo.length){toast('Escribe al menos una entrada.');return}
  PEN.busy=true;let ok=0,bad=0;
  try{for(const r of todo){r.er=penVal(r);if(Object.keys(r.er).length){bad++;if(PND.some(k=>r.er[k]))r.open=true;continue}
-  const d=r.d,l=d.lot.trim().toUpperCase(),id=newLotId();
-  ST.R.push({id,lot:l,origin:d.origin.trim(),tank:d.tank,rdate:d.rdate,time:d.time,date:fd(d.rdate),tempT:d.tempT===''?null:+d.tempT,tempP:String(d.tempP).trim(),kgbox:d.kgbox===''?null:+d.kgbox,desp:d.desp===''?null:+d.desp,final:null,closed:false});
-  ST.B[l]=[];S.forEach((s,i)=>{const k=+d['k'+i]||0;if(k>0)post('RECEPCION',l,s,k,0,id)});r.st='ok';r.d.lot=l;r.d.origin=d.origin.trim();r.open=false;r.er={};ok++}
+  const d=r.d,l=addLot(d);r.st='ok';r.d.lot=l;r.d.origin=d.origin.trim();r.open=false;r.er={};ok++}
   if(ok)save()}finally{PEN.busy=false}
  PEN.cf=null;render();
  if(bad){toast(`Faltan datos en ${bad} ${bad==1?'entrada':'entradas'} (marcadas en rojo).${ok?` Se ${ok==1?'guardó 1':'guardaron '+ok}.`:''}`);penJump()}
@@ -1668,7 +1742,7 @@ function pmenuHTML(){return `<div class="pmscrim" data-pmclose="1"></div><div cl
  <div class="pmsep"></div>
  ${me.role=='admin'?`<button role="menuitem" class="pmi" data-pm="users">${IC.admin}<span>Administración</span><small>Usuarios, permisos, correos y respaldo</small></button>
  <div class="pmsep"></div>`:''}
- <button role="menuitem" class="pmi out" data-pm="logout">${IC.logout}<span>Cerrar sesión</span></button><p class="pmver">Versión 1.5.0</p></div>`}
+ <button role="menuitem" class="pmi out" data-pm="logout">${IC.logout}<span>Cerrar sesión</span></button><p class="pmver">Versión 1.8.0</p></div>`}
 function placePmenu(){const c=document.getElementById('pmenu'),b=PMRET&&PMRET.isConnected?PMRET:document.querySelector('[data-avatar]'),m=c&&c.querySelector('.pmbox');if(!m||!b)return;
  const r=b.getBoundingClientRect(),W=document.documentElement.clientWidth;m.style.top=Math.round(r.bottom+8)+'px';m.style.right=Math.max(8,Math.round(W-r.right))+'px'}
 function openPmenu(btn){PMRET=btn;PMOPEN=true;const c=document.getElementById('pmenu');c.hidden=false;c.innerHTML=pmenuHTML();placePmenu();syncAv();const f=c.querySelector('[role=menuitem]');if(f)f.focus({preventScroll:true})}
@@ -1714,7 +1788,7 @@ function uiRestore(){try{const s=JSON.parse(localStorage.getItem(SES_KEY)||'null
 const uiAct=()=>{LAST_ACT=Date.now();uiSoon()};['input','change','click','keydown'].forEach(t=>document.addEventListener(t,uiAct));
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden'){clearTimeout(UI_T);uiSave()}});
 window.addEventListener('pagehide',()=>{clearTimeout(UI_T);uiSave()});
-function render0(){const A=document.getElementById('app');if(!me){A.innerHTML=(CLOUD?NEEDSETUP:!(ST.U&&ST.U.length))?setupView():loginView();return}if(!ST.M)seedM();if(!ST.OR)seedOR();if(!ST.ORc)cleanOrders();if(!ST.PK)migratePK();
+function render0(){const A=document.getElementById('app');if(!me){A.innerHTML=(CLOUD?NEEDSETUP:!(ST.U&&ST.U.length))?setupView():loginView();return}
  if(V.v=='admin'&&me.role!='admin')V={v:'inicio'};const o=document.querySelector('main'),sc=o?o.scrollTop:0,s=STEP[V.v]||0,T=orderedAll(),PA=packedAll();
  const steps=[['recepcion',1,'Entrada',`${ST.R.length} lotes`],['ordenes',2,'Órdenes',ST.OR.length?`${ST.OR.length} ${ST.OR.length==1?'orden':'órdenes'}`:'Sin órdenes'],['empaque',3,'Empaque',T?`${PA}/${T} cajas`:'Sin cajas pedidas',T>PA],['embarques',4,'Embarque',`${ST.P.filter(p=>p.closed).length}/${ST.P.length} cerrados`,ST.P.some(p=>!p.closed)],['cierre',5,'Mortalidad final',`${ST.R.filter(r=>r.closed).length}/${ST.R.length} lotes`,false]];
  if(PISO)A.innerHTML=pisoShell(topBanners()+PG[V.v](V.id));else A.innerHTML=`<div class="shell"><a class="skip" href="#main">Saltar al contenido</a><aside class="sb" aria-label="Menú principal"><button class="lt lgb" data-go="inicio" aria-label="PROPESA · ir al inicio" title="Ir al inicio">${LOGOD}</button><h4>Operación</h4><button class="iosrow" role="switch" aria-checked="false" data-mode="piso"><span class="iosic">${IC.cajas}</span><span class="iostx"><b>Modo piso</b><small>Botones grandes</small></span><span class="iossw" aria-hidden="true"><i></i></span></button><button class="fs ${V.v=='inicio'?'on':''}" data-go="inicio" ${V.v=='inicio'?'aria-current="page"':''}><i>${IC.inicio}</i><span><b>Panel</b><small>Siguiente paso</small></span></button>${steps.map(([k,n,t,sub,pn])=>`<button class="fs ${s==n?'on':''}${pn?' pn':''}" data-go="${k}" ${s==n?'aria-current="page"':''}><i>${IC[k]}<em>${n}</em></i><span><b>${t}</b><small>${pn?'⚠ ':''}${sub}</small></span></button>`).join('')}<span class="sp"></span><h4>Sistema</h4><button class="fs sm ${V.v=='temperatura'?'on':''}" data-go="temperatura" ${V.v=='temperatura'?'aria-current="page"':''}><i>${IC.temperatura}</i><span><b>Temperatura</b></span></button>${me.role=='admin'?`<button class="fs sm ${V.v=='admin'?'on':''}" data-go="admin" ${V.v=='admin'?'aria-current="page"':''}><i>${IC.admin}</i><span><b>Administración</b></span></button>`:''}<div style="height:12px"></div></aside><div class="scr" data-sb="0"></div><div class="ct"><header class="hd"><button class="mb" data-sb="1" aria-label="Menú">☰</button>${hdTitle(steps,s)}<input id="sq" type="search" placeholder="Buscar lote o envío" aria-label="Buscar"><div class="usr">${setBtn(false)}${avatarBtn(false)}</div></header><main id="main" tabindex="-1">${topBanners()}${PG[V.v](V.id)}</main></div></div>`;
@@ -1730,15 +1804,15 @@ function delLot(){const l=V.id;if(ST.B[l].some(b=>b.d!=null)){conf=null;toast('N
 function closeLot(l){const r=R_(l),c=calc(l);if(!c)return toast('Captura primero el conteo final.');r.closed=true;save();toast(`✔ Lote cerrado. Mortalidad calculada: ${f(c.dead)} kg (${c.p.toFixed(2)}%).`);render()}
 function closeP(i){const p=ST.P[i],bad=[];for(const l in ST.B)ST.B[l].forEach((b,n)=>{if(b.d===i&&!(b.c>0&&b.k))bad.push(`${l} #${n+1}`)});
  if(bad.length)return toast('Faltan datos en cajas: '+bad.slice(0,4).join(', '));if(!boxesOf(i).length)return toast('Empaca cajas para este envío antes de cerrar.');
- p.closed=true;const x=boxesOf(i),by={R:0,V:0,B:0,A:0};x.forEach(o=>by[o.b.k]+=o.b.c);const to=ST.U.filter(u=>u.notify).map(u=>u.email);
- const body=`Empaque cerrado: ${p.n}\nFecha: ${now()}\nCerrado por: ${me.name}\n\nÓrdenes de empaque: ${[...new Set(shipLinks(i).map(z=>fd(z.o.etd)))].join(', ')}\nHieleras: ${p.h}\nPeso bruto: ${gross(p).toFixed(1)} kg\nLotes: ${[...new Set(x.map(o=>o.l))].join(', ')}\nCajas empacadas: ${x.length}\nLangostas: ${sent(i)} (Rojo ${by.R} · Verde ${by.V} · Blanco ${by.B})\n\nDetalle por caja:\n`+x.map(o=>`  ${o.l}: ${o.b.c} piezas ${RC[o.b.k][0]}`).join('\n');
- const pdfn=pdfName('Embarque',p.n);ST.O.unshift({u:uidS(),subject:`[PROPESA] Informe de empaque ${p.n}`,t:now(),to,body:body+`\n\nAdjunto: ${pdfn}`,pn:p.n,att:pdfn});save();toast('✔ Empaque cerrado. Manda el informe con «Enviar por correo».');render()}
+ p.closed=true;const x=boxesOf(i),by=byCat(x.map(o=>o.b));const to=ST.U.filter(u=>u.notify).map(u=>u.email);
+ const body=`Empaque cerrado: ${p.n}\nFecha: ${now()}\nCerrado por: ${me.name}\n\nÓrdenes de empaque: ${[...new Set(shipLinks(i).map(z=>fd(z.o.etd)))].join(', ')}\nHieleras: ${p.h}\nPeso bruto: ${gross(p).toFixed(1)} kg\nLotes: ${[...new Set(x.map(o=>o.l))].join(', ')}\nCajas empacadas: ${x.length}\nLangostas: ${sent(i)} (${catTxt(by)})\n\nDetalle por caja:\n`+x.map(o=>`  ${o.l}: ${o.b.c} piezas ${RC[o.b.k][0]}`).join('\n');
+ const pdfn=pdfName('Embarque',p.n);ST.O.unshift({u:uidS(),subject:`[PROPESA] Informe de empaque ${p.n}`,t:now(),to,body:body+`\n\nAdjunto: ${pdfn}`,pn:p.n,att:pdfn,pu:p.u});save();toast('✔ Empaque cerrado. Manda el informe con «Enviar por correo».');render()}
 async function saveUCloud(n,e,pw,r,nt,isNew){const b=document.querySelector('[data-a=su]');if(b)b.disabled=true;
  try{await fnUsers(isNew?'create':'update',{id:uf.id,name:n,email:e.toLowerCase(),password:pw||undefined,role:r,notify:nt});uf=null;msg='';await loadProfiles();toast('✔ Usuario guardado');render()}
  catch(x){if(b)b.disabled=false;fail(x.message||'No se pudo guardar.','un')}}
 function saveU(){const n=g('un').trim(),e=g('ue').trim(),pw=g('up'),r=g('ur'),nt=document.querySelector('[data-a=un]').getAttribute('aria-checked')=='true',isNew=!uf.id;
  if(!n)return fail('Escribe el nombre.','un');if(!/.+@.+\..+/.test(e))return fail('Escribe un correo válido.','ue');
- if((isNew||pw)&&pw.length<6)return fail(isNew?'La contraseña debe tener al menos 6 caracteres.':'La nueva contraseña debe tener al menos 6 caracteres (o deja el campo vacío para no cambiarla).','up');
+ if((isNew||pw)&&pw.length<8)return fail(isNew?'La contraseña debe tener al menos 8 caracteres.':'La nueva contraseña debe tener al menos 8 caracteres (o deja el campo vacío para no cambiarla).','up');
  if(ST.U.some(u=>String(u.email).toLowerCase()==e.toLowerCase()&&u.id!=uf.id))return fail('Ese correo ya existe.','ue');
  if(CLOUD)return saveUCloud(n,e,pw,r,nt,isNew);
  if(!isNew){const u=ST.U.find(u=>u.id==uf.id);if(u.role=='admin'&&r!='admin'&&ST.U.filter(x=>x.role=='admin').length<2)return fail('Debe quedar al menos un Administrador.','ur');Object.assign(u,{name:n,email:e,role:r,notify:nt})}
@@ -1746,16 +1820,15 @@ function saveU(){const n=g('un').trim(),e=g('ue').trim(),pw=g('up'),r=g('ur'),nt
  uf=null;msg='';save();toast('✔ Usuario guardado');render()}
 document.addEventListener('click',e=>{const sbx=e.target.closest('[data-sb]'),A_=document.getElementById('app');if(sbx)A_.classList.toggle('sbo',sbx.dataset.sb=='1');else if(e.target.closest('[data-go]'))A_.classList.remove('sbo');
 const t=e.target,q=s=>t.closest(s);let x;
- if(x=q('[data-q]')){const[a,b]=x.dataset.q.split(',');document.getElementById('le').value=a;document.getElementById('lp').value=b;return}
  if(x=q('button[data-r]'))return rev(+x.dataset.r);
- if(x=q('button[data-ur]')){const id=+x.dataset.ur,m=ST.L.find(y=>y.id===id&&y.type==='REVERSA');if(m&&confirm('¿Anular la reversa #'+mvNo(id)+'? El movimiento #'+mvNo(m.rev)+' vuelve a contar en el inventario.')){ST.L=ST.L.filter(y=>y!==m);save();msg='✔ Reversa #'+id+' anulada.';render()}return}
+ if(x=q('button[data-ur]')){const id=+x.dataset.ur,m=ST.L.find(y=>y.id===id&&y.type==='REVERSA');if(!m)return;if(bal(m.lot,m.size)-m.m<0){msg='No se puede anular la reversa: dejaría existencia negativa.';render();return}const no=mvNo(id);if(confirm('¿Anular la reversa #'+no+'? El movimiento #'+mvNo(m.rev)+' vuelve a contar en el inventario.')){ST.L=ST.L.filter(y=>y!==m);save();msg='✔ Reversa #'+no+' anulada.';render()}return}
  if(x=q('[data-eu]')){uf={id:CLOUD?x.dataset.eu:+x.dataset.eu};msg='';return render()}
  if(x=q('[data-du]')){conf='u'+x.dataset.du;return render()}
  if(x=q('[data-du2]')){if(CLOUD){x.disabled=true;fnUsers('delete',{id:x.dataset.du2}).then(loadProfiles).then(()=>{conf=null;toast('Usuario eliminado');render()}).catch(z=>{conf=null;toast('No se pudo eliminar: '+z.message);render()});return}ST.U=ST.U.filter(u=>u.id!=x.dataset.du2);conf=null;save();toast('Usuario eliminado');return render()}
  if(x=q('[data-a]')){const k=x.dataset.a;
   if(k=='s0')return setupSave();
   if(k=='lg'){if(CLOUD)return cloudLogin();/* modo local (solo pruebas en localhost): entra con el correo; las contraseñas las revisa Supabase */const em=g('le').trim().toLowerCase(),u=ST.U.find(u=>String(u.email).toLowerCase()==em);if(!u){document.getElementById('lm').textContent='Correo o contraseña incorrectos.';return}me=u;setPiso(u.role=='piso');PEN=null;V={v:PISO?'piso':'inicio'};return render()}
-  if(k=='lo')return signOut();if(k=='pison')return switchMode(true);if(k=='pisoff')return switchMode(false);
+  if(k=='lo')return signOut();
   if(k=='nf'){form=form?null:{t:'lot'};msg='';return render()}if(k=='el'){form={t:'lot',edit:V.id};msg='';return render()}
   if(k=='tq')return saveTemp();if(k=='sv')return saveLot();if(k=='mv')return mv();if(k=='dl'){conf='lot';return render()}if(k=='dl2')return delLot();
   if(k=='cl')return closeLot(x.dataset.lot||V.id);if(k=='ol'){R_(V.id).closed=false;save();return render()}
@@ -1763,15 +1836,16 @@ const t=e.target,q=s=>t.closest(s);let x;
   if(k=='cp')return closeP(+V.id);if(k=='op'){ST.P[+V.id].closed=false;save();return render()}
   if(k=='nu'){uf={};msg='';return render()}if(k=='cu'){uf=null;return render()}if(k=='su')return saveU();
   if(k=='un'){x.setAttribute('aria-checked',x.getAttribute('aria-checked')!='true');return}
-  if(k=='rst'){if(CLOUD){const w=prompt('Esto borra TODOS los datos de TODOS los equipos (lotes, órdenes, embarques, notas y temperatura). Los usuarios se conservan. Para confirmar escribe BORRAR');if((w||'').trim().toUpperCase()!=='BORRAR')return toast('No se borró nada.');const U=ST.U;ST={...seed(),U};save();V={v:'inicio',id:null};toast('Datos borrados en todos los equipos');return render()}const w=prompt('Esto borra TODOS los datos de este equipo. Para confirmar escribe BORRAR');if((w||'').trim().toUpperCase()!=='BORRAR')return toast('No se borró nada.');ST=seed();save();me=null;closePmenu(false);closeSettings();toast('Datos borrados');return render()}return}
+  if(k=='rst'){if(CLOUD){const w=prompt('Esto borra TODOS los datos de TODOS los equipos (lotes, órdenes, embarques, notas y temperatura). Los usuarios se conservan. Para confirmar escribe BORRAR');if((w||'').trim().toUpperCase()!=='BORRAR')return toast('No se borró nada.');const U=ST.U,fs=[];for(const k in ST.M)(ST.M[k]||[]).forEach(n=>fs.push(...n.imgs));fotoDel(fs);ST={...seed(),U};save();V={v:'inicio',id:null};toast('Datos borrados en todos los equipos');return render()}const w=prompt('Esto borra TODOS los datos de este equipo. Para confirmar escribe BORRAR');if((w||'').trim().toUpperCase()!=='BORRAR')return toast('No se borró nada.');ST=seed();save();me=null;closePmenu(false);closeSettings();toast('Datos borrados');return render()}return}
  if(x=q('[data-go]'))go(x.dataset.go)});
 document.addEventListener('keydown',e=>{if(e.key=='Enter'){const d=e.target.dataset||{};if(d.go)go(d.go);else if(e.target.id=='lp')document.querySelector('[data-a=lg]').click();else if(e.target.id=='s0q')document.querySelector('[data-a=s0]').click();else if(e.target.id=='sq'){V={v:'buscar',id:e.target.value};render()}}});
 document.addEventListener('change',e=>{const t=e.target,d=t.dataset||{};
  
  
  if(d.k&&d.j!=null){ST.P[+V.id].c[+d.j][+d.k]=Math.max(0,+t.value||0);save();return render()}
- if(d.alive!=null){const i=+d.alive,n=sent(i);ST.P[i].alive=t.value===''?null:Math.min(n,Math.max(0,Math.floor(+t.value)||0));save();return render()}
+ if(d.alive!=null){const i=pIx(d.alive);if(i<0){toast('Ese embarque ya no existe: otro equipo lo quitó o lo unió.');return render()}const n=sent(i);ST.P[i].alive=t.value===''?null:Math.min(n,Math.max(0,Math.floor(+t.value)||0));save();return render()}
  if(d.fin!=null){const r=R_(d.fin),v=t.value===''?null:+t.value;if(v!=null&&(v<0||Math.round(v*1000)>bal(r.lot))){toast(`El conteo final no puede ser mayor al esperado (${f(bal(r.lot))} kg).`);render();const q=document.querySelector(`[data-fin="${d.fin}"]`);if(q){q.value=t.value;q.setAttribute('aria-invalid','true');q.focus({preventScroll:true})}return}r.final=v;save();return render()}});
-if(!uiRestore()){if(CLOUD&&SBS&&!me){const u=ST.U.find(x=>x.id===SBS.uid);if(u){me=u;V={v:PISO?'piso':'inicio',id:null}}else dropSes()}render()}
-if(CLOUD){if(me)startSync();else checkSetup()}
+function boot(){if(!uiRestore()){if(CLOUD&&SBS&&!me){const u=ST.U.find(x=>x.id===SBS.uid);if(u){me=u;V={v:PISO?'piso':'inicio',id:null}}else dropSes()}render()}
+ if(CLOUD){if(me)startSync();else checkSetup()}}
+if(CLOUD)loadCache().finally(boot);else boot()
 </script></body></html>

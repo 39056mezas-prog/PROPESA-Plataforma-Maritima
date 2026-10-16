@@ -4,6 +4,8 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 
 | Fecha | Decisión | Por qué / quién |
 |---|---|---|
+| 15/10/2026 | **Entrada: si falta el lote, las dos pantallas dicen «Escribe el lote.»** (antes la vista completa decía «Escribe el lote de recepción.»). Viene de unir la regla de Entrada (`lotErr`, auditoría #10) | Usuario: «mantenlo como tú dices» |
+| 15/10/2026 | **El código del lote se ve completo en su tarjeta de Modo piso** («¿De qué lote sacas las langostas?»): la letra se ajusta al ancho de la tarjeta (hasta el tamaño de antes) y un código muy largo pasa a otro renglón. El código puede ser de cualquier largo | Usuario: «el lote sale dependiendo su entrada» |
 | 14/10/2026 | **Auditoría:** (1) `WN` valida números con `wnn`/`wn0` (antes texto → riesgo de código en el tablero de tanques); (2) «En tanques» del Panel solo cuenta lotes abiertos (como el mapa); (3) cambiar de pestaña de lote con cajas sin guardar avisa en vez de moverlas de lote | `/ponytail-audit` |
 | 14/10/2026 | **Tablero de tanques arriba de Entrada como el plano del piso** (dibujo del usuario: T1–T4 a la derecha de arriba abajo, T6 junto a T3 y T5 junto a T4 a la izquierda; `tanques()`, `.tqmap`, `TQSEL`). Al tocar un tanque sale su detalle. Por tanque: kg (lotes abiertos con existencia), kg por talla, lotes y última temperatura; «● En vivo» con la base compartida. Sin nivel de llenado hasta saber la capacidad de cada tanque | Usuario: «ver todos mis tanques y en vivo lo que tienen» |
 | 14/10/2026 | **Ícono de Entrada = langosta blanca** (silueta del ícono de la app, `IC.recepcion`); Embarque conserva el camión (`IC.camion`). Antes Entrada y Embarque compartían el camión | Usuario |

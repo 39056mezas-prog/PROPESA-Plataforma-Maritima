@@ -2,7 +2,7 @@
 import json,sys
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)

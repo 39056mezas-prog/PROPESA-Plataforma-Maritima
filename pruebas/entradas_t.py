@@ -3,7 +3,7 @@ Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I p
 import json
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)
@@ -93,6 +93,16 @@ with sync_playwright() as p:
     pg.fill(f'[data-pr="{u}:rdate"]','2026-10-13');pg.fill(f'[data-pr="{u}:k0"]','-2');pg.click('[data-pa=save]')
     chk('negativo' in pg.inner_text(f'tr.per[data-pu="{u}"]'),'talla negativa marcada')
     pg.fill(f'[data-pr="{u}:k0"]','');pg.click('[data-pa=save]');chk('al menos una talla' in pg.inner_text(f'tr.per[data-pu="{u}"]'),'sin kg marcado')
+    # auditoría #10: la vista completa usa la misma regla y la misma función que Modo piso para crear lotes
+    pg.evaluate("setPiso(false);go('recepcion')");pg.click('[data-a=nf]')
+    pg.fill('#fl','wlrneg151026');pg.fill('#fo','SCPP');pg.fill('#fk0','-50');pg.fill('#fk1','100');pg.click('[data-a=sv]')
+    chk('No puede ser negativo.' in pg.inner_text('#app') and not pg.evaluate("ST.R.some(r=>r.lot=='WLRNEG151026')"),'vista completa: −50 kg en una talla marca «No puede ser negativo» y no guarda (antes guardaba 100 kg)')
+    chk(pg.input_value('#fk0')=='-50' and pg.input_value('#fk1')=='100','lo escrito se conserva')
+    pg.fill('#fk0','0');pg.click('[data-a=sv]')
+    chk(pg.evaluate("bal('WLRNEG151026')")==100000,'al corregirlo se guarda con 100 kg')
+    ka=pg.evaluate("Object.keys(R_('WLRNEG151026')).join()");kb=pg.evaluate("Object.keys(R_('WLRCO131026A')).join()")
+    chk(ka==kb,'el lote de la vista completa y el de Modo piso tienen los mismos campos')
+    chk(pg.evaluate("typeof addLot=='function'&&!/ST\\.R\\.push/.test(saveLot.toString()+penSave.toString())"),'las dos pantallas crean el lote con addLot')
     pg.close()
     # --- Vistas: celular, tablet vertical, computadora, texto muy grande, tema oscuro ---
     for vw,sch,fs in [((390,844),'light',None),((820,1180),'dark',None),((1440,900),'light',None),((1180,820),'dark',20),((820,1180),'light',20)]:

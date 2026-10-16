@@ -2,7 +2,7 @@
 import os,json,base64
 from playwright.sync_api import sync_playwright
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE=os.environ.get('BASE','http://localhost:8765/index.html');fails=[];errs=[]
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local');fails=[];errs=[]  # modo local: nunca toca la base real
 def chk(c,m):
     print(('PASS ' if c else 'FAIL ')+m)
     if not c:fails.append(m)

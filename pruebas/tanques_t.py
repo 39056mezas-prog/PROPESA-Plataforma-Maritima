@@ -4,7 +4,7 @@ tocar un lote abre el lote; un lote cerrado ya no cuenta; sin desbordes en celul
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/tanques_t.py"""
 import os
 from playwright.sync_api import sync_playwright
-BASE = os.environ.get('BASE', 'http://localhost:8765/index.html')
+BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 SEED = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos', 'seed.json'), encoding='utf-8').read()
 fails, errs = [], []
 def chk(c, m):

@@ -1,15 +1,13 @@
 # DATOS.md · Modelo de datos
 
-Todo vive en el objeto global `ST`. **Desde la v1.4.0 la copia que vale está en la base compartida** (Supabase, `public.app_records`, ver `SUPABASE.md`); cada equipo guarda una copia en `localStorage['propesa-c1']` para trabajar sin internet. En el modo local de pruebas sigue siendo `localStorage['propesa-v4']`. El usuario en sesión (`me`) no va dentro de `ST`: desde la v1.2.5 se guarda aparte en `propesa-ses` (solo su id y la hora de vencimiento) y la pantalla con los borradores en `propesa-ui` (ver `ARQUITECTURA.md` §9).
+Todo vive en el objeto global `ST`. **Desde la v1.4.0 la copia que vale está en la base compartida** (Supabase, `public.app_records`, ver `SUPABASE.md`); cada equipo guarda una copia en IndexedDB (base `propesa`, registro `propesa-c1`, desde la v1.6.0; antes en `localStorage`) para trabajar sin internet. En el modo local de pruebas sigue siendo `localStorage['propesa-v4']`. El usuario en sesión (`me`) no va dentro de `ST`: desde la v1.2.5 se guarda aparte en `propesa-ses` (solo su id y la hora de vencimiento) y la pantalla con los borradores en `propesa-ui` (ver `ARQUITECTURA.md` §9).
 
 ## 1. Forma de `ST`
 
 ```js
 ST = {
-  // banderas de migración y contadores
-  PK:1, ORc:1, E0:1,          // migraciones ya aplicadas
-  BN: 0,                      // contador de cajas (seq), solo crece
-  N:  0,                      // contador de movimientos
+  // bandera y contador (v1.6.0: se quitaron PK, ORc, BN y N, que ya no se usaban)
+  E0: 1,                      // datos de demo ya vaciados
   RN: 120,                    // contador de lotes (id 'R-0121'), solo crece
 
   U: [{ id, name, email, role /* 'admin'|'piso'|'consulta' */, notify /* recibe informes */ }],  // sin contraseñas (v1.4.1): las guarda Supabase
@@ -35,7 +33,7 @@ ST = {
         h /* hieleras */, z: [4 tallas en hieleras], c: [[concepto, kgUnit, cantidad]],
         alive /* vivas al llegar | null */, closed }],   // embarques / consignaciones
 
-  O: [{ subject, t, to: [correos], body, pn /* nombre del embarque */, att /* nombre del PDF */ }], // informes de cierre
+  O: [{ subject, t, to: [correos], body, pn /* nombre del embarque */, att /* nombre del PDF */, pu /* id fijo del embarque (v1.6.0): el PDF se busca por él; los informes viejos, por nombre */ }], // informes de cierre
 
   T: [{ id, t /* 'YYYY-MM-DDTHH:MM' */, tank, a /* agua °F */, s /* superficie */, p /* producto */, by }],
 
@@ -83,4 +81,4 @@ ST = {
 
 ## 6. Tamaño
 
-Con un año de datos sin fotos: ~2.2 MB. El límite de `localStorage` ronda 5 MB por sitio; las fotos (base64, se reducen con `shrink` a 800 px y calidad 0.6 desde la v1.4.1, ~120 mil caracteres cada una) son lo que más lo llena. Desde la v1.4.0 cada equipo recibe las fotos de todos: caben unas 40 en total; el arreglo de fondo es pasarlas a Supabase Storage (ver `SUPABASE.md` §6). Si `save()` falla aparece el aviso rojo con «Descargar respaldo».
+Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equipo vive en IndexedDB**, que aguanta cientos de MB: con 45 fotos (~5.4 millones de caracteres) se guarda completa (`sincronizacion_t.py`). Antes vivía en `localStorage` (5 MB, la mitad en iPad), se borraba sola con unas 40 fotos y no avisaba. Si el navegador no deja guardar la copia, aparece «No se pudo guardar la copia de este equipo» y lo capturado se sigue subiendo a la base. La cola de cambios por subir (`propesa-out`) sigue en `localStorage`, que se escribe al instante. Desde la v1.8.0 las fotos ya no van dentro de los datos: viven en el espacio de archivos de Supabase y la nota guarda `sb:notas/<id>/<n>.jpg` (ver `SUPABASE.md` §8); la copia de cada equipo guarda aparte las fotos que ya vio (`F/<ruta>`). En el modo local de pruebas, si `save()` falla aparece el aviso rojo de memoria llena.

@@ -2,7 +2,7 @@
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/teclado_t.py"""
 import json,os,tempfile
 from playwright.sync_api import sync_playwright
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True);T=OUT.rstrip('/')+'/'
 seed=json.loads(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos','seed.json')).read())
 seed['OR'].append({'id':3,'etd':'2026-10-14','lines':[{'id':1,'city':'HKG','cons':0,'cli':'LHD','boxes':6}],'sh':{}})

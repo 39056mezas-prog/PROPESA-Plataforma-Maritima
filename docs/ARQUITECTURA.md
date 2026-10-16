@@ -5,7 +5,7 @@
 | Cosa | Cómo |
 |---|---|
 | Archivos | **Un solo `index.html`** (~205 KB, ~1,040 líneas): HTML + CSS + JS vanilla. Sin dependencias, sin build, sin npm. |
-| Datos | **Base compartida en Supabase** (v1.4.0): todos los equipos ven lo mismo. Copia en el navegador (`propesa-c1`) para trabajar sin internet. Modo local de pruebas: `propesa-v4`. |
+| Datos | **Base compartida en Supabase** (v1.4.0): todos los equipos ven lo mismo. Copia en el navegador (IndexedDB, `propesa-c1`, desde la v1.6.0) para trabajar sin internet. Modo local de pruebas: `propesa-v4`. |
 | Despliegue | GitHub → Vercel (Framework *Other*, sin build, se sirve la raíz). `vercel.json` pone cabeceras de seguridad y caché. |
 | PWA ligera | `manifest.webmanifest` + íconos para «Agregar a pantalla de inicio». Sin service worker todavía. |
 | Copia suelta | `PROPESA_Plataforma_maritima.html` = el mismo `index.html`. |
@@ -81,7 +81,7 @@ Antes de agregar un `data-*` nuevo, busca que no exista ya con otro significado.
 | Núcleo | `load`, `seed`, `save`, `render`, `render0`, `go`, `E`, `toast`, `topBanners`, `iconize` |
 | Formularios | `renderKeep`, `fail` (conservan lo escrito y marcan el campo) |
 | Entrada / lotes | `recepcion`, `lote`, `lotForm`, `saveLot`, `newLotId`, `delLot`, `closeLot`, `post` (movimientos), `mv`, `rev` |
-| Órdenes | `ordenes`, `orden`, `ordAssigned`, `ordCsv` (packing list CSV), `cleanOrders`, `seedOR` |
+| Órdenes | `ordenes`, `orden`, `ordAssigned`, `ordCsv` (packing list CSV) |
 | Empaque | `empaque`, `empacar`, `pkGrid`, `pkCnt`, `pkLive`, `pkEdLive`, `pkUpd`, `pkAnim`, `PKS`, `PKP`, `pendChip`, `goPend`/`goLine` |
 | Embarque | `embarques`, `emb`, `shipFor`, `newShip`, `syncShip`, `syncShipIdx`, `shipLinks`, `moveGroup`, `dropShip`, `joinable`, `shipPanel`, `shipIssues`, `shipAlert`, `truck`, `closeP` |
 | Mortalidad | `cierre`, `calc`, `donut`, `hbars` |
@@ -104,7 +104,7 @@ Probado con un año de datos (500 lotes, 37,400 cajas, 250 órdenes y embarques)
 
 - **Índices de dibujo `RX`**: `render()` arma una vez por dibujo `rxLine`, `rxShip`, `rxMov`, `rxLinks`, `rxLot`, `rxRvd`; funciones como `ordAssigned`, `bal`, `calc`, `shipLinks` los usan si existen y, fuera del dibujo, calculan directo (los manejadores siempre ven datos frescos). Si agregas un cálculo que recorre todas las cajas o movimientos, **úsalo dentro de un índice**.
 - **Listas activas** (`histList`, `HIST`): solo lo abierto o reciente; historial de 100 en 100.
-- Pendiente: `save()` reescribe todo (~80 ms en tablet con un año); las fotos en base64 inflan el almacenamiento (mover a IndexedDB o Supabase Storage).
+- Pendiente: `save()` reescribe todo (~80 ms en tablet con un año). Las fotos ya no inflan los datos: desde la v1.8.0 viven en el espacio de archivos de Supabase (`SUPABASE.md` §8).
 
 ## 7. Ajustes y preferencias
 
@@ -120,8 +120,8 @@ Escritor propio `PdfRep` (sin librerías): Helvetica con codificación WinAnsi y
 
 | Clave | Contenido |
 |---|---|
-| `propesa-c1` | Copia de `ST` de la base compartida (v1.4.0) |
-| `propesa-c1-since` | Último número de cambio (`rev`) ya aplicado |
+| `propesa-c1` | Solo en equipos que no han abierto la v1.6.0: copia vieja de `ST`. Al abrir, se pasa a IndexedDB (`propesa` → `kv` → `propesa-c1` = `{st, since}`) y se borra de aquí |
+| `propesa-c1-since` | Igual: se pasa a IndexedDB junto con la copia y se borra |
 | `propesa-out` | Cola de cambios por subir (`{clave: JSON o 'null'}`) |
 | `propesa-outb` | Cómo estaba cada registro de la cola en la base antes del primer cambio (`{clave: JSON o null}`); sin clave = sube sin revisar (cola de la v1.4.0) |
 | `propesa-sb` | Sesión de Supabase: `{at, rt, exp, uid}` |
@@ -146,7 +146,8 @@ propesa-plataforma/
 ├── docs/                   ← contexto del proyecto (este archivo y los demás)
 │   └── referencias/        ← formatos en papel y documentos del usuario
 ├── pruebas/                ← pruebas automáticas (Playwright/Python) y datos de prueba
-├── supabase/               ← schema.sql (primer esquema), migrations/ (lo aplicado el 14/oct) y functions/usuarios
+├── supabase/               ← schema.sql (primer esquema), migrations/ (lo aplicado en propesa_bc, en orden; ver SUPABASE.md) y functions/usuarios
+├── api/despierta.js        ← tarea diaria de Vercel: consulta pequeña para que Supabase no pause la base
 ├── vercel.json · manifest.webmanifest · íconos
 └── .claude/settings.json   ← activa el plugin agent-skills en Claude Code
 ```
@@ -162,12 +163,13 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 | `WN`, `encodeST`, `decodeST` | `ST` ⇄ registros. Cajas con caché por lote (`ENC_C`) para que guardar sea rápido |
 | `SHW` | Lo último que se sabe de cada registro (texto + objeto) |
 | `syncStage()` | Compara `encodeST()` con `SHW` y anota lo cambiado en `OUT` (`propesa-out`) y, la primera vez, cómo estaba en `OUTB`. Con Consulta no anota nada: vuelve a bajar todo para regresar a lo de la base. Lo llama `save()` |
-| `flush()` | Sube `OUT` en tandas a `rpc/push` (≤ 500 registros / 1.5 MB). Lo que choca (otro equipo lo cambió antes) se aplica desde la base con `applyRows()` y avisa. Si la base no tiene `push` (404), sube como antes. Consulta nunca sube ni vacía la cola |
+| `flush()` | Sube `OUT` en tandas a `rpc/push` (≤ 500 registros / 1.5 MB). Lo que choca (otro equipo lo cambió antes) se aplica desde la base con `applyRows()` y avisa. Si la base no tiene `push` (404), ya no sube por otro camino (v1.6.0): queda pendiente con el aviso «No se pudo subir». Si el mismo registro se cambió otra vez mientras subía, su «antes» pasa a ser lo recién subido (v1.5.1). Consulta nunca sube ni vacía la cola |
 | `syncNow()` | Sube (`flush`) y baja (`pull`). Si la base rechaza lo que se sube, igual baja lo de los demás y después muestra el error (v1.4.1). `wp()` quita el carácter nulo, que la base no acepta |
-| `pull()` / `applyRows()` | Baja `rpc/pull` desde `propesa-c1-since` (de 1000 en 1000). Solo avanza el número hasta lo que tiene más de 8 s (por si otro equipo estaba guardando). Lo pendiente en `OUT` gana. Rearma `ST`, conserva el embarque abierto (`emb:<i>` por su `u`) y corrige la ruta si algo se borró (`fixRoute`) |
+| `pull()` / `applyRows()` | Baja `rpc/pull` desde `SINCE` (lo que se guardó con la copia en IndexedDB) (de 1000 en 1000). Solo avanza el número hasta lo que tiene más de 8 s (por si otro equipo estaba guardando). Lo pendiente en `OUT` gana. Rearma `ST`, conserva el embarque abierto (`emb:<i>` por su `u`) y corrige la ruta si algo se borró (`fixRoute`) |
 | `syncNow`, `syncLoop`, `syncSoon` | Cada 4 s (30 s en segundo plano), al volver el internet y al regresar a la app; `save()` sube a los 250 ms. Perfiles cada 60 s |
 | `softRender()` | Redibuja por cambios de otros sin borrar lo escrito (conserva los campos cambiados por el usuario); si hay un campo con el cursor, espera a que salga |
-| `cacheSoon` / `cacheST` | Copia en el equipo agrupada cada 1.5 s (y al salir de la app); guarda `ST` y `since` juntos |
+| `cacheSoon` / `cacheST` / `loadCache` | Copia en el equipo agrupada cada 1.5 s (y al salir de la app); guarda `ST` y `since` juntos en un solo registro de IndexedDB (v1.6.0). `loadCache()` la lee al arrancar (antes de entrar y de sincronizar) y pasa la copia vieja de `localStorage` si la hay. Si no se puede guardar: `CACHE_ERR` y aviso |
 | `syncBanners()` | «Descargando los datos compartidos…», «Sin conexión…» (rojo si hay pendientes) |
+| Fotos (v1.8.0) | `FQ` cola por subir (IndexedDB `fotos-cola`), `FC` fotos listas para mostrar, `fotoSrc`/`fImg` (src o gris + `data-fp`), `fotoLoad` (IndexedDB `F/<ruta>` o bajada con sesión), `upFotos` (sube antes que `flush`), `fotoMigra` (fotos viejas dentro de notas), `fotoDel`. `outN()` cuenta también las fotos por subir. Detalle: `SUPABASE.md` §8 |
 | Acceso | `sbAuth`, `sbToken` (renueva el token solo), `sbFetch`, `cloudLogin`, `cloudSetup`, `checkSetup` (`rpc/has_admin`), `signOut`, `dropSes` |
 | Usuarios | `loadProfiles()` llena `ST.U`; `fnUsers(action)` llama a la función `usuarios` (`create`, `update`, `delete`, `setup`) |

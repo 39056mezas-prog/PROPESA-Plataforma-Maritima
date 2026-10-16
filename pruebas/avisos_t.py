@@ -2,7 +2,7 @@
 import json
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)
@@ -36,11 +36,20 @@ with sync_playwright() as p:
         # shipment alerts: HKG shipment index
         i=pg.evaluate("ST.P.findIndex(p=>p.n.startsWith('HKG'))");pg.evaluate(f"ST.P[{i}].c[0][1]=1.5;save();go('emb:{i}')")
         n=pg.locator('.alk').count();chk(n>=3,f'{n} alert items clickable')
-        pg.click(".alk:has-text('tallas')");pg.wait_for_timeout(500);chk((pg.evaluate("document.activeElement.dataset.zs") or '').startswith(str(i)),'tallas alert focuses size input')
+        hs=pg.evaluate("[...document.querySelectorAll('#app .alk,#app .chipb')].filter(e=>e.offsetParent).map(e=>Math.round(e.getBoundingClientRect().height))")
+        chk(hs and min(hs)>=44,f'avisos y chips rojos miden 44 px o más para tocar con guantes (auditoría #19): {sorted(set(hs))}')
+        pg.click(".alk:has-text('tallas')");pg.wait_for_timeout(500);chk((pg.evaluate("document.activeElement.dataset.zs") or '').startswith(pg.evaluate(f"ST.P[{i}].u")+':'),'tallas alert focuses size input')
         pg.click(".alk:has-text('Peso bruto')");pg.wait_for_timeout(500);chk(pg.evaluate("document.activeElement.dataset.k")=='1','peso alert focuses weight input')
         pg.click("button.chipb:has-text('NO SUMA')");pg.wait_for_timeout(500);chk((pg.evaluate("document.activeElement.dataset.zs") or '')!='','NO SUMA chip focuses')
         pg.click(".alk:has-text('No hay cajas')");chk(at()==E+'3.1','no boxes alert -> '+at())
         pg.evaluate(f"go('emb:{i}')");pg.click("td button.chipb");chk(at()==E+'3.1','ordsInShip chip -> '+at())
+        # auditoría #6: dos tablets guardan el último lugar a la vez y queda una caja de más
+        pg.evaluate("ST.B.WLRCO051026A.push({c:15,k:'R',d:0,o:'1.1',seq:uidN()});save();go('emb:0')")
+        chk(pg.locator(".alk:has-text('HXH tiene 4 cajas y la orden pide 3')").count()==1,f'piso={piso} aviso rojo «HXH tiene 4 cajas y la orden pide 3»')
+        pg.click(".alk:has-text('HXH tiene 4 cajas')");chk(at()=='empacar:1.1','el aviso lleva a la vista completa de ese cliente -> '+at())
+        chk(pg.evaluate("ordAssigned(ST.OR[0],ST.OR[0].lines[0]).length")==4 and pg.locator('#app').inner_text().count('15')>=1,'ahí se ve la caja de más')
+        pg.evaluate("(()=>{ST.B.WLRCO051026A.pop();save();go('emb:0')})()")
+        chk(pg.locator(".alk:has-text('cajas y la orden pide')").count()==0,'al quitarla, el aviso se va')
         pg.evaluate(f"go('emb:{i}')");pg.screenshot(path=T+f'l_{piso}_emb.png')
         pg.evaluate("go('inicio')");pg.screenshot(path=T+f'l_{piso}_inicio.png')
         pg.close()

@@ -1,5 +1,5 @@
 // PROPESA · función "usuarios": alta, cambios y baja de usuarios (solo el Administrador).
-// También crea el primer Administrador cuando todavía no hay ninguno ("setup").
+// También crea el primer Administrador cuando la base todavía no tiene ninguna cuenta ("setup").
 // Usa la llave de servicio, que solo existe aquí (nunca en la app).
 import { createClient } from "npm:@supabase/supabase-js@2";
 
@@ -27,8 +27,15 @@ Deno.serve(async (req) => {
     const name = txt(b.name, 80), email = txt(b.email, 120).toLowerCase(), pw = String(b.password ?? "");
     const role = ROLES.includes(b.role) ? b.role : "consulta", notify = !!b.notify;
 
-    const checkPw = () => pw.length < 6 ? "La contraseña debe tener al menos 6 caracteres."
+    const checkPw = () => pw.length < 8 ? "La contraseña debe tener al menos 8 caracteres."
       : WEAK.includes(pw.toLowerCase()) ? "Esa contraseña es muy fácil de adivinar. Elige otra." : null;
+    // v1.7.0 (auditoría #15): "setup" solo cuando no hay NINGÚN perfil. Antes bastaba con que no hubiera Administrador:
+    // si alguien borraba a los Administradores desde el panel, cualquiera que abriera la página se volvía Administrador.
+    const profiles = async () => {
+      const { count, error } = await adm.from("profiles").select("id", { count: "exact", head: true });
+      if (error) throw error;
+      return count || 0;
+    };
     const admins = async () => {
       const { count } = await adm.from("profiles").select("id", { count: "exact", head: true }).eq("role", "admin");
       return count || 0;
@@ -54,6 +61,7 @@ Deno.serve(async (req) => {
 
     if (action === "setup") {
       if (await admins()) return out(403, { error: "Ya existe un Administrador. Entra con tu correo y contraseña." });
+      if (await profiles()) return out(403, { error: "Ya hay cuentas en la base. Para dar de alta un Administrador, pide ayuda a quien administra Supabase." });
       if (!name) return out(400, { error: "Escribe tu nombre." });
       if (!/.+@.+\..+/.test(email)) return out(400, { error: "Escribe un correo válido." });
       const bad = checkPw(); if (bad) return out(400, { error: bad });

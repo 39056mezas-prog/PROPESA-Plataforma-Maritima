@@ -1,5 +1,90 @@
 # Cambios
 
+## 1.8.0 · 15 de octubre de 2026
+
+### Nuevo
+- **Las fotos ya no viajan dentro de los datos.** Cada foto se guarda en un espacio de archivos privado de Supabase («fotos») y la nota solo lleva su referencia. Antes cada foto pesaba unas 120 mil letras dentro de la nota, se repetía en todos los equipos y llenaba su memoria.
+  - Al guardar una nota, la foto se ve al instante. Se sube antes que la nota, así los demás equipos ya la encuentran.
+  - Sin internet, la foto espera en el equipo, aunque se recargue la página, y cuenta como «cambio pendiente». Se sube sola al regresar el internet.
+  - Los demás equipos bajan cada foto una sola vez y la guardan; después se ve aunque no haya internet. Mientras baja, el cuadro se ve gris; si tocas una foto que todavía no baja, avisa «La foto todavía se está bajando. Espera unos segundos.»
+  - Eliminar una nota borra sus fotos; «Borrar todos los datos» también.
+  - Una foto que todavía venga dentro de una nota (por ejemplo, de un respaldo) se pasa sola al espacio de archivos.
+  - Si la base rechaza una foto, se quita de su nota y avisa «No se pudo subir una foto: se quitó de su nota.»
+  - Ver: Administrador y Piso y Consulta; subir y borrar: Administrador y Piso. Máximo 2 MB por foto (la app manda ~90 KB). Plan gratis: 1 GB, unas 10,000 fotos.
+- **La base ya no se pausa en la veda.** Vercel llama una vez al día a `api/despierta.js`, que hace una consulta pequeña a la base («¿ya hay Administrador?»). El plan gratis de Supabase solo pausa después de 7 días sin uso, así que ya no hace falta entrar al panel cada mes. Cómo comprobarlo: README → *Fin de temporada*.
+
+### Base de datos
+- Espacio de archivos `fotos` y sus reglas aplicados en `propesa_bc` (`supabase/migrations/20261015_fotos.sql`). Probado en la base real dentro de una transacción que se deshizo.
+
+### Pruebas
+- `fotos_t.py` (34) y `despierta_t.py` (8), nuevas. El Supabase de mentira imita el espacio de archivos. 23 grupos, TODO BIEN.
+
+## 1.7.1 · 15 de octubre de 2026
+
+### Corregido
+- **Modo piso, «¿De qué lote sacas las langostas?»:** el código del lote ya no se corta dentro de su tarjeta. La letra se ajusta al ancho de la tarjeta (hasta el tamaño de antes) y, si el código es muy largo, pasa a otro renglón. El código puede tener cualquier largo, según como se capturó en Entrada.
+
+### Confirmado
+- El texto «Escribe el lote.» de la vista completa (cambio de la 1.6.0) se queda así.
+- **Publicada en Supabase la función `usuarios` nueva** (versión 3): ya aplica en la base real que la Configuración inicial solo funcione sin cuentas y que las contraseñas tengan mínimo 8 caracteres (auditoría #15 y #20).
+
+### Base de datos (15/oct, tarde)
+- **Se borraron las tablas viejas** del primer esquema en `propesa_bc` (`20261014d_quitar_tablas_viejas.sql`): las 9 tablas sin uso, la función `piso_solo_conteo` y el disparador `al_crear_usuario` con su función `nuevo_perfil`. Antes se revisó que estuvieran vacías y que nada dependiera de ellas. Quedan `app_records`, `app_records_hist` y `profiles` (2 Administradores). La app no cambia.
+- **La regla «solo el Administrador cambia roles» ya está en el repositorio** (`supabase/migrations/20261012b_solo_admin_cambia_rol.sql`). Existía en la base desde el 12/oct, pero no en ningún archivo: una base reconstruida desde cero no la habría tenido. Se copió tal cual de la base, sin cambiar nada allá, y se probó en una base local: piso no puede cambiar su rol, el Administrador y la función `usuarios` sí.
+- Ya no salen los avisos de Supabase sobre esas tablas. Los que quedan (`has_admin`, `my_role`, contraseñas filtradas del plan Pro) son por diseño.
+
+### Pruebas
+- `piso_t.py`: los lotes se ven completos en 390, 820, 1180 y 1440 px, con un código de 17 letras. 21 grupos, 1197 verificaciones, TODO BIEN.
+
+## 1.7.0 · 15 de octubre de 2026
+
+### Corregido (auditoría Parte 2, puntos 13 al 20)
+- **13. Fin de temporada:** el README trae una lista de 3 pasos para la veda (respaldo y todo arriba antes del 15 de febrero; revisar el panel de Supabase cada mes y darle «Resume project» si se pausó; confirmar en septiembre antes de prender las tablets).
+- **14. iPad/Safari:** resuelto con la copia en IndexedDB de la v1.6.0 (ya no hay límite de 5 MB ni se cuenta doble con emojis o comillas “ ”). El riesgo de que Safari borre la tablet tras 7 días sin abrir la app queda en la lista de la veda.
+- **15. Configuración inicial:** la función `usuarios` solo crea el primer Administrador si la base no tiene **ninguna** cuenta. Antes, si alguien borraba a los Administradores desde el panel, cualquiera que abriera la página se volvía Administrador. Mensaje nuevo: «Ya hay cuentas en la base. Para dar de alta un Administrador, pide ayuda a quien administra Supabase.»
+- **16. Pruebas sueltas en modo local:** todas las pruebas y Lighthouse usan `?modo=local` por omisión; antes, corridas por separado intentaban entrar a la base real y no probaban nada. `vistas_t.py` ahora sí verifica (nada se sale de la pantalla) y está en `correr_todo.sh`.
+- **17. Modo piso, cajas guardadas legibles:** la tarjeta ya no es transparente; «Caja 1» y «✔ Completada» pasan de 2.4–2.5:1 a 4.7–5.3:1 en tema claro (5.7–6.3:1 en oscuro). «Cambiar» (lote) en azul marino en tema claro (13.9:1).
+- **18. CSS sin uso:** se borraron 68 reglas de 31 clases (~4 KB). Se comprobó con 252 capturas (todas las pantallas, 3 tamaños, claro/oscuro, texto normal y muy grande) que nada cambia.
+- **19. Avisos rojos de 44 px** (antes 23 y 34 px) para tocar con guantes.
+- **20. Contraseñas de mínimo 8 caracteres** (antes 6), en la función `usuarios`, en Configuración inicial y en Administración.
+- Acceso y Configuración inicial marcados como contenido principal para lectores de pantalla: Lighthouse da 100 en las 15 pantallas.
+
+### Importante
+- Los puntos 15 y 20 en la base real necesitan publicar `supabase/functions/usuarios/index.ts` en Supabase (Vercel no lo publica). Ver `docs/SUPABASE.md` §5.
+
+### Pruebas
+- `sincronizacion_t.py` (sin Administradores pero con cuentas, contraseñas de 7), `inicio_t.py`, `estados_caja_t.py` (caja guardada sin transparencia), `avisos_t.py` (44 px), `vistas_t.py` (nueva en la lista). 21 grupos, 1173 verificaciones, TODO BIEN; todas pasan también corridas por separado sin indicar la dirección; `rendimiento_t.py` TODO BIEN; Lighthouse 100 en 15 pantallas.
+
+## 1.6.0 · 15 de octubre de 2026
+
+### Corregido (auditoría `/ponytail-audit` de la v1.5.0, puntos 3 al 12; el 1 y el 2 se hicieron en la 1.5.1)
+- **3. Las vivas al llegar y las tallas se guardan en el embarque correcto.** Si otro equipo quitaba o unía un embarque mientras escribías, lo capturado se iba a otro embarque. Ahora esos campos y la lista «Unir a otro embarque» usan el id fijo del embarque. Si el embarque ya no existe, avisa «Ese embarque ya no existe: otro equipo lo quitó o lo unió.».
+- **4. Amarillo en el packing list y en el informe de cierre.** El PDF del packing list (totales y tabla por cliente), el informe de cierre, la pantalla de Embarque y su PDF cuentan Rojo, Verde, Blanco y **Amarillo**, con una sola función (`byCat`), así que las categorías siempre suman las piezas vivas.
+- **5. El PDF de un informe de cierre es el del embarque que se cerró**, aunque haya dos embarques con el mismo nombre. El informe guarda el id fijo del embarque; los informes viejos se siguen buscando por nombre.
+- **6. Aviso de cajas de más.** Si dos tablets guardan la última caja de un cliente casi al mismo tiempo y queda una de más, el embarque muestra en rojo «HXH tiene 3 cajas y la orden pide 2 · Resolver ›», que lleva a la vista completa de ese cliente para quitarla.
+- **7. La copia de cada equipo ya no se borra con muchas fotos.** Vive en IndexedDB en vez de `localStorage` (cientos de MB en vez de 5): con 45 fotos se guarda completa. Las tablets que ya tenían copia la pasan solas al abrir. Si el navegador no deja guardarla, sale «No se pudo guardar la copia de este equipo» y lo capturado se sigue subiendo.
+- **8. Se quitó la subida que no revisaba choques.** Si la base no encuentra la función que revisa choques, el cambio queda pendiente con el aviso «No se pudo subir» en vez de pisar lo de otros equipos.
+- **9. «Anular reversa» ya no deja la existencia en negativo** («No se puede anular la reversa: dejaría existencia negativa.») y el mensaje usa el número corto del movimiento.
+- **10. La Entrada usa una sola regla en las dos pantallas.** La vista completa y Modo piso crean el lote con la misma función (`addLot`) y la misma revisión (`lotErr`). En la vista completa, −50 kg en una talla ahora marca «No puede ser negativo.» en vez de guardar otro total. Cambio de texto: si falta el lote, la vista completa dice «Escribe el lote.» (antes «Escribe el lote de recepción.»).
+- **11. Se borró código que ya no se usaba** (pantallas y botones de versiones anteriores, migraciones ya aplicadas y contadores viejos).
+- **12. La prueba de rendimiento mide la base compartida** y falla si guardar una caja o recibir un cambio de otro equipo se vuelve lento.
+
+### Pruebas
+- Nuevas verificaciones en `sincronizacion_t.py` (embarque que se recorre mientras escribes, copia en IndexedDB con 45 fotos, paso de la copia vieja, memoria llena, base sin `push`), `pdf_t.py` (Amarillo, informes con el mismo nombre), `avisos_t.py` (cajas de más), `correcciones_t.py` (anular reversa), `entradas_t.py` (Entrada única), `e2e.py` («Unir» con id fijo) y `rendimiento_t.py` (límites).
+- `inicio_t.py` revisa la versión 1.6.0 (en la 1.5.1 se quedó revisando 1.5.0 y fallaba).
+- 20 grupos, 1156 verificaciones, TODO BIEN; `rendimiento_t.py` TODO BIEN.
+
+## 1.5.1 · 15 de octubre de 2026
+
+### Corregido (segunda auditoría `/ponytail-audit`, puntos 1 y 2)
+- **Un registro con valores sin sentido ya no descompone pantallas en todas las tablets.** Antes, una orden con un consignatario que no existe (por ejemplo, el 99) hacía fallar Empaque, la orden y «Empacar cajas» de Modo piso, y una orden con la fecha guardada como número tumbaba el Panel, Órdenes y Empaque. Ahora lo que llega de la base compartida se revisa con las mismas reglas que un respaldo: solo ciudades y consignatarios que existen, mínimo 1 caja por línea, fechas que son fechas, cajas con piezas y con categoría Rojo/Verde/Blanco/Amarillo, movimientos de una talla y tipo válidos y lecturas de temperatura con fecha y tanque. Lo que no se puede usar se ignora en ese equipo (no se sube ni se borra). Lo válido llega exactamente igual que antes (se comprobó con un año de datos: 19,394 registros, cero diferencias).
+- **Si una pantalla llega a fallar, la tablet sigue sincronizando.** Antes dejaba de bajar y subir cambios hasta recargar, aunque ya se hubiera borrado el registro malo.
+- **Al corregir un registro viejo que se arregló al bajarlo, ya no sale «otro equipo lo cambió».** La app se da cuenta de que en la base está lo mismo, solo escrito distinto, vuelve a subirlo y la base queda arreglada.
+- **Cambiar lo mismo dos veces seguidas con internet lento ya no pierde el segundo cambio.** Antes, por ejemplo, tallas 1 y luego tallas 2 en el mismo embarque: quedaba la 1 y salía «No se guardó tu cambio: otro equipo lo cambió antes» aunque nadie más lo había tocado. Ahora queda la 2 y no sale aviso. Si de verdad otro equipo lo cambió antes, gana la base como siempre (y el aviso sale una sola vez).
+
+### Pruebas
+- `sincronizacion_t.py` +13 verificaciones: registros con valores sin sentido (A y Modo piso recorren sus pantallas sin fallar, la orden se corrige y se sube sin aviso falso) e internet lento (dos cambios seguidos). `supabase_falso.py` tiene un interruptor `/__lento` (cada subida tarda 2 s). Las pruebas nuevas fallan con la v1.5.0 y pasan con la v1.5.1. 20 grupos, 1114 verificaciones, TODO BIEN.
+
 ## 1.5.0 · 14 de octubre de 2026
 
 ### Corregido (auditoría `/ponytail-audit`)
@@ -39,7 +124,7 @@
 - Función `public.push` (`20261014b_sin_pisar.sql`): guarda un cambio solo si nadie cambió ese registro antes.
 - **Historial** `app_records_hist` (`20261014c_historial.sql`): cada cambio o borrado guarda cómo estaba antes, para poder recuperarlo. Solo lo ve el Administrador. Cómo recuperar: `docs/SUPABASE.md` §7.
 - Función `usuarios` versión 2: se quitó un paso repetido al eliminar un usuario (la base ya borraba su perfil).
-- **Por aplicar:** `20261014d_quitar_tablas_viejas.sql` borra las 9 tablas vacías del primer esquema. Supabase pide confirmar los borrados.
+- **Por aplicar:** `20261014d_quitar_tablas_viejas.sql` borra las 9 tablas vacías del primer esquema. Supabase pide confirmar los borrados. *(Aplicada el 15/oct/2026, ver 1.7.1.)*
 
 ### Pruebas
 - `sincronizacion_t.py`: 27 verificaciones nuevas (76 en total). 19 grupos, 972 verificaciones, TODO BIEN.

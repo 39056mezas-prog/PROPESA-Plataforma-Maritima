@@ -2,7 +2,7 @@
 import json
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)
@@ -42,5 +42,12 @@ with sync_playwright() as p:
     pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
     chk(pg.locator('.sb').count()==1,'admin full view');pg.click('[data-mode=piso]');pg.wait_for_timeout(900);chk(pg.locator('.pt.p1').count()==1,'admin enters piso');pg.click('[data-mode=full]');pg.wait_for_timeout(900);chk(pg.locator('.sb').count()==1,'admin exits')
     pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.screenshot(path=T+'p_form_sizes.png')
+    # el código del lote se ve completo en «¿De qué lote sacas las langostas?», sea del largo que sea (15/oct/2026)
+    for vw in (390,820,1180,1440):
+        pg.set_viewport_size({'width':vw,'height':900})
+        pg.evaluate("(()=>{if(!R_('WLRLE151026LARGO2')){const r={...ST.R[1],id:'R-0999',lot:'WLRLE151026LARGO2'};ST.R.push(r);ST.B[r.lot]=[];post('RECEPCION',r.lot,S[0],50,0,r.id)}const o=ST.OR[0],l=o.lines[0];for(const k in ST.B)ST.B[k]=ST.B[k].filter(b=>b.o!==o.id+'.'+l.id);save();PE={rows:{}};setPiso(true);go('pemp:'+o.id+'.'+l.id)})()");pg.wait_for_timeout(150)
+        cut=pg.evaluate("[...document.querySelectorAll('.pk2')].filter(c=>{const t=c.querySelector('.cli');return t.scrollWidth>c.clientWidth||t.getBoundingClientRect().right>c.getBoundingClientRect().right+1}).length")
+        n=pg.locator('.pk2').count();chk(n>=3 and cut==0,f'{vw} px: los {n} lotes se ven completos en su tarjeta')
+    pg.evaluate("setPiso(false)")
     b.close()
 print('ERRS',errs)

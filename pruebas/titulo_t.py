@@ -2,7 +2,7 @@
 En tablet y computadora no aparece (ahí se ve el menú lateral). Uso: python3 -m http.server 8765 y luego python3 -I pruebas/titulo_t.py"""
 import json,os,shutil,tempfile
 from playwright.sync_api import sync_playwright
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)

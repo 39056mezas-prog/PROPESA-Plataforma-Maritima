@@ -1,4 +1,4 @@
-# PROPESA · Plataforma marítima · v1.5.0
+# PROPESA · Plataforma marítima · v1.8.0
 
 Sitio estático de una sola página (HTML + CSS + JavaScript, sin dependencias ni paso de compilación).
 Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, temperatura, y fotos y notas por sección.
@@ -9,8 +9,9 @@ Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, t
 |---|---|
 | `index.html` | Toda la aplicación |
 | `manifest.webmanifest`, `favicon.svg`, `icon-*.png`, `apple-touch-icon.png` | Ícono (langosta) y opción "Agregar a pantalla de inicio" en tablet |
-| `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; y caché) |
-| `supabase/` | Base compartida: `migrations/` (lo que está aplicado en el proyecto `propesa_bc`), `functions/usuarios` (alta de usuarios) y `schema.sql` (primer esquema) |
+| `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; caché; y la tarea diaria que mantiene despierta la base) |
+| `api/despierta.js` | La tarea diaria: una consulta pequeña a la base para que el plan gratis de Supabase no la pause (ver *Fin de temporada*) |
+| `supabase/` | Base compartida: `migrations/` (lo que está aplicado en el proyecto `propesa_bc`, incluido el espacio de archivos «fotos»), `functions/usuarios` (alta de usuarios) y `schema.sql` (primer esquema) |
 | `pruebas/` | Pruebas automáticas (ver «Pruebas») |
 | `CHANGELOG.md` | Cambios por versión |
 | `CLAUDE.md` · `AGENTS.md` | Instrucciones para asistentes de IA (empiezan aquí) |
@@ -32,7 +33,7 @@ Desde la v1.4.0 los datos viven en Supabase (proyecto `propesa_bc`): **todos los
 
 ## Primer uso
 
-Cada persona entra con el **correo y la contraseña** que le dio el Administrador. Si la base todavía no tiene Administrador, la app abre **Configuración inicial** para crearlo (nombre, correo y contraseña de mínimo 6 caracteres; las contraseñas muy fáciles se rechazan). Después, en **Administración**, el Administrador da de alta a los demás usuarios con su rol:
+Cada persona entra con el **correo y la contraseña** que le dio el Administrador. Si la base todavía no tiene ninguna cuenta, la app abre **Configuración inicial** para crear el Administrador (nombre, correo y contraseña de mínimo 8 caracteres; las contraseñas muy fáciles se rechazan). Después, en **Administración**, el Administrador da de alta a los demás usuarios con su rol:
 
 | Rol | Puede |
 |---|---|
@@ -106,25 +107,38 @@ Bitácora real de lecturas por tanque (agua, superficie y producto en °F, 20–
 - Lo que cada tablet tenía antes de la v1.4.0 no se mezcla: Administración → *Datos viejos de este equipo* para descargarlo o borrarlo.
 - Para las pruebas existe un modo local (`http://localhost:8765/index.html?modo=local`) que no usa la base.
 
+## Fin de temporada (veda)
+
+La langosta roja se pesca del 16 de septiembre al 15 de febrero. En la veda casi nadie abre la app, y el plan gratis de Supabase **pausa la base después de 7 días sin uso**.
+
+**Desde la v1.8.0 esto se cuida solo:** Vercel llama todos los días a `api/despierta.js` (configurado en `vercel.json`, sección `crons`), que hace una consulta pequeña a la base. Con eso la base nunca pasa 7 días sin uso. No hay que hacer nada.
+
+- **Para comprobar que corre:** Vercel → el proyecto → *Settings* → *Cron Jobs* (debe aparecer `/api/despierta`, una vez al día) y *View Logs*: cada día una llamada con respuesta 200. Una respuesta 502 quiere decir que la base no contestó.
+- **Opcional:** en Vercel → *Settings* → *Environment Variables*, agrega `CRON_SECRET` con una clave larga cualquiera. Así solo Vercel puede usar esa dirección. Sin ella también funciona (la consulta no lee ni cambia datos).
+- **Si algún día la base sí se pausa** (por ejemplo, si se quitó la tarea): Supabase manda un correo. Entra al panel (proyecto `propesa_bc`) y dale **Resume project**; no dejes pasar más de 90 días.
+- **Tablets con Safari:** si una tablet pasa más de 7 días sin abrir la app, Safari puede borrar su copia. Los datos no se pierden (viven en la base), salvo lo que esa tablet no haya subido. Antes del 15 de febrero, revisa que Administración diga «Todo lo de este equipo ya está arriba».
+- **Si cambian a su propia base de datos**, actualicen la dirección y la llave de `api/despierta.js` (las mismas de `index.html`), o quiten la tarea si su base no se pausa.
+
 ## Pruebas
 
 Requieren Python 3 con Playwright y Chromium.
 
 ```bash
-sh pruebas/correr_todo.sh      # 18 grupos, 904 verificaciones; termina con «TODO BIEN»
+sh pruebas/correr_todo.sh      # 23 grupos; termina con «TODO BIEN»
 ```
 
-Extras: `python3 -I pruebas/rendimiento_t.py` (un año de datos, tiempos de pantalla) y `node pruebas/accesibilidad.mjs pruebas/datos/backup.json` (Lighthouse en 14 pantallas; requiere `npm i lighthouse puppeteer-core`).
+Extras: `python3 -I pruebas/rendimiento_t.py` (un año de datos, tiempos de pantalla) y `node pruebas/accesibilidad.mjs pruebas/datos/backup.json` (Lighthouse en 15 pantallas, en modo local; requiere `npm i lighthouse puppeteer-core`).
 
 ## Actualizar y volver atrás
 
 1. Antes de publicar una versión nueva, descarga un respaldo desde Administración.
 2. `git push` a `main` → Vercel despliega solo. `index.html` se sirve con `Cache-Control: no-cache`, así que los equipos toman la versión nueva al recargar.
-3. Si algo sale mal: en Vercel → *Deployments* → la versión anterior → **Promote to Production** (vuelta atrás inmediata). Los datos de cada equipo no se tocan porque viven en su navegador.
+3. Si algo sale mal: en Vercel → *Deployments* → la versión anterior → **Promote to Production** (vuelta atrás inmediata). Los datos no se tocan: viven en la base compartida.
 
-## Límites conocidos de la versión 1.0
+## Límites conocidos
 
-- El inicio de sesión se valida **en el mismo equipo** (contraseñas cifradas con SHA-256); protege el uso diario, no contra alguien con acceso técnico al navegador. El inicio de sesión de servidor llega con Supabase.
-- Cada equipo tiene sus propios datos hasta conectar Supabase; el respaldo `.json` es la forma de pasarlos.
+- Los permisos finos por rol (quién edita órdenes, cierra lotes…) los aplica la pantalla; la base solo distingue «puede escribir» (Administrador, Piso) de «solo ver» (Consulta). Ver `docs/SEGURIDAD.md`.
+- Las fotos viven en el espacio de archivos «fotos» de Supabase (plan gratis: 1 GB, unas 10,000 fotos). El respaldo `.json` lleva las notas pero no las fotos.
 - «Enviar por correo» usa el menú de compartir del equipo o abre tu programa de correo; no hay servidor de correo.
 - El logo es una recreación en SVG; para el archivo oficial, reemplaza la función `LG` en `index.html`.
+- La base usa el plan gratis de Supabase: ver *Fin de temporada (veda)*.

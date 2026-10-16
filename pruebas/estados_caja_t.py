@@ -3,7 +3,7 @@ las completadas se reabren y corrigen sin duplicarse, y la barra de abajo crece 
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/estados_caja_t.py"""
 import json,os,shutil,tempfile
 from playwright.sync_api import sync_playwright
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)
@@ -110,6 +110,7 @@ with sync_playwright() as p:
         pg.evaluate("PISO=true;go('pemp:3.1')")
         if pg.locator('[data-pe^="lot:"]').count():pg.click('[data-pe^="lot:"] >> nth=0')
         chk(pg.locator('.pbx.sv').count()==3 and 'Completada' in pg.inner_text('.pbx.sv >> nth=0'),tag+' piso: 3 tarjetas ✔ Completada')
+        chk(pg.evaluate("getComputedStyle(document.querySelector('.pbx.sv')).opacity")=='1' and pg.evaluate("getComputedStyle(document.querySelector('.plot span')).color")!=pg.evaluate("getComputedStyle(document.querySelector('.plot')).backgroundColor"),tag+' piso: la caja guardada no es transparente (auditoría #17, contraste AA)')
         chk('1 pendiente' in pg.inner_text('.pkn2') and '75% completado' in pg.inner_text('.pkn2'),tag+' piso: resumen '+pg.inner_text('.pkn2').replace('\n',' '))
         free=pg.locator('.pbx:not(.sv)').first;fid=free.get_attribute('id')
         pg.click(f'#{fid} .pbn');pg.click('#kpad [data-kp="k:R"]');chk(pg.locator(f'#{fid}.ip').count()==1,tag+' piso: color sin piezas → en captura')

@@ -4,7 +4,7 @@ punto de color junto a su talla, encabezados sin cortes de más y desplazamiento
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/tabla_entrada_t.py"""
 import os
 from playwright.sync_api import sync_playwright
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 SEED=open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos','seed.json'),encoding='utf-8').read()
 def chk(c,m):print(('PASS ' if c else 'FAIL ')+m)
 PRI=['0-650','651-850','851-1250','1251-UP'];SEC=['491-610','611-850','851-1220','1221-UP']

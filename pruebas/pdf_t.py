@@ -2,7 +2,7 @@
 import json,sys,os
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
-BASE=os.environ.get('BASE','http://localhost:8765/index.html')
+BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
 for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)
@@ -14,11 +14,37 @@ os.makedirs(T+'pdfs',exist_ok=True)
 errs=[]
 with sync_playwright() as p:
     b=p.chromium.launch();ctx=b.new_context(viewport={'width':1180,'height':820},accept_downloads=True);pg=ctx.new_page()
-    pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('console',lambda m:m.type=='error' and errs.append(m.text))
+    pg.on('dialog',lambda d:d.accept());pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('console',lambda m:m.type=='error' and errs.append(m.text))
     pg.goto(BASE);pg.evaluate('s=>localStorage.setItem("propesa-v4",s)',seed);pg.reload()
     pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
     # make shipment have alive + sizes for richer report
     pg.evaluate("ST.P[0].z=[2,2,2,1];ST.P[0].alive=100;save()")
+    # auditoría #4: orden 2 con una caja Roja y una Amarilla (10 piezas cada una)
+    pg.evaluate("(()=>{const b=ST.B.WLRCO051026A;b[0].c=10;b[0].k='R';b[1].c=10;b[1].k='A';save()})()")
+    pg.evaluate("go('orden:2')")
+    with pg.expect_download() as d: pg.locator('[data-pdf^="dl:ord"]').first.click()
+    with pg.expect_download() as d2: pg.evaluate("go('empacar:2.1')"); pg.locator('[data-pdf^="dl:emp"]').first.click()
+    raw=open(d2.value.path(),'rb').read()
+    print(('PASS' if b'(Amarillo)' in raw else 'FAIL'),'el packing list trae la columna y el total de Amarillo')
+    ok=pg.evaluate("ST.OR.every(o=>{const bx=ordBoxes(o).map(x=>x.b),c=byCat(bx);return Object.values(c).reduce((a,v)=>a+v,0)===bx.reduce((a,b)=>a+b.c,0)})&&byCat(ST.B.WLRCO051026A.slice(0,2)).A===10")
+    print(('PASS' if ok else 'FAIL'),'en el packing list las piezas por categoría suman las piezas vivas (con Amarillo)')
+    pg.evaluate("go('emb:0')"); pg.click('[data-a=cp]'); pg.wait_for_timeout(300)
+    body=pg.evaluate("ST.O[0]&&ST.O[0].body||''"); import re as _re
+    m=_re.search(r'Langostas: (\d+) \(([^)]*)\)',body); parts=[int(x) for x in _re.findall(r'(\d+)',m.group(2))] if m else []
+    print(('PASS' if m and 'Amarillo 10' in m.group(2) and sum(parts)==int(m.group(1)) else 'FAIL'),'el informe de cierre cuenta Amarillo y sus categorías suman las langostas:',m and m.group(0))
+    pg.evaluate("ST.P[0].closed=false;ST.O=[];save()")
+    # auditoría #5: dos embarques con el mismo nombre; el PDF del informe es el del embarque que se cerró
+    u1=pg.evaluate("(()=>{const p0=ST.P[0];ST.P.push({...p0,u:uidS(),h:1,z:[1,0,0,0],c:p0.c.map(x=>x.slice()),alive:null,closed:false});ST.B.WLRCO051026A[2].d=1;save();return ST.P[1].u})()")
+    pg.evaluate("go('emb:1')"); pg.click('[data-a=cp]'); pg.wait_for_timeout(300)
+    print(('PASS' if pg.evaluate("ST.O[0].pu")==u1 and pg.evaluate("ST.P[0].n===ST.P[1].n") else 'FAIL'),'el informe guarda el id fijo del embarque (los dos embarques se llaman igual)')
+    pg.evaluate("ST.O.push({u:uidS(),subject:'Informe viejo',t:now(),to:[],body:'x',pn:ST.P[0].n,att:'x.pdf'});save();go('admin')")
+    at=pg.evaluate("[...document.querySelectorAll('[data-pdf^=\"dl:emb\"]')].map(b=>b.dataset.pdf)")
+    print(('PASS' if at==['dl:embu:'+u1,'dl:embn:'+pg.evaluate('ST.P[0].n')] else 'FAIL'),'Administración: el PDF del informe busca por id fijo; los informes viejos, por nombre',at)
+    pg.evaluate("document.querySelectorAll('#app details').forEach(d=>d.open=true)")
+    with pg.expect_download() as d3: pg.locator(f'[data-pdf="dl:embu:{u1}"]').click()
+    raw=open(d3.value.path(),'rb').read()
+    print(('PASS' if raw[:5]==b'%PDF-' and b'(Cerrado)' in raw else 'FAIL'),'el PDF que sale es el del embarque cerrado')
+    pg.evaluate("(()=>{ST.B.WLRCO051026A[2].d=0;ST.P.splice(1,1);ST.O=[];save()})()")
     for route,sel in [('recepcion','dl:ent'),('ordenes','dl:ord'),('orden:1','dl:ord'),('empaque','dl:emp'),('empacar:1.1','dl:emp'),('embarques','dl:embs'),('emb:0','dl:emb'),('cierre','dl:mort')]:
         pg.evaluate(f"go('{route}')")
         btn=pg.locator(f'[data-pdf^="{sel}"]').first
