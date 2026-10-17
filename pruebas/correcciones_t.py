@@ -33,7 +33,7 @@ with sync_playwright() as p:
     ids=pg.evaluate("ST.R.map(r=>r.id)");chk(len(ids)==len(set(ids)),'#6 unique lot ids '+str(ids))
     # 5 closed shipment
     pg.evaluate("ST.P[0].z=[2,2,2,1];save();closeP(0);go('orden:1')")
-    n0=pg.evaluate("ST.OR[0].lines.length");pg.select_option('#ol_city','PVG');pg.fill('#ol_cli','NEW');pg.fill('#ol_n','3');pg.click('[data-oa=ln]')
+    n0=pg.evaluate("ST.OR[0].lines.length");(pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.select_option('#ol_city','PVG');pg.fill('#ol_n','3');pg.fill('#ol_z0','3');pg.click('[data-oa=ln]')
     chk(pg.evaluate("ST.OR[0].lines.length")==n0 and 'cerrado' in pg.inner_text('#toast'),'#5 line into closed shipment blocked')
     # 4 XSS via restore
     evil=json.loads(seed);evil['R'][0]['tank']='<img src=x onerror="window.__pwn=1">';evil['P'].append({'n':'<img src=x onerror="window.__pwn=1">','col':'red;background:url(x)','z':[0,0,0,0],'c':[],'h':0})

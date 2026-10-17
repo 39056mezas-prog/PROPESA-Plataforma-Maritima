@@ -28,10 +28,10 @@ with sync_playwright() as p:
     def mk(etd):
         pg.click('.sb [data-go=ordenes]');pg.fill('#no_etd',etd);pg.click('[data-oa=new]')
     def addline(cli,n,city='PVG'):
-        pg.select_option('#ol_city',city);pg.fill('#ol_cli',cli);pg.fill('#ol_n',str(n));pg.click('[data-oa=ln]')
+        (pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.select_option('#ol_city',city);pg.fill('#ol_n',str(n));pg.fill('#ol_z0',str(n));pg.fill('#ol_tar','0');pg.click('[data-oa=ln]')
     mk('2026-10-12');addline('HXH',3)
-    tx=pg.inner_text('#app');chk('3 hieleras · 48 kg neto · 58.8 kg bruto' in tx and '19.6 kg brutos por hielera' in tx,'orden: peso bruto 19.6 kg por hielera, sin decimales de más')
-    chk(abs(pg.evaluate("ST.P[0].exp")-58.8)<1e-9,'el embarque espera el mismo peso bruto que la orden (58.8 kg)')
+    tx=pg.inner_text('#app');chk('3 hieleras · 48 kg neto · 56.7 kg de peso bruto' in tx and '2138.4' not in tx,'orden: peso bruto = hieleras × (1.4 + 1.5 + 16), sin tarimas ni cartón: 56.7 kg')
+    chk(abs(pg.evaluate("ST.P[0].exp")-56.7)<1e-9,'el embarque espera el mismo peso bruto que la orden (56.7 kg)')
     mk('2026-10-13');addline('ZSM',2)
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     chk(len(st['P'])==2,'2 embarques antes de unir: %d'%len(st['P']))
@@ -87,7 +87,7 @@ with sync_playwright() as p:
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     bx=[b for l in st['B'].values() for b in l];chk(len(bx)==5,'5 hieleras totales: %d'%len(bx))
     pg.click('.sb [data-go=embarques]');pg.locator('.bp').first.click()
-    pg.fill('[data-zs$=":0"]','5');pg.press('[data-zs$=":0"]','Tab')
+    chk(pg.locator('[data-zs]').count()==0 and pg.evaluate("ST.P[0].z")==[5,0,0,0],'las tallas del embarque vienen de las órdenes (sin casillas): '+str(pg.evaluate("ST.P[0].z")))
     # v1.9.0: hoja de empaque completa de las dos órdenes (si falta algo, cerrar pregunta)
     pg.evaluate("ST.OR.forEach(o=>{o.f={...(o.f||{}),hf:'08:00',re:'Ana Torres',ev:'S',pl:'ZRY68F3',ch:'Alejandro S.',tel:'646-294-1282',tp:'48 - 49 °F',to:'T1',tq:'T1 - 50 °F'}});save();render()")
     chk(pg.evaluate("ST.OR.every(o=>!ordTot(o)||!f6Miss(o,true).length)"),'hoja de empaque completa en las dos órdenes (hora inicial puesta sola)')

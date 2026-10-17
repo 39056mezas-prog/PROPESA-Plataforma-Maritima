@@ -31,7 +31,7 @@ with sync_playwright() as p:
         chk(abs(P['T6'][1] - P['T3'][1]) < 4 and abs(P['T5'][1] - P['T4'][1]) < 4, f'{tag}: T6 a la altura de T3 y T5 a la altura de T4 (como el piso)')
         exp = pg.evaluate("f(ST.R.filter(r=>r.tank=='T1'&&!r.closed).reduce((a,r)=>a+bal(r.lot),0),1)")
         chk(pg.get_attribute('[data-tq=T1]', 'aria-pressed') == 'true' and 'Tanque 1' in det(pg) and exp + ' kg' in det(pg), f'{tag}: abre con el primer tanque con producto (T1, {exp} kg)')
-        chk(exp + ' kg' in pg.inner_text('[data-tq=T1]') and 'Agua 60.1°' in pg.inner_text('[data-tq=T1]'), f'{tag}: en el mapa T1 dice sus kg y el agua más reciente')
+        chk(exp + ' kg' in pg.inner_text('[data-tq=T1]') and 'Flotante 60.1°' in pg.inner_text('[data-tq=T1]'), f'{tag}: en el mapa T1 dice sus kg y el agua más reciente')
         chk(pg.evaluate("[...document.querySelectorAll('.tqd .tqc .tqsz b')].reduce((a,e)=>a+ +e.textContent,0).toFixed(1)") == exp, f'{tag}: las 4 tallas del detalle suman el total')
         chk('60.1°' in det(pg) and 'Hoy 09:15' in det(pg) and '50°' not in det(pg), f'{tag}: el detalle muestra la lectura más reciente')
         pg.click('[data-tq=T2]'); chk(pg.get_attribute('[data-tq=T2]', 'aria-pressed') == 'true' and 'Vacío' in det(pg) and 'Sin lectura' in det(pg), f'{tag}: tocar T2 (vacío) muestra «Vacío» y «Sin lectura»')

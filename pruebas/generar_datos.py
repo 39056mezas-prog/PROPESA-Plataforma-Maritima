@@ -20,8 +20,8 @@ with sync_playwright() as p:
         pg.fill('#fdes','4.2');pg.click('[data-a=sv]')
     for etd,rows in [('2026-10-12',[('HXH',3),('ZSM',2)]),('2026-10-13',[('RSK',2)])]:
         pg.click('.sb [data-go=ordenes]');pg.fill('#no_etd',etd);pg.click('[data-oa=new]')
-        for cli,n in rows:
-            pg.select_option('#ol_city','PVG');pg.fill('#ol_cli',cli);pg.fill('#ol_n',str(n));pg.click('[data-oa=ln]')
+        for j,(cli,n) in enumerate(rows):
+            (pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.select_option('#ol_city','PVG');pg.select_option('#ol_cons',index=j);pg.fill('#ol_n',str(n));pg.fill('#ol_z0',str(n));pg.click('[data-oa=ln]')
     pg.click('[data-sh^=join]')
     pg.click('.sb [data-go=empaque]')
     for _ in range(8):

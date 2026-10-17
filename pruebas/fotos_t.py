@@ -133,8 +133,8 @@ try:
         # --- 9. modo local (pruebas, sin base): las fotos siguen dentro de la nota
         cl = b.new_context(); L = cl.new_page(); L.goto(APP + '?modo=local'); chk(not L.evaluate("CLOUD"), 'modo local: sin base compartida'); cl.close()
 
-        # --- 10. v1.8.5: ya no hay «Borrar todos los datos» en la app
-        A.evaluate("go('admin')"); chk(A.locator('[data-a=rst]').count() == 0 and A.evaluate("Object.keys(ST.M).length") > 0, 'Administración ya no tiene «Borrar todos los datos»; las notas y fotos siguen')
+        # --- 10. v1.10.1: «Borrar todos los datos» escondido
+        A.evaluate("go('admin')"); chk(A.locator('[data-a=rst]').count() == 1 and not A.locator('[data-a=rst]').is_visible() and A.evaluate("Object.keys(ST.M).length") > 0, '«Borrar todos los datos» queda escondido (v1.10.1); las notas y fotos siguen')
         b.close()
 finally:
     srv.terminate()

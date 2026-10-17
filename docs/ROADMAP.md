@@ -16,7 +16,7 @@ Estado: **v1.4.0** con base compartida (todos los equipos ven lo mismo). Pregunt
 | 8 | **Mortalidad:** ¿la definición actual es la que usan? El papel reporta % mortalidad y temperatura de arribo por envío | Mortalidad |
 | 9 | **Resuelto 17/oct (v1.9.0): hoja de empaque (Formato 06) en cada orden.** Pendiente: ¿cerrar el embarque con la hoja incompleta se bloquea o solo pregunta (hoy pregunta)? | Órdenes/Embarque, PDF |
 | 10 | **Color de tape** por consignatario | Embarque |
-| 11 | **Temperatura:** ¿quién captura, cada cuánto, qué alertas? (almacenaje 57.7–62.2 °F; transporte 48–49 °F) | Temperatura |
+| 11 | **Pendiente (17/oct, v1.10.1): el usuario quitó el rango por ahora.** Hay PDF de monitoreo; falta definir el rango normal (y si es igual para flotante, superficie y producto) para volver a marcar en rojo (`TRNG`). Antes: **Temperatura:** ¿quién captura, cada cuánto, qué alertas? (almacenaje 57.7–62.2 °F; transporte 48–49 °F) | Temperatura |
 | 12 | Órdenes de fechas distintas en un embarque: ¿se permite y cómo se factura? | Embarque |
 | 13 | ¿Versión en inglés o chino para los socios? | Todo |
 | 14 | **Logo oficial:** subir el archivo para reemplazar la recreación | Marca |

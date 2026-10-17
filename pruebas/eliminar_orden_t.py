@@ -28,11 +28,11 @@ with sync_playwright() as p:
         chk('Orden eliminada' in pg.inner_text('#toast'), f'{vw} avisa «Orden eliminada»')
         # 2. orden con líneas pero sin hieleras: se elimina con su embarque abierto vacío y sus notas
         p0 = pg.evaluate('ST.P.length'); pg.fill('#no_etd', '2026-10-17'); pg.click('[data-oa=new]'); oid = pg.evaluate('+V.id')
-        pg.select_option('#ol_city', 'PVG'); pg.fill('#ol_cli', 'TST'); pg.fill('#ol_n', '3'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(100)
+        pg.select_option('#ol_city', 'PVG'); pg.fill('#ol_n', '3'); pg.fill('#ol_z0', '3'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(100)
         chk(pg.evaluate('ST.P.length') == p0 + 1, f'{vw} la línea crea su embarque')
         lid = pg.evaluate(f'ST.OR.find(o=>o.id=={oid}).lines[0].id')
         pg.evaluate(f"ST.M['emp:{oid}.{lid}']=[{{id:uidN(),t:now(),by:'Ana Torres',text:'nota de prueba',ref:'',imgs:[]}}];save()")
-        pg.evaluate(f"go('orden:{oid}')"); pg.click('[data-oa=dco]'); chk('con 1 línea' in pg.inner_text('#app'), f'{vw} la confirmación dice cuántas líneas tiene')
+        pg.evaluate(f"go('orden:{oid}')"); pg.click('[data-oa=dco]'); chk('con 1 destino' in pg.inner_text('#app'), f'{vw} la confirmación dice cuántos destinos tiene')
         pg.click('[data-oa=dlo]')
         chk(not pg.evaluate(f'ST.OR.some(o=>o.id=={oid})') and pg.evaluate('ST.P.length') == p0, f'{vw} se elimina con su embarque vacío')
         chk(not pg.evaluate(f"'emp:{oid}.{lid}' in ST.M"), f'{vw} y sus notas de empaque')

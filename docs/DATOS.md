@@ -87,3 +87,8 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - `OR[].f` (opcional): `{hi,hf,re,ev,ob,pl,ch,tel,tp,to,tq}`, todo texto. `hi`/`hf` en `HH:MM`; `ev` ∈ `S|NS|ND|NA`. Se limpia con `f6Norm` en `cleanST` y en `WN.OR`; `decodeST` la copia. Sin migración: las órdenes viejas simplemente no la tienen.
 - `P[].ob` (opcional): indicaciones para la carga, hasta 500 letras. En `cleanST` y `WN.P`.
 - Ninguno requiere cambios en Supabase: viajan dentro de `OR/<id>` y `P/<u>`.
+
+## v1.10.0 · líneas de orden por consignatario
+- `OR[].lines[]` nuevas: `{id, city, cons, boxes, z:[B,R,V,A], kp, tar, cc}`; `cli` solo en líneas viejas. `lnX` deja pasar solo números válidos (tallas enteras ≥ 0, `kp` 0–100, `tar`/`cc` enteros ≥ 0).
+- `W` (peso estándar) agrega `t` (tarima, 9.9 kg por omisión).
+- `P[].c` = componentes de las líneas del embarque sin renglones en 0; `P[].z` = suma de tallas de sus líneas cuando todas las tienen.

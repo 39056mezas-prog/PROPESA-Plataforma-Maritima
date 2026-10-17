@@ -42,7 +42,7 @@ def new_lot(pg, code, kgs=(100, 200, 300, 400)):
     pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
 def new_order(pg, etd, cli, n, city='PVG'):
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', etd); pg.click('[data-oa=new]')
-    pg.select_option('#ol_city', city); pg.fill('#ol_cli', cli); pg.fill('#ol_n', str(n)); pg.click('[data-oa=ln]'); pg.wait_for_timeout(150)
+    pg.select_option('#ol_city', city); pg.fill('#ol_n', str(n)); pg.fill('#ol_z0', str(n)); pg.click('[data-oa=ln]'); pg.wait_for_timeout(150)
 DATA = "JSON.stringify(['R','L','B','OR','P','O','T','M'].map(k=>ST[k]))"
 CORE = "JSON.stringify([ST.R.map(r=>r.lot),ST.L.map(x=>x.id),Object.keys(ST.B).sort().map(l=>ST.B[l].map(b=>[b.seq,b.c,b.k,b.d,b.o])),ST.OR.map(o=>[o.id,o.lines,o.sh]),ST.P.map(p=>[p.u,p.n,p.h]),Object.keys(ST.M).sort().map(k=>[k,ST.M[k].map(n=>n.text)])])"
 
@@ -179,8 +179,17 @@ try:
         # --- equipo nuevo descarga todo
         cf, F = device(b, 'F'); chk(login(F, 'admin2@propesa.mx', 'clave-admin2'), 'equipo nuevo entra')
         chk(until(F, "ST.R.length==3&&ST.OR.length==3&&ST.P.length==3") and until(F, "1") and F.evaluate(CORE) == A.evaluate(CORE), 'equipo nuevo descarga exactamente lo mismo')
-        # --- v1.8.5: ya no hay «Borrar todos los datos» en la app
-        A.evaluate("go('admin')"); chk(A.locator('[data-a=rst]').count() == 0 and A.evaluate("!!me") and A.evaluate("ST.U.length") >= 5, 'Administración ya no tiene «Borrar todos los datos»')
+        # --- v1.10.1: «Borrar todos los datos» regresa, escondido y solo para el Administrador
+        A.evaluate("go('admin')"); chk(A.locator('details#adv:not([open]) [data-a=rst]').count() == 1 and not A.locator('[data-a=rst]').is_visible(), 'el botón está escondido dentro de «Configuración avanzada» (cerrada)')
+        A.click('#adv summary'); chk(A.locator('[data-a=rst]').is_disabled(), 'sin respaldo reciente el botón está apagado')
+        with A.expect_download(): A.locator('#adv [data-bk=dl]').click()
+        A.wait_for_timeout(200); chk(A.locator('[data-a=rst]').is_enabled() and A.locator('details#adv[open]').count() == 1, 'con el respaldo descargado se prende (y Configuración avanzada sigue abierta)')
+        A.fill('#rst_t', 'borrar todo'); A.fill('#rst_p', 'otra-clave'); A.click('[data-a=rst]'); A.wait_for_timeout(500)
+        chk('contraseña no es correcta' in A.inner_text('#rst_m') and A.evaluate("ST.R.length") == 3, 'con la contraseña equivocada no borra nada')
+        A.fill('#rst_p', 'clave-admin1'); A.click('[data-a=rst]')
+        chk(until(A, "ST.R.length==0&&ST.OR.length==0&&ST.P.length==0&&outN()==0") and A.evaluate("ST.U.length") >= 5, 'con BORRAR TODO y la contraseña borra todo; los usuarios se quedan')
+        chk(until(F, "ST.R.length==0&&ST.OR.length==0&&ST.P.length==0", 20), 'el borrado llega a los demás equipos')
+        chk(all(r['v'] is None for k, r in mock('/__estado')['recs'].items() if k[:2] in ('R/', 'L/', 'B/', 'OR', 'P/', 'O/', 'T/', 'M/')), 'en la base cada registro queda marcado como borrado')
         # --- respaldo restaurado llega a todos
         A.evaluate("go('admin')"); A.locator('input[data-bk=up]').first.set_input_files(os.path.join(ROOT, 'pruebas', 'datos', 'backup.json'))
         chk(until(A, "ST.R.length>=1") and until(F, f"ST.R.length=={A.evaluate('ST.R.length')}&&ST.OR.length=={A.evaluate('ST.OR.length')}", 20), 'restaurar un respaldo lo pone en todos los equipos')
@@ -306,6 +315,7 @@ try:
         # --- v1.6.0 (auditoría #3): si otro equipo quita un embarque mientras escribes, las vivas y las tallas van al embarque correcto
         us0 = set(A.evaluate("ST.P.map(p=>p.u)")); new_order(A, '2026-10-17', 'HSF', 2, 'XMN')
         ut = [u for u in A.evaluate("ST.P.map(p=>p.u)") if u not in us0][0]; uj = json.dumps(ut)
+        A.evaluate("(()=>{const o=ST.OR.find(o=>o.etd=='2026-10-17'&&o.lines.some(l=>l.city=='XMN'));o.lines.forEach(l=>{delete l.z;delete l.kp;delete l.tar;delete l.cc});save();render()})()")  # orden con el formato de antes: tallas a mano en Embarque
         A.evaluate(f"(()=>{{const i=ST.P.findIndex(p=>p.u=={uj}),l=ST.R.find(r=>!r.lot.startsWith('ZZ')).lot;ST.B[l].push({{c:30,k:'R',d:i,o:null,seq:uidN()}});ST.P.forEach(p=>{{if(p.alive===9)p.alive=null}});save()}})()")
         dummy = lambda u: {'k': 'P/' + u, 'v': {'u': u, 'n': 'HKG · PRUEBA · 01/01', 'z0': '', 'col': '#1c7f9a', 'exp': 0, 'h': 0, 'z': [0, 0, 0, 0], 'c': [], 'alive': None, 'closed': False}}
         for fld, val, du in (('[data-alive]', '9', '000000'), ('[data-zs$=":1"]', '4', '0000000')):

@@ -4,6 +4,7 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 
 | Fecha | Decisión | Por qué / quién |
 |---|---|---|
+| 17/10/2026 | **«Borrar todos los datos» regresa** solo para el Administrador, escondido en «Configuración avanzada» (respaldo reciente + BORRAR TODO + contraseña). **Rango de temperatura pendiente** (sin avisos). **Órdenes sin clientes finales**, por consignatario con tallas, kg de producto (15/16), tarimas y cartón. **Tarima 9.9 kg.** Consulta puede salir de Modo piso | Usuario |
 | 15/10/2026 | **Entrada: si falta el lote, las dos pantallas dicen «Escribe el lote.»** (antes la vista completa decía «Escribe el lote de recepción.»). Viene de unir la regla de Entrada (`lotErr`, auditoría #10) | Usuario: «mantenlo como tú dices» |
 | 15/10/2026 | **El código del lote se ve completo en su tarjeta de Modo piso** («¿De qué lote sacas las langostas?»): la letra se ajusta al ancho de la tarjeta (hasta el tamaño de antes) y un código muy largo pasa a otro renglón. El código puede ser de cualquier largo | Usuario: «el lote sale dependiendo su entrada» |
 | 14/10/2026 | **Auditoría:** (1) `WN` valida números con `wnn`/`wn0` (antes texto → riesgo de código en el tablero de tanques); (2) «En tanques» del Panel solo cuenta lotes abiertos (como el mapa); (3) cambiar de pestaña de lote con cajas sin guardar avisa en vez de moverlas de lote | `/ponytail-audit` |

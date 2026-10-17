@@ -28,15 +28,15 @@ with sync_playwright() as p:
         dialogs = []; pg.on('dialog', lambda d: (dialogs.append(d.message), d.dismiss()))
         entrar(pg, 'admin@propesa.mx', 'admin123')
         pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '2026-10-20'); pg.click('[data-oa=new]'); oid = pg.evaluate('+V.id')
-        for cli, n in [('ABC', 2), ('DEF', 1)]:
-            pg.select_option('#ol_city', 'PVG'); pg.fill('#ol_cli', cli); pg.fill('#ol_n', str(n)); pg.click('[data-oa=ln]'); pg.wait_for_timeout(80)
+        for j, n in enumerate([2, 1]):
+            (pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]')); pg.select_option('#ol_city', 'PVG'); pg.select_option('#ol_cons', index=j); pg.fill('#ol_n', str(n)); pg.fill('#ol_z1', str(n)); pg.fill('#ol_tar', '1'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(80)
         O = f"ST.OR.find(o=>o.id=={oid})"
         chk(pg.locator('#f6card').count() == 1, f'{vw} la orden muestra la hoja de empaque (Formato 06)')
         t = pg.inner_text('#f6card')
         chk('Langosta Roja' in t and '20/10/2026' in t and 'PVG' in t, f'{vw} la hoja trae fecha, especie y destino solos')
         chk(pg.evaluate(f"f6Miss({O}).length") == 0 and 'Faltan datos de la hoja' not in t, f'{vw} antes de empacar no pide nada en rojo')
         chk('Empacar hieleras' in pg.inner_text('#app') or 'hieleras' in pg.inner_text('#app'), f'{vw} la orden habla de hieleras')
-        chk(not re.search(r'\b[Cc]ajas?\b', pg.inner_text('#app').replace('caja de cartón', '')), f'{vw} la orden ya no dice «cajas»')
+        chk(not re.search(r'\b[Cc]ajas?\b', re.sub(r'(?i)cajas? de cart[oó]n', '', pg.inner_text('#app'))), f'{vw} la orden ya no dice «cajas»')
         # empacar ABC (2 hieleras) en la vista completa
         lids = pg.evaluate(f"{O}.lines.map(l=>l.id)")
         pg.evaluate(f"go('empacar:{oid}.{lids[0]}')"); pg.evaluate("PKD.lot=openLots()[0]")
@@ -91,6 +91,7 @@ with sync_playwright() as p:
         body = pg.evaluate("ST.O[0].body")
         for s in ['HOJA DE EMPAQUE', 'Langosta Roja', 'ZRY68F3', 'Alejandro S.', '646-294-1282', '48 - 49 °F', 'Evaluación: S (Satisfactorio)', 'Hora inicial: ' + hi, 'INDICACIONES PARA LA CARGA: Echar 2 tarimas', 'Realizó: Ana Torres', 'Tanques de origen: T1']:
             chk(s in body, f'{vw} el informe de correo trae «{s}»')
+        pg.evaluate(f"Object.values({O}.sh).forEach(i=>ST.P[i].closed=true);save();render()")  # la orden lleva dos consignatarios: dos embarques
         chk(pg.locator('#f6_pl').count() == 0 or pg.is_disabled('#f6_pl'), f'{vw} con el embarque cerrado la hoja ya no se cambia')
         pg.evaluate(f"go('orden:{oid}')"); chk(pg.is_disabled('#f6_pl') and pg.locator('[data-f6^="sv:"]').count() == 0, f'{vw} en la orden la hoja queda de solo lectura')
         tx = pdf_text(pg, 'emb', si)
@@ -100,7 +101,7 @@ with sync_playwright() as p:
         chk('Formato 06' in tx and 'ZRY68F3' in tx and 'hieleras' in tx.lower() and not re.search(r'\bcajas?\b', tx.lower()), f'{vw} el packing list de la orden trae la hoja y dice hieleras')
         # cerrar con la hoja incompleta pide confirmación
         pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '2026-10-21'); pg.click('[data-oa=new]'); o2 = pg.evaluate('+V.id')
-        pg.select_option('#ol_city', 'HKG'); pg.fill('#ol_cli', 'XYZ'); pg.fill('#ol_n', '1'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(80)
+        pg.select_option('#ol_city', 'HKG'); pg.fill('#ol_n', '1'); pg.fill('#ol_z0', '1'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(80)
         l2 = pg.evaluate(f"ST.OR.find(o=>o.id=={o2}).lines[0].id"); pg.evaluate(f"go('empacar:{o2}.{l2}')"); pg.evaluate("PKD.lot=openLots()[0]"); pg.fill('#pk_c0', '20'); pg.click('#pkr0 [data-pk^="k:"] >> nth=0'); pg.click('[data-pk=addall]'); pg.wait_for_timeout(80)
         s2 = pg.evaluate(f"(o=>o.sh[Object.keys(o.sh)[0]])(ST.OR.find(o=>o.id=={o2}))")
         pg.evaluate(f"go('emb:{s2}')"); iss = pg.evaluate(f"shipIssues({s2}).map(x=>x.t+'|'+(x.go||''))")

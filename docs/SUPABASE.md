@@ -101,7 +101,9 @@ update app_records set v = (select v from app_records_hist where id = <id del hi
 - Plan gratis de Supabase: 1 GB de archivos (unas 10,000 fotos) y 5 GB de descarga al mes.
 - Probado: `pruebas/fotos_t.py` con el Supabase de mentira, y en `propesa_bc` (15/oct/2026, dentro de una transacción que se deshizo) que el Administrador sube y ve, y que una cuenta sin perfil o sin sesión no ve ni sube nada. La regla de borrar no se pudo probar en la base real (Supabase pide confirmar los borrados); es igual a la de subir.
 
-## 9. Borrar todos los datos a mano (no existe en la app desde la v1.8.5)
+## 9. Borrar todos los datos a mano
+
+Desde la v1.10.1 también se puede desde la app: Administración → «Configuración avanzada» (solo el Administrador; pide respaldo reciente, BORRAR TODO y la contraseña). Lo de abajo sigue sirviendo si la app no está disponible.
 
 Decisión del usuario: nadie puede borrarlo todo desde la app; si algún día hace falta, lo hace el dueño de la cuenta de Supabase.
 

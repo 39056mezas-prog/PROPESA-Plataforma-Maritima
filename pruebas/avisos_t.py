@@ -26,13 +26,13 @@ with sync_playwright() as p:
         # panel order table
         pg.click("button.chipb:has-text('Faltan 25')");chk(at()==E+'3.1',f'piso={piso} panel Faltan -> {at()}')
         pg.evaluate("go('inicio')");pg.click("button.chipb:has-text('Sin líneas')");chk(at()=='orden:4','panel Sin líneas -> '+at())
-        pg.click("button.chipb:has-text('Sin líneas')");pg.wait_for_timeout(500);chk(pg.evaluate("document.activeElement.id")=='ol_cli','on order page jumps to add-line field')
+        pg.click("button.chipb:has-text('Sin líneas')");pg.wait_for_timeout(500);chk(pg.evaluate("document.activeElement.id")=='ol_n','on order page jumps to add-line field')
         # KPI cards
         pg.evaluate("go('inicio')");pg.click('.kpl >> nth=0');chk(at().startswith(E) or at().startswith('orden:'),'KPI hieleras -> '+at())
         pg.evaluate("go('inicio')");pg.click('.kpl >> nth=1');chk(at().startswith('emb:'),'KPI empaques -> '+at())
         # empaque per-line chip
         pg.evaluate("go('empaque')");pg.click("td button.chipb:has-text('Faltan 25')");chk(at()==E+'3.1','empaque line chip -> '+at())
-        pg.evaluate("go('orden:3')");pg.click("td button.chipb");chk(at()==E+'3.1','orden line chip -> '+at())
+        pg.evaluate("go('orden:3')");pg.click(".lnb button.chipb");chk(at()==E+'3.1','orden line chip -> '+at())
         # shipment alerts: HKG shipment index
         i=pg.evaluate("ST.P.findIndex(p=>p.n.startsWith('HKG'))");pg.evaluate(f"ST.P[{i}].c[0][1]=1.5;save();go('emb:{i}')")
         n=pg.locator('.alk').count();chk(n>=3,f'{n} alert items clickable')

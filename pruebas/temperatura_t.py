@@ -26,7 +26,7 @@ with sync_playwright() as p:
         chk(pg.evaluate("!!R_('WLRTEMP1')") and pg.evaluate("ST.T.length") == 0, f'{vw} se guarda la entrada (sin copiar nada a las lecturas)')
         # Temperatura la muestra sola
         pg.evaluate("go('temperatura')"); tx = pg.inner_text('#app')
-        chk('Entrada · WLRTEMP1' in tx and '57.3 °F' in tx and '58-60 °F' in tx and '16/10/2026 07:40' in tx, f'{vw} Temperatura muestra la de la entrada (agua, producto, fecha y hora, lote)')
+        chk('Entrada · WLRTEMP1' in tx and '57.3 °F' in tx and '58-60 °F' in tx and '16/10/2026' in tx and '07:40' in tx, f'{vw} Temperatura muestra la de la entrada (agua, producto, fecha y hora, lote)')
         chk(pg.locator('tr.tqent [data-tqdel]').count() == 0, f'{vw} la de la entrada no se elimina desde Temperatura (se corrige en el lote)')
         pg.click('button.lnk:has-text("Entrada · WLRTEMP1")'); chk(pg.evaluate("V.v") == 'lote' and pg.evaluate("V.id") == 'WLRTEMP1', f'{vw} «Entrada · lote» abre el lote')
         # el lote muestra la temperatura de su tanque
@@ -34,7 +34,7 @@ with sync_playwright() as p:
         # lectura manual desde el lote: el tanque ya viene elegido
         pg.click('[data-go="temperatura:T6"] >> text=Registrar lectura'); chk(pg.evaluate("V.v") == 'temperatura' and pg.input_value('#tq_t') == 'T6', f'{vw} «+ Registrar lectura» abre Temperatura con el tanque 6 elegido')
         chk(pg.evaluate("TFIL") == 'T6' and pg.locator('[data-tqf="T6"][aria-pressed=true]').count() == 1, f'{vw} y la lista filtrada en el tanque 6')
-        pg.fill('#tq_d', '2026-10-16T12:10'); pg.fill('#tq_a', '56.1'); pg.fill('#tq_s', '55.9'); pg.click('[data-a=tq]')
+        pg.fill('#tq_d', '2026-10-16'); pg.fill('#tq_h', '12:10'); pg.fill('#tq_a', '56.1'); pg.fill('#tq_s', '55.9'); pg.click('[data-a=tq]')
         chk(pg.evaluate("ST.T.length") == 1 and 'Lectura · Ana Torres' in pg.inner_text('#app'), f'{vw} la lectura manual se sigue guardando (para seguimiento)')
         rows = pg.evaluate("[...document.querySelectorAll('#app tbody tr')].map(r=>r.innerText)")
         chk(len(rows) >= 2 and '12:10' in rows[0] and 'WLRTEMP1' in rows[1], f'{vw} lista en orden: la más reciente arriba')
@@ -45,7 +45,7 @@ with sync_playwright() as p:
         chk('56.1' in tq and '12:10' in tq, f'{vw} el tablero del tanque 6 muestra la última temperatura (lectura 12:10): {tq[-120:]!r}')
         pg.evaluate("ST.T=[];save();render()"); tq = pg.inner_text('.tqd')
         chk('57.3' in tq and 'entrada WLRTEMP1' in tq, f'{vw} sin lecturas, el tablero muestra la de la entrada')
-        chk('Agua 57.3°' in pg.inner_text('[data-tq="T6"]'), f'{vw} y el mapa del tanque 6 también')
+        chk('Flotante 57.3°' in pg.inner_text('[data-tq="T6"]'), f'{vw} y el mapa del tanque 6 también')
         # editar el lote cambia la temperatura sola
         pg.evaluate("go('lote:WLRTEMP1')"); pg.click('[data-a=el]'); pg.fill('#ftt', '55.5'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
         pg.evaluate("go('temperatura')"); chk('55.5 °F' in pg.inner_text('#app tbody') and '57.3 °F' not in pg.inner_text('#app tbody'), f'{vw} al editar el lote, Temperatura se actualiza sola')

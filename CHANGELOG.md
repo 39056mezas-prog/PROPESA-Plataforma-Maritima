@@ -1,5 +1,37 @@
 # Cambios
 
+## 1.10.1 · 17 de octubre de 2026
+
+### Corregido
+- **Con la cuenta de Consulta ya se puede salir de Modo piso.** El interruptor «Modo piso» de arriba solo le salía al Administrador; Consulta entraba desde el menú y se quedaba atorada. Ahora lo ven el Administrador y Consulta. El Encargado de piso sigue entrando directo a Modo piso (decisión del 12/oct).
+
+### Cambiado
+- **Temperatura: el rango normal queda pendiente** (pedido del usuario). Ya no se marca nada en rojo, no hay aviso de «fuera de rango» y el PDF no habla de rango. Las columnas (fecha, hora, termómetro flotante, superficie del agua, interna del producto) se quedan.
+- **«Borrar todos los datos» regresa, escondido y solo para el Administrador** (pedido del usuario). Está al final de Administración, dentro de «Configuración avanzada» (cerrada). Pide un respaldo descargado en los últimos 15 minutos, escribir BORRAR TODO y la contraseña. Borra lotes, órdenes, embarques, hieleras, notas y fotos, informes y temperaturas en todos los equipos; los usuarios y el peso de la hielera se quedan.
+
+### Pruebas
+- `ordenes_t` (salir de Modo piso con Consulta, temperatura sin rango), `sincronizacion_t` (borrar todo: contraseña equivocada no borra; con la correcta llega a todos los equipos), `inicio_t`, `fotos_t`. 33 grupos, 1734 verificaciones, TODO BIEN.
+
+## 1.10.0 · 17 de octubre de 2026
+
+### Nuevo
+- **Órdenes por destino y consignatario, como la hoja que usa PROPESA** (pedido del usuario, con su «ORDER LIST» de ejemplo). Por cada consignatario el Administrador captura: **total de hieleras**, **hieleras por talla** (Chica / Mediana / Grande / Jumbo, con sus colores), **kg de producto por hielera (15 o 16)**, **tarimas** y **cajas de cartón**.
+  - La app arma la tabla de **peso bruto** (hieleras · gel ice · tarimas · producto · caja de cartón) mientras se escribe, y el total de la orden. Ejemplo de la hoja: 110 hieleras, 6 tarimas, 16 kg, sin cartón = **2138.4 kg**.
+  - Las tallas deben sumar el total; si no, no se agrega y se conserva lo escrito.
+  - Cada orden lleva un solo destino: después del primer consignatario, la ciudad queda fija. El mismo consignatario no se repite en una orden.
+  - **Ya no se capturan clientes finales** (las órdenes de antes conservan los suyos y su peso anterior).
+  - El embarque toma las tallas y el peso de la orden (ya no se capturan en Embarque).
+  - Al empacar se ve, por talla, cuántas hieleras se pidieron y cuántas van; si no cuadran, aviso rojo en la orden, en Empaque, en Modo piso y en el embarque.
+  - El PDF de la orden sale como la hoja: un bloque por consignatario con sus tallas en colores y su tabla de peso bruto, y el peso bruto de toda la orden.
+- **Tablero de tanques (Entrada):** por cada talla, cuántas **hieleras de 15 kg** hay en el tanque (y los kg sueltos), y el total.
+- **Monitoreo de temperatura de tanques** (control interno): fecha y hora por separado, **termómetro flotante**, **superficie del agua** e **interna del producto**. Rango normal **48.4 a 56.6 °F**: lo que sale se marca en rojo (tabla, tablero de tanques, lote), al guardar avisa, y arriba sale un aviso con «Ver las lecturas en rojo ›». Nuevo **PDF de monitoreo de temperatura** (todas las lecturas, o las del tanque elegido).
+
+### Cambiado
+- Peso estándar (Administración): se agrega la **tarima (9.9 kg)**. El producto queda como valor por omisión; en cada orden se elige 15 o 16.
+
+### Pruebas
+- `ordenes_t.py` (86), nueva. Las pruebas que agregaban líneas con cliente se pasaron al formulario nuevo. 33 grupos, 1711 verificaciones, TODO BIEN.
+
 ## 1.9.0 · 17 de octubre de 2026
 
 ### Nuevo

@@ -25,8 +25,8 @@ with sync_playwright() as p:
         chk(pg.locator('#fo').count()==1 and pg.input_value('#fo')=='SCPP Ensenada',f'{w} el formulario de Entrada sigue abierto con el proveedor')
         chk(pg.input_value('#fl')=='WLRCO131026' and pg.input_value('#fk1')=='55.5',f'{w} se conservan lote y kilos')
         # 2) Orden a medias
-        pg.evaluate("go('orden:1')");pg.fill('#ol_cli','ZZZ');pg.fill('#ol_n','7');reload(pg)
-        chk(pg.input_value('#ol_cli')=='ZZZ' and pg.input_value('#ol_n')=='7',f'{w} la línea de orden a medias se conserva')
+        pg.evaluate("go('orden:1')");(pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.fill('#ol_z1','5');pg.fill('#ol_n','7');reload(pg)
+        chk(pg.input_value('#ol_z1')=='5' and pg.input_value('#ol_n')=='7',f'{w} la línea de orden a medias se conserva')
         # 3) Nota sin guardar en un lote
         pg.evaluate("go('lote:WLRCO051026A')");pg.fill('#ntx','revisar tanque 2');reload(pg)
         chk('lote' in pg.evaluate('V.v') and pg.input_value('#ntx')=='revisar tanque 2',f'{w} la nota sin guardar se conserva en la misma pantalla')
