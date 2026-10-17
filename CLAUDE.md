@@ -1,14 +1,16 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.8.0** (15 de octubre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.8.9** (16 de octubre de 2026).
 
 ## Qué es
 
 Plataforma web para **PROPESA** (Proveedor del Pescador S.A. de C.V., Ensenada, B.C.), que exporta langosta roja viva a China por avión.
 Sigue cada lote por este flujo, que **no se cambia sin permiso del usuario**:
 
-**Entrada → Órdenes → Empaque → Embarque → Mortalidad final**
+**Entrada → Órdenes → Empaque → Embarque**
+
+**Mortalidad final va aparte** (decidido por el usuario el 16/oct/2026): no es un paso del flujo; se calcula sola con el conteo final de cada lote y las vivas al llegar de cada envío, y se revisa cuando se necesite (menú → «Revisión»).
 
 La usan en tablet personas de piso con poca experiencia técnica (manos mojadas, guantes, poca luz), y también se consulta en computadora y celular.
 
@@ -55,7 +57,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 
 ```bash
 python3 -m http.server 8765                 # servir en http://localhost:8765
-sh pruebas/correr_todo.sh                   # 23 grupos de pruebas, debe terminar en «TODO BIEN»
+sh pruebas/correr_todo.sh                   # 31 grupos de pruebas, debe terminar en «TODO BIEN»
 python3 -I pruebas/rendimiento_t.py         # rendimiento con un año de datos
 node pruebas/accesibilidad.mjs pruebas/datos/backup.json   # Lighthouse (npm i lighthouse puppeteer-core)
 ```
@@ -74,7 +76,7 @@ Las pruebas usan Python 3 + Playwright con Chromium. Si `correr_todo.sh` ya leva
 - [ ] Revisado en 390, 820 y 1440 px, y con texto «Muy grande» (20 px): sin desbordes.
 - [ ] Tema claro y oscuro.
 - [ ] Sin errores en consola; sin violaciones de la CSP.
-- [ ] Documentación y `CHANGELOG.md` al día; versión subida si aplica (`Versión x.y.z` en `pmenuHTML` y en Administración).
+- [ ] Documentación y `CHANGELOG.md` al día; versión subida si aplica (constante `APPV` en `index.html`: la usan el menú del perfil y Administración).
 
 ## Entregables de cada ronda
 

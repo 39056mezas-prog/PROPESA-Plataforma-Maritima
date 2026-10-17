@@ -1,5 +1,111 @@
 # Cambios
 
+## 1.8.9 · 16 de octubre de 2026
+
+### Corregido
+- **Empaque en celular: ya no se abre el teclado de Android al completar una caja.** Al tocar la categoría, la app pasa a la siguiente caja y le pone el cursor (para que también funcione un teclado físico); algunos teclados, como el de Samsung, se abrían en ese momento aunque la app pedía que no. Ahora, en celulares y tablets táctiles, las casillas de piezas son de solo lectura para el sistema y se llenan solo con el teclado de la app (vista completa y Modo piso, cajas nuevas y guardadas). En computadora no cambia: el teclado físico sigue escribiendo.
+
+### Pruebas
+- `teclado_movil_t.py` (13), nueva: simula un celular Android táctil. 31 grupos, TODO BIEN.
+
+## 1.8.8 · 16 de octubre de 2026
+
+### Nuevo
+- **Editar una orden después de crearla** (solo el Administrador, quien crea órdenes):
+  - **Fecha del empaque (ETD):** «Cambiar fecha» junto al título de la orden. El nombre del embarque toma la fecha nueva.
+  - **Cada línea:** «Editar» para cambiar el cliente final y cuántas cajas. El embarque se actualiza solo (hieleras y peso).
+  - No se pueden pedir menos cajas de las que ya están empacadas (lo dice ahí mismo), y no se cambia una línea cuyo embarque ya está cerrado (hay que reabrirlo en Embarque, igual que para agregar líneas).
+  - Para cambiar el destino o el consignatario: si la línea no tiene cajas, se elimina y se agrega de nuevo (lo explica al editar).
+  - En celular el formulario de edición ocupa todo el ancho, con «Guardar» a la vista.
+
+### Pruebas
+- `editar_orden_t.py` (31), nueva. 30 grupos, TODO BIEN.
+
+## 1.8.7 · 16 de octubre de 2026
+
+### Cambiado
+- **El peso de la caja se cambia en un solo lugar: Administración → «Peso de la caja».** Antes cada embarque tenía su propia tabla con casillas para editar, hasta abajo y con un título técnico, y no era claro dónde se cambiaba. El usuario confirmó que en el piso no se pesa (se usa el estándar) y que solo el Administrador lo cambia.
+  - Peso estándar de cada caja (hielera): hielera vacía 1.4 + gel 1.5 + producto 16 + caja de cartón 0.7 = **19.6 kg brutos, 16 kg netos**. Al escribir se ve el total. Solo el Administrador lo ve y lo cambia; aplica a todos los equipos.
+  - **Embarque:** la tarjeta se llama «Peso del embarque», explica que se calcula solo (hieleras × peso estándar) y ya no tiene casillas. El Administrador ve «Cambiar el peso estándar ›», que lleva directo a Administración.
+  - **Órdenes y PDF** usan el mismo estándar («16 kg netos y 19.6 kg brutos por caja» ya no está fijo).
+  - Al cambiar el estándar se recalculan los embarques abiertos; **los cerrados conservan el peso con el que se cerraron.**
+  - Si un embarque abierto trae pesos cambiados a mano de una versión anterior, lo avisa y el Administrador tiene «Usar el peso estándar».
+- «Kg por caja en tanque» de Entrada no cambió: es otro dato (cuánto pesa una caja de langosta en el tanque al recibir el lote).
+
+### Pruebas
+- `pesos_t.py` (39), nueva; `avisos_t` y `sincronizacion_t` (el peso llega a otro equipo). 29 grupos, TODO BIEN.
+
+## 1.8.6 · 16 de octubre de 2026
+
+### Nuevo
+- **Al compartir el link sale el logo de PROPESA.** Imagen `og-image.png` (1200×630, logo en blanco sobre azul marino con «Plataforma marítima») y las etiquetas que leen WhatsApp, Facebook, Slack, X, Teams y LinkedIn (`og:*`, `twitter:*`).
+- La descripción del link ya no menciona Mortalidad final como paso: «Seguimiento de cada lote de langosta viva: entrada, órdenes, empaque y embarque.»
+- **Pantalla de carga con el logo de PROPESA.** Al abrir la app aparece el logo en blanco sobre azul marino, con tres puntitos, mientras se cargan los datos del equipo; se desvanece sola en cuanto la app está lista (en la app instalada se ve al menos medio segundo para que no parpadee).
+- **El ícono de la pantalla de inicio de Android ya no se ve pixeleado.** Android dibuja ese ícono más grande que 512 px y estiraba el de 512; ahora hay uno de 1024 px (normal y para íconos redondos). El fondo de esa pantalla es el mismo azul que la pantalla de carga, así que se pasa de una a otra sin cambio de color. Íconos con `?v=4`.
+
+### Pruebas
+- `vista_previa_t.py` (28), nueva: vista previa del link, íconos del manifiesto y pantalla de carga. 28 grupos, TODO BIEN.
+
+## 1.8.5 · 16 de octubre de 2026
+
+### Quitado
+- **«Borrar todos los datos» ya no existe en la app** (pedido del usuario: «no quiero que alguien lo pueda hacer, solo lo haría yo manualmente»). Se quitó también la sección «Configuración avanzada» que lo contenía (v1.8.4). Descargar y restaurar respaldo siguen igual. Si algún día hace falta borrar todo, se hace a mano desde Supabase: `docs/SUPABASE.md` §9.
+
+### Pruebas
+- `inicio_t`, `fotos_t` y `sincronizacion_t` revisan que el botón ya no existe. 27 grupos, TODO BIEN.
+
+## 1.8.4 · 16 de octubre de 2026
+
+### Cambiado
+- **Temperatura conectada con Entrada.** Las temperaturas que se capturan al registrar cada entrada (agua del tanque y producto) aparecen solas en Temperatura, marcadas «Entrada · lote» con enlace al lote. No se copian: si editas o eliminas el lote, cambian solas en todos los equipos.
+  - El tablero de tanques muestra la temperatura más reciente de cada tanque, sea de una lectura o de una entrada.
+  - Cada lote tiene una tarjeta «Temperatura del tanque desde la entrada», con «+ Registrar lectura».
+  - Las lecturas manuales siguen igual, para seguimiento. Temperatura tiene filtro por tanque, y «Registrar» desde un tanque o un lote ya trae ese tanque elegido.
+- **Mortalidad final ya no es el paso 5.** El flujo queda en 4 pasos (Entrada → Órdenes → Empaque → Embarque). Mortalidad final está aparte, en el menú → «Revisión», y se sigue calculando sola. El Panel ya no te manda ahí, Embarque ya no tiene «Siguiente: mortalidad final» y las guías dicen «Paso N de 4».
+- **«Borrar todos los datos» ya no está a la vista.** Vive dentro de Administración → «Configuración avanzada» (cerrada) y pide tres cosas: descargar un respaldo (en los últimos 15 minutos), escribir BORRAR TODO y tu contraseña. Con la contraseña equivocada no borra nada.
+
+### Corregido
+- Administración decía «versión 1.5.0» al final; ahora muestra la versión actual (la misma del menú del perfil).
+
+### Pruebas
+- `temperatura_t.py` (47), nueva; `inicio_t`, `fotos_t` y `sincronizacion_t` con el nuevo borrado. 27 grupos, TODO BIEN.
+
+## 1.8.3 · 16 de octubre de 2026
+
+### Nuevo
+- **Eliminar una orden** creada por error. Hasta ahora no había forma: solo se podían borrar sus líneas. Al final de la orden hay una sección «Eliminar orden» con su botón; pide confirmar («¿Eliminar la orden del 16/10/2026? No se puede deshacer.»).
+  - Solo se puede si la orden **no tiene cajas empacadas**. Si tiene, explica por qué y no aparece el botón.
+  - Se lleva sus líneas, sus notas de empaque y los embarques abiertos que se quedan vacíos. Las demás órdenes y cajas no se tocan.
+  - Solo el Administrador (quien puede crear órdenes) lo ve. Se borra en todos los equipos.
+
+### Pruebas
+- `eliminar_orden_t.py` (33), nueva. 26 grupos, TODO BIEN.
+
+## 1.8.2 · 15 de octubre de 2026
+
+### Cambiado
+- **Entrada: todos los datos del formato son obligatorios** (pedido del usuario, para que no se olviden). Además de proveedor, tanque, lote, kg por talla y fecha, ahora también: **hora, temperatura del tanque, temperatura del producto, kg por caja en tanque y kg de desperdicio** (0 si no hubo). La temperatura del tanque debe estar entre 20 y 110 °F, igual que en Temperatura. Aplica en la vista completa y en Modo piso, con la misma regla. Solo al crear un lote: editar uno viejo no obliga a llenarlos.
+  - En Modo piso, si una fila ya tiene datos y falta alguno de «Más», el botón lo dice en rojo («Más · Faltan 4») y baja mientras los llenas. Al guardar, la fila se abre y marca cada dato que falta.
+  - En la vista completa, al guardar te lleva al primer dato que falta, con su mensaje, sin borrar lo escrito.
+- **Cambiar de modo ya no te saca de donde estabas.**
+  - Si estás en Modo piso → «Registrar entradas» y apagas Modo piso, te quedas en la misma hoja, ahora dentro de la vista completa, con las mismas filas y datos. Desde ahí puedes guardar, o volver a Entrada con «‹ Volver a Entrada».
+  - Si sales de la hoja con entradas sin guardar, la pantalla de Entrada lo avisa con «Terminar de capturarlas ›».
+  - Si estás en la vista completa con «+ Nueva entrada» a medio llenar y prendes Modo piso, lo escrito pasa como una fila de la hoja.
+  - Empacar en un modo → Empacar del mismo cliente en el otro.
+  - En celular, el menú ☰ ya no se queda abierto encima después de cambiar de modo.
+
+### Pruebas
+- `cambio_modo_t.py` (29), nueva; `entradas_t.py` con los datos obligatorios. 25 grupos, TODO BIEN.
+
+## 1.8.1 · 15 de octubre de 2026
+
+### Nuevo
+- **Botón de atrás (Android y navegador):** regresa a la pantalla anterior de la app en vez de sacarte. Si hay algo abierto encima (una foto en grande, el menú lateral del celular, Ajustes o el menú del perfil), primero lo cierra. En Modo piso regresa a la pantalla anterior de piso, y si acabas de cambiar de modo, regresa al modo y la pantalla donde estabas. Desde la primera pantalla después de entrar, atrás sale de la app como siempre.
+- **Ícono de la app y favicon: langosta blanca** sobre azul marino, el mismo dibujo del botón Entrada (antes era roja). Cambia en la pestaña del navegador y en el ícono de «Agregar a pantalla de inicio» (Android e iPhone). En Android el ícono ya llena todo el círculo o cuadro. El logo PROPESA de adentro de la app no cambió.
+
+### Pruebas
+- `atras_t.py` (41), nueva. 24 grupos, TODO BIEN.
+
 ## 1.8.0 · 15 de octubre de 2026
 
 ### Nuevo

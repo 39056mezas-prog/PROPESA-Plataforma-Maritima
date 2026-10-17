@@ -1,26 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!-- PROPESA · langosta blanca, igual al ícono de Entrada de la app (v1.8.1) -->
 <rect width="512" height="512" rx="112" fill="#0B1D59"/>
-<g transform="translate(256 258) scale(.88) translate(-256 -238)">
-
-  <path d="M284 200 C312 192 330 178 340 158" fill="none" stroke="#E8473D" stroke-width="22" stroke-linecap="round"/>
-  <g transform="translate(340 160) rotate(30)"><path d="M0 4 C-42 -6 -50 -62 -40 -104 C-33 -132 -18 -150 -6 -156 L-3 -100 L5 -100 L12 -160 C32 -146 48 -116 48 -80 C48 -36 34 -2 0 4 Z" fill="#E8473D"/></g>
-  <path d="M296 238 L346 226 M298 262 L350 262 M294 286 L340 298" stroke="#E8473D" stroke-width="12" stroke-linecap="round" fill="none"/>
-  <path d="M268 140 C296 96 340 70 400 30" fill="none" stroke="#E8473D" stroke-width="8" stroke-linecap="round"/>
-
-<g transform="translate(512 0) scale(-1 1)">
-  <path d="M284 200 C312 192 330 178 340 158" fill="none" stroke="#E8473D" stroke-width="22" stroke-linecap="round"/>
-  <g transform="translate(340 160) rotate(30)"><path d="M0 4 C-42 -6 -50 -62 -40 -104 C-33 -132 -18 -150 -6 -156 L-3 -100 L5 -100 L12 -160 C32 -146 48 -116 48 -80 C48 -36 34 -2 0 4 Z" fill="#E8473D"/></g>
-  <path d="M296 238 L346 226 M298 262 L350 262 M294 286 L340 298" stroke="#E8473D" stroke-width="12" stroke-linecap="round" fill="none"/>
-  <path d="M268 140 C296 96 340 70 400 30" fill="none" stroke="#E8473D" stroke-width="8" stroke-linecap="round"/>
-</g>
-  <path d="M256 130 L268 156 L244 156 Z" fill="#E8473D"/>
-  <ellipse cx="256" cy="228" rx="46" ry="76" fill="#E8473D"/>
-  <circle cx="238" cy="166" r="7" fill="#0B1D59"/><circle cx="274" cy="166" r="7" fill="#0B1D59"/>
-  <rect x="218" y="292" width="76" height="30" rx="13" fill="#E8473D"/>
-  <rect x="222" y="318" width="68" height="28" rx="12" fill="#E8473D"/>
-  <rect x="226" y="342" width="60" height="26" rx="11" fill="#E8473D"/>
-  <rect x="230" y="364" width="52" height="24" rx="10" fill="#E8473D"/>
-  <path d="M256 384 C232 392 200 412 196 446 C214 456 236 452 248 438 L256 452 L264 438 C276 452 298 456 316 446 C312 412 280 392 256 384 Z" fill="#E8473D"/>
-  <path d="M232 298 L280 298 M234 323 L278 323 M238 347 L274 347 M241 369 L271 369" stroke="#B5302A" stroke-width="4" stroke-linecap="round"/>
-</g>
+<g transform="translate(256 258) scale(.88) translate(-256 -238)"><path d="M284 200 C312 192 330 178 340 158" fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/><g transform="translate(340 160) rotate(30)"><path d="M0 4 C-42 -6 -50 -62 -40 -104 C-33 -132 -18 -150 -6 -156 L-3 -100 L5 -100 L12 -160 C32 -146 48 -116 48 -80 C48 -36 34 -2 0 4 Z" fill="#FFFFFF"/></g><path d="M296 238 L346 226 M298 262 L350 262 M294 286 L340 298" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M268 140 C296 96 340 70 400 30" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/><g transform="translate(512 0) scale(-1 1)"><path d="M284 200 C312 192 330 178 340 158" fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/><g transform="translate(340 160) rotate(30)"><path d="M0 4 C-42 -6 -50 -62 -40 -104 C-33 -132 -18 -150 -6 -156 L-3 -100 L5 -100 L12 -160 C32 -146 48 -116 48 -80 C48 -36 34 -2 0 4 Z" fill="#FFFFFF"/></g><path d="M296 238 L346 226 M298 262 L350 262 M294 286 L340 298" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M268 140 C296 96 340 70 400 30" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/></g><path d="M256 130 L268 156 L244 156 Z" fill="#FFFFFF"/><ellipse cx="256" cy="228" rx="46" ry="76" fill="#FFFFFF"/><rect x="218" y="292" width="76" height="30" rx="13" fill="#FFFFFF"/><rect x="222" y="318" width="68" height="28" rx="12" fill="#FFFFFF"/><rect x="226" y="342" width="60" height="26" rx="11" fill="#FFFFFF"/><rect x="230" y="364" width="52" height="24" rx="10" fill="#FFFFFF"/><path d="M256 384 C232 392 200 412 196 446 C214 456 236 452 248 438 L256 452 L264 438 C276 452 298 456 316 446 C312 412 280 392 256 384 Z" fill="#FFFFFF"/></g>
 </svg>

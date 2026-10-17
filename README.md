@@ -1,4 +1,4 @@
-# PROPESA · Plataforma marítima · v1.8.0
+# PROPESA · Plataforma marítima · v1.8.9
 
 Sitio estático de una sola página (HTML + CSS + JavaScript, sin dependencias ni paso de compilación).
 Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, temperatura, y fotos y notas por sección.
@@ -8,7 +8,8 @@ Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, t
 | Archivo | Para qué sirve |
 |---|---|
 | `index.html` | Toda la aplicación |
-| `manifest.webmanifest`, `favicon.svg`, `icon-*.png`, `apple-touch-icon.png` | Ícono (langosta) y opción "Agregar a pantalla de inicio" en tablet |
+| `manifest.webmanifest`, `favicon.svg`, `icon-192/512/1024.png`, `apple-touch-icon.png` | Ícono (langosta blanca sobre azul marino, la misma del botón Entrada) y opción "Agregar a pantalla de inicio" en tablet |
+| `og-image.png` | Imagen que sale al compartir el link (logo de PROPESA, 1200×630). Las etiquetas `og:`/`twitter:` de `index.html` llevan la dirección completa `https://propesa.vercel.app/`: si cambia el dominio, cámbiala ahí |
 | `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; caché; y la tarea diaria que mantiene despierta la base) |
 | `api/despierta.js` | La tarea diaria: una consulta pequeña a la base para que el plan gratis de Supabase no la pause (ver *Fin de temporada*) |
 | `supabase/` | Base compartida: `migrations/` (lo que está aplicado en el proyecto `propesa_bc`, incluido el espacio de archivos «fotos»), `functions/usuarios` (alta de usuarios) y `schema.sql` (primer esquema) |
@@ -67,13 +68,14 @@ También con la CLI: `npx vercel --prod` dentro de la carpeta.
 
 ## Flujo de la plataforma
 
-**Entrada → Órdenes → Empaque → Embarque → Mortalidad final**
+**Entrada → Órdenes → Empaque → Embarque**
 
 1. **Entrada:** se captura el formato de recepción (fecha, hora, proveedor, tanque, temperaturas, lote (se escribe en mayúsculas solo), kg por caja en tanque, kg por talla, kg total y kg de desperdicio). Aquí no se cuentan ni se numeran cajas.
 2. **Órdenes:** ciudad destino → consignatario (lista oficial, constante `CONS`) → cliente final → cajas. Se usan 16 kg netos y 19.6 kg brutos por caja (`KGN` y `KGB`; el bruto es la suma de hielera, gel, producto y caja).
 3. **Empaque:** las langostas se cuentan al empacar cada pedido. Aparece una fila por cada caja que falta (piezas vivas + categoría + lote) y se guardan todas a la vez; las filas en blanco no se guardan. Cada caja se numera sola. Aquí solo hay notas, sin fotos.
 4. **Embarque:** cada orden crea su embarque, pero varias órdenes con el mismo destino y consignatario se pueden juntar en uno solo (botón «Unir» en la orden, o «Agregar otra orden» en el embarque; «Separar» las divide). Las hieleras se suman, se revisan peso y tallas y se cierra el empaque.
-5. **Mortalidad final:** conteo final por lote y langostas vivas al llegar; el sistema calcula la pérdida.
+
+**Mortalidad final (aparte, no es un paso):** el sistema calcula la pérdida con el conteo final por lote y las langostas vivas al llegar. Se revisa en el menú → «Revisión», cuando se necesite.
 
 ## Modo piso
 
@@ -103,7 +105,7 @@ Bitácora real de lecturas por tanque (agua, superficie y producto en °F, 20–
 
 - Los datos se guardan en la **base compartida** (Supabase, proyecto `propesa_bc`): todos los equipos y cuentas ven lo mismo. Cada equipo guarda una copia y sigue funcionando sin internet; lo que se capture se sube solo cuando regresa la conexión.
 - Administración → *Datos y respaldo*: muestra la última actualización con la base y si hay cambios pendientes. **Descarga un respaldo `.json` de vez en cuando.** «Restaurar respaldo» reemplaza los datos de **todos** los equipos (el archivo se revisa y limpia antes; los usuarios no cambian).
-- Administración → *Borrar todos los datos*: pide escribir BORRAR y borra en todos los equipos; los usuarios se conservan.
+- **La app no tiene botón para borrar todos los datos** (decisión del usuario, v1.8.5). Si algún día hace falta, se hace a mano desde Supabase: ver `docs/SUPABASE.md` §9.
 - Lo que cada tablet tenía antes de la v1.4.0 no se mezcla: Administración → *Datos viejos de este equipo* para descargarlo o borrarlo.
 - Para las pruebas existe un modo local (`http://localhost:8765/index.html?modo=local`) que no usa la base.
 
@@ -124,7 +126,7 @@ La langosta roja se pesca del 16 de septiembre al 15 de febrero. En la veda casi
 Requieren Python 3 con Playwright y Chromium.
 
 ```bash
-sh pruebas/correr_todo.sh      # 23 grupos; termina con «TODO BIEN»
+sh pruebas/correr_todo.sh      # 31 grupos; termina con «TODO BIEN»
 ```
 
 Extras: `python3 -I pruebas/rendimiento_t.py` (un año de datos, tiempos de pantalla) y `node pruebas/accesibilidad.mjs pruebas/datos/backup.json` (Lighthouse en 15 pantallas, en modo local; requiere `npm i lighthouse puppeteer-core`).
