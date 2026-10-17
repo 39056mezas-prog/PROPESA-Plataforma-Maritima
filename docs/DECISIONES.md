@@ -48,6 +48,11 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 | oct 2026 | Módulo de Órdenes con consignatarios oficiales y clientes finales | Usuario |
 | oct 2026 | Una sola página HTML sin dependencias hasta tener backend; despliegue GitHub + Vercel | Simplicidad |
 | 14 oct 2026 | **Base compartida en Supabase (`propesa_bc`)**: todos los equipos y cuentas ven lo mismo | El usuario no quería que cada equipo tuviera sus propios datos |
+| 15 oct 2026 | Datos de Entrada obligatorios: hora, temperaturas, kg por caja en tanque y desperdicio | Usuario: «para que no se le olviden» |
+| 16 oct 2026 | **Mortalidad final sale del flujo**: 4 pasos (Entrada → Órdenes → Empaque → Embarque); Mortalidad final se calcula sola y se revisa aparte (menú «Revisión») | Usuario: «eso se revisa aparte, no quiero que el flujo me lleve ahí» |
+| 16 oct 2026 | Temperatura conectada con Entrada: las temperaturas de cada entrada salen solas en Temperatura, tablero de tanques y lote; las lecturas manuales siguen | Usuario: «que no sea algo aparte, que se actualice solo» |
+| 16 oct 2026 | **Peso de la caja = un solo estándar** en Administración (solo el Administrador); Embarque, Órdenes y PDF lo usan; los embarques cerrados conservan su peso | Usuario: en el piso no se pesa, se usa el estándar; «no es claro dónde edito cuánto pesa la caja» |
+| 16 oct 2026 | **Sin «Borrar todos los datos» en la app.** Primero se escondió en «Configuración avanzada» (respaldo + BORRAR TODO + contraseña, v1.8.4); minutos después el usuario pidió quitarlo por completo (v1.8.5). Solo se hace a mano desde Supabase (`SUPABASE.md` §9) | Usuario: «quita completamente el botón; no quiero que alguien lo pueda hacer, solo lo haría yo manualmente» |
 | 14 oct 2026 | Los datos viajan como **registros por cosa** (`app_records`) y la app sigue usando `ST` igual; no se usaron las tablas normalizadas de `schema.sql` | Mantener intacta la app (flujo, pantallas y reglas) y que no choquen dos tablets; las tablas normalizadas quedan para reportes |
 | 14 oct 2026 | Sin librería de Supabase: conexión con `fetch` (acceso, registros, función) | Regla de cero dependencias; CSP simple |
 | 14 oct 2026 | «Último que guarda gana» por registro; lo pendiente del equipo gana sobre lo que llega mientras no se suba | Simple y suficiente: cada caja, movimiento y nota es su propio registro |

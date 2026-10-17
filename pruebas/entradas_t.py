@@ -15,12 +15,20 @@ def login(pg,vw,sch='light',fs=None):
     pg.goto(BASE);pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s)}',seed)
     if fs:pg.evaluate(f"localStorage.setItem('propesa-fs','{fs}')")
     pg.reload();pg.fill('#le','piso@propesa.mx');pg.fill('#lp','piso123');pg.click('[data-a=lg]');pg.click('.pt.p2')
-def fill_row(pg,u,prov,tank,lot,kgs):
+EXTRA={'tempT':'58','tempP':'59-61','kgbox':'18','desp':'0'}
+def extra(pg,u,vals=EXTRA):
+    """v1.8.2: los datos de «Más» son obligatorios: los llena abriendo «Más» y lo deja como estaba."""
+    was=pg.evaluate(f"!!(PEN.rows.find(r=>r.u=={u})||{{}}).open")
+    if not was:pg.click(f'[data-pa="more:{u}"]')
+    for k,v in vals.items():pg.fill(f'[data-pr="{u}:{k}"]',v)
+    if not was:pg.click(f'[data-pa="more:{u}"]')
+def fill_row(pg,u,prov,tank,lot,kgs,more=True):
     pg.fill(f'[data-pr="{u}:origin"]',prov)
     if tank:pg.select_option(f'[data-pr="{u}:tank"]',tank)
     pg.fill(f'[data-pr="{u}:lot"]',lot)
     for i,k in enumerate(kgs):
         if k!='':pg.fill(f'[data-pr="{u}:k{i}"]',str(k))
+    if more:extra(pg,u)
 with sync_playwright() as p:
     b=p.chromium.launch()
     # --- Flujo principal en tablet horizontal ---
@@ -40,10 +48,13 @@ with sync_playwright() as p:
     # fila 2: sin tanque (inválida); fila 3: lote repetido de la fila 1; fila 4: válida, con detalles
     fill_row(pg,2,'Emancipación','','WLREM131026',[5,'','',''])
     fill_row(pg,3,'Leyes de Reforma','T2','WLRCO131026A',['',15,'',''])
-    fill_row(pg,4,'SCPP Ensenada','T4','WLRCO131026B',['','',12.5,''])
+    fill_row(pg,4,'SCPP Ensenada','T4','WLRCO131026B',['','',12.5,''],more=False)
+    chk('Faltan 4' in pg.inner_text('[data-pa="more:4"]') and 'pmx' in pg.get_attribute('[data-pa="more:4"]','class'),'v1.8.2: fila con datos y sin los de «Más» → el botón dice «Faltan 4» en rojo')
     pg.click('[data-pa="more:4"]');chk(pg.is_visible('[data-pr="4:tempT"]'),'Más muestra los detalles')
     pg.fill('[data-pr="4:tempT"]','58');pg.fill('[data-pr="4:tempP"]','59-61');pg.fill('[data-pr="4:desp"]','1.2')
-    chk('· 3' in pg.inner_text('[data-pa="more:4"]'),'Más cuenta los datos llenos')
+    chk('Faltan 1' in pg.inner_text('[data-pa="more:4"]'),'el aviso baja mientras se llenan (falta kg por caja)')
+    pg.fill('[data-pr="4:kgbox"]','18')
+    chk('· 4' in pg.inner_text('[data-pa="more:4"]') and 'pmx' not in pg.get_attribute('[data-pa="more:4"]','class'),'completos: Más cuenta los datos llenos, sin rojo')
     # el foco y lo escrito se conservan al agregar otra fila
     pg.click('[data-pa=add]');chk(pg.input_value('[data-pr="3:origin"]')=='Leyes de Reforma' and pg.input_value('[data-pr="4:tempT"]')=='58','se conserva lo escrito al agregar')
     chk(pg.locator('tr.per').count()==5,'5 filas')
@@ -87,7 +98,14 @@ with sync_playwright() as p:
     pg.click('.pt.p2');chk(pg.input_value(f'[data-pr="{u}:lot"]')=='BORRADOR1','borrador se conserva')
     # fecha vacía abre detalles y marca el campo
     pg.fill(f'[data-pr="{u}:origin"]','X');pg.select_option(f'[data-pr="{u}:tank"]','T6');pg.fill(f'[data-pr="{u}:k0"]','3')
-    pg.click(f'[data-pa="more:{u}"]');pg.fill(f'[data-pr="{u}:rdate"]','');pg.click(f'[data-pa="more:{u}"]');pg.click('[data-pa=save]')
+    # v1.8.2: sin los datos de «Más» no se guarda; la fila se abre y marca cada uno
+    pg.click('[data-pa=save]');tx=pg.inner_text(f'tr.pdet[data-pu="{u}"]')
+    chk(pg.is_visible(f'[data-pr="{u}:tempT"]') and all(m in tx for m in ['temperatura del tanque','temperatura del producto','kg por caja','desperdicio']) and not pg.evaluate("ST.R.some(r=>r.lot=='BORRADOR1')"),'sin temperaturas, kg por caja y desperdicio no se guarda; la fila se abre y marca cada dato')
+    extra(pg,u,{'tempT':'150','tempP':'59','kgbox':'18','desp':'0'});pg.click('[data-pa=save]')
+    chk('entre 20 y 110' in pg.inner_text(f'tr.pdet[data-pu="{u}"]'),'temperatura fuera de rango (150 °F) marcada')
+    extra(pg,u,{'tempT':'58'})
+    if not pg.is_visible(f'[data-pr="{u}:rdate"]'):pg.click(f'[data-pa="more:{u}"]')
+    pg.fill(f'[data-pr="{u}:rdate"]','');pg.click(f'[data-pa="more:{u}"]');pg.click('[data-pa=save]')
     chk(pg.is_visible(f'[data-pr="{u}:rdate"]') and pg.evaluate("document.activeElement.dataset.pr")==f'{u}:rdate','fecha faltante abre detalles')
     # talla negativa y sin kg
     pg.fill(f'[data-pr="{u}:rdate"]','2026-10-13');pg.fill(f'[data-pr="{u}:k0"]','-2');pg.click('[data-pa=save]')
@@ -96,6 +114,10 @@ with sync_playwright() as p:
     # auditoría #10: la vista completa usa la misma regla y la misma función que Modo piso para crear lotes
     pg.evaluate("setPiso(false);go('recepcion')");pg.click('[data-a=nf]')
     pg.fill('#fl','wlrneg151026');pg.fill('#fo','SCPP');pg.fill('#fk0','-50');pg.fill('#fk1','100');pg.click('[data-a=sv]')
+    chk('Escribe la temperatura del tanque' in pg.inner_text('#app') and pg.evaluate("document.activeElement.id")=='ftt' and pg.input_value('#fk1')=='100','v1.8.2 vista completa: sin temperatura del tanque no guarda, lleva al campo y conserva lo escrito')
+    pg.fill('#ftt','58');pg.click('[data-a=sv]');chk('temperatura del producto' in pg.inner_text('#app'),'vista completa: pide la temperatura del producto')
+    pg.fill('#ftp','59-61');pg.fill('#fkb','18');pg.fill('#fk0','0');pg.click('[data-a=sv]');chk('desperdicio' in pg.inner_text('#app') and pg.evaluate("document.activeElement.id")=='fdes','vista completa: pide el desperdicio (0 si no hubo)')
+    pg.fill('#fk0','-50');pg.fill('#fdes','0');pg.click('[data-a=sv]')
     chk('No puede ser negativo.' in pg.inner_text('#app') and not pg.evaluate("ST.R.some(r=>r.lot=='WLRNEG151026')"),'vista completa: −50 kg en una talla marca «No puede ser negativo» y no guarda (antes guardaba 100 kg)')
     chk(pg.input_value('#fk0')=='-50' and pg.input_value('#fk1')=='100','lo escrito se conserva')
     pg.fill('#fk0','0');pg.click('[data-a=sv]')

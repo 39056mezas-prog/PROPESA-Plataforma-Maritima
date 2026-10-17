@@ -40,7 +40,7 @@ STEP = { recepcion:1, lote:1, ordenes:2, orden:2, empaque:3, empacar:3, embarque
 | `ordenes` · `orden:<id>` | id de orden | Órdenes · detalle |
 | `empaque` · `empacar:<orden>.<línea>` | `3.2` | Empaque · empacar un cliente |
 | `embarques` · `emb:<i>` | índice en `ST.P` | Embarque · consignación |
-| `cierre` | — | Mortalidad final |
+| `cierre` | — (sección «Revisión», no es paso) | Mortalidad final |
 | `temperatura`, `admin`, `buscar:<texto>` | | |
 | `piso` · `pemp[:o.l]` · `pent` | | Modo piso: inicio, empacar, entrada |
 
@@ -170,6 +170,13 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 | `softRender()` | Redibuja por cambios de otros sin borrar lo escrito (conserva los campos cambiados por el usuario); si hay un campo con el cursor, espera a que salga |
 | `cacheSoon` / `cacheST` / `loadCache` | Copia en el equipo agrupada cada 1.5 s (y al salir de la app); guarda `ST` y `since` juntos en un solo registro de IndexedDB (v1.6.0). `loadCache()` la lee al arrancar (antes de entrar y de sincronizar) y pasa la copia vieja de `localStorage` si la hay. Si no se puede guardar: `CACHE_ERR` y aviso |
 | `syncBanners()` | «Descargando los datos compartidos…», «Sin conexión…» (rojo si hay pendientes) |
+| Temperatura conectada (v1.8.4) | `tempAll()` junta `ST.T` (lecturas) con las temperaturas de cada entrada de `ST.R` (`src:'ent'`, se calculan, no se copian). La usan Temperatura (filtro `TFIL`, ruta `temperatura:<tanque>`), el tablero de tanques (`ult`) y la tarjeta «Temperatura del tanque desde la entrada» del lote |
+| Borrar todos los datos | **No existe** desde la v1.8.5 (se quitaron `advCard`, `rstAll` y `data-a=rst`). Solo a mano desde Supabase: `SUPABASE.md` §9 |
+| Teclado de la app en táctiles (v1.8.9) | `KPRO()` (`hover: none` y `pointer: coarse`) → `kpro()` agrega `readonly` a `.pkc`/`.pke` (con `KPON`) y `.ppc`/`.psc`, para que el teclado del sistema no se abra cuando el código mueve el foco |
+| Editar orden (v1.8.8) | En `orden()`: `data-oa` `ee`/`se` (fecha, `OA.etd`) y `el:<id>`/`sl:<id>` (cliente y cajas por línea, `OA.ed`); `se` → `syncShipIdx`, `sl` → `syncShip`. Solo `can('lot')` |
+| Peso estándar de la caja (v1.8.7) | `ST.W` / `W0`, `pesoStd()`, `pesosSync()` (en cada `render()`: `KGN`, `KGB`), `stdC(h)` para `p.c` en `syncShipIdx`. Tarjeta `#pesos` en Administración (`data-a=pw`), `pwfix:<i>` en Embarque. Registro `W/pesos` |
+| Pantalla de carga (v1.8.6) | `#boot` en el HTML (logo fijo, antes que `#app`; su CSS al principio del `<style>`). `boot()` = `boot0()` + `bootDone()` (desvanece y borra; mínimo 0.5 s en la app instalada) |
+| Botón de atrás (v1.8.1) | `navSync()` (al final de `render()`) guarda `[pantalla, dato, Modo piso]` en el historial del navegador; `popstate` cierra primero lo que está encima (`navOverlay`) y si no, regresa a la pantalla anterior (limpia como `go()` y pasa por `fixRoute()`). La dirección no cambia |
 | Fotos (v1.8.0) | `FQ` cola por subir (IndexedDB `fotos-cola`), `FC` fotos listas para mostrar, `fotoSrc`/`fImg` (src o gris + `data-fp`), `fotoLoad` (IndexedDB `F/<ruta>` o bajada con sesión), `upFotos` (sube antes que `flush`), `fotoMigra` (fotos viejas dentro de notas), `fotoDel`. `outN()` cuenta también las fotos por subir. Detalle: `SUPABASE.md` §8 |
 | Acceso | `sbAuth`, `sbToken` (renueva el token solo), `sbFetch`, `cloudLogin`, `cloudSetup`, `checkSetup` (`rpc/has_admin`), `signOut`, `dropSes` |
 | Usuarios | `loadProfiles()` llena `ST.U`; `fnUsers(action)` llama a la función `usuarios` (`create`, `update`, `delete`, `setup`) |

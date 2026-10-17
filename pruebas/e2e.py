@@ -17,7 +17,7 @@ with sync_playwright() as p:
     chk('Kg por caja en tanque' in pg.inner_text('#app'),'label Kg por caja en tanque')
     pg.click('#fl');pg.keyboard.type('wlrco051026a',delay=5)
     chk(pg.input_value('#fl')=='WLRCO051026A','lote en mayusculas en vivo: '+pg.input_value('#fl'))
-    pg.fill('#fo','SCPP');pg.fill('#fkb','18');
+    pg.fill('#fo','SCPP');pg.fill('#fkb','18');pg.fill('#ftt','58');pg.fill('#ftp','59-61');pg.fill('#fdes','0');
     for i,v in enumerate([100,200,300,400]):pg.fill(f'#fk{i}',str(v))
     pg.click('[data-a=sv]');pg.wait_for_timeout(200)
     chk('WLRCO051026A' in pg.inner_text('#app'),'lote guardado')

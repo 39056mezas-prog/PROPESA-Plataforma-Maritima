@@ -42,6 +42,7 @@ Desde la v1.6.0 la app ya no tiene el camino viejo que subía sin revisar choque
 | `P/<u>` | embarque (`u` = id fijo) | `ST.P` |
 | `O/<u>` | informe de cierre | `ST.O` |
 | `T/<id>` | lectura de temperatura | `ST.T` |
+| `W/pesos` | peso estándar de la caja (`{h, g, p, c}`, v1.8.7) | `ST.W` |
 | `M/<id>` | nota y su `key` (las de embarque usan `emb:@<u>`). Desde la v1.8.0 `imgs` trae **referencias** `sb:notas/<id>/<n>.jpg`, no la foto (ver §8) | `ST.M` |
 
 Los usuarios **no** van en registros: `ST.U` se llena con `profiles`.
@@ -93,9 +94,26 @@ update app_records set v = (select v from app_records_hist where id = <id del hi
 - **Al guardar una nota** con fotos, cada foto (800 px, JPEG 0.6, ~90 KB) entra a una cola del equipo (IndexedDB, `fotos-cola`) y la nota guarda solo su referencia `sb:notas/<id de la nota>/<n>.jpg`. En `syncNow()` primero se suben las fotos (`upFotos`, `POST /storage/v1/object/fotos/<ruta>`) y después los registros, así los otros equipos ya encuentran el archivo cuando llega la nota.
 - **Sin internet** la foto espera en la cola (cuenta en «cambios pendientes»). Si la base de archivos falla, la nota sí se sube y la foto se reintenta. Si la base **rechaza** una foto (permiso, tamaño), se quita de su nota y se avisa.
 - **Para verla**, cada equipo la baja con su sesión (`GET /storage/v1/object/authenticated/fotos/<ruta>`) y la guarda en IndexedDB (`F/<ruta>`), así se sigue viendo sin internet. Mientras baja, el cuadro se ve gris.
-- **Eliminar una nota** borra sus fotos; **Borrar todos los datos** también. Si en ese momento no hay internet, los archivos se quedan sin uso en el espacio (no estorban).
+- **Eliminar una nota** (o una orden) borra sus fotos. Si en ese momento no hay internet, los archivos se quedan sin uso en el espacio (no estorban).
 - **Fotos viejas dentro de una nota** (un respaldo restaurado o una versión anterior) se pasan solas al espacio de archivos la siguiente vez que sincroniza un Administrador o Piso (`fotoMigra`). La ruta depende solo del id de la nota y del número de foto, así que dos equipos que la pasan al mismo tiempo suben el mismo archivo.
 - El respaldo `.json` lleva las notas con sus referencias, no las fotos.
 - **Modo local** (pruebas): las fotos siguen dentro de la nota, como antes.
 - Plan gratis de Supabase: 1 GB de archivos (unas 10,000 fotos) y 5 GB de descarga al mes.
 - Probado: `pruebas/fotos_t.py` con el Supabase de mentira, y en `propesa_bc` (15/oct/2026, dentro de una transacción que se deshizo) que el Administrador sube y ve, y que una cuenta sin perfil o sin sesión no ve ni sube nada. La regla de borrar no se pudo probar en la base real (Supabase pide confirmar los borrados); es igual a la de subir.
+
+## 9. Borrar todos los datos a mano (no existe en la app desde la v1.8.5)
+
+Decisión del usuario: nadie puede borrarlo todo desde la app; si algún día hace falta, lo hace el dueño de la cuenta de Supabase.
+
+1. **Antes:** descarga un respaldo (Administración → *Datos y respaldo*) y pide que nadie esté capturando.
+2. Supabase → proyecto `propesa_bc` → **SQL Editor** → New query:
+   ```sql
+   -- Borra lotes, órdenes, embarques, cajas, notas, informes y lecturas de temperatura en TODOS los equipos.
+   -- Los usuarios no se tocan. Se marca cada registro como borrado (v = null) en lugar de quitar la fila:
+   -- así cada equipo recibe el borrado al sincronizar y no vuelve a subir su copia.
+   update public.app_records set v = null where v is not null;
+   ```
+   Las versiones anteriores quedan en `app_records_hist` (se pueden recuperar con §7). Para borrar también ese historial, sin vuelta atrás: `truncate public.app_records_hist;`
+3. **Fotos:** Supabase → **Storage** → `fotos` → selecciona la carpeta `notas` → *Delete*.
+4. En las tablets: abrir la app con internet; en unos segundos se vacían solas.
+

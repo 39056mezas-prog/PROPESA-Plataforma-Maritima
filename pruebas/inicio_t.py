@@ -23,7 +23,7 @@ with sync_playwright() as p:
         pg.evaluate(f"go('{r}')");tx=pg.inner_text('#app')
         if DEMO.search(tx):seen.append((r,DEMO.search(tx).group(0)))
     pg.locator('#app [data-avatar]').click();tx=pg.inner_text('#pmenu');pg.keyboard.press('Escape')
-    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.8.0' in tx,'el menú de perfil muestra la versión 1.8.0')
+    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.8.9' in tx,'el menú de perfil muestra la versión 1.8.9')
     # temperatura real
     pg.evaluate("go('temperatura')");chk('Todavía no hay lecturas' in pg.inner_text('#app'),'temperatura empieza vacía (sin datos inventados)')
     pg.select_option('#tq_t','T2');pg.fill('#tq_a','150');pg.click('[data-a=tq]');chk('20 y 110' in pg.inner_text('#app'),'valida el rango de temperatura')
@@ -33,8 +33,13 @@ with sync_playwright() as p:
     pg.click('[data-tqdel]');chk(pg.evaluate("ST.T.length")==0,'el Administrador puede eliminar una lectura')
     # informe de cierre: sin "simulado"
     pg.evaluate("go('admin')");chk('Informes de cierre' in pg.inner_text('#app'),'Administración muestra Informes de cierre')
-    # borrar datos
-    pg.click('[data-a=rst]');chk(pg.locator('#s0n').count()==1,'Borrar todos los datos (escribiendo BORRAR) regresa a la configuración inicial')
+    # v1.8.5: «Borrar todos los datos» ya no existe en la app (solo a mano, desde Supabase)
+    tx=pg.inner_text('#app')
+    chk(pg.locator('[data-a=rst]').count()==0 and pg.locator('#adv').count()==0 and 'Borrar todos los datos' not in tx and 'Configuración avanzada' not in tx,'Administración ya no tiene «Borrar todos los datos» ni «Configuración avanzada»')
+    chk(pg.evaluate("typeof rstAll")=='undefined','y la app no tiene forma de borrarlo todo')
+    n0=pg.evaluate("JSON.stringify([ST.R,ST.OR,ST.T,ST.U.length])")
+    with pg.expect_download():pg.click('[data-bk=dl]')
+    chk(pg.evaluate("JSON.stringify([ST.R,ST.OR,ST.T,ST.U.length])")==n0 and pg.locator('#s0n').count()==0,'descargar el respaldo sigue funcionando y no borra nada')
     pg.close()
     # equipo con datos anteriores: conserva sus usuarios
     pg=b.new_page();pg.on('pageerror',lambda e:errs.append(str(e)))

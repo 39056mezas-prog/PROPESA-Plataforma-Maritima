@@ -1,6 +1,6 @@
 # DATOS.md · Modelo de datos
 
-Todo vive en el objeto global `ST`. **Desde la v1.4.0 la copia que vale está en la base compartida** (Supabase, `public.app_records`, ver `SUPABASE.md`); cada equipo guarda una copia en IndexedDB (base `propesa`, registro `propesa-c1`, desde la v1.6.0; antes en `localStorage`) para trabajar sin internet. En el modo local de pruebas sigue siendo `localStorage['propesa-v4']`. El usuario en sesión (`me`) no va dentro de `ST`: desde la v1.2.5 se guarda aparte en `propesa-ses` (solo su id y la hora de vencimiento) y la pantalla con los borradores en `propesa-ui` (ver `ARQUITECTURA.md` §9).
+Todo vive en el objeto global `ST`. **Desde la v1.8.7, `ST.W = {h, g, p, c}`** es el peso estándar de la caja (hielera vacía, gel, producto, caja de cartón; kg). Si no existe se usan 1.4, 1.5, 16 y 0.7. **Desde la v1.4.0 la copia que vale está en la base compartida** (Supabase, `public.app_records`, ver `SUPABASE.md`); cada equipo guarda una copia en IndexedDB (base `propesa`, registro `propesa-c1`, desde la v1.6.0; antes en `localStorage`) para trabajar sin internet. En el modo local de pruebas sigue siendo `localStorage['propesa-v4']`. El usuario en sesión (`me`) no va dentro de `ST`: desde la v1.2.5 se guarda aparte en `propesa-ses` (solo su id y la hora de vencimiento) y la pantalla con los borradores en `propesa-ui` (ver `ARQUITECTURA.md` §9).
 
 ## 1. Forma de `ST`
 
@@ -74,7 +74,7 @@ ST = {
 
 - **Descargar respaldo** (Administración) = `ST` completo en `.json`.
 - **Restaurar** (solo Administrador, en Administración): pide confirmación, pasa por `cleanST(d, true)` (descarta código, imágenes no válidas, índices fuera de rango, duplicados; los usuarios del respaldo se ignoran) y **reemplaza los datos de todos los equipos**.
-- **Borrar todos los datos**: escribir BORRAR → `ST = {...seed(), U}`; se borra en todos los equipos; los usuarios se conservan.
+- **Borrar todos los datos: ya no existe en la app** (v1.8.5, decisión del usuario). Solo a mano desde Supabase (`SUPABASE.md` §9).
 - **Datos viejos de cada tablet** (antes de la v1.4.0) se quedan en `propesa-v4` sin mezclarse; Administración permite descargarlos o borrarlos.
 - En el modo local de pruebas, restaurar y borrar funcionan como antes (solo en ese navegador).
 - Ejemplos válidos: `pruebas/datos/backup.json` (con usuarios de prueba, solo para pruebas) y `pruebas/datos/seed.json`.

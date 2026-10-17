@@ -10,15 +10,17 @@
 
 ## 2. El flujo (decidido por el usuario; no se cambia sin permiso)
 
-**Entrada → Órdenes → Empaque → Embarque → Mortalidad final**
+**Entrada → Órdenes → Empaque → Embarque**
+
+**Mortalidad final va aparte** (decidido por el usuario el 16/oct/2026): no es un paso del flujo; se calcula sola con el conteo final de cada lote y las vivas al llegar de cada envío, y se revisa cuando se necesite (menú → «Revisión»).
 
 | # | Paso | Qué se hace | Quién | Ruta interna |
 |---|---|---|---|---|
 | 1 | **Entrada** | Formato de recepción del lote: fecha, hora, proveedor, tanque (T1–T6), °F tanque, °F producto (puede ser rango «59-62»), lote (mayúsculas automáticas), kg por caja en tanque, kg por talla, kg total (se calcula), kg desperdicio | Admin y Encargado de piso | `recepcion`, `lote:<lote>` |
-| 2 | **Órdenes** | Pedido de un empaque: ETD → ciudad destino → consignatario → cliente final → cajas | Admin | `ordenes`, `orden:<id>` |
+| 2 | **Órdenes** | Pedido de un empaque: ETD → ciudad destino → consignatario → cliente final → cajas. Una orden sin cajas empacadas se puede eliminar (v1.8.3). Después de crearla se puede cambiar su fecha y, por línea, el cliente final y las cajas (no menos de las ya empacadas; no con el embarque cerrado) (v1.8.8) | Admin | `ordenes`, `orden:<id>` |
 | 3 | **Empaque** | Se cuentan las langostas de cada caja al empacar: lote, piezas vivas, categoría. La caja se numera ahí | Admin y piso | `empaque`, `empacar:<orden>.<línea>` |
 | 4 | **Embarque** | Junta una o varias órdenes con mismo destino y consignatario. Plan de carga del camión, tallas, peso bruto, cierre del empaque e informe | Admin | `embarques`, `emb:<índice>` |
-| 5 | **Mortalidad final** | Conteo final por lote (kg) y langostas vivas al llegar; se calcula la pérdida | Captura admin y piso; cierra admin | `cierre` |
+| — | **Mortalidad final** (aparte, no es paso) | Se calcula sola con el conteo final por lote (kg) y las langostas vivas al llegar; se revisa cuando se necesite | Captura admin y piso; cierra admin | `cierre` |
 
 Además: **Panel** (`inicio`), **Temperatura** (`temperatura`), **Administración** (`admin`), **Buscar** (`buscar:<texto>`) y **Modo piso** (`piso`, `pemp`, `pent`).
 
@@ -57,7 +59,8 @@ Direcciones, contactos y USCI completos: `index.html` (`CONS`) y `docs/referenci
 
 - **Existencia por lote** = suma de movimientos (`L`, en gramos). La entrada crea un movimiento `RECEPCION` por talla. La salida a embarque es un movimiento manual en la página del lote. **Empacar una caja NO descuenta kilos** (pregunta abierta).
 - **Kg total de entrada** = suma de las 4 tallas (solo lectura). **Desperdicio** es informativo; no resta existencia.
-- **Lote:** fecha, proveedor y lote obligatorios; el lote no se repite; al menos una talla con kilos. ID interno `R-0121` con contador que solo crece (`ST.RN`).
+- **Peso de la caja (v1.8.7):** no se pesa en el piso; se usa un estándar único (hielera vacía 1.4 + gel 1.5 + producto 16 + caja de cartón 0.7 = 19.6 kg brutos, 16 kg netos) que solo el Administrador cambia en Administración → «Peso de la caja». Peso del embarque = hieleras × estándar; los embarques cerrados conservan el peso con el que se cerraron.
+- **Lote:** al crearlo son obligatorios fecha, hora, proveedor, tanque, lote, temperatura del tanque (20–110 °F), temperatura del producto, kg por caja en tanque y kg de desperdicio (0 si no hubo) — decidido por el usuario el 15/oct/2026 (v1.8.2); el lote no se repite; al menos una talla con kilos. Editar un lote viejo no obliga a llenar los datos nuevos. ID interno `R-0121` con contador que solo crece (`ST.RN`).
 - **Orden:** neto = cajas × 16 kg; bruto = cajas × 19.6 kg. Una línea no admite más cajas empacadas que las pedidas. No se elimina una línea con cajas. No se agregan líneas a un destino cuyo embarque está cerrado.
 - **Consignación:** una por (orden + ciudad + consignatario); varias órdenes pueden unirse en un embarque («Unir», «Agregar otra orden», «Separar»). Hieleras = suma de cajas de sus órdenes. Peso bruto = hieleras × (1.4 hielera + 1.5 gel + 16 producto + 0.7 cartón) = **19.6 kg/hielera**.
 - **Plan de carga:** 10 celdas (2 × 5) de 15/20/20/25/25 hieleras = **210** por camión; se llena desde la cabina; avisa si se excede. Solo cuenta embarques abiertos.

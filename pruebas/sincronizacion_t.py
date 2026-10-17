@@ -37,7 +37,7 @@ def login(pg, em, pw):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
     return until(pg, "!!document.querySelector('.sb,.pshell,[data-avatar]')")
 def new_lot(pg, code, kgs=(100, 200, 300, 400)):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.fill('#fo', 'SCPP'); pg.fill('#fkb', '18')
+    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.fill('#fo', 'SCPP'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
     for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
     pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
 def new_order(pg, etd, cli, n, city='PVG'):
@@ -179,14 +179,15 @@ try:
         # --- equipo nuevo descarga todo
         cf, F = device(b, 'F'); chk(login(F, 'admin2@propesa.mx', 'clave-admin2'), 'equipo nuevo entra')
         chk(until(F, "ST.R.length==3&&ST.OR.length==3&&ST.P.length==3") and until(F, "1") and F.evaluate(CORE) == A.evaluate(CORE), 'equipo nuevo descarga exactamente lo mismo')
-        # --- borrar todos los datos (Administración) llega a todos
-        A.evaluate("go('admin')"); A.click('[data-a=rst]')
-        chk(until(F, "ST.R.length==0&&ST.OR.length==0&&ST.P.length==0") and until(C, "ST.R.length==0"), 'Borrar todos los datos llega a todos los equipos')
-        chk(A.evaluate("!!me") and A.evaluate("ST.U.length") >= 5, 'después de borrar, los usuarios siguen y A sigue dentro')
+        # --- v1.8.5: ya no hay «Borrar todos los datos» en la app
+        A.evaluate("go('admin')"); chk(A.locator('[data-a=rst]').count() == 0 and A.evaluate("!!me") and A.evaluate("ST.U.length") >= 5, 'Administración ya no tiene «Borrar todos los datos»')
         # --- respaldo restaurado llega a todos
         A.evaluate("go('admin')"); A.locator('input[data-bk=up]').first.set_input_files(os.path.join(ROOT, 'pruebas', 'datos', 'backup.json'))
         chk(until(A, "ST.R.length>=1") and until(F, f"ST.R.length=={A.evaluate('ST.R.length')}&&ST.OR.length=={A.evaluate('ST.OR.length')}", 20), 'restaurar un respaldo lo pone en todos los equipos')
         time.sleep(1.5); chk(until(F, "1") and F.evaluate(CORE) == A.evaluate(CORE), 'tras restaurar, A y el equipo nuevo son idénticos')
+        # --- v1.8.7: el peso estándar de la caja llega a los demás equipos
+        A.evaluate("ST.W={h:1.4,g:1.5,p:16.2,c:0.7};save()")
+        chk(until(F, "ST.W&&ST.W.p==16.2", 20) and until(F, "render(),KGN==16.2&&KGB==19.8"), 'el peso estándar de la caja que guarda A llega al otro equipo')
         sweep = []
         for r in ['inicio', 'recepcion', 'ordenes', 'empaque', 'embarques', 'cierre', 'temperatura', 'admin']:
             F.evaluate(f"go('{r}')"); tx = F.inner_text('#app')
