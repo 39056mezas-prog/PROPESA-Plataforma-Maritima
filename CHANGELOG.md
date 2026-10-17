@@ -1,5 +1,25 @@
 # Cambios
 
+## 1.9.0 · 17 de octubre de 2026
+
+### Nuevo
+- **Hoja de empaque (Formato 06) en cada orden.** Pedido del usuario: «es requerido por ley para tenerlo en archivo; todo esto debe salir en el correo o PDF». Una hoja por orden (cada orden va a un solo destino; puede llevar varios lotes y varios consignatarios). La ven la orden, Empaque y Modo piso.
+  - **La app la llena sola:** fecha, especie (Langosta Roja), destino, consignatario(s), lotes (de las hieleras empacadas), peso bruto (hieleras × peso estándar) y total de hieleras por talla.
+  - **La app propone y se puede corregir:** tanques de origen (tanque de cada lote empacado) y tanque y temperatura (última lectura de agua de ese tanque). Al guardar quedan fijos.
+  - **Se capturan:** placas (se guardan en mayúsculas), nombre y teléfono del chofer, temperatura del producto, quién realizó y observaciones.
+  - **Horas:** la hora inicial se pone sola con la primera hielera; al terminar la última se ponen solas la hora final y quién realizó (se pueden corregir) y aparece «Terminar empaque».
+  - **Evaluación del empaque (S / NS / N/D / N/A):** cuatro botones grandes; si todo fue normal, un toque en **S** y queda guardado. Las connotaciones salen al pie de la hoja y del PDF.
+  - Lo que falta sale en rojo con «Completar ›» (en la orden y en el embarque). Antes de empacar no se pide nada; con la primera hielera se piden transporte y temperaturas; al terminar, también hora final, quién realizó y evaluación.
+  - Cerrar un embarque con la hoja incompleta **pregunta** («¿Cerrar de todos modos?»); si se cierra, el PDF la marca como incompleta. Con el embarque cerrado la hoja ya no se cambia.
+  - Sale completa en el PDF de la orden, en el packing list, en el informe del embarque y en el texto del correo de cierre.
+- **Indicaciones para la carga en cada embarque** (ej. «ECHAR 2 TARIMAS VACÍAS Y FLEJE»). Pedido del usuario: «que sea algo hard to miss». Recuadro amarillo con letra grande en mayúsculas: arriba del embarque, en el plan del camión y en la tarjeta del embarque, en el inicio de Modo piso y dentro de la hoja de la orden. Sale solo al principio del PDF del embarque, del PDF del camión (plan de embarques) y en el correo de cierre.
+
+### Cambiado
+- **«Cajas» → «hieleras» en toda la app y en los PDF** (pedido del usuario: «el término correcto serían hieleras»). Se quedan «Kg por caja en tanque» (dato de Entrada), «caja de cartón» (parte del peso) y la explicación de que en el tanque no se numeran cajas.
+
+### Pruebas
+- `hoja_t.py` (110), nueva: hoja completa de punta a punta en tablet y celular, Modo piso, Consulta, PDF, correo, respaldo y base compartida. Las demás pruebas se pasaron a «hieleras». 32 grupos, 1622 verificaciones, TODO BIEN.
+
 ## 1.8.9 · 16 de octubre de 2026
 
 ### Corregido

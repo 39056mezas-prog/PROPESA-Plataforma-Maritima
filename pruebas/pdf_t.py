@@ -19,7 +19,7 @@ with sync_playwright() as p:
     pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
     # make shipment have alive + sizes for richer report
     pg.evaluate("ST.P[0].z=[2,2,2,1];ST.P[0].alive=100;save()")
-    # auditoría #4: orden 2 con una caja Roja y una Amarilla (10 piezas cada una)
+    # auditoría #4: orden 2 con una hielera Roja y una Amarilla (10 piezas cada una)
     pg.evaluate("(()=>{const b=ST.B.WLRCO051026A;b[0].c=10;b[0].k='R';b[1].c=10;b[1].k='A';save()})()")
     pg.evaluate("go('orden:2')")
     with pg.expect_download() as d: pg.locator('[data-pdf^="dl:ord"]').first.click()

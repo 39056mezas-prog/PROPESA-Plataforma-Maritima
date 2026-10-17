@@ -1,5 +1,5 @@
 """Eliminar una orden (v1.8.3): pedido del usuario, para quitar una orden creada por error.
-Solo sin cajas empacadas; pide confirmar; quita sus embarques abiertos que quedan vacíos y sus notas de empaque.
+Solo sin hieleras empacadas; pide confirmar; quita sus embarques abiertos que quedan vacíos y sus notas de empaque.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/eliminar_orden_t.py"""
 from playwright.sync_api import sync_playwright
 import os, sys
@@ -26,7 +26,7 @@ with sync_playwright() as p:
         pg.click('[data-oa=dco]'); pg.click('[data-oa=dlo]')
         chk(pg.evaluate('ST.OR.length') == n0 and not pg.evaluate(f'ST.OR.some(o=>o.id=={oid})') and pg.evaluate('V.v') == 'ordenes', f'{vw} «Sí, eliminar» la quita y regresa a Órdenes')
         chk('Orden eliminada' in pg.inner_text('#toast'), f'{vw} avisa «Orden eliminada»')
-        # 2. orden con líneas pero sin cajas: se elimina con su embarque abierto vacío y sus notas
+        # 2. orden con líneas pero sin hieleras: se elimina con su embarque abierto vacío y sus notas
         p0 = pg.evaluate('ST.P.length'); pg.fill('#no_etd', '2026-10-17'); pg.click('[data-oa=new]'); oid = pg.evaluate('+V.id')
         pg.select_option('#ol_city', 'PVG'); pg.fill('#ol_cli', 'TST'); pg.fill('#ol_n', '3'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(100)
         chk(pg.evaluate('ST.P.length') == p0 + 1, f'{vw} la línea crea su embarque')
@@ -36,15 +36,15 @@ with sync_playwright() as p:
         pg.click('[data-oa=dlo]')
         chk(not pg.evaluate(f'ST.OR.some(o=>o.id=={oid})') and pg.evaluate('ST.P.length') == p0, f'{vw} se elimina con su embarque vacío')
         chk(not pg.evaluate(f"'emp:{oid}.{lid}' in ST.M"), f'{vw} y sus notas de empaque')
-        chk(pg.evaluate("ST.OR.every(o=>Object.values(o.sh||{}).every(i=>ST.P[i]))") and pg.evaluate("Object.values(ST.B).flat().every(b=>b.d==null||ST.P[b.d])"), f'{vw} las demás órdenes y cajas siguen apuntando a embarques que existen')
-        # 3. orden con cajas empacadas: no se puede
+        chk(pg.evaluate("ST.OR.every(o=>Object.values(o.sh||{}).every(i=>ST.P[i]))") and pg.evaluate("Object.values(ST.B).flat().every(b=>b.d==null||ST.P[b.d])"), f'{vw} las demás órdenes y hieleras siguen apuntando a embarques que existen')
+        # 3. orden con hieleras empacadas: no se puede
         o = pg.evaluate("(()=>{const o=ST.OR.find(o=>ordBoxes(o).length);return o&&{id:o.id,n:ordBoxes(o).length}})()")
-        chk(o is not None, f'{vw} los datos de prueba tienen una orden con cajas')
+        chk(o is not None, f'{vw} los datos de prueba tienen una orden con hieleras')
         pg.evaluate(f"go('orden:{o['id']}')")
-        chk(pg.locator('[data-oa=dco]').count() == 0 and 'no se puede eliminar' in pg.inner_text('#app'), f'{vw} con cajas empacadas no hay botón y explica por qué')
+        chk(pg.locator('[data-oa=dco]').count() == 0 and 'no se puede eliminar' in pg.inner_text('#app'), f'{vw} con hieleras empacadas no hay botón y explica por qué')
         pg.evaluate(f"OA.cf='ord';render()"); chk(pg.locator('[data-oa=dlo]').count() == 0, f'{vw} ni forzando la confirmación aparece el botón')
         pg.evaluate("(()=>{const b=document.createElement('button');b.dataset.oa='dlo';document.getElementById('app').appendChild(b);b.click()})()")
-        chk(pg.evaluate(f"ST.OR.some(o=>o.id=={o['id']})") and pg.evaluate(f"ordBoxes(ST.OR.find(o=>o.id=={o['id']})).length") == o['n'], f'{vw} y la acción tampoco la borra (cajas intactas)')
+        chk(pg.evaluate(f"ST.OR.some(o=>o.id=={o['id']})") and pg.evaluate(f"ordBoxes(ST.OR.find(o=>o.id=={o['id']})).length") == o['n'], f'{vw} y la acción tampoco la borra (hieleras intactas)')
         pg.close()
     # 4. Encargado de piso y Consulta no ven el botón
     for em, pw in [('piso@propesa.mx', 'piso123'), ('consulta@propesa.mx', 'ver123')]:

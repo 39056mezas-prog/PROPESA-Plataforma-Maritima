@@ -82,3 +82,8 @@ ST = {
 ## 6. Tamaño
 
 Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equipo vive en IndexedDB**, que aguanta cientos de MB: con 45 fotos (~5.4 millones de caracteres) se guarda completa (`sincronizacion_t.py`). Antes vivía en `localStorage` (5 MB, la mitad en iPad), se borraba sola con unas 40 fotos y no avisaba. Si el navegador no deja guardar la copia, aparece «No se pudo guardar la copia de este equipo» y lo capturado se sigue subiendo a la base. La cola de cambios por subir (`propesa-out`) sigue en `localStorage`, que se escribe al instante. Desde la v1.8.0 las fotos ya no van dentro de los datos: viven en el espacio de archivos de Supabase y la nota guarda `sb:notas/<id>/<n>.jpg` (ver `SUPABASE.md` §8); la copia de cada equipo guarda aparte las fotos que ya vio (`F/<ruta>`). En el modo local de pruebas, si `save()` falla aparece el aviso rojo de memoria llena.
+
+## v1.9.0 · hoja de empaque e indicaciones de carga
+- `OR[].f` (opcional): `{hi,hf,re,ev,ob,pl,ch,tel,tp,to,tq}`, todo texto. `hi`/`hf` en `HH:MM`; `ev` ∈ `S|NS|ND|NA`. Se limpia con `f6Norm` en `cleanST` y en `WN.OR`; `decodeST` la copia. Sin migración: las órdenes viejas simplemente no la tienen.
+- `P[].ob` (opcional): indicaciones para la carga, hasta 500 letras. En `cleanST` y `WN.P`.
+- Ninguno requiere cambios en Supabase: viajan dentro de `OR/<id>` y `P/<u>`.

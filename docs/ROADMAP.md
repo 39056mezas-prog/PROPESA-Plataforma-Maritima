@@ -12,9 +12,9 @@ Estado: **v1.4.0** con base compartida (todos los equipos ven lo mismo). Pregunt
 | 4 | **Resuelto 14/oct: resta del total del lote.** Antes: **Desperdicio:** ¿resta existencia o es informativo? | Existencias |
 | 5 | **Varios tanques por lote** (en papel «1/2», «3 y 1»). Hoy es uno | Entrada |
 | 6 | **Lotes mezclados en un envío:** ya se permite al empacar; ¿se necesita verlo por envío? | Embarque |
-| 7 | **Cajas = hieleras:** ¿siempre? | Embarque |
+| 7 | **Resuelto 17/oct: se dicen «hieleras»** en toda la app. | Embarque |
 | 8 | **Mortalidad:** ¿la definición actual es la que usan? El papel reporta % mortalidad y temperatura de arribo por envío | Mortalidad |
-| 9 | **Encabezado del packing list** (placas, chofer, teléfono, horas, temperaturas, tanque): ¿se captura? | Órdenes/Embarque, PDF |
+| 9 | **Resuelto 17/oct (v1.9.0): hoja de empaque (Formato 06) en cada orden.** Pendiente: ¿cerrar el embarque con la hoja incompleta se bloquea o solo pregunta (hoy pregunta)? | Órdenes/Embarque, PDF |
 | 10 | **Color de tape** por consignatario | Embarque |
 | 11 | **Temperatura:** ¿quién captura, cada cuánto, qué alertas? (almacenaje 57.7–62.2 °F; transporte 48–49 °F) | Temperatura |
 | 12 | Órdenes de fechas distintas en un embarque: ¿se permite y cómo se factura? | Embarque |
@@ -42,7 +42,7 @@ Estado: **v1.4.0** con base compartida (todos los equipos ven lo mismo). Pregunt
 
 ### P2 · Procesos que siguen en papel
 - [ ] Formato 02 · Control de pesos y tallas (pesos por tina 1–180, totales, cajas completas/incompletas).
-- [ ] Encabezado del packing list y PDF con formato oficial.
+- [x] Encabezado del packing list (hoja de empaque, v1.9.0).
 - [ ] Alertas de temperatura fuera de rango (la captura ya existe).
 - [ ] Control de envío: % mortalidad y temperatura de arribo por envío.
 - [ ] Editar/eliminar órdenes completas; reordenar el packing list.

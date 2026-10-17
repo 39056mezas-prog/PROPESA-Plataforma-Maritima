@@ -1,7 +1,7 @@
 # PROPESA · Plataforma marítima · v1.8.9
 
 Sitio estático de una sola página (HTML + CSS + JavaScript, sin dependencias ni paso de compilación).
-Incluye recepción de lotes, captura de cajas, embarques, cierre y mortalidad, temperatura, y fotos y notas por sección.
+Incluye recepción de lotes, captura de hieleras, hoja de empaque (Formato 06), embarques, cierre y mortalidad, temperatura, y fotos y notas por sección.
 
 ## Contenido
 
@@ -71,15 +71,15 @@ También con la CLI: `npx vercel --prod` dentro de la carpeta.
 **Entrada → Órdenes → Empaque → Embarque**
 
 1. **Entrada:** se captura el formato de recepción (fecha, hora, proveedor, tanque, temperaturas, lote (se escribe en mayúsculas solo), kg por caja en tanque, kg por talla, kg total y kg de desperdicio). Aquí no se cuentan ni se numeran cajas.
-2. **Órdenes:** ciudad destino → consignatario (lista oficial, constante `CONS`) → cliente final → cajas. Se usan 16 kg netos y 19.6 kg brutos por caja (`KGN` y `KGB`; el bruto es la suma de hielera, gel, producto y caja).
-3. **Empaque:** las langostas se cuentan al empacar cada pedido. Aparece una fila por cada caja que falta (piezas vivas + categoría + lote) y se guardan todas a la vez; las filas en blanco no se guardan. Cada caja se numera sola. Aquí solo hay notas, sin fotos.
-4. **Embarque:** cada orden crea su embarque, pero varias órdenes con el mismo destino y consignatario se pueden juntar en uno solo (botón «Unir» en la orden, o «Agregar otra orden» en el embarque; «Separar» las divide). Las hieleras se suman, se revisan peso y tallas y se cierra el empaque.
+2. **Órdenes:** ciudad destino → consignatario (lista oficial, constante `CONS`) → cliente final → hieleras. Se usan 16 kg netos y 19.6 kg brutos por hielera (`KGN` y `KGB`; el bruto es la suma de hielera, gel, producto y caja).
+3. **Empaque:** las langostas se cuentan al empacar cada pedido. Aparece una fila por cada hielera que falta (piezas vivas + categoría + lote) y se guardan todas a la vez; las filas en blanco no se guardan. Cada hielera se numera sola. Aquí solo hay notas, sin fotos. Cada orden lleva su **hoja de empaque (Formato 06)**: la hora inicial se pone sola con la primera hielera; al terminar la última se piden hora final, quién realizó y la evaluación S/NS/N/D/N/A; placas, chofer, teléfono y temperaturas se capturan en la misma hoja. Todo sale en el PDF y en el correo.
+4. **Embarque:** cada embarque tiene «Indicaciones para la carga» (ej. «ECHAR 2 TARIMAS VACÍAS Y FLEJE»), que salen en grande en el embarque, el plan del camión, Modo piso y los PDF. Cada orden crea su embarque, pero varias órdenes con el mismo destino y consignatario se pueden juntar en uno solo (botón «Unir» en la orden, o «Agregar otra orden» en el embarque; «Separar» las divide). Las hieleras se suman, se revisan peso y tallas y se cierra el empaque.
 
 **Mortalidad final (aparte, no es un paso):** el sistema calcula la pérdida con el conteo final por lote y las langostas vivas al llegar. Se revisa en el menú → «Revisión», cuando se necesite.
 
 ## Modo piso
 
-Pantalla con botones grandes para el personal de piso (entra solo con el rol *Encargado de piso*; el Administrador lo prende y apaga con el interruptor estilo iOS «Modo piso», en el menú y en el encabezado). Tocar el logo regresa al inicio en cualquier modo. Cuatro botones: **Empacar cajas**, **Registrar entrada**, **Cerrar embarque**, **Conteo final**.
+Pantalla con botones grandes para el personal de piso (entra solo con el rol *Encargado de piso*; el Administrador lo prende y apaga con el interruptor estilo iOS «Modo piso», en el menú y en el encabezado). Tocar el logo regresa al inicio en cualquier modo. Cuatro botones: **Empacar hieleras**, **Registrar entrada**, **Cerrar embarque**, **Conteo final**.
 - *Empacar:* cliente → lote (se salta si solo hay uno) → una tarjeta grande por cada caja del cliente (piezas + ROJO / VERDE / BLANCO). Cada caja **se guarda sola** al tener piezas y categoría y se queda en gris con ✔ en su lugar; se corrige ahí mismo o se quita con «Quitar». «Poner a todas las vacías» aplica una categoría de un toque.
 - En Órdenes y Empaque, el aviso rojo «X de Y cajas empacadas» es un botón que lleva directo al cliente al que le faltan cajas.
 - *Registrar entrada:* hoja con una fila por lote (proveedor, tanque, lote, kg por talla); «+ Agregar entrada» para más filas, «Más» para temperaturas, kg por caja, desperdicio, fecha y hora, y «Guardar entradas» guarda todas las filas completas (las que tienen errores se quedan marcadas en rojo).

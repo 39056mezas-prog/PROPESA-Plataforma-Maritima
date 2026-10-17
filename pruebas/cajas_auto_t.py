@@ -13,7 +13,7 @@ seed=json.loads(open(T+'seed.json').read())
 seed['OR'].append({'id':3,'etd':'2026-10-13','lines':[{'id':1,'city':'HKG','cons':0,'cli':'ABC','boxes':5}],'sh':{}})
 S=json.dumps(seed);errs=[]
 def chk(c,m):print(('PASS ' if c else 'FAIL ')+m)
-def tap(pg,no):pg.click(f'#pps{no} .pbn')  # tocar la tarjeta: la vuelve la caja activa del teclado
+def tap(pg,no):pg.click(f'#pps{no} .pbn')  # tocar la tarjeta: la vuelve la hielera activa del teclado
 def kp(pg,digits):
     for d in str(digits):pg.click(f'#kpad [data-kp="d:{d}"]')
 def boxes(pg):

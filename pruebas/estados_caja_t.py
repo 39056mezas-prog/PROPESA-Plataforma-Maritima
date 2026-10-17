@@ -1,4 +1,4 @@
-"""Prueba PROPESA (estados_caja_t): Empaque → cada caja muestra su estado (Pendiente / En captura / ✔ Completada / Editando),
+"""Prueba PROPESA (estados_caja_t): Empaque → cada hielera muestra su estado (Pendiente / En captura / ✔ Completada / Editando),
 las completadas se reabren y corrigen sin duplicarse, y la barra de abajo crece con el avance real.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/estados_caja_t.py"""
 import json,os,shutil,tempfile
@@ -37,25 +37,25 @@ with sync_playwright() as p:
         sw=pg.evaluate("[...document.querySelectorAll('#pkr0 .seg .chip')].map(e=>Math.round(e.getBoundingClientRect().width))");chk(len(set(sw))==1 and min(sw)>=60,tag+' Rojo/Verde/Blanco del mismo tamaño '+str(sw))
         sh=pg.evaluate("Math.min(...[...document.querySelectorAll('#pkr0 .seg .chip')].map(e=>e.getBoundingClientRect().height))");chk(sh>=44,tag+f' categoría con objetivo táctil ≥44 px ({sh:.0f})')
         chk(pg.locator('.pklb[aria-pressed=true]').count()==1,tag+' un lote marcado arriba')
-        if pg.locator('.pklb').count()>1:  # v1.5: con cajas escritas, cambiar de pestaña de lote avisa y no las lleva al otro lote
+        if pg.locator('.pklb').count()>1:  # v1.5: con hieleras escritas, cambiar de pestaña de lote avisa y no las lleva al otro lote
             lot0=pg.evaluate("PKD.lot");pg.fill('#pk_c0','7')
             pg.click('.pklb[aria-pressed=false] >> nth=0');pg.wait_for_timeout(100)
-            chk(pg.evaluate("PKD.lot")==lot0 and 'Primero guarda' in pg.inner_text('#toast'),tag+' cajas sin guardar: no cambia de lote y avisa')
+            chk(pg.evaluate("PKD.lot")==lot0 and 'Primero guarda' in pg.inner_text('#toast'),tag+' hieleras sin guardar: no cambia de lote y avisa')
             pg.fill('#pk_c0','')
         chk(pg.locator('.pkx .chip.ok').count()==0,tag+' sin pastillas verdes de estado')
         # elegir categoría sola: «En captura», NO completada
         pg.click('[data-pk="k:0:R"]')
         chk(pg.locator('#pkr0.is-prog').count()==1 and 'En captura' in pg.inner_text('#pkr0'),tag+' solo color → En captura')
         chk('Completada' not in pg.inner_text('#pkr0') and len(boxes(pg))==0,tag+' solo color no completa ni guarda')
-        chk(pg.inner_text('.pkn')=='Guardar cajas',tag+' botón sin cajas listas: «Guardar cajas»')
-        pg.fill('#pk_c0','20');chk(pg.inner_text('.pkn')=='Guardar 1 caja',tag+' botón cuenta cajas listas: '+pg.inner_text('.pkn'))
+        chk(pg.inner_text('.pkn')=='Guardar hieleras',tag+' botón sin hieleras listas: «Guardar hieleras»')
+        pg.fill('#pk_c0','20');chk(pg.inner_text('.pkn')=='Guardar 1 hielera',tag+' botón cuenta hieleras listas: '+pg.inner_text('.pkn'))
         # doble toque: no duplica
         pg.dblclick('[data-pk=addall]');pg.wait_for_timeout(700)
-        bx=boxes(pg);chk(len(bx)==1 and bx[0][1:3]==(20,'R'),tag+' doble toque guarda 1 sola caja '+str(bx))
-        chk(pg.locator('.pkdn.is-done').count()==1 and 'Completada' in pg.inner_text('.pkdn.is-done'),tag+' caja guardada → ✔ Completada')
+        bx=boxes(pg);chk(len(bx)==1 and bx[0][1:3]==(20,'R'),tag+' doble toque guarda 1 sola hielera '+str(bx))
+        chk(pg.locator('.pkdn.is-done').count()==1 and 'Completada' in pg.inner_text('.pkdn.is-done'),tag+' hielera guardada → ✔ Completada')
         chk(pg.locator('.pkrow').count()==3,tag+' quedan 3 filas pendientes')
         lab=pg.evaluate("[...document.querySelectorAll('.pkt tbody tr:not(.pkear)')].map(r=>[r.querySelector('.pkno').innerText.split('\\n')[0].trim(),r.querySelector('.pkpz').innerText.replace(/\\s+/g,' ').trim()])")
-        chk(all(x[0].startswith('Caja ') for x in lab) and all('piezas' in x[1] for x in lab),tag+' cada fila dice «Caja N» y las piezas llevan «piezas» '+str(lab[:2]))
+        chk(all(x[0].startswith('Hielera ') for x in lab) and all('piezas' in x[1] for x in lab),tag+' cada fila dice «Hielera N» y las piezas llevan «piezas» '+str(lab[:2]))
         tb=pg.evaluate("(()=>{const t=document.querySelector('#toast').getBoundingClientRect(),b=document.querySelector('#pkb').getBoundingClientRect();return t.bottom<=b.top||getComputedStyle(document.querySelector('#toast')).display=='none'})()");chk(tb,tag+' el aviso sale arriba, no sobre la barra')
         chk('1 completada' in pg.inner_text('#pksum') and '3 pendientes' in pg.inner_text('#pksum') and '25% completado' in pg.inner_text('#pksum'),tag+' resumen 25 %: '+pg.inner_text('#pksum').replace('\n',' '))
         f1=fill(pg);chk(abs(f1-0.25)<0.02,tag+f' la barra delgada marca 25 % ({f1:.2f})');chk(abs(btnw(pg)-b0)<1,tag+' el botón Guardar no cambia de tamaño con el avance')
@@ -67,15 +67,15 @@ with sync_playwright() as p:
         if vw[0]==1440:pg.screenshot(path=T+f'estados_{tag}_25.png')
         # reabrir tocando la fila completada; valores conservados
         seq=bx[0][0];pg.click(f'#pkd{seq} .pkv')
-        chk(pg.locator('.pkdn.is-edit').count()>=1 and pg.input_value('#pk_e')=='20',tag+' tocar la caja la reabre con sus valores')
+        chk(pg.locator('.pkdn.is-edit').count()>=1 and pg.input_value('#pk_e')=='20',tag+' tocar la hielera la reabre con sus valores')
         chk(pg.get_attribute('#pkd%d [data-pk="ek:R"]'%seq,'aria-pressed')=='true','%s categoría guardada marcada'%tag)
         chk('Editando' in pg.inner_text('#pkd%d'%seq),tag+' muestra «Editando»')
         # vaciar piezas → pierde «Completada» mientras está incompleta, no se puede actualizar
         pg.fill('#pk_e','');chk('Incompleta' in pg.inner_text('#pkd%d'%seq),tag+' edición incompleta → ⚠ Incompleta')
         pg.click('[data-pk=upd]');chk(boxes(pg)[0][1]==20 and pg.locator('.pkdn.is-edit').count()>=1,tag+' no actualiza con piezas vacías y sigue editando')
-        # corregir piezas y categoría → actualiza la MISMA caja
+        # corregir piezas y categoría → actualiza la MISMA hielera
         pg.fill('#pk_e','24');pg.click('[data-pk="ek:V"]');pg.click('[data-pk=upd]')
-        bx2=boxes(pg);chk(len(bx2)==1 and bx2[0][:3]==(seq,24,'V'),tag+' actualiza la misma caja sin duplicar '+str(bx2))
+        bx2=boxes(pg);chk(len(bx2)==1 and bx2[0][:3]==(seq,24,'V'),tag+' actualiza la misma hielera sin duplicar '+str(bx2))
         chk(pg.locator('.pkdn.is-edit').count()==0 and 'Completada' in pg.inner_text(f'#pkd{seq}'),tag+' vuelve a ✔ Completada')
         # Cancelar no cambia nada
         pg.click(f'#pkd{seq} [data-pk^="ed:"].pked');pg.fill('#pk_e','99');pg.click('[data-pk=cancel]');chk(boxes(pg)[0][1]==24,tag+' Cancelar conserva lo guardado')
@@ -92,12 +92,12 @@ with sync_playwright() as p:
         chk(len(boxes(pg))==4 and pg.locator('.pkdn.is-done').count()==4,tag+' 4 completadas')
         chk('100% completado' in pg.inner_text('#pksum') and '0 pendientes' in pg.inner_text('#pksum'),tag+' resumen 100 %')
         f4=fill(pg);chk(f4>0.98,tag+f' al 100 % la barra está llena ({f4:.2f})')
-        chk(pg.locator('[data-pk=addall]').count()==0 and '4 de 4 cajas completadas' in pg.inner_text('.pkall'),tag+' al 100 % dice 4 de 4')
+        chk(pg.locator('[data-pk=addall]').count()==0 and '4 de 4 hieleras completadas' in pg.inner_text('.pkall'),tag+' al 100 % dice 4 de 4')
         # se puede corregir aun completa (sin botón Guardar abajo)
         s2=boxes(pg)[-1][0];pg.click(f'#pkd{s2} .pked');pg.fill('#pk_e','40');pg.click('[data-pk=upd]');chk([x for x in boxes(pg) if x[0]==s2][0][1]==40 and len(boxes(pg))==4,tag+' corrige con la línea completa')
         # Quitar desde la corrección (con confirmación) → vuelve a pendiente y la barra baja
         pg.click(f'#pkd{s2} .pked');pg.click('[data-pk^="del:"]');pg.click('[data-pk^="rm:"]')
-        chk(len(boxes(pg))==3 and '75% completado' in pg.inner_text('#pksum') and pg.locator('.pkrow').count()==1,tag+' quitar caja → 75 % y 1 pendiente')
+        chk(len(boxes(pg))==3 and '75% completado' in pg.inner_text('#pksum') and pg.locator('.pkrow').count()==1,tag+' quitar hielera → 75 % y 1 pendiente')
         # sin cruces ni desbordes
         ov=pg.evaluate("document.documentElement.scrollWidth-document.documentElement.clientWidth");chk(ov==0,tag+' sin desborde de página')
         ovr=not overlap(pg,'.pkgo','#pksum') and not overlap(pg,'.pkgo','.pkbar');chk(ovr,tag+' el botón no tapa el resumen')
@@ -106,11 +106,11 @@ with sync_playwright() as p:
         chk(pg.locator('#le').count()==0 and pg.evaluate("V.v+':'+V.id")=='empacar:3.1',tag+' tras recargar sigue dentro y en la misma pantalla')
         chk(pg.locator('.pkdn.is-done').count()==3 and '75% completado' in pg.inner_text('#pksum'),tag+' tras recargar: 3 completadas, 75 %')
         if vw[0]==1440:pg.screenshot(path=T+f'estados_{tag}_75.png')
-        # Modo piso: mismas cajas, completadas en verde con «Completada»; en captura en cian; resumen
+        # Modo piso: mismas hieleras, completadas en verde con «Completada»; en captura en cian; resumen
         pg.evaluate("PISO=true;go('pemp:3.1')")
         if pg.locator('[data-pe^="lot:"]').count():pg.click('[data-pe^="lot:"] >> nth=0')
         chk(pg.locator('.pbx.sv').count()==3 and 'Completada' in pg.inner_text('.pbx.sv >> nth=0'),tag+' piso: 3 tarjetas ✔ Completada')
-        chk(pg.evaluate("getComputedStyle(document.querySelector('.pbx.sv')).opacity")=='1' and pg.evaluate("getComputedStyle(document.querySelector('.plot span')).color")!=pg.evaluate("getComputedStyle(document.querySelector('.plot')).backgroundColor"),tag+' piso: la caja guardada no es transparente (auditoría #17, contraste AA)')
+        chk(pg.evaluate("getComputedStyle(document.querySelector('.pbx.sv')).opacity")=='1' and pg.evaluate("getComputedStyle(document.querySelector('.plot span')).color")!=pg.evaluate("getComputedStyle(document.querySelector('.plot')).backgroundColor"),tag+' piso: la hielera guardada no es transparente (auditoría #17, contraste AA)')
         chk('1 pendiente' in pg.inner_text('.pkn2') and '75% completado' in pg.inner_text('.pkn2'),tag+' piso: resumen '+pg.inner_text('.pkn2').replace('\n',' '))
         free=pg.locator('.pbx:not(.sv)').first;fid=free.get_attribute('id')
         pg.click(f'#{fid} .pbn');pg.click('#kpad [data-kp="k:R"]');chk(pg.locator(f'#{fid}.ip').count()==1,tag+' piso: color sin piezas → en captura')

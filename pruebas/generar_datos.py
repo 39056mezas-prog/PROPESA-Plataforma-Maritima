@@ -32,7 +32,7 @@ with sync_playwright() as p:
         for r in range(pg.locator('.pkrow').count()):
             pg.fill(f'#pk_c{r}',str(18+r*3));pg.click(f'#pkr{r} [data-pk^="k:"] >> nth={r%3}')
         pg.click('[data-pk=addall]');pg.wait_for_timeout(80)
-        pg.fill('#ntx','Caja con 2 piezas débiles, revisar al llegar.');pg.click('[data-ev^=save]')
+        pg.fill('#ntx','Hielera con 2 piezas débiles, revisar al llegar.');pg.click('[data-ev^=save]')
         pg.click('.sb [data-go=empaque]')
     open(T+'seed.json','w').write(pg.evaluate("localStorage.getItem('propesa-v4')"))
     b.close()

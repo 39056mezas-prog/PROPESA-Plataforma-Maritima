@@ -1,6 +1,6 @@
-"""Teclado de la app en celular/tablet táctil (v1.8.9): al completar una caja, Android no debe abrir su teclado.
+"""Teclado de la app en celular/tablet táctil (v1.8.9): al completar una hielera, Android no debe abrir su teclado.
 Simula un celular Android (pantalla táctil, sin mouse): las casillas de piezas quedan de solo lectura, así el sistema no abre
-su teclado; el teclado de la app sigue escribiendo y al tocar la categoría pasa a la siguiente caja. En computadora no cambia.
+su teclado; el teclado de la app sigue escribiendo y al tocar la categoría pasa a la siguiente hielera. En computadora no cambia.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/teclado_movil_t.py"""
 import json, os, sys
 from playwright.sync_api import sync_playwright
@@ -30,8 +30,8 @@ with sync_playwright() as p:
     first = pg.evaluate("KPT.t")
     kp(pg, '55'); chk(pg.input_value('#pk_c0') == '55' if pg.locator('#pk_c0').count() else True, 'el teclado de la app escribe aunque la casilla sea de solo lectura')
     pg.tap('#kpad [data-kp="k:R"]'); pg.wait_for_timeout(150)
-    a = pg.evaluate(act); chk(pg.evaluate("KPT.t") != first, f'al tocar la categoría pasa a la siguiente caja ({first} → {pg.evaluate("KPT.t")})')
-    chk(a is None or a['ro'], f'la caja siguiente tiene el cursor pero es de solo lectura: Android no abre su teclado ({a})')
+    a = pg.evaluate(act); chk(pg.evaluate("KPT.t") != first, f'al tocar la categoría pasa a la siguiente hielera ({first} → {pg.evaluate("KPT.t")})')
+    chk(a is None or a['ro'], f'la hielera siguiente tiene el cursor pero es de solo lectura: Android no abre su teclado ({a})')
     kp(pg, '40'); pg.tap('#kpad [data-kp="k:V"]'); pg.wait_for_timeout(150)
     a = pg.evaluate(act); chk(a is None or a['ro'], f'y lo mismo en la siguiente ({a})')
     ctx.close()
@@ -40,9 +40,9 @@ with sync_playwright() as p:
     pg.tap('[data-pe="lot:WLRCO061026B"]'); pg.wait_for_timeout(200)
     ins = pg.locator('input.ppc'); chk(ins.count() >= 2 and all(ins.nth(k).get_attribute('readonly') is not None for k in range(ins.count())), 'Modo piso: las casillas de piezas son de solo lectura en el celular')
     kp(pg, '33'); pg.tap('#kpad [data-kp="k:R"]'); pg.wait_for_timeout(200)
-    a = pg.evaluate(act); chk(pg.evaluate("KPT.t") == 'slot:2' and (a is None or a['ro']), f'Modo piso: guarda la caja 1, pasa a la 2 y Android no abre su teclado ({a})')
-    chk(pg.locator('input.psc').count() == 1 and pg.locator('input.psc').first.get_attribute('readonly') is not None, 'la caja guardada (para corregir) también es de solo lectura')
-    pg.tap('#pps1'); pg.wait_for_timeout(150); chk(pg.evaluate("KPT.t") == 'slot:1', 'tocar una caja la elige para corregirla con el teclado de la app')
+    a = pg.evaluate(act); chk(pg.evaluate("KPT.t") == 'slot:2' and (a is None or a['ro']), f'Modo piso: guarda la hielera 1, pasa a la 2 y Android no abre su teclado ({a})')
+    chk(pg.locator('input.psc').count() == 1 and pg.locator('input.psc').first.get_attribute('readonly') is not None, 'la hielera guardada (para corregir) también es de solo lectura')
+    pg.tap('#pps1'); pg.wait_for_timeout(150); chk(pg.evaluate("KPT.t") == 'slot:1', 'tocar una hielera la elige para corregirla con el teclado de la app')
     ctx.close()
     # ---------- computadora: sin cambios (un teclado físico sigue escribiendo) ----------
     ctx, pg = start(b, 'admin@propesa.mx', 'admin123', 'empacar:3.1', movil=False)

@@ -30,7 +30,7 @@ with sync_playwright() as p:
     def addline(cli,n,city='PVG'):
         pg.select_option('#ol_city',city);pg.fill('#ol_cli',cli);pg.fill('#ol_n',str(n));pg.click('[data-oa=ln]')
     mk('2026-10-12');addline('HXH',3)
-    tx=pg.inner_text('#app');chk('3 cajas · 48 kg neto · 58.8 kg bruto' in tx and '19.6 kg brutos por caja' in tx,'orden: peso bruto 19.6 kg por caja, sin decimales de más')
+    tx=pg.inner_text('#app');chk('3 hieleras · 48 kg neto · 58.8 kg bruto' in tx and '19.6 kg brutos por hielera' in tx,'orden: peso bruto 19.6 kg por hielera, sin decimales de más')
     chk(abs(pg.evaluate("ST.P[0].exp")-58.8)<1e-9,'el embarque espera el mismo peso bruto que la orden (58.8 kg)')
     mk('2026-10-13');addline('ZSM',2)
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
@@ -55,7 +55,7 @@ with sync_playwright() as p:
     pg.click('[data-pk=addall]');pg.wait_for_timeout(100)
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     bx=[b for l in st['B'].values() for b in l]
-    chk(len(bx)==2 and all(b['d']==0 for b in bx),'2 cajas guardadas a la vez, d=0: %s'%bx)
+    chk(len(bx)==2 and all(b['d']==0 for b in bx),'2 hieleras guardadas a la vez, d=0: %s'%bx)
     chk(pg.locator('.pkrow').count()==n-2,'filas restantes %d'%pg.locator('.pkrow').count())
     # notes
     pg.fill('#ntx','nota prueba');pg.click('[data-ev^=save]');chk('nota prueba' in pg.inner_text('#app'),'nota guardada en empaque')
@@ -73,7 +73,7 @@ with sync_playwright() as p:
     pg.click('[data-sh^=add]');pg.wait_for_timeout(100)
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     chk(len(st['P'])==1 and st['P'][0]['h']==5,'reunidas: %s'%[(q['n'],q['h']) for q in st['P']])
-    bx=[b for l in st['B'].values() for b in l];chk(all(b['d']==0 for b in bx),'cajas siguen en d=0 tras reindexar')
+    bx=[b for l in st['B'].values() for b in l];chk(all(b['d']==0 for b in bx),'hieleras siguen en d=0 tras reindexar')
     # pack the remaining and close
     pg.click('.sb [data-go=empaque]')
     for _ in range(6):
@@ -85,9 +85,12 @@ with sync_playwright() as p:
             pg.fill(f'#pk_c{r}',str(20+r));pg.click(f'#pkr{r} [data-pk^="k:"] >> nth=2')
         pg.click('[data-pk=addall]');pg.wait_for_timeout(100);pg.click('.sb [data-go=empaque]')
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
-    bx=[b for l in st['B'].values() for b in l];chk(len(bx)==5,'5 cajas totales: %d'%len(bx))
+    bx=[b for l in st['B'].values() for b in l];chk(len(bx)==5,'5 hieleras totales: %d'%len(bx))
     pg.click('.sb [data-go=embarques]');pg.locator('.bp').first.click()
     pg.fill('[data-zs$=":0"]','5');pg.press('[data-zs$=":0"]','Tab')
+    # v1.9.0: hoja de empaque completa de las dos órdenes (si falta algo, cerrar pregunta)
+    pg.evaluate("ST.OR.forEach(o=>{o.f={...(o.f||{}),hf:'08:00',re:'Ana Torres',ev:'S',pl:'ZRY68F3',ch:'Alejandro S.',tel:'646-294-1282',tp:'48 - 49 °F',to:'T1',tq:'T1 - 50 °F'}});save();render()")
+    chk(pg.evaluate("ST.OR.every(o=>!ordTot(o)||!f6Miss(o,true).length)"),'hoja de empaque completa en las dos órdenes (hora inicial puesta sola)')
     pg.click('[data-a=cp]');pg.wait_for_timeout(200)
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     chk(st['P'][0]['closed'],'cerrado'); print(st['O'][0]['body'][:300]);chk('12/10' in st['O'][0]['body'] and '13/10' in st['O'][0]['body'],'correo lista ordenes')

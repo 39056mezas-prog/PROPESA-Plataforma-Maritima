@@ -19,7 +19,7 @@ GEN=r"""(days)=>{const S0=S,R=[],L=[],B={},OR=[],P=[];let N=0,seq=0;const sh=(i)
   OR.push(o)}
  ST.R=R;ST.L=L;ST.B=B;ST.OR=OR;ST.P=P;ST.N=N;ST.BN=seq;const t0=performance.now();const ok=save();return{ok,saveMs:performance.now()-t0,bytes:JSON.stringify(ST).length,lots:R.length,boxes:seq,orders:OR.length,ships:P.length}}"""
 # Mediana de 5 medidas. Límites con margen sobre lo medido el 15/oct/2026 (≈120 ms y ≈180 ms con CPU 4×): si algo
-# vuelve a recorrer o convertir a texto todas las cajas en cada guardado, se pasa del límite y la prueba falla.
+# vuelve a recorrer o convertir a texto todas las hieleras en cada guardado, se pasa del límite y la prueba falla.
 LIM={'stage':200,'apply':320}
 fails=[]
 def chk(c,m):
@@ -50,16 +50,16 @@ with sync_playwright() as p:
         pg.evaluate(f"setPiso(true);go('pemp:{days}.1')")
         if pg.locator('[data-pe^="lot:"]').count():pg.click('[data-pe^="lot:"] >> nth=0')
         t=pg.evaluate("""()=>{const i=document.querySelector('.ppc');if(!i)return -1;i.value='20';i.dispatchEvent(new Event('input',{bubbles:true}));const no=i.dataset.slot;kpGo('slot:'+no);const btn=document.querySelector('#kpad [data-kp="k:R"]');const a=performance.now();btn.click();return performance.now()-a}""")
-        print(f'CPUx{rate} guardar una caja (modo piso) ms',round(t))
+        print(f'CPUx{rate} guardar una hielera (modo piso) ms',round(t))
         k=pg.evaluate("()=>{const a=performance.now();for(let i=0;i<20;i++)save();return (performance.now()-a)/20}");print(f'CPUx{rate} save() promedio ms',round(k,1))
         pg.evaluate("setPiso(false)")
         # auditoría #12: el camino de la base compartida (corre igual en modo local; aquí se mide el trabajo, no la red).
-        # stage = calcular qué registros cambiaron al guardar una caja (lo que hace syncStage); apply = poner en pantalla
+        # stage = calcular qué registros cambiaron al guardar una hielera (lo que hace syncStage); apply = poner en pantalla
         # un cambio de otro equipo (applyRows: con la base compartida también hace un stage antes).
         cl=pg.evaluate(CLOUD_M)
         print(f'CPUx{rate} base compartida ms',cl)
         if rate==4:
-            chk(cl['stage']<=LIM['stage'],f"guardar una caja con la base compartida: {cl['stage']} ms (límite {LIM['stage']} ms con CPU 4×)")
+            chk(cl['stage']<=LIM['stage'],f"guardar una hielera con la base compartida: {cl['stage']} ms (límite {LIM['stage']} ms con CPU 4×)")
             chk(cl['stage']+cl['apply']<=LIM['apply'],f"recibir el cambio de otro equipo: {cl['stage']+cl['apply']} ms (límite {LIM['apply']} ms con CPU 4×)")
     b.close()
 print('RESULTADO:','TODO BIEN' if not fails else f'{len(fails)} fallas');sys.exit(1 if fails else 0)

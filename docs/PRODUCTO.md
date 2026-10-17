@@ -32,7 +32,7 @@ Además: **Panel** (`inicio`), **Temperatura** (`temperatura`), **Administració
 |---|---|
 | **Lote** | Una entrada de producto. Código tipo `WLRCO170926` = `WLR` (langosta roja) + proveedor (`CO` Cooperativa/SCPP Ensenada, `EM` Emancipación, `LE` Leyes de Reforma) + fecha `ddmmyy`. *Inferido de los PDFs; confirmar.* |
 | **Tallas (g)** | 491-610, 611-850, 851-1220, 1221-UP. En papel también: 0-650, 651-850, 851-1250, 1251-UP. Interno: `S`, etiquetas `SL`. |
-| **Caja / hielera** | Se tratan como lo mismo. Una caja = **16 kg netos** (`KGN`) y **19.6 kg brutos** (`KGB` = 1.4 hielera + 1.5 gel + 16 producto + 0.7 caja de cartón), igual en la orden y en el embarque. |
+| **Hielera** | Desde la v1.9.0 la app dice **hielera** (antes «caja»). En el tanque sí se habla de cajas («Kg por caja en tanque»). Una hielera = **16 kg netos** (`KGN`) y **19.6 kg brutos** (`KGB` = 1.4 hielera + 1.5 gel + 16 producto + 0.7 caja de cartón), igual en la orden y en el embarque. |
 | **Categoría** | La **talla** de la caja, por color (`RC`): Blanco 491-610 · Rojo 611-850 · Verde 851-1220 · Amarillo 1221-UP (v1.5.0). |
 | **Consignatario** | A quién se factura en destino. Lista oficial de 7 (`CONS`). |
 | **Cliente final** | Código de 3 letras: HXH, ZSM, LHD, RSK, HSF, HYG, HJX, ZYX, LMD, MXH (`CLI0`). Una orden a PVG se reparte entre varios. |
@@ -63,6 +63,8 @@ Direcciones, contactos y USCI completos: `index.html` (`CONS`) y `docs/referenci
 - **Lote:** al crearlo son obligatorios fecha, hora, proveedor, tanque, lote, temperatura del tanque (20–110 °F), temperatura del producto, kg por caja en tanque y kg de desperdicio (0 si no hubo) — decidido por el usuario el 15/oct/2026 (v1.8.2); el lote no se repite; al menos una talla con kilos. Editar un lote viejo no obliga a llenar los datos nuevos. ID interno `R-0121` con contador que solo crece (`ST.RN`).
 - **Orden:** neto = cajas × 16 kg; bruto = cajas × 19.6 kg. Una línea no admite más cajas empacadas que las pedidas. No se elimina una línea con cajas. No se agregan líneas a un destino cuyo embarque está cerrado.
 - **Consignación:** una por (orden + ciudad + consignatario); varias órdenes pueden unirse en un embarque («Unir», «Agregar otra orden», «Separar»). Hieleras = suma de cajas de sus órdenes. Peso bruto = hieleras × (1.4 hielera + 1.5 gel + 16 producto + 0.7 cartón) = **19.6 kg/hielera**.
+- **Hoja de empaque · Formato 06 (v1.9.0):** una por orden (`o.f`). La app llena fecha, especie, destino, consignatarios, lotes, peso bruto y hieleras por talla; propone tanques de origen y tanque y temperatura (última lectura de agua). Se capturan placas, chofer, teléfono, temperatura del producto, quién realizó, evaluación S/NS/N/D/N/A y observaciones. Hora inicial sola con la primera hielera; hora final, quién realizó y evaluación al terminar la última. Faltantes en rojo con «Completar ›»; cerrar el embarque con la hoja incompleta pregunta. Sale en los PDF y en el correo. Admin y piso la llenan; con el embarque cerrado ya no se cambia.
+- **Indicaciones para la carga (v1.9.0):** texto por embarque (`p.ob`, ej. «ECHAR 2 TARIMAS VACÍAS Y FLEJE») en recuadro amarillo grande: embarque, plan del camión, inicio de Modo piso, hoja de la orden, PDF del embarque y del camión, correo de cierre.
 - **Plan de carga:** 10 celdas (2 × 5) de 15/20/20/25/25 hieleras = **210** por camión; se llena desde la cabina; avisa si se excede. Solo cuenta embarques abiertos.
 - **Alertas de embarque (rojo):** peso bruto ≠ formato; tallas ≠ hieleras (también con tallas en 0); cajas sin cantidad o categoría; sin cajas empacadas. Cada una con «Resolver ›».
 - **Cerrar empaque (solo admin):** requiere al menos una caja; guarda el informe en Administración → Informes de cierre (con PDF). Después, las cajas de ese destino quedan bloqueadas.
@@ -97,7 +99,7 @@ Función `can(a)`: el admin puede todo; el Encargado de piso puede `box`, `fin` 
 | `PROPESA_Control_Recepcion.pdf` | Control de recepción y tallas | **Sí**: formulario de Entrada |
 | `orden_a_proveedor.pdf` | ETD, cliente, destino, cajas, pesos | **Sí**: Órdenes |
 | `lista_de_consignatarios.pdf` | 7 consignatarios con dirección, contacto, USCI | **Sí**: `CONS` |
-| `packing_list.pdf` (Formato 06) | Cajas con piezas vivas y cliente; encabezado con placas, chofer, horas, temperaturas, peso bruto | Parcial: packing list sí, encabezado no |
+| `packing_list.pdf` (Formato 06) | Hieleras con piezas vivas y cliente; encabezado con placas, chofer, horas, temperaturas, peso bruto | **Sí** (v1.9.0): hoja de empaque en cada orden |
 | `tabla_logistica.pdf` | Cajas y kg neto por cliente y destino | Parcial |
 | `control_de_pesos_y_tallas.pdf` (Formato 02) | Pesos por tina (1–180), totales por talla, cajas completas/incompletas | **No** |
 | `Recepcion_Variedades.pdf` | Control de envío: color de tape, lotes mezclados, % mortalidad, temperatura de arribo | **No** (solo se calcula mortalidad) |

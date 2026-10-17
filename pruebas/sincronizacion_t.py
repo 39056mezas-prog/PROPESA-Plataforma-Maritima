@@ -19,7 +19,7 @@ for _ in range(50):
     try: mock('/__reset', True); break
     except Exception: time.sleep(0.1)
 
-INIT = "window.PROPESA_SB={url:'%s',key:'clave-publica-de-prueba'};try{localStorage.setItem('propesa-kp','0')}catch(e){}" % MOCK  # empaque con botones en cada caja
+INIT = "window.PROPESA_SB={url:'%s',key:'clave-publica-de-prueba'};try{localStorage.setItem('propesa-kp','0')}catch(e){}" % MOCK  # empaque con botones en cada hielera
 def until(pg, js, t=12):
     end = time.time() + t
     while time.time() < end:
@@ -97,9 +97,9 @@ try:
         B.evaluate("go('empaque')"); B.locator('[data-go^="empacar:"]').first.click(); B.click('[data-pk="lot:WLRCO141026A"]')
         B.fill('#pk_c0', '30'); B.click('#pkr0 [data-pk^="k:"] >> nth=0'); B.fill('#pk_c1', '25'); B.click('#pkr1 [data-pk^="k:"] >> nth=1')
         B.click('[data-pk=addall]'); B.wait_for_timeout(200)
-        chk(B.evaluate("Object.values(ST.B).flat().length") == 2, 'B guardó 2 cajas: %s' % B.evaluate("JSON.stringify(ST.B)+' '+document.getElementById('toast').textContent"))
-        chk(until(A, "Object.values(ST.B).flat().length==2"), 'cajas empacadas en B aparecen en A')
-        chk(A.evaluate("Object.values(ST.B).flat().every(b=>b.d===0)"), 'en A las cajas apuntan al mismo embarque')
+        chk(B.evaluate("Object.values(ST.B).flat().length") == 2, 'B guardó 2 hieleras: %s' % B.evaluate("JSON.stringify(ST.B)+' '+document.getElementById('toast').textContent"))
+        chk(until(A, "Object.values(ST.B).flat().length==2"), 'hieleras empacadas en B aparecen en A')
+        chk(A.evaluate("Object.values(ST.B).flat().every(b=>b.d===0)"), 'en A las hieleras apuntan al mismo embarque')
         chk(A.evaluate("sent(0)") == 55, 'A ve 55 langostas en el embarque')
         # nota del embarque en A → B
         A.evaluate("go('emb:0')"); A.fill('#ntx', 'Tarima revisada'); A.click('[data-ev^=save]')
@@ -185,9 +185,9 @@ try:
         A.evaluate("go('admin')"); A.locator('input[data-bk=up]').first.set_input_files(os.path.join(ROOT, 'pruebas', 'datos', 'backup.json'))
         chk(until(A, "ST.R.length>=1") and until(F, f"ST.R.length=={A.evaluate('ST.R.length')}&&ST.OR.length=={A.evaluate('ST.OR.length')}", 20), 'restaurar un respaldo lo pone en todos los equipos')
         time.sleep(1.5); chk(until(F, "1") and F.evaluate(CORE) == A.evaluate(CORE), 'tras restaurar, A y el equipo nuevo son idénticos')
-        # --- v1.8.7: el peso estándar de la caja llega a los demás equipos
+        # --- v1.8.7: el peso estándar de la hielera llega a los demás equipos
         A.evaluate("ST.W={h:1.4,g:1.5,p:16.2,c:0.7};save()")
-        chk(until(F, "ST.W&&ST.W.p==16.2", 20) and until(F, "render(),KGN==16.2&&KGB==19.8"), 'el peso estándar de la caja que guarda A llega al otro equipo')
+        chk(until(F, "ST.W&&ST.W.p==16.2", 20) and until(F, "render(),KGN==16.2&&KGB==19.8"), 'el peso estándar de la hielera que guarda A llega al otro equipo')
         sweep = []
         for r in ['inicio', 'recepcion', 'ordenes', 'empaque', 'embarques', 'cierre', 'temperatura', 'admin']:
             F.evaluate(f"go('{r}')"); tx = F.inner_text('#app')
@@ -268,15 +268,15 @@ try:
         raw_push(D, [{'k': 'OR/987655', 'v': {'id': 987655, 'etd': 20261016, 'sh': {}, 'lines': [
                         {'id': 1, 'city': 'PVG', 'cons': 99, 'cli': 'HXH', 'boxes': 2},     # consignatario que no existe
                         {'id': 2, 'city': 'XXX', 'cons': 0, 'cli': 'ZSM', 'boxes': 2},      # ciudad que no existe
-                        {'id': 3, 'city': 'PVG', 'cons': 0, 'cli': 'RSK', 'boxes': 0}]}},   # cero cajas
+                        {'id': 3, 'city': 'PVG', 'cons': 0, 'cli': 'RSK', 'boxes': 0}]}},   # cero hieleras
                      {'k': 'B/987656', 'v': {'lot': lotv, 'c': 5, 'k': 'Z', 'd': None, 'o': '987655.3', 'seq': 987656}},   # categoría que no existe
-                     {'k': 'B/987657', 'v': {'lot': lotv, 'c': 0, 'k': 'R', 'd': None, 'o': '987655.3', 'seq': 987657}},   # caja sin piezas
+                     {'k': 'B/987657', 'v': {'lot': lotv, 'c': 0, 'k': 'R', 'd': None, 'o': '987655.3', 'seq': 987657}},   # hielera sin piezas
                      {'k': 'T/987658', 'v': {'id': 987658, 't': None, 'tank': 'T1', 'a': 50}}])                           # lectura sin fecha
         chk(until(A, "ST.OR.some(o=>o.id==987655)") and until(D, "ST.OR.some(o=>o.id==987655)"), 'A y piso reciben la orden con valores sin sentido')
         chk(A.evaluate("JSON.stringify(ST.OR.find(o=>o.id==987655).lines.map(l=>[l.id,l.boxes]))+ST.OR.find(o=>o.id==987655).etd") == '[[3,1]]',
-            'se quedan solo las líneas válidas (consignatario y ciudad que existen, mínimo 1 caja) y la fecha que no es fecha queda vacía')
+            'se quedan solo las líneas válidas (consignatario y ciudad que existen, mínimo 1 hielera) y la fecha que no es fecha queda vacía')
         chk(not A.evaluate("Object.values(ST.B).flat().some(b=>b.seq>=987656&&b.seq<=987657)") and not A.evaluate("ST.T.some(x=>x.id==987658)"),
-            'cajas sin piezas o con categoría que no existe y lecturas sin fecha se ignoran')
+            'hieleras sin piezas o con categoría que no existe y lecturas sin fecha se ignoran')
         for r in ['inicio', 'ordenes', 'orden:987655', 'empaque', 'empacar:987655.3', 'embarques', 'cierre', 'temperatura']:
             A.evaluate(f"go('{r}')"); A.wait_for_timeout(80)
         D.evaluate("setPiso(true)")

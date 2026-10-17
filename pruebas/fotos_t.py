@@ -90,7 +90,7 @@ try:
 
         # --- 3. sin internet: la foto espera en el equipo y se sube antes que la nota
         corta = lambda r: r.abort('internetdisconnected')   # sin internet hacia la base (la página sí carga, como en la tablet)
-        B.route(MOCK + '/**', corta); n2 = nota(B, 'caja 12 golpeada')
+        B.route(MOCK + '/**', corta); n2 = nota(B, 'hielera 12 golpeada')
         chk(until(B, "outN()==2"), 'sin internet: quedan 2 pendientes (la nota y su foto)')
         chk(n2['imgs'][0][3:] not in mock('/__estado')['files'] and B.evaluate("document.querySelector('img[data-fp]').src.startsWith('data:image/jpeg')"), 'la foto todavía no está arriba, pero en B se ve')
         chk(B.evaluate("idbGet('fotos-cola').then(o=>Object.keys(o||{}).length)") == 1, 'la foto pendiente se guarda en la memoria del equipo (cola)')

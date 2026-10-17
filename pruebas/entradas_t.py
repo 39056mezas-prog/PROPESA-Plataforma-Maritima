@@ -52,7 +52,7 @@ with sync_playwright() as p:
     chk('Faltan 4' in pg.inner_text('[data-pa="more:4"]') and 'pmx' in pg.get_attribute('[data-pa="more:4"]','class'),'v1.8.2: fila con datos y sin los de «Más» → el botón dice «Faltan 4» en rojo')
     pg.click('[data-pa="more:4"]');chk(pg.is_visible('[data-pr="4:tempT"]'),'Más muestra los detalles')
     pg.fill('[data-pr="4:tempT"]','58');pg.fill('[data-pr="4:tempP"]','59-61');pg.fill('[data-pr="4:desp"]','1.2')
-    chk('Faltan 1' in pg.inner_text('[data-pa="more:4"]'),'el aviso baja mientras se llenan (falta kg por caja)')
+    chk('Faltan 1' in pg.inner_text('[data-pa="more:4"]'),'el aviso baja mientras se llenan (falta kg por hielera)')
     pg.fill('[data-pr="4:kgbox"]','18')
     chk('· 4' in pg.inner_text('[data-pa="more:4"]') and 'pmx' not in pg.get_attribute('[data-pa="more:4"]','class'),'completos: Más cuenta los datos llenos, sin rojo')
     # el foco y lo escrito se conservan al agregar otra fila

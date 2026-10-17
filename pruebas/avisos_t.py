@@ -28,7 +28,7 @@ with sync_playwright() as p:
         pg.evaluate("go('inicio')");pg.click("button.chipb:has-text('Sin líneas')");chk(at()=='orden:4','panel Sin líneas -> '+at())
         pg.click("button.chipb:has-text('Sin líneas')");pg.wait_for_timeout(500);chk(pg.evaluate("document.activeElement.id")=='ol_cli','on order page jumps to add-line field')
         # KPI cards
-        pg.evaluate("go('inicio')");pg.click('.kpl >> nth=0');chk(at().startswith(E) or at().startswith('orden:'),'KPI cajas -> '+at())
+        pg.evaluate("go('inicio')");pg.click('.kpl >> nth=0');chk(at().startswith(E) or at().startswith('orden:'),'KPI hieleras -> '+at())
         pg.evaluate("go('inicio')");pg.click('.kpl >> nth=1');chk(at().startswith('emb:'),'KPI empaques -> '+at())
         # empaque per-line chip
         pg.evaluate("go('empaque')");pg.click("td button.chipb:has-text('Faltan 25')");chk(at()==E+'3.1','empaque line chip -> '+at())
@@ -42,15 +42,15 @@ with sync_playwright() as p:
         pg.click(".alk:has-text('Peso bruto')");pg.wait_for_timeout(500);chk((pg.evaluate("document.activeElement.dataset.a") or '').startswith('pwfix:'),'v1.8.7: el aviso de peso lleva a «Usar el peso estándar»')
         pg.click('[data-a^="pwfix:"]');chk(pg.locator(".alk:has-text('Peso bruto')").count()==0 and pg.evaluate(f"ST.P[{i}].c[0][1]")==1.4,'al usar el peso estándar el aviso desaparece')
         pg.click("button.chipb:has-text('NO SUMA')");pg.wait_for_timeout(500);chk((pg.evaluate("document.activeElement.dataset.zs") or '')!='','NO SUMA chip focuses')
-        pg.click(".alk:has-text('No hay cajas')");chk(at()==E+'3.1','no boxes alert -> '+at())
+        pg.click(".alk:has-text('No hay hieleras')");chk(at()==E+'3.1','no boxes alert -> '+at())
         pg.evaluate(f"go('emb:{i}')");pg.click("td button.chipb");chk(at()==E+'3.1','ordsInShip chip -> '+at())
-        # auditoría #6: dos tablets guardan el último lugar a la vez y queda una caja de más
+        # auditoría #6: dos tablets guardan el último lugar a la vez y queda una hielera de más
         pg.evaluate("ST.B.WLRCO051026A.push({c:15,k:'R',d:0,o:'1.1',seq:uidN()});save();go('emb:0')")
-        chk(pg.locator(".alk:has-text('HXH tiene 4 cajas y la orden pide 3')").count()==1,f'piso={piso} aviso rojo «HXH tiene 4 cajas y la orden pide 3»')
-        pg.click(".alk:has-text('HXH tiene 4 cajas')");chk(at()=='empacar:1.1','el aviso lleva a la vista completa de ese cliente -> '+at())
-        chk(pg.evaluate("ordAssigned(ST.OR[0],ST.OR[0].lines[0]).length")==4 and pg.locator('#app').inner_text().count('15')>=1,'ahí se ve la caja de más')
+        chk(pg.locator(".alk:has-text('HXH tiene 4 hieleras y la orden pide 3')").count()==1,f'piso={piso} aviso rojo «HXH tiene 4 hieleras y la orden pide 3»')
+        pg.click(".alk:has-text('HXH tiene 4 hieleras')");chk(at()=='empacar:1.1','el aviso lleva a la vista completa de ese cliente -> '+at())
+        chk(pg.evaluate("ordAssigned(ST.OR[0],ST.OR[0].lines[0]).length")==4 and pg.locator('#app').inner_text().count('15')>=1,'ahí se ve la hielera de más')
         pg.evaluate("(()=>{ST.B.WLRCO051026A.pop();save();go('emb:0')})()")
-        chk(pg.locator(".alk:has-text('cajas y la orden pide')").count()==0,'al quitarla, el aviso se va')
+        chk(pg.locator(".alk:has-text('hieleras y la orden pide')").count()==0,'al quitarla, el aviso se va')
         pg.evaluate(f"go('emb:{i}')");pg.screenshot(path=T+f'l_{piso}_emb.png')
         pg.evaluate("go('inicio')");pg.screenshot(path=T+f'l_{piso}_inicio.png')
         pg.close()
