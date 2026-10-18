@@ -24,7 +24,7 @@ with sync_playwright() as p:
         pg.click('.pt.p2')
         chk(pg.locator('tr.per').count()==1,'hoja de entradas con una fila')
         pg.click('[data-pa=save]',force=True);chk(pg.locator('tr.per').count()==1,'guardar sin datos no hace nada')
-        pg.fill('[data-pr="1:origin"]','SCPP Ensenada');pg.select_option('[data-pr="1:tank"]','T3')
+        pg.select_option('[data-pr="1:origin"]','1');pg.select_option('[data-pr="1:tank"]','T3')
         pg.click('[data-pr="1:lot"]');pg.keyboard.type('nuevo123');chk(pg.input_value('[data-pr="1:lot"]')=='NUEVO123','uppercase lot')
         pg.click('[data-pa="more:1"]');pg.fill('[data-pr="1:tempT"]','57');pg.fill('[data-pr="1:tempP"]','58');pg.fill('[data-pr="1:kgbox"]','18');pg.fill('[data-pr="1:desp"]','0')
         pg.fill('[data-pr="1:k1"]','100.5');pg.fill('[data-pr="1:k3"]','20');pg.screenshot(path=T+f'p_{vw[0]}_kilos.png');pg.click('[data-pa=save]')

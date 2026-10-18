@@ -19,10 +19,10 @@ with sync_playwright() as p:
         w=vw[0]
         # 1) Administrador: Entrada con el formulario a medias
         pg=fresh(b,vw);login(pg,'admin@propesa.mx','admin123')
-        pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fo','SCPP Ensenada');pg.click('#fl');pg.keyboard.type('wlrco131026');pg.fill('#fk1','55.5')
+        pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.select_option('#fo','1');pg.fill('#fl','');pg.click('#fl');pg.keyboard.type('wlrco131026');pg.fill('#fk1','55.5')
         reload(pg)
         chk(pg.locator('#le').count()==0,f'{w} admin sigue dentro después de recargar')
-        chk(pg.locator('#fo').count()==1 and pg.input_value('#fo')=='SCPP Ensenada',f'{w} el formulario de Entrada sigue abierto con el proveedor')
+        chk(pg.locator('#fo').count()==1 and pg.input_value('#fo')=='1',f'{w} el formulario de Entrada sigue abierto con el proveedor')
         chk(pg.input_value('#fl')=='WLRCO131026' and pg.input_value('#fk1')=='55.5',f'{w} se conservan lote y kilos')
         # 2) Orden a medias
         pg.evaluate("go('orden:1')");(pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.fill('#ol_z1','5');pg.fill('#ol_n','7');reload(pg)
@@ -51,8 +51,8 @@ with sync_playwright() as p:
         st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
         chk(sum(1 for x in st['B']['WLRCO061026B'] if x['o']=='3.1')==2,f'{w} después de recargar se puede seguir empacando')
         # 7) Registrar entradas en piso a medias
-        pg.evaluate("go('pent')");pg.fill('[data-pr="1:origin"]','Emancipación');pg.click('[data-pr="1:lot"]');pg.keyboard.type('abc9');reload(pg)
-        chk(pg.input_value('[data-pr="1:origin"]')=='Emancipación' and pg.input_value('[data-pr="1:lot"]')=='ABC9',f'{w} la hoja de entradas de piso se conserva')
+        pg.evaluate("go('pent')");pg.select_option('[data-pr="1:origin"]','2');pg.fill('[data-pr="1:lot"]','');pg.click('[data-pr="1:lot"]');pg.keyboard.type('abc9');reload(pg)
+        chk(pg.input_value('[data-pr="1:origin"]')=='2' and pg.input_value('[data-pr="1:lot"]')=='ABC9',f'{w} la hoja de entradas de piso se conserva')
         # 8) Sesión vencida o usuario borrado
         pg.evaluate("LAST_ACT=Date.now()-13*36e5;localStorage.setItem('propesa-ses',JSON.stringify({u:2,exp:Date.now()-1000}))");pg.reload()
         chk(pg.locator('#le').count()==1,f'{w} sesión vencida pide entrar')

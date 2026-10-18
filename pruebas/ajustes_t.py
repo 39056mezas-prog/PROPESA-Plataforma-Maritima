@@ -47,9 +47,9 @@ with sync_playwright() as p:
         for _ in range(8):pg.keyboard.press('Tab')
         chk(pg.evaluate("!!document.activeElement.closest('#setp')"),'Tab no se sale del panel');pg.keyboard.press('Escape')
         # no borra lo capturado
-        pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fo','Proveedor escrito');pg.fill('#fk1','12.5')
+        pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.select_option('#fo','2');pg.fill('#fk1','12.5')
         open_set(pg);pg.click('[data-set-theme=light]');pg.keyboard.press('Escape')
-        chk(pg.input_value('#fo')=='Proveedor escrito' and pg.input_value('#fk1')=='12.5','abrir Ajustes y cambiar tema no borra lo capturado')
+        chk(pg.input_value('#fo')=='2' and pg.input_value('#fk1')=='12.5','abrir Ajustes y cambiar tema no borra lo capturado')
         # tema: toda la app
         def look():
             return pg.evaluate("""()=>{const g=s=>{const e=document.querySelector(s);return e?getComputedStyle(e):null};const cd=g('.cd');return{bg:getComputedStyle(document.body).backgroundColor,cd:cd.backgroundColor,ink:cd.color,hd:g('.hd').backgroundColor,hdc:g('#sq').color,hdi:g('#sq').backgroundColor,mut:g('.mut')?g('.mut').color:null,th:g('th')?g('th').color:null,td:g('td')?g('td').color:null}}""")

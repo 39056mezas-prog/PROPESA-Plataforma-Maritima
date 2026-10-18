@@ -21,7 +21,7 @@ with sync_playwright() as p:
         pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
         # --- nueva entrada en T6 con temperaturas
         pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
-        pg.fill('#fl', 'wlrtemp1'); pg.fill('#fo', 'SCPP'); pg.select_option('#ft', 'T6'); pg.fill('#fd', '2026-10-16'); pg.fill('#fh', '07:40')
+        pg.fill('#fl', 'wlrtemp1'); pg.select_option('#fo', '1'); pg.select_option('#ft', 'T6'); pg.fill('#fd', '2026-10-16'); pg.fill('#fh', '07:40')
         pg.fill('#ftt', '57.3'); pg.fill('#ftp', '58-60'); pg.fill('#fkb', '18'); pg.fill('#fdes', '0'); pg.fill('#fk1', '200'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
         chk(pg.evaluate("!!R_('WLRTEMP1')") and pg.evaluate("ST.T.length") == 0, f'{vw} se guarda la entrada (sin copiar nada a las lecturas)')
         # Temperatura la muestra sola

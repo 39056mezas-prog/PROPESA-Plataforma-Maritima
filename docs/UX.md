@@ -95,3 +95,4 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - Mover el botón de Ajustes al menú del perfil.
 - ~~Teclado numérico propio en Modo piso (se quitó el 12/oct).~~ **Regresó el 13/oct a pedido del cliente**, distinto: fijo en pantalla (no aparece y desaparece), en todas las vistas de Empaque. Ver §4 y `HISTORIAL.md` (v1.3.0).
 - Cambiar muchas cosas sin validarlas: el equipo sintió que se trabajaba «sin rumbo».
+- **Textos que suenan a app sin terminar o a información que falta** (17/oct): «Todavía no hay…», «Aún no hay…», «Sin datos todavía», «(de una versión anterior)», «escrito a mano, de antes», explicaciones largas de lo que falta. Los vacíos se dicen corto («Sin lotes», «Sin lecturas») y los avisos de pendientes solo con lo necesario («Lote X · sin entrada» + botón). Los mensajes de conexión («cambios que todavía no se suben») sí se quedan.

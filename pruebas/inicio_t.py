@@ -23,9 +23,9 @@ with sync_playwright() as p:
         pg.evaluate(f"go('{r}')");tx=pg.inner_text('#app')
         if DEMO.search(tx):seen.append((r,DEMO.search(tx).group(0)))
     pg.locator('#app [data-avatar]').click();tx=pg.inner_text('#pmenu');pg.keyboard.press('Escape')
-    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.10.1' in tx,'el menú de perfil muestra la versión 1.10.1')
+    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.11.0' in tx,'el menú de perfil muestra la versión 1.11.0')
     # temperatura real
-    pg.evaluate("go('temperatura')");chk('Todavía no hay lecturas' in pg.inner_text('#app'),'temperatura empieza vacía (sin datos inventados)')
+    pg.evaluate("go('temperatura')");chk('Sin lecturas' in pg.inner_text('#app'),'temperatura empieza vacía (sin datos inventados)')
     pg.select_option('#tq_t','T2');pg.fill('#tq_a','150');pg.click('[data-a=tq]');chk('20 y 110' in pg.inner_text('#app'),'valida el rango de temperatura')
     pg.fill('#tq_a','54.3');pg.fill('#tq_p','58');pg.click('[data-a=tq]')
     t=pg.evaluate("ST.T");chk(len(t)==1 and t[0]['tank']=='T2' and t[0]['a']==54.3 and t[0]['p']==58 and t[0]['s'] is None and t[0]['by']=='María López','lectura guardada con tanque, valores y quién la capturó')

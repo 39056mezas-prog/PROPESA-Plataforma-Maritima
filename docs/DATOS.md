@@ -92,3 +92,9 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - `OR[].lines[]` nuevas: `{id, city, cons, boxes, z:[B,R,V,A], kp, tar, cc}`; `cli` solo en líneas viejas. `lnX` deja pasar solo números válidos (tallas enteras ≥ 0, `kp` 0–100, `tar`/`cc` enteros ≥ 0).
 - `W` (peso estándar) agrega `t` (tarima, 9.9 kg por omisión).
 - `P[].c` = componentes de las líneas del embarque sin renglones en 0; `P[].z` = suma de tallas de sus líneas cuando todas las tienen.
+
+## v1.11.0 · proveedores y lotes sin entrada
+- `ST.PV` (opcional): `[{id, n nombre oficial, k clave del lote (1–4 letras), rfc, per permiso de pesca, off oculto}]`. Si no existe se usa `PV0` (Ensenada CO, Emancipación EM, Leyes de Reforma LE); se crea al primer cambio en Administración. Ids nuevos con `uidN()`. Se comparte como un registro por proveedor `V/<id>` (`WN.V = pvClean`); `cleanST` la limpia (`pvClean`, sin ids repetidos).
+- `R[].pv` (opcional): id del proveedor. `R[].origin` sigue guardando el nombre (lo usan PDF y reportes, y es lo único que tienen los lotes de antes). `pvMatch(r)` da el proveedor por `pv` o, en un lote de antes, por nombre exacto.
+- `R[].ne` (opcional): lote **sin entrada** (se empezó a empacar sin recepción): sin kilos, `rdate` vacío. Al capturar su entrada con el mismo código, `addLot` lo completa (conserva `id` y hieleras) y quita `ne`.
+- Los dos campos solo se escriben cuando existen: los lotes de antes se suben exactamente igual. No cambió Supabase.

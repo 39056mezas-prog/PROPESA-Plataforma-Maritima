@@ -14,7 +14,7 @@ with sync_playwright() as p:
     pg.goto(BASE);pg.evaluate(FIX);pg.reload()
     pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
     for lot,o in [('WLRCO051026A','SCPP Ensenada SCL'),('WLRCO061026B','Pescadores del Sur')]:
-        pg.click('.sb [data-go=recepcion]');pg.click('[data-a=nf]');pg.fill('#fl',lot.lower());pg.fill('#fo',o)
+        pg.click('.sb [data-go=recepcion]');pg.click('[data-a=nf]');pg.fill('#fl',lot.lower());pg.select_option('#fo','1' if 'Ensenada' in o else '2')
         pg.fill('#ftt','58.5');pg.fill('#ftp','59-62');pg.fill('#fkb','18')
         for i,v in enumerate([120.5,300,410.25,95]):pg.fill(f'#fk{i}',str(v))
         pg.fill('#fdes','4.2');pg.click('[data-a=sv]')

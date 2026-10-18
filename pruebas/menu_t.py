@@ -26,8 +26,8 @@ with sync_playwright() as p:
         av.click();pg.mouse.click(vw[0]//2,vw[1]-20);chk(not pg.locator('#pmenu .pmbox').count(),'tocar fuera cierra')
         av.click();pg.click('[data-pm=users]');chk(pg.evaluate('V.v')=='admin' and 'Usuarios' in pg.inner_text('#app'),'Administración abre la pantalla de usuarios')
         pg.locator('#app [data-settings]').click();chk(pg.locator('#setp .setpanel').is_visible(),'el botón Ajustes de la barra abre Configuración');pg.keyboard.press('Escape')
-        pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fo','escrito')
-        pg.locator('#app [data-avatar]').click();pg.keyboard.press('Escape');chk(pg.input_value('#fo')=='escrito','abrir el menú no borra lo capturado')
+        pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.select_option('#fo','2')
+        pg.locator('#app [data-avatar]').click();pg.keyboard.press('Escape');chk(pg.input_value('#fo')=='2','abrir el menú no borra lo capturado')
         pg.screenshot(path='/tmp/propesa-menu.png') if False else None
         pg.locator('#app [data-avatar]').click();pg.click('[data-pm=logout]');chk(pg.locator('#le').count()==1,'Cerrar sesión regresa a la pantalla de entrada')
         # piso role: no users option; menu in piso header

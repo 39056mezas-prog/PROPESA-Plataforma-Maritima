@@ -14,5 +14,5 @@ await pg.type('#le','admin@propesa.mx');await pg.type('#lp','admin123');await pg
 for(const r of ['inicio','recepcion','ordenes','empaque','empacar:1.1','embarques','emb:0','cierre','temperatura','admin']){await pg.evaluate(x=>{window.scrollTo(0,0);go(x)},r);await new Promise(r=>setTimeout(r,200));await run(r)}
 await pg.evaluate(()=>setPiso(true));await new Promise(r=>setTimeout(r,500));await run('piso');
 await pg.evaluate(()=>go('pemp'));await new Promise(r=>setTimeout(r,300));await run('piso_empacar');
-await pg.evaluate(()=>{PEN=null;go('pent')});await new Promise(r=>setTimeout(r,300));await pg.click('[data-pa=add]');await pg.type('[data-pr="1:origin"]','SCPP');await pg.type('[data-pr="1:lot"]','wlrco131026');await pg.click('[data-pa="more:1"]');await pg.click('[data-pa=save]');await new Promise(r=>setTimeout(r,300));await run('piso_entradas');
+await pg.evaluate(()=>{PEN=null;go('pent')});await new Promise(r=>setTimeout(r,300));await pg.click('[data-pa=add]');await pg.select('[data-pr="1:origin"]','1');await pg.type('[data-pr="1:lot"]','wlrco131026');await pg.click('[data-pa="more:1"]');await pg.click('[data-pa=save]');await new Promise(r=>setTimeout(r,300));await run('piso_entradas');
 console.log(JSON.stringify(res,null,1));await br.close();

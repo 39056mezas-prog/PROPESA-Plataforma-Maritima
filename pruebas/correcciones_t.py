@@ -29,7 +29,7 @@ with sync_playwright() as p:
     pg.evaluate("setPiso(true);PEN=null;go('pent')");chk(pg.evaluate("PEN.rows[0].d.rdate")=='2026-10-12','#3 piso entrada date local');pg.evaluate("setPiso(false);go('inicio')")
     # 6 lot ids unique after delete
     pg.evaluate("ST.R.push({id:'R-0123',lot:'TMP3',origin:'x',tank:'T1',final:null,closed:false});ST.B.TMP3=[];ST.R=ST.R.filter(r=>r.lot!=='WLRCO061026B');delete ST.B.WLRCO061026B;save();go('recepcion')")
-    pg.click('[data-a=nf]');pg.fill('#fl','NUEVO');pg.fill('#fo','X');pg.fill('#fk0','5');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]')
+    pg.click('[data-a=nf]');pg.fill('#fl','NUEVO');pg.select_option('#fo','1');pg.fill('#fk0','5');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]')
     ids=pg.evaluate("ST.R.map(r=>r.id)");chk(len(ids)==len(set(ids)),'#6 unique lot ids '+str(ids))
     # 5 closed shipment
     pg.evaluate("ST.P[0].z=[2,2,2,1];save();closeP(0);go('orden:1')")
@@ -49,7 +49,7 @@ with sync_playwright() as p:
     pg.evaluate("go('admin')");pg.set_input_files('[data-bk=up]',T+'backup.json');pg.wait_for_timeout(300);chk(pg.evaluate("ST.U.length>0&&ST.U.every(u=>!('pw' in u)&&!('pwh' in u))"),'#4 old backup restores without passwords')
     # 1 storage full
     pg.evaluate("(()=>{let n=0;for(const sz of [1<<20,1<<16,1<<12,256,16]){const s='x'.repeat(sz);while(true){try{localStorage.setItem('pad'+(n++),s)}catch(e){break}}}})()")
-    pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fl','PRUEBA');pg.fill('#fo','X');pg.fill('#fk0','10');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]');pg.wait_for_timeout(100)
+    pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fl','PRUEBA');pg.select_option('#fo','1');pg.fill('#fk0','10');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]');pg.wait_for_timeout(100)
     chk('Guardado' not in pg.inner_text('#toast') and 'memoria' in pg.inner_text('#toast'),'#1 no false "Guardado": '+pg.inner_text('#toast'))
     chk('NO SE PUDO GUARDAR' in pg.inner_text('#app'),'#1 persistent red banner')
     pg.screenshot(path=T+'f_full.png')

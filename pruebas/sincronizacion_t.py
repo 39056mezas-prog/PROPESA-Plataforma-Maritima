@@ -37,7 +37,7 @@ def login(pg, em, pw):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
     return until(pg, "!!document.querySelector('.sb,.pshell,[data-avatar]')")
 def new_lot(pg, code, kgs=(100, 200, 300, 400)):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.fill('#fo', 'SCPP'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
+    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
     for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
     pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
 def new_order(pg, etd, cli, n, city='PVG'):

@@ -1,5 +1,29 @@
 # Cambios
 
+## 1.11.0 · 17 de octubre de 2026
+
+### Nuevo
+- **El proveedor se elige de una lista** (pedido del usuario, después de probar la app con sus documentos reales: el mismo proveedor salía escrito de 3 formas, por ejemplo «SCPP EMANCIPACION SC DE RL» y «SCCP EMANCIPACION»). En la Entrada (vista completa) y en la hoja de entradas de Modo piso.
+  - Lista inicial: **SCPP Ensenada SCL (CO)**, **SCPP Emancipación SC de RL (EM)** y **SCPP Leyes de Reforma (LE)**.
+  - **La app propone el código del lote** al elegir proveedor y fecha: WLR + clave + día-mes-año (Ensenada + 22/09/26 → **WLRCO220926**). Si ya existe, propone la siguiente letra (WLRCO220926B). Se puede corregir. Si se escribió a mano, ya no se cambia solo. Al tocar el lote propuesto se selecciona completo: lo que se escriba lo reemplaza.
+  - **Administración → Proveedores** (solo el Administrador): agregar, editar nombre oficial, clave del lote, **RFC** y **permiso de pesca**, y ocultar (los lotes que ya tiene no cambian; siempre queda al menos uno). Al cambiar el nombre, sus lotes toman el nombre nuevo.
+  - Un lote de antes con el nombre exacto de la lista ya cuenta como ese proveedor; a los demás se les pone proveedor al editarlos.
+  - El PDF de Entrada trae una tabla de proveedores con su clave, RFC y permiso de pesca.
+- **Empacar de un lote sin entrada** (pedido del usuario para dejar el papel: la langosta que ya está en los tanques no tiene entrada en la app).
+  - En Empaque (vista completa y Modo piso) hay **«+ Lote sin entrada»**: se escribe el lote y se eligen proveedor y tanque; se empaca normal. Lo pueden hacer el Administrador y el Encargado de piso. Si el lote ya existe, solo se elige.
+  - Ese lote sale en amarillo **«Sin entrada»** en Entrada, Empaque y su página, con **«Completar entrada ›»**. Completar abre la Entrada (o la hoja de Modo piso) con lote, proveedor y tanque ya puestos; al guardarla, el lote queda normal y conserva sus hieleras.
+  - Mientras no tenga entrada **no cuenta** en el tablero de tanques, en Mortalidad final ni en sus PDF.
+
+### Cambiado
+- **Textos más cortos, sin «todavía no» ni versiones viejas** (pedido del usuario): «Todavía no hay lotes. Registra la primera entrada para empezar» → «Registra la primera entrada.»; «Todavía no hay lecturas» → «Sin lecturas»; «Aún no hay informes» → «Sin informes»; «Sin datos todavía» → «Sin datos»; sin «(de una versión anterior)». Los avisos de conexión no cambian.
+- Lote sin entrada y proveedores sin explicaciones de más: el aviso dice solo «Lote X · sin entrada» con «Completar entrada ›»; el PDF de Entrada no lo menciona; Administración no habla de lotes escritos a mano.
+
+### Corregido
+- «Configuración avanzada» (Administración) a veces se cerraba sola si la pantalla se redibujaba justo después de abrirla.
+
+### Pruebas
+- `proveedores_t.py` (128), nueva. Las pruebas que escribían el proveedor ahora lo eligen de la lista. 34 grupos, 1862 verificaciones, TODO BIEN.
+
 ## 1.10.1 · 17 de octubre de 2026
 
 ### Corregido
