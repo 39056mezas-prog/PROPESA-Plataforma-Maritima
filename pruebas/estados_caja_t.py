@@ -86,9 +86,9 @@ with sync_playwright() as p:
         # editar mientras hay filas a medias: lo escrito en pendientes no se borra
         pg.fill('#pk_c0','17');pg.click(f'#pkd{seq} .pked');pg.click('[data-pk=cancel]');chk(pg.input_value('#pk_c0')=='17',tag+' editar no borra filas a medias')
         # completar el resto → 100 %
-        for r in range(3):
-            pg.fill(f'#pk_c{r}',str(30+r));pg.click(f'[data-pk="k:{r}:B"]')
-        pg.click('[data-pk=addall]');pg.wait_for_timeout(700)
+        for r in range(3):  # v1.12.0: cada hielera se completa sola al tener piezas y categoría; la siguiente queda como fila 0
+            pg.fill('#pk_c0',str(30+r));pg.click('[data-pk="k:0:B"]');pg.wait_for_timeout(150)
+        pg.wait_for_timeout(500)
         chk(len(boxes(pg))==4 and pg.locator('.pkdn.is-done').count()==4,tag+' 4 completadas')
         chk('100% completado' in pg.inner_text('#pksum') and '0 pendientes' in pg.inner_text('#pksum'),tag+' resumen 100 %')
         f4=fill(pg);chk(f4>0.98,tag+f' al 100 % la barra está llena ({f4:.2f})')

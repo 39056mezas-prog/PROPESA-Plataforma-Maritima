@@ -30,7 +30,7 @@ with sync_playwright() as p:
         pg.evaluate("setPiso(true);go('pent')"); pg.wait_for_timeout(150)
         # dos filas a medio llenar en Modo piso
         pg.select_option('[data-pr="1:origin"]', '1'); pg.select_option('[data-pr="1:tank"]', 'T2'); pg.fill('[data-pr="1:lot"]', 'wlrmodo1'); pg.fill('[data-pr="1:k0"]', '25')
-        pg.click('[data-pa="more:1"]'); pg.fill('[data-pr="1:tempT"]', '57.5')
+        pg.fill('[data-pr="1:tempT"]', '57.5')
         pg.click('[data-pa=add]'); pg.select_option('[data-pr="2:origin"]', '2'); pg.fill('[data-pr="2:lot"]', 'wlrmodo2')
         toggle(pg)
         chk(pg.evaluate(V) == ['pent', '', False] and pg.locator('.sb').count() == 1, f'{vw} apagar Modo piso en «Registrar entradas» → misma hoja en la vista completa')

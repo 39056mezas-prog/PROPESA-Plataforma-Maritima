@@ -25,8 +25,8 @@ with sync_playwright() as p:
         def at():return pg.evaluate("V.v+(V.id?':'+V.id:'')")
         # panel order table
         pg.click("button.chipb:has-text('Faltan 25')");chk(at()==E+'3.1',f'piso={piso} panel Faltan -> {at()}')
-        pg.evaluate("go('inicio')");pg.click("button.chipb:has-text('Sin líneas')");chk(at()=='orden:4','panel Sin líneas -> '+at())
-        pg.click("button.chipb:has-text('Sin líneas')");pg.wait_for_timeout(500);chk(pg.evaluate("document.activeElement.id")=='ol_n','on order page jumps to add-line field')
+        pg.evaluate("go('inicio')");pg.click("button.chipb:has-text('Falta el destino')");chk(at()=='orden:4','panel Falta el destino -> '+at())
+        pg.click("button.chipb:has-text('Falta el destino')");pg.wait_for_timeout(500);chk(pg.evaluate("document.activeElement.id")=='ol_z0','on order page jumps to the first size field')
         # KPI cards
         pg.evaluate("go('inicio')");pg.click('.kpl >> nth=0');chk(at().startswith(E) or at().startswith('orden:'),'KPI hieleras -> '+at())
         pg.evaluate("go('inicio')");pg.click('.kpl >> nth=1');chk(at().startswith('emb:'),'KPI empaques -> '+at())

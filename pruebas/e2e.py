@@ -51,8 +51,9 @@ with sync_playwright() as p:
     pg.fill('#pk_c0','30');pg.click('[data-pk=addall]');pg.wait_for_timeout(100)
     chk(pg.input_value('#pk_c0')=='30','valor conservado tras error')
     pg.click('#pkr0 [data-pk^="k:"] >> nth=0')
-    pg.fill('#pk_c1','25');pg.click('#pkr1 [data-pk^="k:"] >> nth=1')
-    pg.click('[data-pk=addall]');pg.wait_for_timeout(100)
+    # v1.12.0: cada hielera se completa sola al tocar la categoría; la siguiente queda como fila 0
+    pg.fill('#pk_c0','25');pg.click('#pkr0 [data-pk^="k:"] >> nth=1');pg.wait_for_timeout(100)
+    pg.wait_for_timeout(100)
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     bx=[b for l in st['B'].values() for b in l]
     chk(len(bx)==2 and all(b['d']==0 for b in bx),'2 hieleras guardadas a la vez, d=0: %s'%bx)
@@ -82,8 +83,8 @@ with sync_playwright() as p:
         btns.first.click()
         rows=pg.locator('.pkrow').count()
         for r in range(rows):
-            pg.fill(f'#pk_c{r}',str(20+r));pg.click(f'#pkr{r} [data-pk^="k:"] >> nth=2')
-        pg.click('[data-pk=addall]');pg.wait_for_timeout(100);pg.click('.sb [data-go=empaque]')
+            pg.fill('#pk_c0',str(20+r));pg.click('#pkr0 [data-pk^="k:"] >> nth=2');pg.wait_for_timeout(80)
+        (pg.locator('[data-pk=addall]').count() and pg.click('[data-pk=addall]'));pg.wait_for_timeout(100);pg.click('.sb [data-go=empaque]')
     st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
     bx=[b for l in st['B'].values() for b in l];chk(len(bx)==5,'5 hieleras totales: %d'%len(bx))
     pg.click('.sb [data-go=embarques]');pg.locator('.bp').first.click()

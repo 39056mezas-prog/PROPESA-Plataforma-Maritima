@@ -50,7 +50,7 @@ with sync_playwright() as p:
     fill_row(pg,3,'Leyes de Reforma','T2','WLRCO131026A',['',15,'',''])
     fill_row(pg,4,'SCPP Ensenada','T4','WLRCO131026B',['','',12.5,''],more=False)
     chk('Faltan 4' in pg.inner_text('[data-pa="more:4"]') and 'pmx' in pg.get_attribute('[data-pa="more:4"]','class'),'v1.8.2: fila con datos y sin los de «Más» → el botón dice «Faltan 4» en rojo')
-    pg.click('[data-pa="more:4"]');chk(pg.is_visible('[data-pr="4:tempT"]'),'Más muestra los detalles')
+    chk(pg.is_visible('[data-pr="4:tempT"]'),'v1.12.0: los datos de «Más datos» se ven desde el principio')
     pg.fill('[data-pr="4:tempT"]','58');pg.fill('[data-pr="4:tempP"]','59-61');pg.fill('[data-pr="4:desp"]','1.2')
     chk('Faltan 1' in pg.inner_text('[data-pa="more:4"]'),'el aviso baja mientras se llenan (falta kg por hielera)')
     pg.fill('[data-pr="4:kgbox"]','18')
@@ -86,7 +86,7 @@ with sync_playwright() as p:
     # Enter avanza; al final crea fila nueva
     pg.select_option('[data-pr="5:origin"]','1');pg.focus('[data-pr="5:origin"]');pg.keyboard.press('Enter')
     chk(pg.evaluate("document.activeElement.dataset.pr")=='5:tank','Enter pasa al siguiente campo')
-    pg.focus('[data-pr="5:k3"]');pg.keyboard.press('Enter');chk(pg.locator('tr.per').count()==6 and pg.evaluate("document.activeElement.dataset.pr")=='6:origin','Enter al final crea fila')
+    pg.focus('[data-pr="5:time"]');pg.keyboard.press('Enter');chk(pg.locator('tr.per').count()==6 and pg.evaluate("document.activeElement.dataset.pr")=='6:origin','Enter al final crea fila')
     # Quitar con confirmación
     pg.click('[data-pa="rm:5"]');chk(pg.locator('[data-pa="rmy:5"]').count()==1,'pide confirmar al quitar fila con datos')
     pg.click('[data-pa="rmn:5"]');chk(pg.locator('tr.per[data-pu="5"]').count()==1,'No conserva la fila')

@@ -41,9 +41,8 @@ with sync_playwright() as p:
         lids = pg.evaluate(f"{O}.lines.map(l=>l.id)")
         pg.evaluate(f"go('empacar:{oid}.{lids[0]}')"); pg.evaluate("PKD.lot=openLots()[0]")
         chk('Guardar' in pg.inner_text('#app') and not re.search(r'\b[Cc]ajas?\b', pg.inner_text('#app')), f'{vw} Empaque dice «hieleras», no «cajas»')
-        for r in range(2):
-            pg.fill(f'#pk_c{r}', str(25 + r)); pg.click(f'#pkr{r} [data-pk^="k:"] >> nth=1')
-        pg.click('[data-pk=addall]'); pg.wait_for_timeout(100)
+        for r in range(2):  # v1.12.0: cada hielera se completa sola
+            pg.fill('#pk_c0', str(25 + r)); pg.click('#pkr0 [data-pk^="k:"] >> nth=1'); pg.wait_for_timeout(100)
         hi = pg.evaluate(f"({O}.f||{{}}).hi")
         chk(bool(hi) and re.match(r'^\d{2}:\d{2}$', hi or ''), f'{vw} la hora inicial se pone sola con la primera hielera: {hi}')
         chk(pg.locator('#f6card').count() == 0, f'{vw} con la orden a medias no aparece «Terminar empaque» en Empaque')
@@ -52,7 +51,7 @@ with sync_playwright() as p:
         pg.evaluate(f"go('orden:{oid}')")
         chk(pg.locator('#f6card .alb').count() == 1 and pg.locator('[data-jump="#f6_pl"]').count() >= 1, f'{vw} la hoja muestra en rojo lo que falta con «Completar ›»')
         # terminar con DEF
-        pg.evaluate(f"go('empacar:{oid}.{lids[1]}')"); pg.evaluate("PKD.lot=openLots()[0]"); pg.fill('#pk_c0', '30'); pg.click('#pkr0 [data-pk^="k:"] >> nth=2'); pg.click('[data-pk=addall]'); pg.wait_for_timeout(100)
+        pg.evaluate(f"go('empacar:{oid}.{lids[1]}')"); pg.evaluate("PKD.lot=openLots()[0]"); pg.fill('#pk_c0', '30'); pg.click('#pkr0 [data-pk^="k:"] >> nth=2'); (pg.locator('[data-pk=addall]').count() and pg.click('[data-pk=addall]')); pg.wait_for_timeout(100)
         chk(pg.locator('#f6card').count() == 1 and 'Terminar empaque' in pg.inner_text('#f6card'), f'{vw} al terminar la última hielera aparece «Terminar empaque»')
         chk(re.match(r'^\d{2}:\d{2}$', pg.input_value('#f6_hf')) and pg.input_value('#f6_re') == 'Ana Torres', f'{vw} hora final y quién realizó vienen llenos: {pg.input_value("#f6_hf")} / {pg.input_value("#f6_re")}')
         chk(pg.locator('[data-f6$=":S"]').count() == 1 and pg.locator('[data-f6$=":NS"]').count() == 1 and pg.locator('[data-f6$=":ND"]').count() == 1 and pg.locator('[data-f6$=":NA"]').count() == 1, f'{vw} botones S, NS, N/D y N/A')
@@ -102,7 +101,7 @@ with sync_playwright() as p:
         # cerrar con la hoja incompleta pide confirmación
         pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '2026-10-21'); pg.click('[data-oa=new]'); o2 = pg.evaluate('+V.id')
         pg.select_option('#ol_city', 'HKG'); pg.fill('#ol_n', '1'); pg.fill('#ol_z0', '1'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(80)
-        l2 = pg.evaluate(f"ST.OR.find(o=>o.id=={o2}).lines[0].id"); pg.evaluate(f"go('empacar:{o2}.{l2}')"); pg.evaluate("PKD.lot=openLots()[0]"); pg.fill('#pk_c0', '20'); pg.click('#pkr0 [data-pk^="k:"] >> nth=0'); pg.click('[data-pk=addall]'); pg.wait_for_timeout(80)
+        l2 = pg.evaluate(f"ST.OR.find(o=>o.id=={o2}).lines[0].id"); pg.evaluate(f"go('empacar:{o2}.{l2}')"); pg.evaluate("PKD.lot=openLots()[0]"); pg.fill('#pk_c0', '20'); pg.click('#pkr0 [data-pk^="k:"] >> nth=0'); (pg.locator('[data-pk=addall]').count() and pg.click('[data-pk=addall]')); pg.wait_for_timeout(80)
         s2 = pg.evaluate(f"(o=>o.sh[Object.keys(o.sh)[0]])(ST.OR.find(o=>o.id=={o2}))")
         pg.evaluate(f"go('emb:{s2}')"); iss = pg.evaluate(f"shipIssues({s2}).map(x=>x.t+'|'+(x.go||''))")
         chk(any('Hoja de empaque' in x and f'orden:{o2}' in x for x in iss), f'{vw} el embarque avisa en rojo la hoja incompleta y lleva a la orden: {iss}')

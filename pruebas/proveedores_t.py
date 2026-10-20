@@ -38,7 +38,7 @@ with sync_playwright() as p:
         pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
         chk(pg.evaluate("document.getElementById('fo').tagName") == 'SELECT', f'{vw} el proveedor se elige de una lista')
         ops = pg.evaluate("[...document.querySelectorAll('#fo option')].map(o=>o.textContent)")
-        chk(ops == ['Elige proveedor', 'SCPP Ensenada SCL', 'SCPP Emancipación SC de RL', 'SCPP Leyes de Reforma'], f'{vw} la lista trae los 3 proveedores de hoy: {ops}')
+        chk(ops == ['Elige proveedor', 'SCPP Ensenada SCL', 'SCPP Emancipación SC de RL', 'SCPP Leyes de Reforma', '+ Agregar proveedor…'], f'{vw} la lista trae los 3 proveedores de hoy: {ops}')
         pg.fill('#fd', '2026-09-22'); pg.select_option('#fo', '1')
         chk(pg.input_value('#fl') == 'WLRCO220926', f'{vw} Ensenada + 22/09/26 propone WLRCO220926: {pg.input_value("#fl")}')
         pg.select_option('#fo', '2'); chk(pg.input_value('#fl') == 'WLREM220926', f'{vw} al cambiar a Emancipación cambia a WLREM220926')

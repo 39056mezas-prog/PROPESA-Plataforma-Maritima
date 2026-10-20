@@ -1,5 +1,31 @@
 # Cambios
 
+## 1.12.0 · 18 de octubre de 2026
+
+Pedidos del usuario después de usar la app en su celular.
+
+### Nuevo
+- **Ventana para instalar la app.** Al entrar al sitio, en Android y en computadora sale «Instala la app PROPESA» con «Instalar» / «Ahora no»; en iPhone dice cómo agregarla a inicio. No sale si ya está instalada ni durante 7 días después de «Ahora no». Archivo nuevo `sw.js` (solo deja la app instalable; no guarda nada).
+- **Empacar sin lote y conectarlo después.** En Empaque (vista completa y Modo piso) hay «Empacar sin lote»: crea un lote provisional de la orden (SIN-LOTE-ddmm) y se empaca normal. Después, en su página, «Conectar con su entrada» pasa sus hieleras al lote correcto y el provisional desaparece.
+- **Agregar un proveedor desde la Entrada** («+ Agregar proveedor…» en la lista, solo Administrador), sin perder lo que ya se escribió; queda elegido y propone su lote. También en la hoja de Modo piso.
+- **Editar pesos desde Embarque** (Administrador): «Editar pesos» abre ahí mismo hielera, gel, tarima, producto y caja de cartón.
+
+### Cambiado
+- **Fechas y horas se escriben** (sin el calendario ni el reloj de Android, que se trababan): dd/mm/aaaa y HH:MM con botón «Hoy» / «Ahora». Las diagonales y los dos puntos se ponen solos. Hora inicial y final del Formato 06 con «Ahora».
+- **Empaque (vista completa): cada hielera se completa sola** al tener piezas y categoría (como en Modo piso). Al terminar la última se cierra el teclado y sale «✔ Listo» con animación.
+- **Orden:** primero las hieleras por talla y **el total sale solo**; sin tallas se escribe el total (tallas opcionales: el embarque toma las tallas de lo empacado). Kg de producto, tarimas y cajas de cartón van en su propio apartado, «Producto y empaque».
+- **Órdenes:** «Nueva orden» va en el encabezado y las órdenes en una tabla (fecha, destino, hieleras, peso bruto, estado, Abrir).
+- **Aviso «Sin líneas» → «Falta el destino · Agregar ›».**
+- **Entrada (Modo piso):** los datos extra se ven desde el principio («Más datos»). Ya no está «Quitar guardadas de la lista».
+- **Mortalidad final** sin «Revisión aparte», «Se calcula sola» ni «No es un paso del flujo».
+
+### Quitado
+- «Descargar packing list (CSV)».
+- «Eliminar orden» dentro de Modo piso (sigue en la vista completa).
+
+### Pruebas
+- `v112_t.py` (109), nueva. Las pruebas de Empaque, Órdenes, fechas, pesos y Mortalidad se pasaron al comportamiento nuevo. 35 grupos, 1961 verificaciones, TODO BIEN.
+
 ## 1.11.0 · 17 de octubre de 2026
 
 ### Nuevo

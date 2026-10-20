@@ -85,6 +85,11 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 
 ## 8. Lo que el usuario rechazó (no repetir sin preguntar)
 
+- **Calendario y reloj del teléfono** para fechas y horas (18/oct): tardan, se traban y ya no abren. Se escriben (dd/mm/aaaa, HH:MM) con «Hoy»/«Ahora».
+- Botones que **borran avance con un solo toque** («Quitar guardadas de la lista», 18/oct).
+- **Descargar CSV** del packing list (no le sirve).
+- Esperar a «Guardar hieleras» en la vista completa: cada hielera se completa sola.
+
 - Rediseño oscuro con colores semánticos y números gigantes (revertido).
 - Galería de fotos en el Panel (revertida).
 - Modo piso de **una caja a la vez** (quiere varias).

@@ -55,8 +55,8 @@ with sync_playwright() as p:
         # --- Mortalidad final aparte
         side = pg.evaluate("[...document.querySelectorAll('.sb .fs em')].map(e=>e.textContent).join(',')")
         chk(side == '1,2,3,4', f'{vw} el menú tiene 4 pasos numerados: {side}')
-        chk(pg.locator('.sb h4:has-text("Revisión") + [data-go=cierre]').count() == 1 and 'Se calcula sola' in pg.inner_text('.sb [data-go=cierre]'), f'{vw} Mortalidad final está aparte, en «Revisión», y dice que se calcula sola')
-        pg.evaluate("go('cierre')"); chk('Revisión aparte' in pg.inner_text('.gd') and pg.locator('.gd [data-go]').count() == 0, f'{vw} su pantalla dice «Revisión aparte» y no empuja a otro paso')
+        chk(pg.locator('.sb h4:has-text("Revisión") + [data-go=cierre]').count() == 1 and 'calcula sola' not in pg.inner_text('.sb [data-go=cierre]').lower(), f'{vw} Mortalidad final está aparte, en «Revisión», y dice que se calcula sola')
+        pg.evaluate("go('cierre')"); chk('Revisión aparte' not in pg.inner_text('.gd') and 'No es un paso' not in pg.inner_text('.gd') and pg.locator('.gd [data-go]').count() == 0, f'{vw} su pantalla dice «Revisión aparte» y no empuja a otro paso')
         chk(pg.locator('[data-fin]').count() >= 1, f'{vw} ahí se sigue pudiendo capturar el conteo final')
         pg.evaluate("go('embarques')"); chk('mortalidad' not in pg.inner_text('.gd').lower(), f'{vw} Embarque ya no tiene «Siguiente: mortalidad final»')
         pg.evaluate("ST.OR.forEach(o=>o.lines.forEach(l=>{}));ST.P.forEach(p=>p.closed=true);save();go('inicio')")

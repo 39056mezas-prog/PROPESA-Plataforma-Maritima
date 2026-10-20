@@ -98,3 +98,8 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - `R[].pv` (opcional): id del proveedor. `R[].origin` sigue guardando el nombre (lo usan PDF y reportes, y es lo único que tienen los lotes de antes). `pvMatch(r)` da el proveedor por `pv` o, en un lote de antes, por nombre exacto.
 - `R[].ne` (opcional): lote **sin entrada** (se empezó a empacar sin recepción): sin kilos, `rdate` vacío. Al capturar su entrada con el mismo código, `addLot` lo completa (conserva `id` y hieleras) y quita `ne`.
 - Los dos campos solo se escriben cuando existen: los lotes de antes se suben exactamente igual. No cambió Supabase.
+
+## v1.12.0
+- `R[].sl` (opcional, con `ne`): lote provisional «sin lote» (`SIN-LOTE-ddmm`), sin proveedor ni tanque (`tank:''`). `neJoin` pasa sus hieleras (`ST.B`) y notas (`M['lote:…']`) a un lote con entrada y lo borra.
+- `OR[].lines[].z` ahora es opcional también en líneas nuevas (tallas no capturadas): el embarque toma las tallas de lo empacado (`zLive` en `save`).
+- Fechas y horas se siguen guardando `YYYY-MM-DD` y `HH:MM`; en pantalla se escriben dd/mm/aaaa y HH:MM (`pD`, `pH`). En la hoja de Modo piso `r.d.rdate` guarda lo escrito (dd/mm/aaaa) y se convierte al guardar (`penD`).

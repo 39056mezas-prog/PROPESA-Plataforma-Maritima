@@ -23,10 +23,10 @@ with sync_playwright() as p:
     pg.fill('#le','ADMIN@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]');chk(pg.locator('.sb').count()==1,'#2 login works (email case-insensitive)')
     chk('contraseña de prueba' not in pg.inner_text('#app').lower(),'#2 sin aviso de contraseña de prueba')
     # 3 dates at 19:30 local
-    pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');chk(pg.input_value('#fd')=='2026-10-12','#3 reception date local: '+pg.input_value('#fd'))
-    pg.evaluate("go('ordenes')");chk(pg.input_value('#no_etd')=='2026-10-13','#3 ETD tomorrow: '+pg.input_value('#no_etd'))
+    pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');chk(pg.input_value('#fd')=='12/10/2026','#3 reception date local: '+pg.input_value('#fd'))
+    pg.evaluate("go('ordenes')");chk(pg.input_value('#no_etd')=='13/10/2026','#3 ETD tomorrow: '+pg.input_value('#no_etd'))
     chk(pg.evaluate("pdfName('Entrada')").endswith('2026-10-12.pdf'),'#3 PDF name date local')
-    pg.evaluate("setPiso(true);PEN=null;go('pent')");chk(pg.evaluate("PEN.rows[0].d.rdate")=='2026-10-12','#3 piso entrada date local');pg.evaluate("setPiso(false);go('inicio')")
+    pg.evaluate("setPiso(true);PEN=null;go('pent')");chk(pg.evaluate("pD(PEN.rows[0].d.rdate)")=='2026-10-12','#3 piso entrada date local');pg.evaluate("setPiso(false);go('inicio')")
     # 6 lot ids unique after delete
     pg.evaluate("ST.R.push({id:'R-0123',lot:'TMP3',origin:'x',tank:'T1',final:null,closed:false});ST.B.TMP3=[];ST.R=ST.R.filter(r=>r.lot!=='WLRCO061026B');delete ST.B.WLRCO061026B;save();go('recepcion')")
     pg.click('[data-a=nf]');pg.fill('#fl','NUEVO');pg.select_option('#fo','1');pg.fill('#fk0','5');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]')
