@@ -83,7 +83,7 @@ Antes de agregar un `data-*` nuevo, busca que no exista ya con otro significado.
 | Entrada / lotes | `recepcion`, `lote`, `lotForm`, `saveLot`, `newLotId`, `delLot`, `closeLot`, `post` (movimientos), `mv`, `rev` |
 | Órdenes | `ordenes`, `orden`, `ordAssigned`, `ordCsv` (packing list CSV) |
 | Empaque | `empaque`, `empacar`, `pkGrid`, `pkCnt`, `pkLive`, `pkEdLive`, `pkUpd`, `pkAnim`, `PKS`, `PKP`, `pendChip`, `goPend`/`goLine` |
-| Embarque | `embarques`, `emb`, `shipFor`, `newShip`, `syncShip`, `syncShipIdx`, `shipLinks`, `moveGroup`, `dropShip`, `joinable`, `shipPanel`, `shipIssues`, `shipAlert`, `truck`, `closeP` |
+| Embarque | `embarques`, `emb`, `shipFor`, `newShip`, `syncShip`, `syncShipIdx`, `shipLinks`, `moveGroup`, `dropShip`, `joinable`, `shipPanel`, `shipIssues`, `shipAlert`, `truck`, `closeP`; camiones (v1.14.0): `trucks`, `truckPlan(tk)`, `tFill`, `tFix`, `tIss`, `truckCard`, `bpCard` |
 | Mortalidad | `cierre`, `calc`, `donut`, `hbars` |
 | Temperatura | `temperatura`, `saveTemp` |
 | Panel / búsqueda | `inicio`, `nxt` (siguiente paso), `buscar` |
@@ -174,7 +174,7 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 | Borrar todos los datos | **No existe** desde la v1.8.5 (se quitaron `advCard`, `rstAll` y `data-a=rst`). Solo a mano desde Supabase: `SUPABASE.md` §9 |
 | Teclado de la app en táctiles (v1.8.9) | `KPRO()` (`hover: none` y `pointer: coarse`) → `kpro()` agrega `readonly` a `.pkc`/`.pke` (con `KPON`) y `.ppc`/`.psc`, para que el teclado del sistema no se abra cuando el código mueve el foco |
 | Editar orden (v1.8.8) | En `orden()`: `data-oa` `ee`/`se` (fecha, `OA.etd`) y `el:<id>`/`sl:<id>` (cliente y cajas por línea, `OA.ed`); `se` → `syncShipIdx`, `sl` → `syncShip`. Solo `can('lot')` |
-| Peso estándar de la caja (v1.8.7) | `ST.W` / `W0`, `pesoStd()`, `pesosSync()` (en cada `render()`: `KGN`, `KGB`), `stdC(h)` para `p.c` en `syncShipIdx`. Tarjeta `#pesos` en Administración (`data-a=pw`), `pwfix:<i>` en Embarque. Registro `W/pesos` |
+| Peso estándar de la caja (v1.8.7) | `ST.W` / `W0`, `pesoStd()`, `pesosSync()` (en cada `render()`: `KGN`, `KGB`), `stdC(h)` para `p.c` en `syncShipIdx`. Se edita solo en Embarque: «Editar pesos» (`data-a=ewp`, `EWP`) abre `pwPanel()` (`data-a=pw`, total en vivo `#pw_n`/`#pw_tt`); `pwfix:<i>`. Desde la v1.13.3 ya no hay tarjeta en Administración ni ruta `admin:pesos`. Registro `W/pesos` |
 | Pantalla de carga (v1.8.6) | `#boot` en el HTML (logo fijo, antes que `#app`; su CSS al principio del `<style>`). `boot()` = `boot0()` + `bootDone()` (desvanece y borra; mínimo 0.5 s en la app instalada) |
 | Botón de atrás (v1.8.1) | `navSync()` (al final de `render()`) guarda `[pantalla, dato, Modo piso]` en el historial del navegador; `popstate` cierra primero lo que está encima (`navOverlay`) y si no, regresa a la pantalla anterior (limpia como `go()` y pasa por `fixRoute()`). La dirección no cambia |
 | Fotos (v1.8.0) | `FQ` cola por subir (IndexedDB `fotos-cola`), `FC` fotos listas para mostrar, `fotoSrc`/`fImg` (src o gris + `data-fp`), `fotoLoad` (IndexedDB `F/<ruta>` o bajada con sesión), `upFotos` (sube antes que `flush`), `fotoMigra` (fotos viejas dentro de notas), `fotoDel`. `outN()` cuenta también las fotos por subir. Detalle: `SUPABASE.md` §8 |

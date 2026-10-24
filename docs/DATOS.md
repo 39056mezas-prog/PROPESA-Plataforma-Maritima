@@ -68,7 +68,7 @@ ST = {
 
 ## 4. Registros compartidos
 
-`encodeST()` convierte `ST` en registros (`R/<lote>`, `L/<id>`, `B/<seq>`, `OR/<id>`, `P/<u>`, `O/<u>`, `T/<id>`, `M/<id>`) normalizados con `WN` (orden fijo de campos), y `decodeST()` hace lo contrario con un orden que no depende del equipo. `ST.U` no viaja en registros: sale de `profiles`. Si agregas un campo a `ST`, agrégalo también en `WN` (si no, ese campo no se comparte).
+`encodeST()` convierte `ST` en registros (`R/<lote>`, `L/<id>`, `B/<seq>`, `OR/<id>`, `P/<u>`, `O/<u>`, `T/<id>`, `M/<id>`, y desde la v1.13.0 `D/disp`, que se calcula con `dispCalc()` y no vive en `ST`) normalizados con `WN` (orden fijo de campos), y `decodeST()` hace lo contrario con un orden que no depende del equipo. `ST.U` no viaja en registros: sale de `profiles`. Si agregas un campo a `ST`, agrégalo también en `WN` (si no, ese campo no se comparte).
 
 ## 5. Respaldo
 
@@ -95,6 +95,8 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 
 ## v1.11.0 · proveedores y lotes sin entrada
 - `ST.PV` (opcional): `[{id, n nombre oficial, k clave del lote (1–4 letras), rfc, per permiso de pesca, off oculto}]`. Si no existe se usa `PV0` (Ensenada CO, Emancipación EM, Leyes de Reforma LE); se crea al primer cambio en Administración. Ids nuevos con `uidN()`. Se comparte como un registro por proveedor `V/<id>` (`WN.V = pvClean`); `cleanST` la limpia (`pvClean`, sin ids repetidos).
+- `ST.ES` (opcional, v1.18.0): `[{id, n nombre, en nombre en inglés para compradores, off oculta}]`. Si no existe se usa `ES0` (Langosta Roja · Red lobster, id 1); se crea al primer cambio en Administración → Especies. Ids nuevos con `uidN()`. Un registro por especie `E/<id>` (`WN.E = esClean`); `cleanST` la limpia (`esClean`, sin ids repetidos).
+- `R[].sp` (opcional, v1.18.0): id de la especie. Sin `sp` = especie 1 (`esOf(r)`). Los lotes nuevos siempre lo guardan.
 - `R[].pv` (opcional): id del proveedor. `R[].origin` sigue guardando el nombre (lo usan PDF y reportes, y es lo único que tienen los lotes de antes). `pvMatch(r)` da el proveedor por `pv` o, en un lote de antes, por nombre exacto.
 - `R[].ne` (opcional): lote **sin entrada** (se empezó a empacar sin recepción): sin kilos, `rdate` vacío. Al capturar su entrada con el mismo código, `addLot` lo completa (conserva `id` y hieleras) y quita `ne`.
 - Los dos campos solo se escriben cuando existen: los lotes de antes se suben exactamente igual. No cambió Supabase.
@@ -103,3 +105,12 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - `R[].sl` (opcional, con `ne`): lote provisional «sin lote» (`SIN-LOTE-ddmm`), sin proveedor ni tanque (`tank:''`). `neJoin` pasa sus hieleras (`ST.B`) y notas (`M['lote:…']`) a un lote con entrada y lo borra.
 - `OR[].lines[].z` ahora es opcional también en líneas nuevas (tallas no capturadas): el embarque toma las tallas de lo empacado (`zLive` en `save`).
 - Fechas y horas se siguen guardando `YYYY-MM-DD` y `HH:MM`; en pantalla se escriben dd/mm/aaaa y HH:MM (`pD`, `pH`). En la hoja de Modo piso `r.d.rdate` guarda lo escrito (dd/mm/aaaa) y se convierte al guardar (`penD`).
+
+## v1.14.0 · varios camiones y acomodo a mano
+- `P[].tk` (opcional): camión de la consignación, texto de `uidS()`. Sin tk = el primer camión (los datos de antes quedan en uno solo). `trucks()` = camiones con consignaciones abiertas, ordenados; se muestran como Camión 1, 2…
+- `P[].ly` (opcional): 10 enteros 0–999, hieleras de la consignación en cada celda (índice = fila×5 + columna; columna 0 = cola, 4 = cabina; capacidades 15/20/20/25/25 por columna). Si ninguna consignación abierta del camión tiene `ly`, el acomodo es automático.
+- Los dos en `cleanST` y `WN.P` (solo si son válidos) y `decodeST` copia `ly`. Viajan dentro de `P/<u>`; no cambió Supabase.
+
+## v1.15.0 · color de cada consignatario
+
+- `ST.CC` (opcional): `{índice en CONS: '#rrggbb'}`. Solo el Administrador lo cambia (Administración → Consignatarios). `syncShipIdx` copia ese color a `p.col` de los embarques abiertos; los cerrados conservan el suyo. Sin color elegido, `p.col` sigue saliendo de `XC` por turno. Se comparte como `C/colores` (`WN.C = ccClean`: solo índices de `CONS` y `#rrggbb`); `cleanST` la limpia igual. Sin migración: es opcional.

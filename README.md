@@ -9,7 +9,7 @@ Incluye recepción de lotes, captura de hieleras, hoja de empaque (Formato 06), 
 |---|---|
 | `index.html` | Toda la aplicación |
 | `manifest.webmanifest`, `favicon.svg`, `icon-192/512/1024.png`, `apple-touch-icon.png` | Ícono (langosta blanca sobre azul marino, la misma del botón Entrada) y opción "Agregar a pantalla de inicio" en tablet |
-| `og-image.png` | Imagen que sale al compartir el link (logo de PROPESA, 1200×630). Las etiquetas `og:`/`twitter:` de `index.html` llevan la dirección completa `https://propesa.vercel.app/`: si cambia el dominio, cámbiala ahí |
+| `og-image.png` | Imagen que sale al compartir el link (logo de PROPESA, 1200×630). Las etiquetas `og:`/`twitter:` de `index.html` llevan la dirección completa `https://propesa.org/` (el dominio propio, v1.13.2): si cambia el dominio, cámbiala ahí y en `pruebas/vista_previa_t.py` |
 | `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; caché; y la tarea diaria que mantiene despierta la base) |
 | `api/despierta.js` | La tarea diaria: una consulta pequeña a la base para que el plan gratis de Supabase no la pause (ver *Fin de temporada*) |
 | `supabase/` | Base compartida: `migrations/` (lo que está aplicado en el proyecto `propesa_bc`, incluido el espacio de archivos «fotos»), `functions/usuarios` (alta de usuarios) y `schema.sql` (primer esquema) |
@@ -41,6 +41,7 @@ Cada persona entra con el **correo y la contraseña** que le dio el Administrado
 | Administrador | Todo, incluidos usuarios, respaldo y borrado de datos |
 | Encargado de piso | Entra directo a Modo piso: empacar, registrar entradas, cerrar embarques, conteo final |
 | Consulta | Solo ver |
+| Cliente (comprador) | Solo ve, en inglés, los kilos disponibles por talla y lo recibido en la semana. La base no le deja ver nada más |
 
 Para cargar un respaldo `.json`: Administración → **Restaurar respaldo** (reemplaza los datos de todos los equipos; los usuarios no cambian).
 
@@ -126,7 +127,7 @@ La langosta roja se pesca del 16 de septiembre al 15 de febrero. En la veda casi
 Requieren Python 3 con Playwright y Chromium.
 
 ```bash
-sh pruebas/correr_todo.sh      # 31 grupos; termina con «TODO BIEN»
+sh pruebas/correr_todo.sh      # 38 grupos; termina con «TODO BIEN»
 ```
 
 Extras: `python3 -I pruebas/rendimiento_t.py` (un año de datos, tiempos de pantalla) y `node pruebas/accesibilidad.mjs pruebas/datos/backup.json` (Lighthouse en 15 pantallas, en modo local; requiere `npm i lighthouse puppeteer-core`).

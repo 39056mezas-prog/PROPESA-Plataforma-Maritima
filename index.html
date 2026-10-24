@@ -9,9 +9,9 @@
 <meta property="og:locale" content="es_MX">
 <meta property="og:title" content="PROPESA · Plataforma marítima">
 <meta property="og:description" content="Seguimiento de cada lote de langosta viva: entrada, órdenes, empaque y embarque.">
-<meta property="og:url" content="https://propesa.vercel.app/">
-<meta property="og:image" content="https://propesa.vercel.app/og-image.png?v=1">
-<meta property="og:image:secure_url" content="https://propesa.vercel.app/og-image.png?v=1">
+<meta property="og:url" content="https://propesa.org/">
+<meta property="og:image" content="https://propesa.org/og-image.png?v=1">
+<meta property="og:image:secure_url" content="https://propesa.org/og-image.png?v=1">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PROPESA · Plataforma marítima">
 <meta name="twitter:description" content="Seguimiento de cada lote de langosta viva: entrada, órdenes, empaque y embarque.">
-<meta name="twitter:image" content="https://propesa.vercel.app/og-image.png?v=1">
+<meta name="twitter:image" content="https://propesa.org/og-image.png?v=1">
 <meta name="theme-color" content="#0B1D59">
 <link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4">
@@ -87,7 +87,7 @@ table.ent th.szh{position:relative}
 .szh-in .szd{grid-row:1/3}
 .szh1{color:var(--ink);font-weight:700;white-space:nowrap}
 .szh2{color:var(--mut);font-weight:500;font-size:.9333rem;white-space:nowrap}tfoot td{font-weight:700;border-top:1px solid var(--ln)}
-input,select{font:inherit;color:#0a2147;background:#fff;border:1px solid #b8c2cc;border-radius:10px;padding:10px;min-height:44px}td input{width:84px;text-align:right;min-height:36px;padding:4px 8px}
+input,select{font:inherit;color:#0a2147;background:#fff;border:1px solid #b8c2cc;border-radius:10px;padding:10px;min-height:44px}td input{width:84px;text-align:right;min-height:36px;padding:4px 8px}td input.ccol{width:64px;min-height:44px;padding:4px;cursor:pointer;vertical-align:middle}
 .f{display:flex;flex-wrap:wrap;gap:10px;align-items:end}.f label{display:flex;flex-direction:column;gap:4px;color:var(--mut);font-size:.8rem}.panel{background:var(--in);border-radius:14px;padding:14px;margin:10px 0}
 
 .bt{background:var(--cd);border:1px solid var(--ln);border-top:6px solid var(--ln);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px}
@@ -106,8 +106,16 @@ input,select{font:inherit;color:#0a2147;background:#fff;border:1px solid #b8c2cc
 .hb{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;margin:8px 0}.hb .tr{height:14px;border-radius:999px;background:var(--in);overflow:hidden}.hb .fl{height:100%;border-radius:999px;background:var(--cor)}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.legend{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0;color:var(--mut);font-size:.8rem}.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
 .tw{max-width:900px}.tw svg{width:100%;height:auto}
+.tleg>span{flex-wrap:wrap;display:inline-flex;align-items:center;gap:6px}.tmv{display:inline-flex;align-items:center;gap:6px;color:var(--mut)}.tmv select{min-height:44px;font-size:16px}
+.tgh{display:flex;justify-content:space-between;max-width:900px;font-size:.8rem;color:var(--mut);margin-top:10px}.tgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;max-width:900px;margin:4px 0 10px}
+.tcel{min-height:64px;border:2px solid var(--ln);border-radius:10px;background:var(--in);color:var(--ink);font:inherit;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}.tcel[aria-pressed=true]{border-color:#ffd166;box-shadow:0 0 0 3px #ffd16680}.tcel.ov{border-color:var(--alr)}
+.tcel b{white-space:nowrap;font-size:clamp(.75rem,3.4vw,1rem)}.tcel span{font-size:.8rem;display:inline-flex;align-items:center;gap:4px}.tcel i{width:10px;height:10px;border-radius:3px;display:inline-block}.tsel h4{margin:6px 0}.tsel .zin input{width:84px}
 #toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:#1c2733;color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;z-index:9;display:none;max-width:90vw}
 .login{display:grid;place-items:center;height:100%;background:radial-gradient(circle at 50% 0,#087DBA,#0B1D59 55%,#07123a)}input:focus,select:focus{outline:2px solid var(--ac);outline-offset:1px}.login .cd{width:min(380px,92vw)}
+/* v1.13.0 · pantalla de la cuenta Cliente (cliView) */
+.cli{min-height:100%;box-sizing:border-box;padding:max(16px,env(safe-area-inset-top,0px)) 16px 24px;background:radial-gradient(circle at 50% 0,#087DBA,#0B1D59 55%,#07123a)}.cli .cd{max-width:560px;margin:0 auto}.cli h1{margin:4px 0}.cli h2{font-size:1.1rem;margin:18px 0 4px}
+.clih{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}.clilg{width:150px;max-width:50%}
+.clil{list-style:none;margin:0;padding:0}.clil li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--ln)}.clil small{display:block;color:var(--mut);font-size:.85rem}.clil b{font-size:1rem;font-weight:700;line-height:1.3}.clik{text-align:right}.clik b{font-size:1.15rem;white-space:nowrap}.clit b,.clit .clik b{font-size:1.2rem}.clir{color:var(--mut)}.clir span{font-size:.95rem}.clih .btn{white-space:nowrap;font-size:1rem;padding:10px 16px;min-height:48px}.clis{margin:4px 0 10px}.clis .chip{margin:0}.clil span>b,.clil span>small{display:block;margin:0}
 details{background:var(--in);border-radius:12px;padding:10px 14px;margin:6px 0}pre{white-space:pre-wrap;font:.8rem/1.5 ui-monospace,monospace}
 :focus-visible{outline:2px solid var(--ac);outline-offset:2px}button:disabled,input:disabled,select:disabled{opacity:.45}
 @media(max-width:760px){.hd input{order:3;max-width:none;min-width:100%}.hb{grid-template-columns:90px 1fr 56px}.wrap{padding:12px 10px 40px}}
@@ -215,7 +223,7 @@ button.chip.pk[aria-pressed=true]{background:var(--ac);color:var(--acf);border-c
 .pkx .seg .chip.pk[aria-pressed=true]{background:var(--pksel);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.14),inset 0 0 0 1.5px var(--pkac)}
 .pkx .seg .dot,.pkcv .dot{width:8px;height:8px;margin:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.28)}
 .pkcv{display:inline-flex;align-items:center;gap:7px;font-weight:500}
-.pkell{display:flex;align-items:center;gap:8px;font-weight:600}.pkx.kpo .pkt .seg{background:none;border:0;padding:0}.pkx.kpo .pkt .seg button[aria-pressed=false]{display:none}.pkx.kpo .pkt td.pkcat:not(:has([aria-pressed=true])){display:none}.kpw.kpoff{grid-template-columns:minmax(0,1fr)}.kpw.kpoff .kpdock{position:sticky;top:auto;bottom:12px}.pkgos{display:flex;gap:8px;flex-wrap:wrap}.kpdock .kpad .kph{padding-right:34px}.kpclose{position:absolute;top:-16px;right:-12px;z-index:4;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;border:2px solid var(--ln);background:var(--cd);color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.18);cursor:pointer}.kpclose:hover{background:var(--in)}.kpclose:focus-visible,.kpfab:focus-visible{outline:3px solid var(--brand-cyan);outline-offset:2px}.kpfab{position:absolute;right:6px;bottom:calc(100% + 14px);z-index:5;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:0;background:var(--brand-blue);color:#fff;box-shadow:0 8px 24px rgba(8,125,186,.45),0 2px 6px rgba(0,0,0,.2);cursor:pointer}.kpfab:hover{filter:brightness(1.08)}@media (prefers-reduced-motion:no-preference){.kpfab{animation:kpfabin .2s ease-out}@keyframes kpfabin{from{transform:scale(.6);opacity:0}}}
+.pkell{display:flex;align-items:center;gap:8px;font-weight:600}.pkx.kpo .pkt .seg{background:none;border:0;padding:0}.pkx.kpo .pkt .seg button[aria-pressed=false]{display:none}.pkx.kpo .pkt td.pkcat:not(:has([aria-pressed=true],.pkcv)){display:none}.kpw.kpoff{grid-template-columns:minmax(0,1fr)}.kpw.kpoff .kpdock{position:sticky;top:auto;bottom:12px}.pkgos{display:flex;gap:8px;flex-wrap:wrap}.kpdock .kpad .kph{padding-right:34px}.kpclose{position:absolute;top:-16px;right:-12px;z-index:4;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;border:2px solid var(--ln);background:var(--cd);color:var(--ink);box-shadow:0 4px 12px rgba(0,0,0,.18);cursor:pointer}.kpclose:hover{background:var(--in)}.kpclose:focus-visible,.kpfab:focus-visible{outline:3px solid var(--brand-cyan);outline-offset:2px}.kpfab{position:absolute;right:6px;bottom:calc(100% + 14px);z-index:5;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;border:0;background:var(--brand-blue);color:#fff;box-shadow:0 8px 24px rgba(8,125,186,.45),0 2px 6px rgba(0,0,0,.2);cursor:pointer}.kpfab:hover{filter:brightness(1.08)}@media (prefers-reduced-motion:no-preference){.kpfab{animation:kpfabin .2s ease-out}@keyframes kpfabin{from{transform:scale(.6);opacity:0}}}
 .pkvb{display:flex;align-items:center;justify-content:flex-end;gap:5px;width:var(--pkin);min-height:44px;padding:0 12px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--ink);font:inherit;cursor:pointer;text-align:right}
 .pkvb .pku{color:var(--mut);font-size:.9333rem;font-weight:500}.pkvb .pkch{align-self:center;margin-left:6px;color:var(--mut);font-size:1.4rem;line-height:1}
 .pkvb .pkv{font-size:max(16px,1.0667rem);font-weight:600}
@@ -235,7 +243,7 @@ button.chip.pk[aria-pressed=true]{background:var(--ac);color:var(--acf);border-c
 .pkcf{display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center}
 .pktot{color:var(--mut);font-size:.8667rem;margin:10px 0 0}
 .pkx .pkb{position:sticky;bottom:12px;z-index:2;display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin:14px 0 2px;padding:10px 10px 10px 18px;background:var(--pkfl);border:1px solid var(--ln);border-radius:22px;box-shadow:var(--pkfs)}
-.pkprog{flex:1 1 15rem;min-width:0}
+.pkprog{flex:1 1 15rem;min-width:0}.pktop{margin:2px 0 14px}
 .pksum{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 8px;margin:0 0 7px;font-size:.9333rem}
 .pkc1{color:var(--pkok);font-weight:600}
 .pksep{color:var(--mut)}
@@ -309,7 +317,7 @@ input[aria-invalid=true],select[aria-invalid=true],textarea[aria-invalid=true]{b
 .pbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:12px 22px;border-radius:14px;border:0;background:var(--brand-blue);color:#fff;font:inherit;font-size:1.2rem;font-weight:800;cursor:pointer}.pbtn.s{background:var(--in);color:var(--ink);border:1px solid var(--ln)}.phd .pbtn.s{background:#ffffff1a;color:#fff;border-color:#ffffff33;min-height:48px;font-size:1rem;padding:8px 14px}.pbtn.big{min-height:68px;font-size:1.4667rem;padding:14px 34px}.pbtn:disabled{opacity:.4}
 .pw{max-width:1100px;margin:auto;padding:20px 16px 40px}.ph{font-size:2rem;margin:6px 0 18px}
 .pg{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.pt{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:6px;min-height:200px;padding:22px;border-radius:20px;border:2px solid var(--ln);background:var(--cd);color:var(--ink);font:inherit;text-align:left;cursor:pointer}.pt i{width:56px;height:56px;margin-bottom:auto}.pt i svg{width:56px;height:56px}.pt b{font-size:1.8667rem;line-height:1.1}.pt span{font-size:1.0667rem;color:var(--mut)}
-.pt.p1{background:var(--brand-blue);border-color:var(--brand-blue);color:#fff;min-height:260px}.pt.p2{background:#1B3680;border-color:#1B3680;color:#fff;min-height:260px}.pt.p1 span,.pt.p2 span{color:#e3eefc}.pt.p3{min-height:150px}.pt:disabled{opacity:.4;cursor:not-allowed}
+.pt.p1{background:var(--brand-blue);border-color:var(--brand-blue);color:#fff;min-height:260px}.pt.p2{background:#1B3680;border-color:#1B3680;color:#fff;min-height:260px}.pt.p1 span,.pt.p2 span{color:#e3eefc}.pt.p3{min-height:150px}.pg>.pt:last-child:nth-child(odd){grid-column:1/-1}/* 5.º botón (Temperatura) a todo lo ancho */.pt:disabled{opacity:.4;cursor:not-allowed}
 .pt:active{transform:scale(.98)}.pc{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}.pt.pk2{min-height:150px;justify-content:center;min-width:0;container-type:inline-size}.pk2 .cli{font-size:clamp(1.3rem,10cqi,2.6667rem)!important;max-width:100%;overflow-wrap:anywhere}/* el código del lote se ajusta al ancho de su tarjeta: puede ser de cualquier largo según la Entrada */.pt.pk2.on{border-color:var(--brand-cyan);box-shadow:inset 0 0 0 2px var(--brand-cyan)}.cli{font-size:2.6667rem!important;letter-spacing:.02em}.big2{font-size:1.6rem!important;color:var(--ink)!important;font-weight:800}
 .pt.tk{align-items:center;min-height:130px}
 .pmsg{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:40px 16px;background:var(--cd);border:1px solid var(--ln);border-radius:20px}.pmsg svg{width:64px;height:64px}.pmsg b{font-size:1.8667rem}.pmsg span{color:var(--mut);font-size:1.1333rem}.pbar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
@@ -390,7 +398,7 @@ tr.cur>td{background:color-mix(in srgb,var(--brand-cyan) 10%,var(--cd))}
 .per.op>td{border-bottom-color:transparent}
 .per.sv>td,.pdet.sv>td{background:var(--in)}
 .pnt-t input:disabled,.pnt-t select:disabled{background:transparent!important;color:var(--ink);-webkit-text-fill-color:var(--ink);border-color:transparent!important;border-style:solid;box-shadow:none;opacity:1;cursor:default;appearance:none;-webkit-appearance:none}
-.pnt-t .c-or input,.pnt-t .c-lo input{text-align:left}
+.pnt-t .c-or input,.pnt-t .c-lo input{text-align:left}.pnt-t .c-or select{display:block}.pnt-t select.pesp{margin-top:6px}
 .pdet>td{padding:4px 10px 12px}.pdg{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:10px}
 .pnt-t .pdg input{text-align:left}.pdg label{display:flex;flex-direction:column;gap:4px;font-size:.8667rem;font-weight:700;color:var(--mut)}
 .pel{display:none}
@@ -648,6 +656,10 @@ details.adv{margin-top:18px;border:1px solid var(--ln);border-radius:14px;paddin
 .nef{border:2px dashed var(--ln);border-radius:12px;padding:12px 14px;margin:10px 0 4px}.nefp{margin:18px 0 0;background:var(--cd)}.nefp{padding:16px 18px}.nefp h2{font-size:1.4rem!important}.nefp .mut{font-size:1rem}.nefp label{font-size:1.0667rem}.nefp input,.nefp select{min-height:60px;font-size:max(16px,1.2rem)}.nebtn{margin:10px 0 4px}
 .nepre{background:#fff4d6;color:#3d2c00;border:2px solid #d99a00;border-radius:12px;padding:10px 14px;margin:0 0 10px}.nepre b{display:block}
 .dtw{display:inline-flex;gap:6px;align-items:center;max-width:100%}.dtw input{width:9.5rem;min-width:0}.dtw input.dth{width:6rem}.dtb{min-height:44px;padding:0 12px;border:1px solid var(--ln)!important;background:var(--cd)!important;color:var(--ink)!important}
+.tqin{width:130px}
+.tqsp{margin:0 0 6px;font-size:1rem}.tqsz+.tqsp{margin-top:14px}.tqspt{display:block}
+/* v1.17.1 · Temperatura en Modo piso: casillas grandes para usarlas con guantes (pedido del usuario); #main le gana a la regla general input:not(…) */
+.pshell #main .tqn .f{gap:14px}.pshell #main .tqn label{font-size:1.0667rem}.pshell #main .tqn input,.pshell #main .tqn select,.pshell #main .tqn .btn{min-height:60px;font-size:1.4rem}.pshell #main .tqn .tqin{width:170px}.pshell #main .tqn .dtw input{width:11rem}.pshell #main .tqn .dtw input.dth{width:7rem}.pshell #main .tqn .dtb{min-height:60px;padding:0 18px;font-size:1.0667rem}.pshell #main .tqn .btn[data-a=tq]{padding:0 28px}
 .ordh{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:flex-end;justify-content:space-between}.ordht{flex:1 1 20rem}.ordnew{flex:0 1 auto;border-left:3px solid var(--ln);padding-left:18px}@media(max-width:700px){.ordnew{border-left:0;padding-left:0;border-top:1px solid var(--ln);padding-top:12px;width:100%}}
 .lntot input[readonly]{background:var(--cd);font-weight:800;border-style:dashed}.lnemp{border-top:1px solid var(--ln);margin-top:10px;padding-top:4px}.pwp{margin:0 0 12px}
 .pkfin.pop{animation:pkpop .7s cubic-bezier(.2,1.4,.4,1)}.pkfin.pop .pkok{font-size:1.2rem}@keyframes pkpop{0%{transform:scale(.9);opacity:.2}60%{transform:scale(1.03);opacity:1}100%{transform:none}}@media(prefers-reduced-motion:reduce){.pkfin.pop{animation:none}}
@@ -661,12 +673,12 @@ details.adv{margin-top:18px;border:1px solid var(--ln);border-radius:14px;paddin
 <script>
 const S=['491-610','611-850','851-1220','1221-up'];
 /* Categoría de la hielera = su talla, con los colores de talla (SZC): Blanco 491-610, Rojo 611-850, Verde 851-1220, Amarillo 1221-UP. */
-const RC={R:['Rojo','#e5484d'],V:['Verde','#30a46c'],B:['Blanco','#e8f1f5'],A:['Amarillo','#F5C518']},ROLE={admin:'Administrador',piso:'Encargado de piso',consulta:'Consulta'};
+const RC={R:['Rojo','#e5484d'],V:['Verde','#30a46c'],B:['Blanco','#e8f1f5'],A:['Amarillo','#F5C518']},ROLE={admin:'Administrador',piso:'Encargado de piso',consulta:'Consulta',cliente:'Cliente (comprador)'};/* cliente (v1.13.0): solo ve la disponibilidad, en inglés (cliView) */
 const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 /* v1.10.0 · hieleras de 15 kg que caben en unos gramos (tablero de tanques): completas + kg que sobran */
 const H15=15000,h15=g=>{g=Math.max(0,Math.round(g));const n=Math.floor(g/H15),r=g-n*H15;return{n,r}},h15t=g=>{const{n,r}=h15(g);return `${n} ${n==1?'hielera':'hieleras'}${r>0?' + '+(r/1000).toFixed(1)+' kg':''}`};
 const f=(m,d=2)=>(m/1000).toFixed(d),cj=m=>(m/16000).toFixed(1),now=()=>new Date().toLocaleString('es-MX',{dateStyle:'short',timeStyle:'short'});
-const TK=['T1','T2','T3','T4','T5','T6'],APPV='1.12.0';/* versión de la app: menú del perfil y Administración */
+const TK=['T1','T2','T3','T4','T5','T6'],APPV='1.18.0';/* versión de la app: menú del perfil y Administración */
 const LGP=[['M37 232C300 440 650 510 1000 497C1150 490 1260 455 1342 424L1272 411C900 480 500 450 195 323C140 290 80 262 37 232ZM195 323C450 380 750 385 1100 357C750 405 450 400 195 323Z','#0a2373'],['M1272 411L1250 400C1215 385 1205 370 1212 335C1218 315 1245 308 1290 288C1360 268 1430 262 1470 265C1480 270 1478 295 1470 330C1462 400 1450 470 1420 495C1395 525 1355 545 1327 555C1365 520 1390 495 1405 435C1415 380 1420 340 1420 302C1360 310 1305 325 1268 347C1258 355 1262 380 1270 388C1290 400 1320 412 1342 424Z','#0a2373'],['M160 405C450 600 900 620 1235 523C1000 565 700 570 480 535C330 505 230 465 160 405Z','#0583c3'],['M758 634C950 640 1150 600 1282 561C1250 590 1200 600 1100 618C1000 640 900 650 758 634Z','#0583c3']],LGW='M240 700Q255 700 266 704Q277 707 283 714Q289 720 291 727Q294 733 294 740Q294 749 291 758Q289 767 283 777Q278 787 270 794Q262 802 249 807Q236 812 221 812H173L159 875H120L160 700ZM220 782Q230 782 237 779Q245 776 248 771Q252 765 253 760Q255 754 255 749Q255 740 249 735Q242 730 232 730H192L180 782ZM411 865Q411 857 416 840Q421 822 421 819Q421 806 399 806H355L339 875H300L340 700H438Q451 700 460 703Q469 707 474 713Q479 719 481 725Q483 730 483 736Q483 746 479 754Q476 763 471 768Q467 774 460 779Q453 784 449 786Q445 788 439 790Q460 797 460 810Q460 818 456 837Q452 856 452 860Q452 865 456 869L455 875H414Q411 869 411 865ZM444 747Q444 730 416 730H372L362 775H409Q419 775 426 772Q434 769 437 765Q441 760 443 755Q444 751 444 747ZM612 697Q648 697 667 715Q687 733 687 766Q687 781 683 796Q679 812 669 827Q660 842 647 854Q634 866 616 873Q597 881 575 881Q540 881 520 862Q500 844 500 812Q500 798 505 782Q509 767 518 752Q527 736 540 724Q553 712 572 704Q591 697 612 697ZM581 850Q595 850 606 845Q617 840 624 833Q631 825 636 816Q641 807 644 798Q646 788 647 781Q649 775 649 770Q649 750 638 739Q627 728 607 728Q594 728 582 732Q571 737 564 745Q557 752 552 761Q547 770 544 779Q541 789 540 796Q539 802 539 807Q539 827 550 838Q562 850 581 850ZM820 700Q835 700 847 704Q858 707 863 714Q869 720 872 727Q874 733 874 740Q874 749 872 758Q869 767 864 777Q858 787 850 794Q842 802 829 807Q817 812 802 812H753L739 875H700L740 700ZM800 782Q810 782 817 779Q825 776 828 771Q832 765 834 760Q835 754 835 749Q835 740 829 735Q823 730 812 730H772L760 782ZM936 800 926 845H1028L1021 875H880L920 700H1057L1050 730H952L943 769H1033L1027 800ZM1078 762Q1078 734 1101 715Q1124 697 1161 697Q1192 697 1209 708Q1227 719 1227 738Q1227 744 1225 753H1188Q1189 749 1189 748Q1189 728 1155 728Q1137 728 1127 734Q1117 741 1117 753Q1117 759 1123 763Q1130 767 1148 770L1176 775Q1196 779 1206 788Q1217 797 1217 811Q1217 820 1214 829Q1212 837 1206 847Q1200 856 1190 864Q1180 871 1164 876Q1148 881 1128 881Q1108 881 1094 876Q1080 872 1072 864Q1065 857 1062 849Q1059 842 1059 833Q1059 829 1060 823H1097Q1097 827 1097 828Q1097 838 1107 844Q1116 850 1134 850Q1154 850 1166 842Q1178 835 1178 823Q1178 815 1171 810Q1165 806 1147 803L1122 798Q1099 794 1088 785Q1078 776 1078 762ZM1356 840H1285L1264 875H1225L1330 700H1375L1400 875H1360ZM1352 810 1343 742 1303 810Z';
 const LG=(o)=>{return `<svg class="lg${o?' o':''}" viewBox="0 205 1500 690" role="img" aria-label="PROPESA">${LGP.map(([d,c])=>`<path d="${d}" fill="${c}"/>`).join('')}<path class="wm" d="${LGW}" fill="#0a2373" stroke="#0a2373" stroke-width="10" stroke-linejoin="round"/></svg>`};
 const IC={ord:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',warn:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4M12 17h.01"/></svg>',cam:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v12H3z"/><circle cx="12" cy="13.5" r="3.5"/></svg>',img:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>',note:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h5"/></svg>',inicio:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',recepcion:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12zM13.5 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',cajas:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg>',embarques:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h18l-2 5H5zM6 13V8h12v5M12 8V3M2 21c2 0 2-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1"/></svg>',cierre:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 14l2 2 4-4"/></svg>',temperatura:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.8V5a2 2 0 10-4 0v9.8a4 4 0 104 0z"/></svg>',admin:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 4.5a3.5 3.5 0 010 7M19.5 14c1.5.8 2.5 2.6 2.5 6"/></svg>'};
@@ -724,7 +736,7 @@ function fotoMigra(){if(!CLOUD||!me||me.role=='consulta')return 0;let n=0;
  for(const k in ST.M)for(const nt of ST.M[k]||[])if(nt.imgs.some(m=>FDATA.test(m))){nt.imgs=nt.imgs.map((m,j)=>{if(!FDATA.test(m))return m;const p=fPath(nt.id,j,m);FQ.set(p,m);FC.set(p,m);return'sb:'+p});n++}
  return n}
 /* Subir la cola. Solo lanza error si no hay conexión o la base falla (se reintenta); una foto que la base rechaza se quita de su nota. */
-async function upFotos(){if(!CLOUD||!SBS||!me||me.role=='consulta')return;if(fotoMigra()){await saveFQ();syncStage();cacheSoon()}if(!FQ.size)return;let bad=0;
+async function upFotos(){if(!CLOUD||!SBS||!me||me.role=='consulta'||me.role=='cliente')return;if(fotoMigra()){await saveFQ();syncStage();cacheSoon()}if(!FQ.size)return;let bad=0;
  for(const [p,d] of [...FQ]){let r;
   for(let k=0;k<2;k++){const t=await sbToken();try{r=await fetch(SBC.url+'/storage/v1/object/'+FBK+'/'+p,{method:'POST',headers:{apikey:SBC.key,Authorization:'Bearer '+t,'Content-Type':FMIME[p.split('.').pop()]||'image/jpeg'},body:fBlob(d)})}catch(x){const e=new Error('Sin conexión');e.status=null;throw e}
    if(r.status===401&&SBS){SBS.exp=0;continue}break}
@@ -789,6 +801,12 @@ const CONS=[
  {k:'XINBANG',n:'Guangzhou Xinbang Freight Forwarding Co., Ltd',p:['CAN'],a:'Room C057, Room 1501, No. 207-213 Dongfeng West Road, Yuexiu District, Guangzhou 510000 (office only)',c:'Miss Guan · 13922130511',u:'91440101MA9UUN96Y'},
  {k:'SEAFOOD ORIGIN',n:'Seafood Origin Pte Ltd',p:['SIN'],a:'7 Mandai Estate #02-04, Singapore 729904',c:'—',u:'202403323N'},
  {k:'YANTAI',n:'Yantai Bajiaowan Marine Technology Limited Company',p:['*'],a:'Room 301, Building 5, No. 8 Jinan Road, Economic and Technological Development Zone, Yantai, Shandong 264000',c:'Zhao Bowen · +86 13031653693',u:'91370600MABTKGWE4E'}];
+/* v1.15.0 · Color de cada consignatario (pedido del usuario, 23/oct/2026: cada comprador tiene su color, el de su tape; pregunta
+   abierta 10). ST.CC = {índice en CONS: '#rrggbb'}; solo el Administrador lo cambia (Administración → Consignatarios). Se comparte
+   como el registro C/colores. Pinta los embarques abiertos (syncShipIdx); los cerrados conservan su color. Sin color elegido, el
+   embarque se queda con el de siempre (XC por turno). */
+const HEX6=/^#[0-9a-fA-F]{6}$/,ccClean=c=>{const o={};if(c&&typeof c=='object')for(const k in c)if(/^\d+$/.test(k)&&CONS[+k]&&HEX6.test(c[k]))o[k]=c[k].toLowerCase();return o},
+ consCol=i=>ST&&ST.CC&&ST.CC[i]||null;
 /* ===== v1.11.0 · Proveedores (pedido del usuario, 17/oct/2026) =====
    El proveedor de cada entrada se elige de una lista: así no salen varios nombres para el mismo proveedor («SCPP EMANCIPACION SC DE RL»,
    «SCCP EMANCIPACION»…). Solo el Administrador agrega, edita u oculta proveedores (Administración → Proveedores). Cada uno tiene
@@ -805,7 +823,20 @@ function pvClean(v){if(!v||typeof v!='object')return null;const n=String(v.n==nu
 function lotProp(pv,dt){const p=pvBy(pv);if(!p||!/^\d{4}-\d{2}-\d{2}$/.test(dt||''))return '';const b='WLR'+p.k+dt.slice(8,10)+dt.slice(5,7)+dt.slice(2,4),free=c=>{const r=R_(c);return !r||!!r.ne};
  if(free(b))return b;for(const x of 'BCDEFGHIJKLMNOPQRSTUVWXYZ')if(free(b+x))return b+x;return b}
 const pvOpts=(sel,old,add)=>`<option value=""${!old&&(sel==null||String(sel)==='')?' selected':''}>Elige proveedor</option>${pvAll().filter(p=>!p.off||String(p.id)===String(sel)).map(p=>`<option value="${p.id}"${String(sel)===String(p.id)?' selected':''}>${E(p.n)}</option>`).join('')}${old?`<option value="old" selected>${E(old)}</option>`:''}${add&&me&&me.role=='admin'?'<option value="__new">+ Agregar proveedor…</option>':''}`;
-let LPV='',PVF=null,EWP=false,NPV=null;/* NPV: proveedor nuevo desde la Entrada ('f' = vista completa; número = fila de la hoja) */
+/* v1.18.0 · Especies (pedido del usuario, 23/oct/2026: «en entradas un dato "especie"… tener diferentes especies en los tanques»).
+   Cada lote guarda sp (id de la especie). Los lotes de antes no lo tienen: son la especie 1 (Langosta Roja). Solo el Administrador
+   agrega, edita u oculta especies (Administración → Especies); en = nombre en inglés para los compradores (rol Cliente).
+   ST.ES no existe hasta que el Administrador cambia algo: mientras tanto se usa ES0. Se comparte como registros E/<id>.
+   Los kilos de tanques y de la hoja de compradores se separan por especie; las órdenes no llevan especie, así que lo pedido
+   solo resta de los totales por talla. */
+const ES0=[{id:1,n:'Langosta Roja',en:'Red lobster'}];
+const esAll=()=>ST&&Array.isArray(ST.ES)&&ST.ES.length?ST.ES:ES0,esOn=()=>esAll().filter(x=>!x.off),
+ esBy=id=>id==null||String(id)===''?null:esAll().find(x=>String(x.id)===String(id))||null,
+ esOf=r=>esBy(r&&r.sp!=null?r.sp:1)||esAll()[0],
+ esOpts=sel=>{const c=esBy(sel)||esOn()[0]||esAll()[0];return esAll().filter(x=>!x.off||x===c).map(x=>`<option value="${x.id}"${x===c?' selected':''}>${E(x.n)}</option>`).join('')};
+function esClean(v){if(!v||typeof v!='object')return null;const t=(x,m)=>String(x==null?'':x).replace(/[\u0000<>"'`&\\]/g,'').replace(/\s+/g,' ').trim().slice(0,m),n=t(v.n,60),id=Math.round(+v.id);
+ if(!n||!isFinite(id)||id<1)return null;return{id,n,en:t(v.en,60),...(v.off?{off:true}:{})}}
+let LPV='',PVF=null,EWP=false,NPV=null,ESF=null;/* NPV: proveedor nuevo desde la Entrada ('f' = vista completa; número = fila de la hoja) */
 /* v1.12.0 · Agregar un proveedor sin salir de la Entrada (pedido del usuario). Solo el Administrador; mismas reglas que en Administración. */
 const npvHtml=()=>`<div class="panel npv" id="npv" role="group" aria-label="Nuevo proveedor"><h3 class="h3" style="margin:0 0 8px">Nuevo proveedor</h3><div class="f"><label>Nombre oficial<input id="np_n" maxlength="120" style="min-width:240px"></label><label>Clave del lote<input id="np_k" maxlength="4" autocapitalize="characters" autocomplete="off" style="width:110px;text-transform:uppercase"></label><label>RFC<input id="np_r" maxlength="13" autocapitalize="characters" autocomplete="off" style="width:170px;text-transform:uppercase"></label><label>Permiso de pesca<input id="np_p" maxlength="60" autocomplete="off" style="width:200px"></label></div><p class="er" id="np_m" role="alert"></p><div class="bar" style="margin:0"><button type="button" class="btn" data-npv="sv">Guardar proveedor</button><button type="button" class="btn s" data-npv="no">Cancelar</button></div></div>`;
 function pvNew(n,k,rfc,per){n=String(n||'').trim().replace(/\s+/g,' ');k=String(k||'').trim().toUpperCase();rfc=String(rfc||'').trim().toUpperCase().replace(/[\s-]/g,'');per=String(per||'').trim();const L=pvAll();
@@ -820,8 +851,8 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-npv]');if(
  NPV=null;save();toast(`✔ Proveedor agregado: ${r.p.n}`);
  if(c==='f'){renderKeep('fo');const sl=document.getElementById('fo');if(sl){sl.value=String(r.p.id);sl.dispatchEvent(new Event('input',{bubbles:true}))}return}
  const row=PEN&&penR(c);if(row){row.d.origin=String(r.p.id);if(row.d.lot===''||row.d.lot===row.lp)row.d.lot=row.lp=lotProp(r.p.id,pD(row.d.rdate))}render()});
-/* v1.12.0: los kg de cada componente (hielera, gel, tarima, producto, caja de cartón) también se editan desde Embarque (solo Administrador). */
-const pwPanel=()=>{const w=pesoStd();return `<div class="panel pwp"><div class="f">${WK.map(([k,l])=>`<label>${l} (kg)<input type="number" step="0.1" min="0" max="100" inputmode="decimal" id="pw_${k}" value="${w[k]}" style="width:120px"></label>`).join('')}</div><p class="er" id="pw_m"></p><div class="bar" style="margin:0"><button class="btn" data-a="pw">Guardar pesos</button></div></div>`};/* LPV: último código de lote que propuso la app (si sigue igual, se puede volver a proponer). PVF: proveedor en edición (Administración) */
+/* v1.13.3: los kg de cada componente (hielera, gel, tarima, producto, caja de cartón) se editan solo en Embarque → «Editar pesos» (solo Administrador); ya no están en Administración. */
+const pwPanel=()=>{const w=pesoStd();return `<div class="panel pwp"><div class="f">${WK.map(([k,l])=>`<label>${l} (kg)<input type="number" step="0.1" min="0" max="100" inputmode="decimal" id="pw_${k}" value="${w[k]}" style="width:120px"></label>`).join('')}</div><p style="margin:6px 0 10px">Producto por omisión: <b id="pw_n">${w.p}</b> kg por hielera (en cada orden se elige 15 o 16) · hielera + gel + producto + caja: <b id="pw_tt">${Math.round((w.h+w.g+w.p+w.c)*10)/10}</b> kg. Aplica a todos los equipos y a los embarques abiertos; los cerrados conservan su peso.</p><p class="er" id="pw_m"></p><div class="bar" style="margin:0"><button class="btn" data-a="pw">Guardar pesos</button></div></div>`};/* LPV: último código de lote que propuso la app (si sigue igual, se puede volver a proponer). PVF: proveedor en edición (Administración) */
 const fd=i=>i?i.split('-').reverse().join('/'):'',fs=i=>i?i.split('-').reverse().slice(0,2).join('/'):'';
 /* v1.12.0 · Fechas y horas se escriben (pedido del usuario: en Android el calendario y el reloj tardan, se traban y ya no abren).
    Casillas de texto: fecha dd/mm/aaaa y hora HH:MM (24 h), con botón «Hoy» / «Ahora». Por dentro se guarda igual: 'YYYY-MM-DD' y 'HH:MM'.
@@ -855,7 +886,7 @@ const ordTot=o=>o.lines.reduce((a,l)=>a+l.boxes,0),ordAsg=o=>o.lines.reduce((a,l
 function shipLinks(i){if(RX)return(rxLinks().get(i)||[]).slice();const r=[];ST.OR.forEach(o=>{const m=o.sh||{};for(const k in m)if(m[k]===i){const q=k.split('|');r.push({o,k,city:q[0],cons:+q[1]})}});return r}
 /* Embarque por su id fijo (p.u): la posición en ST.P cambia si otro equipo quita o une un embarque. */
 const pIx=u=>ST.P.findIndex(p=>p.u===u);
-function newShip(){ST.P.push({u:uidS(),n:'',z0:'',col:XC[ST.P.length%XC.length],exp:0,h:0,z:[0,0,0,0],c:[],alive:null,closed:false});return ST.P.length-1}
+function newShip(){const tk=trucks()[0];/* v1.14.0: va al Camión 1 */ST.P.push({u:uidS(),n:'',z0:'',col:XC[ST.P.length%XC.length],exp:0,h:0,z:[0,0,0,0],c:[],alive:null,closed:false,...(tk?{tk}:{})});return ST.P.length-1}
 function shipFor(o,city,cons){o.sh=o.sh||{};const k=city+'|'+cons;if(o.sh[k]!=null&&ST.P[o.sh[k]])return o.sh[k];
  const i=newShip();ST.P[i].n=`${city} · ${CONS[cons].k} · ${fs(o.etd)}`;o.sh[k]=i;return i}
 /* Componentes del peso del embarque: suma de las líneas de sus órdenes (sin renglones en 0). */
@@ -866,7 +897,7 @@ const shipZauto=i=>{const ls=shipLinks(i).flatMap(x=>x.o.lines.filter(l=>l.city=
 function zLive(){if(!ST||!ST.P)return;ST.P.forEach((p,j)=>{if(!p.closed&&shipZpk(j))syncShipIdx(j)})}
 function syncShipIdx(i){const p=ST.P[i];if(!p||p.closed)return;const lk=shipLinks(i),h=lk.reduce((a,x)=>a+x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons).reduce((b,l)=>b+l.boxes,0),0);
  p.h=h;p.c=lk.length?shipC(i):[];p.exp=gross(p);{const ls=lk.flatMap(x=>x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons));if(ls.length&&ls.every(l=>l.z))p.z=[0,1,2,3].map(k=>ls.reduce((a,l)=>a+l.z[k],0));else if(ls.length&&ls.every(l=>l.z||l.kp!=null)){const zz=lk.flatMap(x=>x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons).map(l=>l.z||lnPz(x.o,l)));p.z=[0,1,2,3].map(k=>zz.reduce((a,z)=>a+z[k],0))}}
- if(lk.length){const ds=[...new Set(lk.map(x=>x.o.etd))].sort().map(fs).join(' + ');p.n=`${lk[0].city} · ${CONS[lk[0].cons].k} · ${ds}`}}
+ if(lk.length){const ds=[...new Set(lk.map(x=>x.o.etd))].sort().map(fs).join(' + ');p.n=`${lk[0].city} · ${CONS[lk[0].cons].k} · ${ds}`;const cc=consCol(lk[0].cons);if(cc)p.col=cc}}
 function syncShip(o,city,cons){const k=city+'|'+cons;o.sh=o.sh||{};
  if(!o.lines.some(l=>l.city==city&&l.cons==cons)){const old=o.sh[k];if(old!=null){delete o.sh[k];syncShipIdx(old);if(ST.P[old]&&!ST.P[old].closed&&!shipLinks(old).length)dropShip(old)}return}
  syncShipIdx(shipFor(o,city,cons))}
@@ -983,16 +1014,18 @@ function pkGrid(d,o,l,key,bs,all,room,next,open){const multi=open.length>1,lotsE
  const N=Math.max(1,l.boxes),n=bs.length,p=Math.min(1,n/N),pc=Math.round(p*100),from=PKP.key===key?PKP.p:p;PKP={key,p};
  const padOn=KPON&&(room>0||d.ed!=null);
  return `<div class="cd pkx${padOn?' kpo':''}"><h2 class="h3">Hieleras de ${E(lnName(l))}</h2>
+ <div class="pkprog pktop" id="pkp" data-p="${p}" style="--p:${from}"><div class="pksum" id="pksum"><span class="pkc1">✔ ${n} ${n==1?'completada':'completadas'}</span><span class="pksep" aria-hidden="true">·</span><span class="pkpen">${room} ${room==1?'pendiente':'pendientes'}</span><span class="pkpc">${pc}% completado</span></div>
+ <div class="pkbar" role="progressbar" aria-label="Hieleras completadas" aria-valuemin="0" aria-valuemax="${l.boxes}" aria-valuenow="${n}" aria-valuetext="${n} de ${l.boxes}"><i></i></div></div>
  <p class="pkhelp">Toca una hielera, escribe las piezas vivas y toca la categoría: queda ✔ Completada y pasa sola a la siguiente. Toca una hielera completada para corregirla.</p>
  ${room?`<p class="pklh">Lote del que sacas las langostas${multi?' · se aplica a todas las hieleras nuevas; para usar otro lote, guarda y elige el otro':''}</p>${open.length?`<div class="pklots" role="group" aria-label="Lote del que sacas las langostas">${open.map(x=>`<button type="button" class="pklb" aria-pressed="${d.lot==x}" data-pk="lot:${E(x)}"><b>${E(x)}</b><span>${R_(x).sl?'Sin lote':`Tanque ${E(String(tk(x)).replace(/^T/,''))} · ${R_(x).ne?'Sin entrada':f(bal(x))+' kg'}`}</span></button>`).join('')}</div>`:'<p class="mut">No hay lotes en tanques.</p>'}${neZone(d.ne,0)}`:''}
  <div class="kpwrap"><div class="kpw kpf${KPON?'':' kpoff'}"><div class="kpmain"><div class="tbl pktw"><table class="pkt"><thead><tr><th>Hielera</th><th>Piezas vivas</th><th>Categoría</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>
  ${n?`<p class="pktot">Total: ${bs.reduce((a,x)=>a+x.b.c,0)} piezas vivas en ${n} ${n==1?'hielera':'hieleras'}.</p>`:''}
- </div><div class="kpdock">${padOn?kpPad('full'):''}<div class="pkb" id="pkb" data-p="${p}" style="--p:${from}">${KPON?'':`<button type="button" class="kpfab" data-kpo="1" aria-label="Abrir teclado" title="Abrir teclado"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">${[[5,4],[12,4],[19,4],[5,10],[12,10],[19,10],[5,16],[12,16],[19,16],[12,21.5]].map(([x,y])=>`<rect x="${x-2.4}" y="${y-2.2}" width="4.8" height="4.4" rx="1.4"/>`).join('')}</svg></button>`}<div class="pkprog"><div class="pksum" id="pksum"><span class="pkc1">✔ ${n} ${n==1?'completada':'completadas'}</span><span class="pksep" aria-hidden="true">·</span><span class="pkpen">${room} ${room==1?'pendiente':'pendientes'}</span><span class="pkpc">${pc}% completado</span></div>
- <div class="pkbar" role="progressbar" aria-label="Hieleras completadas" aria-valuemin="0" aria-valuemax="${l.boxes}" aria-valuenow="${n}" aria-valuetext="${n} de ${l.boxes}"><i></i></div></div>
+ </div><div class="kpdock">${padOn?kpPad('full'):''}<div class="pkb" id="pkb">${KPON?'':`<button type="button" class="kpfab" data-kpo="1" aria-label="Abrir teclado" title="Abrir teclado"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true">${[[5,4],[12,4],[19,4],[5,10],[12,10],[19,10],[5,16],[12,16],[19,16],[12,21.5]].map(([x,y])=>`<rect x="${x-2.4}" y="${y-2.2}" width="4.8" height="4.4" rx="1.4"/>`).join('')}</svg></button>`}
  ${room?`<span class="pkgos"><button class="btn pkgo" data-pk="addall" aria-describedby="pksum"><span class="pkn">Guardar hieleras</span></button></span>`:`<span class="pkall">✔ ${l.boxes} de ${l.boxes} hieleras completadas</span>`}</div></div></div></div></div>`}
-/* La barra delgada parte del avance anterior y llega al real (data-p = guardadas ÷ pedidas). También guarda la altura de la barra fija
+/* v1.13.1: el avance va arriba de las hieleras, quieto (pedido del usuario); abajo solo queda «Guardar hieleras».
+   La barra delgada parte del avance anterior y llega al real (data-p = guardadas ÷ pedidas). También guarda la altura de la barra fija
    para que los avisos (toast) y el desplazamiento al campo no queden tapados. */
-function pkAnim(){const b=document.getElementById('pkb');if(!b)return;const R=document.documentElement.style,m=document.querySelector('main');R.setProperty('--pkbh',b.offsetHeight+'px');if(m)R.setProperty('--pkmt',Math.max(0,Math.round(m.getBoundingClientRect().top))+'px');const p=b.dataset.p;if(b.style.getPropertyValue('--p')===p)return;requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.setProperty('--p',p)))}
+function pkAnim(){const b=document.getElementById('pkb');if(!b)return;const R=document.documentElement.style,m=document.querySelector('main');R.setProperty('--pkbh',b.offsetHeight+'px');if(m)R.setProperty('--pkmt',Math.max(0,Math.round(m.getBoundingClientRect().top))+'px');const g=document.getElementById('pkp');if(!g)return;const p=g.dataset.p;if(g.style.getPropertyValue('--p')===p)return;requestAnimationFrame(()=>requestAnimationFrame(()=>g.style.setProperty('--p',p)))}
 /* v1.12.0 · Vista completa: cada hielera se completa sola cuando tiene piezas y categoría (como en Modo piso). Pedido del usuario: en
    el celular llenaba todas y seguían «En captura» con «0 completadas». Al completar la última se cierra el teclado y sale «✔ Listo». */
 function pkAuto(o,l,r){const w=PKD.rows[r]||{},c=Math.round(+w.c);if(!(c>=1)||!w.k)return false;
@@ -1058,7 +1091,8 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-pk]');if(!
    temperatura» los propone la app (tanque de cada lote empacado y su última lectura de agua) y se pueden corregir; al guardar
    quedan fijos. La hora inicial se pone sola con la primera hielera; hora final, evaluación y quién realizó se piden al terminar
    la última hielera (Empaque y Modo piso). Evaluación = estándar de monitoreo: un toque en «S» si todo fue normal. */
-const ESPECIE='Langosta Roja',EVL={S:'Satisfactorio',NS:'No satisfactorio',ND:'No disponible',NA:'No aplica'},EVK={S:'S',NS:'NS',ND:'N/D',NA:'N/A'},TKEY=['B','R','V','A'];
+/* v1.18.0: la especie sale de los lotes empacados en la orden (antes siempre «Langosta Roja»); sin hieleras, la especie 1 */
+const f6Esp=o=>[...new Set(f6Lots(o).map(l=>esOf(R_(l)).n))].join(', ')||esOf(null).n,EVL={S:'Satisfactorio',NS:'No satisfactorio',ND:'No disponible',NA:'No aplica'},EVK={S:'S',NS:'NS',ND:'N/D',NA:'N/A'},TKEY=['B','R','V','A'];
 const F6L={hi:'Hora inicial',hf:'Hora final',re:'Quién realizó',ev:'Evaluación del empaque',ob:'Observaciones',pl:'No. de placas',ch:'Nombre del chofer',tel:'Teléfono del chofer',tp:'Temperatura del producto',to:'Tanques de origen',tq:'Tanque y temperatura'};
 const F6MAX={hi:5,hf:5,re:60,ev:2,ob:1000,pl:15,ch:60,tel:20,tp:30,to:60,tq:80},F6REQ=['hi','hf','re','ev','pl','ch','tel','tp','to','tq'];
 const hhmm=()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')};
@@ -1088,7 +1122,7 @@ function f6Card(o,fin){const v=f6(o),t=ordTot(o),a=ordAsg(o),done=t>0&&a>=t,lock
  ${fin&&done&&(!o.f||!o.f.hf||!o.f.ev)&&ed?`<p class="f6fin">✔ Ya están las ${t} hieleras. Revisa la <b>hora final</b> y marca <b>cómo estuvo el empaque</b>: si todo fue normal, toca <b>S</b>.</p>`:''}
  ${ms.length?`<div class="alb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>Faltan datos de la hoja</b><div class="f6m">${ms.map(k=>`<button class="chip al chipb" data-jump="#f6_${k}">${F6L[k]} ›</button>`).join('')}</div></div></div>`:''}
  ${ex.map(p=>obsBan(p,'Indicaciones para la carga · '+p.n)).join('')}
- <dl class="f6d"><div><dt>Fecha</dt><dd>${fd(o.etd)}</dd></div><div><dt>Especie</dt><dd>${ESPECIE}</dd></div><div><dt>Destino</dt><dd>${G.map(c=>c+' · '+PORTS[c]).join(', ')||'—'}</dd></div><div><dt>${C.length>1?'Consignatarios':'Consignatario'}</dt><dd>${C.map(i=>E(CONS[i].n)).join(', ')||'—'}</dd></div><div><dt>Lotes</dt><dd>${f6Lots(o).map(E).join(', ')||'<span class="mut">Salen al empacar</span>'}</dd></div><div><dt>Peso bruto</dt><dd>${ordG(o).toFixed(1)} kg</dd></div>
+ <dl class="f6d"><div><dt>Fecha</dt><dd>${fd(o.etd)}</dd></div><div><dt>Especie</dt><dd>${E(f6Esp(o))}</dd></div><div><dt>Destino</dt><dd>${G.map(c=>c+' · '+PORTS[c]).join(', ')||'—'}</dd></div><div><dt>${C.length>1?'Consignatarios':'Consignatario'}</dt><dd>${C.map(i=>E(CONS[i].n)).join(', ')||'—'}</dd></div><div><dt>Lotes</dt><dd>${f6Lots(o).map(E).join(', ')||'<span class="mut">Salen al empacar</span>'}</dd></div><div><dt>Peso bruto</dt><dd>${ordG(o).toFixed(1)} kg</dd></div>
  <div class="f6t"><dt>Total de hieleras por talla (empacadas)</dt><dd>${TKEY.map((k,i)=>`<span class="chip" data-k="${k}">${S[i].toUpperCase()} · ${h[k]}</span>`).join('')}<b>${a} de ${t}</b></dd></div></dl>
  <h3>Empaque</h3><div class="f">${inp('hi','text','HH:MM','7rem','inputmode="numeric" data-dt="h" autocomplete="off"')}${ed?'<button type="button" class="btn s dtb" data-dtn="f6_hi">Ahora</button>':''}${inp('hf','text','HH:MM','7rem','inputmode="numeric" data-dt="h" autocomplete="off"')}${ed?'<button type="button" class="btn s dtb" data-dtn="f6_hf">Ahora</button>':''}${inp('re','text','Nombre de quien empacó','16rem')}</div>
  <h3 id="f6_ev" tabindex="-1">${F6L.ev}</h3><div class="evs" role="group" aria-label="${F6L.ev}">${Object.keys(EVL).map(k=>`<button type="button" class="f6e f6e${k}" aria-pressed="${v.ev==k}" data-f6="ev:${o.id}:${k}" ${dis}><b>${EVK[k]}</b><small>${EVL[k]}</small></button>`).join('')}</div>
@@ -1105,16 +1139,28 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-f6]');if(!
 /* Indicaciones de carga del embarque: se guardan al tocar «Guardar indicaciones». */
 document.addEventListener('click',e=>{const x=e.target.closest('[data-obs]');if(!x)return;const p=ST.P[pIx(x.dataset.obs)];if(!p||!can('box'))return;if(p.closed)return toast('El embarque ya está cerrado. Reábrelo para cambiar las indicaciones.');
  const el=document.getElementById('emb_obs'),v=String(el?el.value:'').trim().slice(0,500);if(v)p.ob=v;else delete p.ob;save();toast(v?'✔ Indicaciones guardadas: salen en el PDF':'Indicaciones borradas');render()});
+/* v1.14.0 · Camiones: tocar dos celdas las intercambia; «Pasar a» cambia el camión del embarque; cada celda se escribe a mano */
+document.addEventListener('click',e=>{const x=e.target.closest('[data-ta],[data-tc]');if(!x||!can('box'))return;
+ if(x.dataset.tc!=null){const q=x.dataset.tc.split(':'),tk=q[0],s=+q[1];if(!TSEL||TSEL.tk!==tk){TSEL={tk,s};return render()}if(TSEL.s===s){TSEL=null;return render()}
+  const a=TSEL.s;tFix(tk).TP.forEach(p=>{[p.ly[a],p.ly[s]]=[p.ly[s],p.ly[a]]});TSEL={tk,s};save();toast(`✔ Se intercambiaron las celdas ${cellNm(a)} y ${cellNm(s)}`);return render()}
+ const q=x.dataset.ta.split(':'),a=q[0],tk=q[1];if(a!='fill')TSEL=null;
+ if(a=='ed')TED=TED===tk?null:tk;
+ else if(a=='fill'){const pl=tFix(tk);tFill(pl.TP,pl.TP.map(p=>p.ly));save();toast('✔ Se acomodó lo que faltaba, desde la cabina')}
+ else if(a=='auto'){truckPlan(tk).TP.forEach(p=>delete p.ly);save();toast('Acomodo automático: se llena desde la cabina')}
+ render()});
+document.addEventListener('change',e=>{const t=e.target,d=t.dataset||{};
+ if(d.tly){const q=d.tly.split(':'),p=ST.P[pIx(q[0])],s=+q[1];if(!p||p.closed||!can('box'))return render();tFix(p.tk||'');p.ly[s]=Math.min(999,Math.max(0,Math.round(+t.value||0)));save();return render()}
+ if(d.tk){const p=ST.P[pIx(d.tk)];if(!p||p.closed||!can('lot'))return render();const v=t.value=='+'?uidS():t.value;if(v)p.tk=v;else delete p.tk;delete p.ly;TSEL=null;save();toast(`✔ ${p.n} va en el ${tName(p.tk||'')}`);return render()}});
 /* Texto de la hoja para el informe de cierre (correo) y una sección del PDF. */
 function f6Txt(o){const v=f6(o),h=f6Hie(o),C=[...new Set(o.lines.map(l=>l.cons))].map(i=>CONS[i].n);
- return `HOJA DE EMPAQUE (FORMATO 06) · Orden ${fd(o.etd)}\nFecha: ${fd(o.etd)} · Especie: ${ESPECIE}\nHora inicial: ${v.hi||'—'} · Hora final: ${v.hf||'—'}\nDestino: ${[...new Set(o.lines.map(l=>l.city))].join(', ')} · Consignatario: ${C.join(', ')}\nLotes: ${f6Lots(o).join(', ')||'—'} · Tanques de origen: ${v.to||'—'}\nPlacas: ${v.pl||'—'} · Chofer: ${v.ch||'—'} · Teléfono: ${v.tel||'—'}\nPeso bruto: ${ordG(o).toFixed(1)} kg · Temperatura del producto: ${v.tp||'—'} · Tanque y temperatura: ${v.tq||'—'}\nHieleras por talla: ${TKEY.map((k,i)=>`${S[i].toUpperCase()} ${h[k]}`).join(' · ')} · Total ${ordAsg(o)}\nRealizó: ${v.re||'—'} · Evaluación: ${v.ev?EVK[v.ev]+' ('+EVL[v.ev]+')':'—'}\nObservaciones: ${v.ob||'Sin observaciones'}`}
+ return `HOJA DE EMPAQUE (FORMATO 06) · Orden ${fd(o.etd)}\nFecha: ${fd(o.etd)} · Especie: ${f6Esp(o)}\nHora inicial: ${v.hi||'—'} · Hora final: ${v.hf||'—'}\nDestino: ${[...new Set(o.lines.map(l=>l.city))].join(', ')} · Consignatario: ${C.join(', ')}\nLotes: ${f6Lots(o).join(', ')||'—'} · Tanques de origen: ${v.to||'—'}\nPlacas: ${v.pl||'—'} · Chofer: ${v.ch||'—'} · Teléfono: ${v.tel||'—'}\nPeso bruto: ${ordG(o).toFixed(1)} kg · Temperatura del producto: ${v.tp||'—'} · Tanque y temperatura: ${v.tq||'—'}\nHieleras por talla: ${TKEY.map((k,i)=>`${S[i].toUpperCase()} ${h[k]}`).join(' · ')} · Total ${ordAsg(o)}\nRealizó: ${v.re||'—'} · Evaluación: ${v.ev?EVK[v.ev]+' ('+EVL[v.ev]+')':'—'}\nObservaciones: ${v.ob||'Sin observaciones'}`}
 /* Indicaciones de carga en el PDF: recuadro amarillo con letra grande, para que no se pasen por alto. */
 function obsPdf(R,t,x){const ls=pwrap(String(x).toUpperCase(),R.CW-24,14,1),h=30+ls.length*18;R.need(h+10);const y=R.y;R.RECT(R.M,y,R.CW,h,'#fff4d6');R.BOX(R.M,y,R.CW,h,'#d99a00',2);R.T(R.M+12,y+16,t,9,1,'#8a5a00');ls.forEach((l,i)=>R.T(R.M+12,y+36+i*18,l,14,1,'#3d2c00'));R.y=y+h+10}
 function f6Pdf(R,o){const v=f6(o),h=f6Hie(o),C=[...new Set(o.lines.map(l=>l.cons))].map(i=>CONS[i].n),a=ordAsg(o),m=a?f6Miss(o,true):[];
  R.h2(`Formato 06 · Embarque (packing list) · Orden ${fd(o.etd)}`);
  [...new Set(o.lines.map(l=>(o.sh||{})[l.city+'|'+l.cons]))].map(i=>ST.P[i]).filter(p=>shipObs(p)).forEach(p=>obsPdf(R,'INDICACIONES PARA LA CARGA · '+p.n,shipObs(p)));
  if(m.length)R.alert('FALTAN DATOS DE LA HOJA',m.map(k=>F6L[k]));
- R.kv([['Fecha',fd(o.etd)],['Especie',ESPECIE],['Hora inicial',v.hi],['Hora final',v.hf],['Destino',[...new Set(o.lines.map(l=>l.city))].join(', ')],[C.length>1?'Consignatarios':'Consignatario',C.join(', ')],
+ R.kv([['Fecha',fd(o.etd)],['Especie',f6Esp(o)],['Hora inicial',v.hi],['Hora final',v.hf],['Destino',[...new Set(o.lines.map(l=>l.city))].join(', ')],[C.length>1?'Consignatarios':'Consignatario',C.join(', ')],
   ['Lotes',f6Lots(o).join(', ')],['Tanques de origen',v.to],['No. de placas',v.pl],['Chofer',v.ch],['Teléfono del chofer',v.tel],['Peso bruto',ordG(o).toFixed(1)+' kg'],
   ['Temperatura del producto',v.tp],['Tanque y temperatura',v.tq],['Realizó',v.re]],3);
  R.table([...TKEY.map((k,i)=>({h:`${S[i].toUpperCase()} g (${RC[k][0]})`,w:1,al:'r'})),{h:'Total de hieleras',w:1,al:'r'}],[[...TKEY.map(k=>h[k]),{t:a,b:1}]]);
@@ -1220,9 +1266,10 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-oa]');if(!
   ST.OR=ST.OR.filter(q=>q!==o);OA.cf=null;save();toast('Orden eliminada');return go('ordenes')}
  if(a=='dl'){const l=L(v);o.lines=o.lines.filter(q=>q.id!=l.id);syncShip(o,l.city,l.cons);OA.cf=null;save();toast('Línea eliminada');return render()}});
 function saveLot(){const pvv=g('fo'),pp=pvBy(pvv),e0=form.edit?R_(form.edit):null,o=pp?pp.n:(pvv==='old'&&e0?String(e0.origin||'').trim():''),t=g('ft'),dt=pD(g('fd')),tt=g('ftt'),de=g('fdes'),kb=g('fkb');if(!dt)return fail('Escribe la fecha de recepción así: 22/09/2026.','fd');if(!o)return fail('Elige el proveedor.','fo');
- const meta={origin:o,...(pp?{pv:pp.id}:{}),tank:t,rdate:dt,time:pH(g('fh')),date:fd(dt),tempT:tt===''?null:+tt,tempP:g('ftp').trim(),kgbox:kb===''?null:+kb,desp:de===''?null:+de};
+ const es=esBy(g('fsp'));if(!es)return fail('Elige la especie.','fsp');
+ const meta={origin:o,...(pp?{pv:pp.id}:{}),sp:es.id,tank:t,rdate:dt,time:pH(g('fh')),date:fd(dt),tempT:tt===''?null:+tt,tempP:g('ftp').trim(),kgbox:kb===''?null:+kb,desp:de===''?null:+de};
  if(form.edit){Object.assign(R_(form.edit),meta)}
- else{const d={lot:g('fl'),origin:o,pv:pp?pp.id:null,tank:t,rdate:dt,time:pH(g('fh')),tempT:tt,tempP:g('ftp'),kgbox:kb,desp:de};S.forEach((s,i)=>d['k'+i]=g('fk'+i));
+ else{const d={lot:g('fl'),origin:o,pv:pp?pp.id:null,sp:es.id,tank:t,rdate:dt,time:pH(g('fh')),tempT:tt,tempP:g('ftp'),kgbox:kb,desp:de};S.forEach((s,i)=>d['k'+i]=g('fk'+i));
   const er=lotErr(d),k=Object.keys(LOT_F).find(k=>er[k]);if(k)return fail(er[k],LOT_F[k]);V={v:'lote',id:addLot(d)}}
  form=null;msg='';save();toast('✔ Guardado');render()}
 function seed(){return {L:[],R:[],B:{},P:[],O:[],M:{},OR:[],E0:1,
@@ -1248,8 +1295,8 @@ document.addEventListener('click',e=>{if(e.target.closest('[data-retry]')){if(sa
 function cleanST(d,noU){const str=(v,m=200)=>String(v==null?'':v).slice(0,m),id=(v,m=60)=>str(v,m).replace(/[<>"'`&\\]/g,''),num=(v,df=0)=>{const n=+v;return isFinite(n)?n:df},nn=v=>v==null||v===''||!isFinite(+v)?null:+v,int=(v,df=0)=>Math.round(num(v,df)),
   date=v=>/^\d{4}-\d{2}-\d{2}$/.test(v)?v:'',img=v=>/^data:image\/(png|jpe?g|webp|gif);base64,[A-Za-z0-9+/=]+$/.test(v)||isFRef(v);
  const lotsOk=new Set(),R=[];(Array.isArray(d.R)?d.R:[]).forEach(r=>{if(!r)return;const lot=id(r.lot);if(!lot||lotsOk.has(lot))return;lotsOk.add(lot);
-  R.push({id:id(r.id,20),lot,origin:str(r.origin),tank:TK.includes(r.tank)?r.tank:(r.ne?'':'T1'),rdate:date(r.rdate),time:/^\d{2}:\d{2}$/.test(r.time)?r.time:'',date:id(r.date,12),tempT:nn(r.tempT),tempP:id(r.tempP,20),kgbox:nn(r.kgbox),desp:nn(r.desp),final:nn(r.final),closed:!!r.closed,...(nn(r.pv)!=null?{pv:int(r.pv)}:{}),...(r.ne?{ne:true}:{}),...(r.ne&&r.sl?{sl:true}:{})})});
- const P=(Array.isArray(d.P)?d.P:[]).filter(Boolean).map((p,i)=>({u:/^[0-9a-z]{6,30}$/.test(p.u)?p.u:legU(i),n:id(p.n,90),z0:id(p.z0,20),col:/^#[0-9a-fA-F]{3,8}$/.test(p.col)?p.col:XC[0],exp:num(p.exp),h:Math.max(0,int(p.h)),z:[0,1,2,3].map(i=>Math.max(0,int((p.z||[])[i]))),c:(Array.isArray(p.c)?p.c:[]).slice(0,10).map(x=>[id((x||[])[0],40),num((x||[])[1]),int((x||[])[2])]),alive:nn(p.alive),closed:!!p.closed,...(typeof p.ob=='string'&&p.ob.trim()?{ob:str(p.ob,500)}:{})}));
+  R.push({id:id(r.id,20),lot,origin:str(r.origin),tank:TK.includes(r.tank)?r.tank:(r.ne?'':'T1'),rdate:date(r.rdate),time:/^\d{2}:\d{2}$/.test(r.time)?r.time:'',date:id(r.date,12),tempT:nn(r.tempT),tempP:id(r.tempP,20),kgbox:nn(r.kgbox),desp:nn(r.desp),final:nn(r.final),closed:!!r.closed,...(nn(r.pv)!=null?{pv:int(r.pv)}:{}),...(nn(r.sp)!=null?{sp:int(r.sp)}:{}),...(r.ne?{ne:true}:{}),...(r.ne&&r.sl?{sl:true}:{})})});
+ const P=(Array.isArray(d.P)?d.P:[]).filter(Boolean).map((p,i)=>({u:/^[0-9a-z]{6,30}$/.test(p.u)?p.u:legU(i),n:id(p.n,90),z0:id(p.z0,20),col:/^#[0-9a-fA-F]{3,8}$/.test(p.col)?p.col:XC[0],exp:num(p.exp),h:Math.max(0,int(p.h)),z:[0,1,2,3].map(i=>Math.max(0,int((p.z||[])[i]))),c:(Array.isArray(p.c)?p.c:[]).slice(0,10).map(x=>[id((x||[])[0],40),num((x||[])[1]),int((x||[])[2])]),alive:nn(p.alive),closed:!!p.closed,...(typeof p.ob=='string'&&p.ob.trim()?{ob:str(p.ob,500)}:{}),...(typeof p.tk=='string'&&/^[0-9a-z]{6,30}$/.test(p.tk)?{tk:p.tk}:{}),...(Array.isArray(p.ly)&&p.ly.length==10?{ly:p.ly.map(v=>Math.min(999,Math.max(0,int(v))))}:{})}));
  const pIdx=v=>{const n=nn(v);return n!=null&&Number.isInteger(n)&&n>=0&&n<P.length?n:null};
  const B={};lotsOk.forEach(l=>{B[l]=((d.B||{})[l]||[]).filter(b=>b&&int(b.c)>=1&&Object.keys(RC).includes(b.k)).map(b=>({c:int(b.c),k:b.k,d:pIdx(b.d),o:/^\d+\.\d+$/.test(b.o)?b.o:null,seq:int(b.seq),...(nn(b.ps)!=null?{ps:int(b.ps)}:{})}))});
  const OR=(Array.isArray(d.OR)?d.OR:[]).filter(Boolean).map(o=>{const sh={};Object.entries(o.sh||{}).forEach(([k,v])=>{if(/^[A-Z]{3}\|\d+$/.test(k)&&pIdx(v)!=null)sh[k]=pIdx(v)});
@@ -1263,7 +1310,9 @@ function cleanST(d,noU){const str=(v,m=200)=>String(v==null?'':v).slice(0,m),id=
  const Tt=(Array.isArray(d.T)?d.T:[]).filter(x=>x&&TK.includes(x.tank)&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(x.t)).map(x=>({id:num(x.id),t:x.t,tank:x.tank,a:nn(x.a),s:nn(x.s),p:nn(x.p),by:str(x.by,80)}));
  const Wd=d.W&&typeof d.W=='object'?(()=>{const o={};WK.map(([k])=>[k,W0[k]]).forEach(([k,df])=>{const v=num(d.W[k],df);o[k]=v>=0&&v<=100?v:df});return o})():null;
  const PVc=[];(Array.isArray(d.PV)?d.PV:[]).forEach(v=>{const c=pvClean(v);if(c&&!PVc.some(x=>x.id===c.id))PVc.push(c)});
- return{T:Tt,E0:1,RN:int(d.RN),R,L,B,OR,P,O,M,U,...(Wd?{W:Wd}:{}),...(PVc.length?{PV:PVc}:{})}}
+ const CCd=ccClean(d.CC);
+ const ESc=[];(Array.isArray(d.ES)?d.ES:[]).forEach(v=>{const c=esClean(v);if(c&&!ESc.some(x=>x.id===c.id))ESc.push(c)});
+ return{T:Tt,E0:1,RN:int(d.RN),R,L,B,OR,P,O,M,U,...(Wd?{W:Wd}:{}),...(PVc.length?{PV:PVc}:{}),...(Object.keys(CCd).length?{CC:CCd}:{}),...(ESc.length?{ES:ESc}:{})}}
 
 
 /* ===== Base compartida (Supabase) · v1.4.0 =====
@@ -1289,18 +1338,39 @@ const LTYPES=['RECEPCION','SALIDA_EMBARQUE','REVERSA'];
 /* Campos de las líneas nuevas (v1.10.0): tallas, kg de producto, tarimas y cajas de cartón. Solo números válidos. */
 const lnX=l=>{const o={};if(Array.isArray(l.z)&&l.z.length==4&&l.z.every(v=>typeof v=='number'&&Number.isInteger(v)&&v>=0&&v<1e5))o.z=l.z.slice();const kp=l.kp;if(typeof kp=='number'&&isFinite(kp)&&kp>0&&kp<=100)o.kp=kp;['tar','cc'].forEach(k=>{const v=l[k];if(typeof v=='number'&&Number.isInteger(v)&&v>=0&&v<1e5)o[k]=v});return o};
 const WN={
- R:r=>!ws(r.lot)?null:({id:wi(r.id),lot:ws(r.lot),origin:wp(r.origin),tank:wi(r.tank),rdate:wd(r.rdate),time:wi(r.time),date:wi(r.date),tempT:wnn(r.tempT),tempP:wi(r.tempP),kgbox:wnn(r.kgbox),desp:wnn(r.desp),final:wnn(r.final),closed:!!r.closed,...(wnn(r.pv)!=null?{pv:wpi(r.pv)}:{}),...(r.ne?{ne:true}:{}),...(r.ne&&r.sl?{sl:true}:{})}),
+ R:r=>!ws(r.lot)?null:({id:wi(r.id),lot:ws(r.lot),origin:wp(r.origin),tank:wi(r.tank),rdate:wd(r.rdate),time:wi(r.time),date:wi(r.date),tempT:wnn(r.tempT),tempP:wi(r.tempP),kgbox:wnn(r.kgbox),desp:wnn(r.desp),final:wnn(r.final),closed:!!r.closed,...(wnn(r.pv)!=null?{pv:wpi(r.pv)}:{}),...(wnn(r.sp)!=null?{sp:wpi(r.sp)}:{}),...(r.ne?{ne:true}:{}),...(r.ne&&r.sl?{sl:true}:{})}),
  L:x=>!S.includes(x.size)||!LTYPES.includes(x.type)?null:({id:wpi(x.id),t:wt(x.t),type:wi(x.type),lot:ws(x.lot),size:wi(x.size),m:wpi(x.m),rev:wnn(x.rev),rc:wi(x.rc)}),
  B:b=>{if(wpi(b.c)<1||!hasOwn(RC,b.k))return null;const o={lot:ws(b.lot),c:wpi(b.c),k:b.k,d:typeof b.d=='string'?wi(b.d):null,o:typeof b.o=='string'&&/^\d+\.\d+$/.test(b.o)?b.o:null,seq:wpi(b.seq)};if(b.ps!=null)o.ps=wpi(b.ps);return o},
  OR:o=>{const s=o.sh&&typeof o.sh=='object'?o.sh:{},sh={};Object.keys(s).sort().forEach(k=>{if(typeof s[k]=='string')sh[wi(k)]=wi(s[k])});
   return{id:wpi(o.id),etd:wd(o.etd),lines:(Array.isArray(o.lines)?o.lines:[]).filter(l=>l&&typeof l=='object'&&typeof l.city=='string'&&hasOwn(PORTS,l.city)&&Number.isInteger(l.cons)&&CONS[l.cons]).map(l=>({id:wpi(l.id),city:l.city,cons:l.cons,...(wt(l.cli)?{cli:wt(l.cli)}:{}),boxes:Math.max(1,wpi(l.boxes)),...lnX(l)})),sh,...(f6Norm(o.f,wp)?{f:f6Norm(o.f,wp)}:{})}},
- P:p=>({u:ws(p.u),n:wt(p.n),z0:wt(p.z0),col:wcolor(p.col),exp:wn0(p.exp),h:Math.max(0,wpi(p.h)),z:[0,1,2,3].map(i=>Math.max(0,wpi((Array.isArray(p.z)?p.z:[])[i]))),c:(Array.isArray(p.c)?p.c:[]).filter(Array.isArray).map(x=>[wi(x[0]),wnn(x[1]),wnn(x[2])]),alive:wnn(p.alive),closed:!!p.closed,...(typeof p.ob=='string'&&p.ob.trim()?{ob:wp(p.ob).slice(0,500)}:{})}),
+ P:p=>({u:ws(p.u),n:wt(p.n),z0:wt(p.z0),col:wcolor(p.col),exp:wn0(p.exp),h:Math.max(0,wpi(p.h)),z:[0,1,2,3].map(i=>Math.max(0,wpi((Array.isArray(p.z)?p.z:[])[i]))),c:(Array.isArray(p.c)?p.c:[]).filter(Array.isArray).map(x=>[wi(x[0]),wnn(x[1]),wnn(x[2])]),alive:wnn(p.alive),closed:!!p.closed,...(typeof p.ob=='string'&&p.ob.trim()?{ob:wp(p.ob).slice(0,500)}:{}),...(typeof p.tk=='string'&&/^[0-9a-z]{6,30}$/.test(p.tk)?{tk:p.tk}:{}),...(Array.isArray(p.ly)&&p.ly.length==10?{ly:p.ly.map(v=>Math.min(999,Math.max(0,wpi(v))))}:{})}),
  O:o=>{const r={u:ws(o.u),subject:wp(o.subject),t:wt(o.t),to:(Array.isArray(o.to)?o.to:[]).map(wp),body:wp(o.body)};if(o.pn!=null){r.pn=wi(o.pn);r.att=wi(o.att)}if(o.pu!=null)r.pu=ws(o.pu);return r},
  W:w=>{const o={};WK.forEach(([k])=>{const v=+(w||{})[k];o[k]=isFinite(v)&&v>=0&&v<=100?Math.round(v*1000)/1000:W0[k]});return o},
  V:v=>pvClean(v),
+ C:c=>ccClean(c),
+ E:v=>esClean(v),
  T:x=>!TK.includes(x.tank)||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(x.t)?null:({id:wpi(x.id),t:x.t,tank:x.tank,a:wnn(x.a),s:wnn(x.s),p:wnn(x.p),by:wp(x.by)}),
- M:n=>({key:ws(n.key),id:wpi(n.id),t:wt(n.t),by:wp(n.by),text:wp(n.text),ref:wp(n.ref),imgs:(Array.isArray(n.imgs)?n.imgs:[]).filter(v=>wimg(v)||isFRef(v)).slice(0,6)})
+ M:n=>({key:ws(n.key),id:wpi(n.id),t:wt(n.t),by:wp(n.by),text:wp(n.text),ref:wp(n.ref),imgs:(Array.isArray(n.imgs)?n.imgs:[]).filter(v=>wimg(v)||isFRef(v)).slice(0,6)}),
+ /* v1.13.0 · hoja de disponibilidad 'D/disp' (dispCalc): gramos enteros por talla y entradas por fecha */
+ D:d=>{const g4=a=>Array.isArray(a)&&a.length==4?a.map(v=>Math.max(0,wpi(v))):[0,0,0,0];
+  return{z:g4(d.z),u:Math.max(0,wpi(d.u)),e:(Array.isArray(d.e)?d.e:[]).filter(x=>Array.isArray(x)&&wd(x[0])).slice(0,14).map(x=>[x[0],g4(x[1])]),s:(Array.isArray(d.s)?d.s:[]).filter(x=>Array.isArray(x)&&typeof x[0]=='string'&&x[0].trim()).slice(0,20).map(x=>[wt(x[0]).slice(0,60),g4(x[1])])}}
 };
+/* v1.13.0 · Disponibilidad para compradores (rol Cliente, pedido del usuario 22/oct/2026: «que vean lo que tengo en los tanques para
+   hacer ventas»). Por talla: lo que hay en tanques (lotes abiertos con existencia, igual que el tablero de tanques) menos lo pedido que
+   todavía no sale (líneas cuyo embarque no está cerrado; al cerrar, salidaAuto lo descuenta del tanque). Lo pedido sin tallas va en u
+   (solo resta del total). e = kg recibidos por fecha, las 2 semanas que terminan en la entrada más reciente (la pantalla del cliente
+   enseña los últimos 7 días según su reloj). Solo depende de los datos, no de la fecha ni del equipo: todos los equipos calculan
+   lo mismo y no se pisan. Se comparte como el registro 'D/disp', lo único que una cuenta Cliente puede leer en la base.
+   Sin proveedor, lote, tanque, consignatario ni nada más: es lo que ve alguien de fuera. */
+function dispCalc(){const g={},rc={},z=[0,0,0,0],e={},n4=()=>[0,0,0,0];let u=0;
+ ST.L.forEach(x=>{const i=S.indexOf(x.size);if(i<0)return;(g[x.lot]=g[x.lot]||n4())[i]+=x.m;if(x.type==='RECEPCION'&&!x.rev)(rc[x.lot]=rc[x.lot]||n4())[i]+=x.m});
+ const sp=new Map();/* v1.18.0: kg en tanques por especie (s), con su nombre en inglés; lo pedido no lleva especie y solo resta de z */
+ ST.R.forEach(r=>{const b=g[r.lot],q=rc[r.lot];if(!r.closed&&b&&b[0]+b[1]+b[2]+b[3]>0){const x=esOf(r),a=sp.get(x)||n4();sp.set(x,a);b.forEach((v,i)=>{z[i]+=Math.max(0,v);a[i]+=Math.max(0,v)})}
+  if(!r.ne&&r.rdate&&q){const a=e[r.rdate]=e[r.rdate]||n4();q.forEach((v,i)=>a[i]+=v)}});
+ ST.OR.forEach(o=>o.lines.forEach(l=>{const si=(o.sh||{})[l.city+'|'+l.cons];if(si!=null&&ST.P[si]&&ST.P[si].closed)return;
+  const kg=Math.round(lnKp(l)*1000),q=l.z||n4();q.forEach((n,i)=>z[i]-=n*kg);u+=Math.max(0,l.boxes-(q[0]+q[1]+q[2]+q[3]))*kg}));
+ const ds=Object.keys(e).sort().reverse(),d0=ds.length?new Date(ds[0]+'T12:00'):null;if(d0)d0.setDate(d0.getDate()-13);const lim=d0?dLoc(d0):'';
+ return{z:z.map(v=>Math.max(0,v)),u,e:ds.filter(d=>d>=lim).map(d=>[d,e[d]]),s:esAll().filter(x=>sp.has(x)).map(x=>[x.en||x.n,sp.get(x)])}}
 const wcol=k=>k.slice(0,k.indexOf('/')),wnorm=(k,v)=>{const f=WN[wcol(k)];return f?f(v):v};
 function ensureIds(){(ST.P||[]).forEach((p,i)=>{if(!p.u)p.u=legU(i)});const n=(ST.O||[]).length;(ST.O||[]).forEach((o,i)=>{if(!o.u)o.u=legU(n-1-i)})}
 let ENC_C=new Map();
@@ -1316,13 +1386,16 @@ function encodeST(){ensureIds();const out=new Map(),put=(k,o)=>{if(o)out.set(k,[
  ST.O.forEach(o=>put('O/'+o.u,WN.O(o)));
  (ST.T||[]).forEach(x=>put('T/'+x.id,WN.T(x)));
  if(ST.W)put('W/pesos',WN.W(ST.W));
+ if(ST.CC)put('C/colores',WN.C(ST.CC));
+ put('D/disp',WN.D(dispCalc()));/* v1.13.0: hoja para los compradores; se calcula, no se guarda en ST (decodeST la deja en _orph) */
  (ST.PV||[]).forEach(v=>put('V/'+v.id,WN.V(v)));
+ (ST.ES||[]).forEach(v=>put('E/'+v.id,WN.E(v)));
  const M=ST.M||{};for(const key in M){const m=/^emb:(\d+)$/.exec(key),wk=m&&pu[+m[1]]!=null?'emb:@'+pu[+m[1]]:key;(M[key]||[]).forEach(n=>put('M/'+n.id,WN.M({...n,key:wk})))}
  const Or=ST._orph||{};for(const k in Or)if(!out.has(k))out.set(k,[JSON.stringify(Or[k]),Or[k]]);
  return out}
 /* Registros → ST (con el mismo orden en todos los equipos). */
-function decodeST(src){const R=[],L=[],Bx=[],OR=[],P=[],O=[],T=[],Mn=[],orph={};let W=null;const Vp=[];
- for(const [k,o] of src){if(!o)continue;switch(wcol(k)){case'R':R.push(o);break;case'L':L.push(o);break;case'B':Bx.push(o);break;case'OR':OR.push(o);break;case'P':P.push(o);break;case'O':O.push(o);break;case'T':T.push(o);break;case'M':Mn.push(o);break;case'W':if(k==='W/pesos')W=o;else orph[k]=o;break;case'V':Vp.push(o);break;default:orph[k]=o}}
+function decodeST(src){const R=[],L=[],Bx=[],OR=[],P=[],O=[],T=[],Mn=[],orph={};let W=null,CC=null;const Vp=[],Ep=[];
+ for(const [k,o] of src){if(!o)continue;switch(wcol(k)){case'R':R.push(o);break;case'L':L.push(o);break;case'B':Bx.push(o);break;case'OR':OR.push(o);break;case'P':P.push(o);break;case'O':O.push(o);break;case'T':T.push(o);break;case'M':Mn.push(o);break;case'W':if(k==='W/pesos')W=o;else orph[k]=o;break;case'V':Vp.push(o);break;case'E':Ep.push(o);break;case'C':if(k==='C/colores')CC=o;else orph[k]=o;break;default:orph[k]=o}}
  const rn=r=>+String(r.id||'').replace(/\D/g,'')||0,cmp=(a,b)=>a<b?-1:a>b?1:0;
  R.sort((a,b)=>rn(a)-rn(b)||cmp(a.lot,b.lot));P.sort((a,b)=>cmp(a.u,b.u));const pix=new Map(P.map((p,i)=>[p.u,i]));
  const lots=new Set(R.map(r=>r.lot)),B={};R.forEach(r=>B[r.lot]=[]);
@@ -1331,8 +1404,8 @@ function decodeST(src){const R=[],L=[],Bx=[],OR=[],P=[],O=[],T=[],Mn=[],orph={};
  const L2=[];L.forEach(x=>{if(!lots.has(x.lot)){orph['L/'+x.id]=x;return}L2.push({...x})});L2.sort((a,b)=>a.id-b.id);
  const OR2=OR.map(o=>{const sh={},us={};for(const k in o.sh){const i=pix.get(o.sh[k]);if(i!=null)sh[k]=i;else us[k]=o.sh[k]}const r={id:o.id,etd:o.etd,lines:o.lines.map(l=>({...l,...(l.z?{z:l.z.slice()}:{})})),sh};if(o.f)r.f={...o.f};if(Object.keys(us).length)r._sh=us;return r}).sort((a,b)=>a.id-b.id);
  const M={};Mn.slice().sort((a,b)=>b.id-a.id).forEach(n=>{let key=n.key;const m=/^emb:@(.+)$/.exec(key);if(m&&pix.has(m[1]))key='emb:'+pix.get(m[1]);(M[key]=M[key]||[]).push({id:n.id,t:n.t,by:n.by,text:n.text,ref:n.ref,imgs:n.imgs.slice()})});
- return{E0:1,RN:R.reduce((a,r)=>Math.max(a,rn(r)),120),R:R.map(r=>({...r})),L:L2,B,OR:OR2,P:P.map(p=>({...p,z:p.z.slice(),c:p.c.map(x=>x.slice())})),
-  O:O.map(o=>({...o,to:o.to.slice()})).sort((a,b)=>cmp(b.u,a.u)),T:T.map(x=>({...x})).sort((a,b)=>a.id-b.id),M,U:ST&&ST.U||[],...(W?{W:{...W}}:{}),...(Vp.length?{PV:Vp.slice().sort((a,b)=>a.id-b.id).map(x=>({...x}))}:{}),_orph:orph}}
+ return{E0:1,RN:R.reduce((a,r)=>Math.max(a,rn(r)),120),R:R.map(r=>({...r})),L:L2,B,OR:OR2,P:P.map(p=>({...p,z:p.z.slice(),c:p.c.map(x=>x.slice()),...(p.ly?{ly:p.ly.slice()}:{})})),
+  O:O.map(o=>({...o,to:o.to.slice()})).sort((a,b)=>cmp(b.u,a.u)),T:T.map(x=>({...x})).sort((a,b)=>a.id-b.id),M,U:ST&&ST.U||[],...(W?{W:{...W}}:{}),...(Vp.length?{PV:Vp.slice().sort((a,b)=>a.id-b.id).map(x=>({...x}))}:{}),...(CC?{CC:{...CC}}:{}),...(Ep.length?{ES:Ep.slice().sort((a,b)=>a.id-b.id).map(x=>({...x}))}:{}),_orph:orph}}
 
 const SB_KEY='propesa-sb',OUT_KEY='propesa-out',OUTB_KEY='propesa-outb',SINCE_KEY='propesa-c1-since';
 let SBS=null,SHW=null,OUT={},OUTB={},NEEDSETUP=false,LOGIN_MSG='',LOGIN_EM='',RFP=null;
@@ -1344,7 +1417,7 @@ const outN=()=>Object.keys(OUT).length+FQ.size,hasOwn=(o,k)=>Object.prototype.ha
    OUTB guarda cómo estaba el registro en la base antes del primer cambio: la base solo acepta el cambio si sigue igual (push).
    Consulta no anota nada: vuelve a bajar todo para regresar a lo de la base, y no toca lo pendiente de otro usuario. */
 function syncStage(){if(!CLOUD||!SHW)return 0;const enc=encodeST(),ro=me&&me.role=='consulta';let n=0;
- const put=(k,s,p)=>{n++;if(ro)return;if(!hasOwn(OUT,k))OUTB[k]=p?p[0]:null;OUT[k]=s};
+ const put=(k,s,p)=>{if(ro&&k==='D/disp')return;/* la hoja se calcula; para Consulta no es un cambio que haya que bajar otra vez */n++;if(ro)return;if(!hasOwn(OUT,k))OUTB[k]=p?p[0]:null;OUT[k]=s};
  for(const [k,v] of enc){const p=SHW.get(k);if(!p||p[0]!==v[0])put(k,v[0],p)}
  for(const [k,p] of SHW)if(!enc.has(k))put(k,'null',p);
  SHW=enc;if(ro){if(n)PEND_SINCE=0;return 0}
@@ -1378,6 +1451,7 @@ function applyRows(rows){const diff=()=>{const ch=[];
  ch.forEach(([k,s,o])=>{if(s==null)SHW.delete(k);else SHW.set(k,[s,o])});
  const src=new Map();for(const [k,v] of SHW)src.set(k,v[1]);
  ST=decodeST(src);if(pv){const i=ST.P.findIndex(p=>p.u===pv);if(i>=0)V.id=String(i)}
+ syncStage();/* v1.13.0: con lo que llegó de otros cambia la hoja de disponibilidad (D/disp); se anota para subirla */
  fixRoute();cacheSoon();return true}
 function fixRoute(){const v=V.v,id=V.id==null?'':String(V.id),p=id.split('.');
  if(v=='lote'&&!ST.R.some(r=>r.lot===id))V={v:'recepcion',id:null};
@@ -1421,7 +1495,7 @@ async function checkSetup(){if(!CLOUD||me)return;try{const r=await fetch(SBC.url
 function dropSes(){const s=SBS;SBS=null;try{localStorage.removeItem(SB_KEY)}catch(e){}if(s&&s.at)fetch(SBC.url+'/auth/v1/logout',{method:'POST',headers:{apikey:SBC.key,Authorization:'Bearer '+s.at}}).catch(()=>{})}
 /* Cerrar sesión (también la usa el modo local de pruebas). */
 function signOut(t,quiet){if(CLOUD&&!quiet&&outN()){if(!confirm(`Hay ${outN()} ${outN()==1?'cambio que todavía no se sube':'cambios que todavía no se suben'} a la base compartida (falta internet). Se quedan guardados en este equipo y se suben cuando alguien vuelva a entrar aquí. ¿Cerrar sesión?`))return}
- const go2=()=>{if(CLOUD)dropSes();clearTimeout(SYNC_T);clearTimeout(FLUSH_T);closePmenu(false);closeSettings();me=null;PEN=null;LOGIN_MSG=t||'';render();if(CLOUD)checkSetup()};
+ const go2=()=>{if(CLOUD)dropSes();clearTimeout(SYNC_T);clearTimeout(FLUSH_T);closePmenu(false);closeSettings();me=null;PEN=null;DISP=null;DREV=0;DLAST='';LOGIN_MSG=t||'';render();if(CLOUD)checkSetup()};
  if(CLOUD&&SBS&&outN()&&!quiet)upFotos().catch(()=>{}).then(()=>flush()).catch(()=>{}).finally(go2);else go2()}
 
 /* Subir lo pendiente (en tandas) y bajar lo nuevo. */
@@ -1431,7 +1505,7 @@ function signOut(t,quiet){if(CLOUD&&!quiet&&outN()){if(!confirm(`Hay ${outN()} $
    Si la base lo rechaza pero tiene lo mismo, solo escrito distinto (un registro viejo que WN arregló al bajarlo), no es un
    choque: se vuelve a subir una vez contra lo que hay de verdad en la base, y así queda arreglado también allá.
    shortcut: si el envío se corta después de guardar y el registro se vuelve a cambiar antes de reintentar, el reintento choca y gana la base; es raro. */
-async function flush(){if(!me||me.role=='consulta')return false;let lost=[];
+async function flush(){if(!me||me.role=='consulta'||me.role=='cliente')return false;let lost=[];
  for(let pass=0,redo=null;pass<2;pass++){const ks=redo||Object.keys(OUT);redo=[];let i=0;
  while(i<ks.length){const batch=[],sent=[];let sz=0;
   while(i<ks.length&&(!batch.length||(sz<1.5e6&&batch.length<500))){const k=ks[i++],s=OUT[k];if(s==null)continue;const r={k,v:JSON.parse(s)},b=hasOwn(OUTB,k)?OUTB[k]:undefined;
@@ -1447,7 +1521,7 @@ async function flush(){if(!me||me.role=='consulta')return false;let lost=[];
    else{delete OUT[k];delete OUTB[k]}});// choque de verdad: gana la base también sobre lo que se cambió mientras tanto
   saveOut();lost=lost.concat([...lk.values()])}
  if(!redo.length)break}
- if(!lost.length)return false;applyRows(lost);toast('No se guardó tu cambio: otro equipo lo cambió antes. Revisa y vuelve a capturarlo si hace falta.');return true}
+ if(!lost.length)return false;applyRows(lost);if(lost.every(x=>x.k==='D/disp'))return true;/* la hoja de disponibilidad se recalcula sola: no es un cambio de nadie */toast('No se guardó tu cambio: otro equipo lo cambió antes. Revisa y vuelve a capturarlo si hace falta.');return true}
 async function pull(){const since=PEND_SINCE!=null?PEND_SINCE:SINCE;let cur=since,safe=since,young=false;const all=[];
  for(let n=0;n<500;n++){const rows=await sbPost('/rest/v1/rpc/pull',{since:cur,lim:1000});if(!Array.isArray(rows))break;
   for(const r of rows){all.push(r);if(!young&&r.age>8)safe=r.rev;else young=true}
@@ -1455,7 +1529,14 @@ async function pull(){const since=PEND_SINCE!=null?PEND_SINCE:SINCE;let cur=sinc
  const ch=all.length?applyRows(all):false;if(safe!==since){PEND_SINCE=safe;cacheSoon()}SYNC_FIRST=true;return ch}
 const offline=()=>!navigator.onLine||!!(SYNC_ERR&&(SYNC_ERR.status==null||SYNC_ERR.status>=500));
 const syncState=()=>[SYNC_FIRST,offline(),!!SYNC_ERR,outN()>0].join();
-async function syncNow(full=true){if(!CLOUD||!SBS||!me)return;if(SYNC_BUSY){SYNC_AGAIN=true;return}SYNC_BUSY=true;const before=syncState();let ch=false;
+/* v1.13.0 · Cuenta Cliente: no baja ni sube los datos del equipo; solo lee su hoja 'D/disp' (la base no le deja ver nada más).
+   Usa el mismo pull, desde el último cambio que ya vio, así cada vuelta es una consulta mínima. */
+let DISP=null,DREV=0,DAT=0,DLAST='';
+async function dispNow(){try{const rows=await sbPost('/rest/v1/rpc/pull',{since:DREV,lim:50});
+  (Array.isArray(rows)?rows:[]).forEach(r=>{if(r&&r.k==='D/disp'){DREV=Math.max(DREV,+r.rev||0);DISP=r.v&&typeof r.v=='object'?WN.D(r.v):null;DAT=Date.now()-(+r.age||0)*1000}});
+  SYNC_FIRST=true;SYNC_OK=Date.now();SYNC_ERR=null}catch(e){if(e&&e.nos)return;SYNC_ERR=e}
+ const s=JSON.stringify([DISP,cliAgo(),offline()]);if(s!==DLAST){DLAST=s;softRender()}}
+async function syncNow(full=true){if(!CLOUD||!SBS||!me)return;if(me.role=='cliente')return dispNow();if(SYNC_BUSY){SYNC_AGAIN=true;return}SYNC_BUSY=true;const before=syncState();let ch=false;
  try{let fe=null;try{await upFotos()}catch(e){if(e&&e.nos)throw e;fe=e}/* v1.8.0: las fotos van antes que las notas que las nombran; si una foto no subió por falta de internet, la nota espera a la siguiente vuelta (si el espacio de archivos falla, la nota sí se sube) */if(!fe||fe.status!=null){try{ch=await flush()}catch(e){if(e&&e.nos)throw e;fe=fe||e}}/* aunque no se pueda subir, se sigue bajando lo de los demás */if(full||!SYNC_FIRST)ch=await pull()||ch;if(fe)throw fe;if(full&&me&&Date.now()-PROF_T>60000){PROF_T=Date.now();await loadProfiles()}SYNC_OK=Date.now();SYNC_ERR=null}
  catch(e){if(e&&e.nos)return;SYNC_ERR=e;if(e&&(e.status===403||e.code==='42501')){OUT={};OUTB={};saveOut();PEND_SINCE=0;toast('No tienes permiso para guardar ese cambio. Se dejó como estaba en la base compartida.')}}
  finally{SYNC_BUSY=false;if(me&&(ch||syncState()!==before))softRender();if(SYNC_AGAIN){SYNC_AGAIN=false;syncNow(full)}}}
@@ -1509,7 +1590,7 @@ function buscar(q){q=(q||'').trim();const lq=q.toLowerCase();let h='';
 const SL=['0-650 / 491-610','651-850 / 611-850','851-1250 / 851-1220','1251-UP / 1221-UP'];
 const rcv=(l,sz)=>RX?((m=>m?(sz==null?m.rt:(m.rs[sz]||0)):0)(rxMov().get(l))):ST.L.filter(x=>x.lot===l&&x.type==='RECEPCION'&&(sz==null||x.size===sz)&&!x.rev).reduce((a,x)=>a+x.m,0);
 function lotForm(){const e=form.edit?R_(form.edit):null,pre=!e&&form.pre&&R_(form.pre.lot)&&R_(form.pre.lot).ne?form.pre:null,td=new Date(),dv=e?(e.rdate||''):dLoc(td),hv=e?(e.time||''):td.toTimeString().slice(0,5);
- return `<div class="panel">${NPV==='f'?npvHtml():''}${pre?`<p class="nepre"><b>Entrada del lote ${E(pre.lot)}</b></p>`:''}<div class="f"><label>Fecha de recepción${dIn('fd',dv)}</label><label>Hora${hIn('fh',hv)}</label><label>Proveedor<select id="fo">${e?(pm=>pvOpts(pm?pm.id:'',!pm&&e.origin?e.origin:'',1))(pvMatch(e)):pvOpts(pre?pre.pv:'','',1)}</select></label><label>Tanque de almacenamiento<select id="ft">${TK.map(t=>`<option ${(e||pre)&&(e||pre).tank==t?'selected':''}>${t}</option>`).join('')}</select></label>
+ return `<div class="panel">${NPV==='f'?npvHtml():''}${pre?`<p class="nepre"><b>Entrada del lote ${E(pre.lot)}</b></p>`:''}<div class="f"><label>Fecha de recepción${dIn('fd',dv)}</label><label>Hora${hIn('fh',hv)}</label><label>Proveedor<select id="fo">${e?(pm=>pvOpts(pm?pm.id:'',!pm&&e.origin?e.origin:'',1))(pvMatch(e)):pvOpts(pre?pre.pv:'','',1)}</select></label><label>Especie<select id="fsp">${esOpts(e?esOf(e).id:'')}</select></label><label>Tanque de almacenamiento<select id="ft">${TK.map(t=>`<option ${(e||pre)&&(e||pre).tank==t?'selected':''}>${t}</option>`).join('')}</select></label>
  <label>Temp. °F del tanque<input id="ftt" type="number" step="0.1" value="${e&&e.tempT!=null?e.tempT:''}" style="width:110px"></label><label>Temp. °F del producto<input id="ftp" value="${E(e?e.tempP||'':'')}" placeholder="59-62" style="width:110px"></label><label>Lote de recepción<input id="fl" value="${E(e?e.lot:pre?pre.lot:'')}" ${e||pre?'disabled':''} placeholder="WLRCO051026" autocapitalize="characters" autocomplete="off" spellcheck="false" style="text-transform:uppercase"></label><label>Kg por caja en tanque<input id="fkb" type="number" min="0" step="0.01" value="${e&&e.kgbox!=null?e.kgbox:''}" style="width:150px"></label>
  ${e?'':SL.map((s,i)=>`<label class="sz sz${i}"><span>${szDot(i)} ${s} kg</span><input id="fk${i}" type="number" min="0" step="0.01" style="width:105px"></label>`).join('')}<label>Kg total<output id="ftot" class="tot">${e?f(rcv(e.lot))+' kg':'0.00 kg'}</output></label><label>Kg desperdicio<input id="fdes" type="number" min="0" step="0.01" value="${e&&e.desp!=null?e.desp:''}" style="width:110px"></label>
  <button class="btn" data-a="sv">${e?'Guardar cambios':'Guardar entrada'}</button><button class="btn s" data-a="nf">Cancelar</button></div><p class="er">${E(msg)}</p></div>`}
@@ -1518,26 +1599,30 @@ function lotForm(){const e=form.edit?R_(form.edit):null,pre=!e&&form.pre&&R_(for
    Cuenta los lotes abiertos con existencia. Se actualiza solo: la base compartida trae lo de los demás equipos cada pocos segundos. */
 let TQSEL=null;
 document.addEventListener('click',e=>{const b=e.target.closest('[data-tq]');if(!b)return;TQSEL=b.dataset.tq;render()});
+/* v1.18.0: kilos por especie y talla de una lista de lotes, en el orden de la lista de especies: [[especie, kg por talla]] */
+const spKz=ls=>esAll().map(x=>{const q=ls.filter(r=>esOf(r)===x);return[x,S.map(z=>q.reduce((a,r)=>a+Math.max(0,bal(r.lot,z)),0))]}).filter(([,k])=>k.some(v=>v>0));
 function tanques(){const hoy=dLoc(),dias=r=>{if(!r.rdate)return'';const d=Math.round((new Date(hoy+'T12:00')-new Date(r.rdate+'T12:00'))/864e5);return d<=0?'hoy':d==1?'1 día':d+' días'},
  TA=tempAll(),ult=t=>TA.find(x=>x.tank===t)||null,v=x=>x==null?'—':x+'°',all=[],
  bar=kz=>`<div class="tqbar" aria-hidden="true">${kz.map((g,i)=>g?`<i style="flex:${g};background:${SZC[i][1]}"></i>`:'').join('')}</div>`,
- I={};TK.forEach(t=>{const ls=ST.R.filter(r=>r.tank===t&&!r.closed&&bal(r.lot)>0),kz=S.map(z=>ls.reduce((a,r)=>a+Math.max(0,bal(r.lot,z)),0));I[t]={ls,kz,tot:kz.reduce((a,b)=>a+b,0),tp:ult(t),n:t.replace(/^T/,'')};all.push(...ls)});
+ I={};TK.forEach(t=>{const ls=ST.R.filter(r=>r.tank===t&&!r.closed&&bal(r.lot)>0),kz=S.map(z=>ls.reduce((a,r)=>a+Math.max(0,bal(r.lot,z)),0));I[t]={ls,kz,tot:kz.reduce((a,b)=>a+b,0),tp:ult(t),n:t.replace(/^T/,''),sp:spKz(ls)};all.push(...ls)});
  const sel=TK.includes(TQSEL)?TQSEL:(TK.find(t=>I[t].tot)||TK[0]),sum=all.reduce((a,r)=>a+bal(r.lot),0),
   live=CLOUD?(offline()?'<span class="chip al">Sin conexión</span>':'<span class="chip ok tqlive">● En vivo</span>'):'',
   tank=t=>{const{ls,kz,tot,tp,n}=I[t],nl=ls.length;return `<button type="button" class="tqm${tot?'':' tq0'}" style="grid-area:${t.toLowerCase()}" data-tq="${t}" aria-pressed="${t==sel}" aria-label="Tanque ${n}: ${tot?f(tot,1)+' kg, '+nl+(nl==1?' lote':' lotes'):'vacío'}"><span class="tqmh"><b>T${n}</b><span class="tqmk">${tot?f(tot,1)+' kg':'Vacío'}</span></span>${tot?bar(kz):''}<span class="tqmf"><span>${tot?nl+(nl==1?' lote':' lotes'):''}</span>${tp&&tp.a!=null?`<span${tOut(tp.a)?' class="tqout"':''}>${tOut(tp.a)?'⚠ ':''}Flotante ${tp.a}°</span>`:''}</span></button>`},
   {ls,kz,tot,tp,n}=I[sel],
+  szUl=kz=>`<ul class="tqsz">${kz.map((g,i)=>`<li>${szDot(i)}<span>${S[i]}</span><b>${f(g,1)}</b><em class="tqh15">${h15t(g)}</em></li>`).join('')}<li class="tqh15t"><span>Hieleras de 15 kg</span><strong>${(q=>`${q.n} ${q.n==1?'hielera':'hieleras'}${q.r>0?' + '+(q.r/1000).toFixed(1)+' kg sueltos':''}`)(kz.reduce((a,g)=>{const x=h15(g);return{n:a.n+x.n,r:a.r+x.r}},{n:0,r:0}))}</strong></li></ul>`,
+  spAll=spKz(all),
   det=`<section class="tqc" aria-label="Tanque ${n}" aria-live="polite"><div class="tqh"><b>Tanque ${n}</b>${tot?`<span class="tqk">${f(tot,1)} kg</span>`:'<span class="tqv">Vacío</span>'}</div>${tot?bar(kz):''}
-  <div class="tqdet">${tot?`<ul class="tqsz">${kz.map((g,i)=>`<li>${szDot(i)}<span>${S[i]}</span><b>${f(g,1)}</b><em class="tqh15">${h15t(g)}</em></li>`).join('')}<li class="tqh15t"><span>Hieleras de 15 kg</span><strong>${(q=>`${q.n} ${q.n==1?'hielera':'hieleras'}${q.r>0?' + '+(q.r/1000).toFixed(1)+' kg sueltos':''}`)(kz.reduce((a,g)=>{const x=h15(g);return{n:a.n+x.n,r:a.r+x.r}},{n:0,r:0}))}</strong></li></ul>
-  <div class="tql">${ls.map(r=>`<button type="button" class="tqlot" data-go="lote:${E(r.lot)}"><b>${E(r.lot)}</b><span>${E(r.origin||'')}${r.rdate?' · '+dias(r):''}</span></button>`).join('')}</div>`:''}
+  <div class="tqdet">${tot?`<div>${I[sel].sp.map(([x,k])=>`<h4 class="tqsp">${E(x.n)}${I[sel].sp.length>1?` · ${f(k.reduce((a,b)=>a+b,0),1)} kg`:''}</h4>${szUl(k)}`).join('')}</div>
+  <div class="tql">${ls.map(r=>`<button type="button" class="tqlot" data-go="lote:${E(r.lot)}"><b>${E(r.lot)}</b><span>${E(esOf(r).n)} · ${E(r.origin||'')}${r.rdate?' · '+dias(r):''}</span></button>`).join('')}</div>`:''}
   <button type="button" class="tqtp" data-go="temperatura:${sel}" aria-label="Temperatura del tanque ${n}">${tp?`<span${tOut(tp.a)?' class="tqout"':''}><small>Flotante</small>${v(tp.a)}</span><span${tOut(tp.s)?' class="tqout"':''}><small>Superficie</small>${v(tp.s)}</span><span${tOut(tp.p)?' class="tqout"':''}><small>Producto</small>${v(tp.p)}</span><em>${tp.t.slice(0,10)==hoy?'Hoy':fd(tp.t.slice(0,10))} ${E(tp.src=='ent'&&tp.t.endsWith('T00:00')?'':tp.t.slice(11,16))}${tp.src=='ent'?' · entrada '+E(tp.lot):''} · Registrar ›</em>`:'<em>Sin lectura de temperatura · Registrar ›</em>'}</button></div></section>`;
- return `<div class="tqd"><div class="tqmap" role="group" aria-label="Mapa de tanques"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(sum,1)} kg en ${all.length} ${all.length==1?'lote':'lotes'}</span>${live}
+ return `<div class="tqd"><div class="tqmap" role="group" aria-label="Mapa de tanques"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(sum,1)} kg en ${all.length} ${all.length==1?'lote':'lotes'}</span>${spAll.length>1?`<span class="mut tqspt">${spAll.map(([x,k])=>`${E(x.n)} ${f(k.reduce((a,b)=>a+b,0),1)} kg`).join(' · ')}</span>`:''}${live}
   <ul class="tqkey" aria-label="Colores de talla">${S.map((z,i)=>`<li>${szDot(i)}${z}</li>`).join('')}</ul></div>${TK.map(tank).join('')}</div>${det}</div>`}
 function recepcion(){const HL=histList('rec',ST.R.slice().reverse(),lotActive),pp=penPend().length;return `<div class="wrap">${pp?`<div class="alb" role="status"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${pp==1?'Tienes 1 entrada sin guardar':`Tienes ${pp} entradas sin guardar`}</b><p style="margin:4px 0 0">Las empezaste en la hoja de entradas. <button class="alk" data-go="pent">Terminar de capturarlas ›</button></p></div></div>`:''}${guide(1,'Entrada de producto','Registra cada entrada como un lote con los datos del formato de recepción: fecha, hora, proveedor, tanque, temperaturas, kg por caja en tanque y kg por talla. Aquí no se cuentan ni se numeran cajas: las langostas se cuentan hasta que se empaca cada pedido.','Siguiente: órdenes','ordenes')}${(n=>n.length?neBanner(n):'')(ST.R.filter(r=>r.ne))}${tanques()}${ST.R.length?pdfBar('ent'):''}
  <div class="bar"><button class="btn" data-a="nf" ${can('ent')?'':'disabled'}>+ Nueva entrada</button>${can('ent')?'':'<span class="mut">Tu rol no puede registrar entradas.</span>'}</div>${form&&form.t=='lot'?lotForm():''}
- <div class="cd tbl"><table class="lf ent"><thead><tr><th>Fecha</th><th>Hora</th><th class="c-prov">Proveedor</th><th>Tanque</th><th class="num">T°F<br>tanque</th><th class="num">T°F<br>producto</th><th class="c-lot">Lote de recepción</th><th class="num">Kg por caja<br>en tanque</th>${S.map((z,i)=>`<th class="szh">${szHead(i)}</th>`).join('')}<th class="num">Kg total</th><th class="num">Kg<br>desperdicio</th><th class="c-etp">Etapa</th><th aria-label="Acciones"></th></tr></thead><tbody>${HL.items.map(r=>`<tr><td>${E(r.date||'')}</td><td>${E(r.time||'—')}</td><td>${E(r.origin)}</td><td>${E(r.tank)}</td><td class="num">${r.tempT!=null?r.tempT:'—'}</td><td class="num">${E(r.tempP||'—')}</td><td><b>${E(r.lot)}</b></td><td class="num">${r.kgbox!=null?r.kgbox:'—'}</td>${S.map(z=>`<td class="szv">${f(rcv(r.lot,z))}</td>`).join('')}<td class="num"><b>${f(rcv(r.lot))}</b></td><td class="num">${r.desp!=null?r.desp:'—'}</td><td>${stc(r.lot)}</td><td><button class="lnk" data-go="lote:${E(r.lot)}">Abrir</button></td></tr>`).join('')||`<tr><td colspan="16" class="mut">${ST.R.length?'No hay lotes abiertos ni recientes.':'Sin entradas.'}</td></tr>`}</tbody></table></div>${HL.bar}${evid('recepcion','Fotos y notas de la entrada')}</div>`}
+ <div class="cd tbl"><table class="lf ent"><thead><tr><th>Fecha</th><th>Hora</th><th class="c-prov">Proveedor</th><th>Tanque</th><th class="num">T°F<br>tanque</th><th class="num">T°F<br>producto</th><th class="c-lot">Lote de recepción</th><th class="num">Kg por caja<br>en tanque</th>${S.map((z,i)=>`<th class="szh">${szHead(i)}</th>`).join('')}<th class="num">Kg total</th><th class="num">Kg<br>desperdicio</th><th class="c-etp">Etapa</th><th aria-label="Acciones"></th></tr></thead><tbody>${HL.items.map(r=>`<tr><td>${E(r.date||'')}</td><td>${E(r.time||'—')}</td><td>${E(r.origin)}</td><td>${E(r.tank)}</td><td class="num">${r.tempT!=null?r.tempT:'—'}</td><td class="num">${E(r.tempP||'—')}</td><td><b>${E(r.lot)}</b><br><small class="mut">${E(esOf(r).n)}</small></td><td class="num">${r.kgbox!=null?r.kgbox:'—'}</td>${S.map(z=>`<td class="szv">${f(rcv(r.lot,z))}</td>`).join('')}<td class="num"><b>${f(rcv(r.lot))}</b></td><td class="num">${r.desp!=null?r.desp:'—'}</td><td>${stc(r.lot)}</td><td><button class="lnk" data-go="lote:${E(r.lot)}">Abrir</button></td></tr>`).join('')||`<tr><td colspan="16" class="mut">${ST.R.length?'No hay lotes abiertos ni recientes.':'Sin entradas.'}</td></tr>`}</tbody></table></div>${HL.bar}${evid('recepcion','Fotos y notas de la entrada')}</div>`}
 function lote(l){const r=R_(l);if(!r)return recepcion();const c=calc(l),rows=ST.L.filter(x=>x.lot===l).slice().reverse(),rv=rvd(),bs=ST.B[l],ds=ST.P.map((p,i)=>({p,x:bs.map((b,n)=>({b,n})).filter(o=>o.b.d===i&&o.b.c>0)})).filter(o=>o.x.length);
  return `<div class="wrap"><button class="back" data-go="recepcion">‹ Volver a Entrada</button>
- <div class="cd head"><div><h1>${E(l)}</h1><p class="mut" style="margin:4px 0 0">${E(r.origin)} · Tanque ${E(r.tank)} · ${f(bal(l))} kg (${cj(bal(l))} hieleras eq.)</p><p class="mut" style="margin:2px 0 0">Recibido ${E(r.date||'')} ${E(r.time||'')} · Temp. tanque ${r.tempT!=null?r.tempT+' °F':'—'} · Temp. producto ${E(r.tempP||'—')} °F · ${r.kgbox!=null?r.kgbox+' kg por caja en tanque':'kg por caja en tanque: —'} · Desperdicio ${r.desp!=null?r.desp+' kg':'—'}</p></div><div class="bar" style="margin:0">${stc(l)}<button class="btn" data-go="empaque">Ir a Empaque</button>${can('lot')?`<button class="btn s" data-a="el">Editar</button>${conf=='lot'?'<button class="btn d" data-a="dl2">Confirmar eliminar</button>':'<button class="btn d" data-a="dl">Eliminar</button>'}`:''}</div></div>${form&&form.t=='lot'?lotForm():''}
+ <div class="cd head"><div><h1>${E(l)}</h1><p class="mut" style="margin:4px 0 0">${E(esOf(r).n)} · ${E(r.origin)} · Tanque ${E(r.tank)} · ${f(bal(l))} kg (${cj(bal(l))} hieleras eq.)</p><p class="mut" style="margin:2px 0 0">Recibido ${E(r.date||'')} ${E(r.time||'')} · Temp. tanque ${r.tempT!=null?r.tempT+' °F':'—'} · Temp. producto ${E(r.tempP||'—')} °F · ${r.kgbox!=null?r.kgbox+' kg por caja en tanque':'kg por caja en tanque: —'} · Desperdicio ${r.desp!=null?r.desp+' kg':'—'}</p></div><div class="bar" style="margin:0">${stc(l)}<button class="btn" data-go="empaque">Ir a Empaque</button>${can('lot')?`<button class="btn s" data-a="el">Editar</button>${conf=='lot'?'<button class="btn d" data-a="dl2">Confirmar eliminar</button>':'<button class="btn d" data-a="dl">Eliminar</button>'}`:''}</div></div>${form&&form.t=='lot'?lotForm():''}
  ${r.ne&&!r.sl?neBanner([r]):''}${r.ne&&can('ent')?neJoinCard(r):''}<div class="g2"><div class="cd"><h3>Trazabilidad por destino</h3>${ds.length?`<div class="tbl"><table><thead><tr><th>Destino</th><th>Hieleras</th><th>Langostas</th>${Object.keys(RC).map(k=>`<th>${RC[k][0]}</th>`).join('')}</tr></thead><tbody>${ds.map(o=>`<tr><td>${o.p.n}</td><td>${o.x.length}</td><td>${o.x.reduce((a,y)=>a+y.b.c,0)}</td>${(c=>Object.keys(RC).map(k=>`<td>${c[k]}</td>`).join(''))(byCat(o.x.map(y=>y.b)))}</tr>`).join('')}</tbody></table></div>`:'<p class="mut">Sin hieleras empacadas de este lote.</p>'}</div>
  <div class="cd"><h3>Existencia por talla</h3><div class="tbl"><table><thead><tr><th>Talla</th><th>Kg</th><th>Hieleras eq.</th></tr></thead><tbody>${S.map(s=>`<tr><td>${s}</td><td>${f(bal(l,s))}</td><td>${cj(bal(l,s))}</td></tr>`).join('')}</tbody></table></div></div></div>
  ${(()=>{const tl=tempAll().filter(x=>x.tank===r.tank&&r.rdate&&x.t.slice(0,10)>=r.rdate),sh=tl.slice(0,8),v=x=>x==null||x===''?'—':x+' °F';
@@ -1595,22 +1680,56 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-nej]');if(
 function byCat(bs){const o={};for(const k in RC)o[k]=0;bs.forEach(b=>{if(b&&b.c>0&&hasOwn(o,b.k))o[b.k]+=b.c});return o}
 const catTxt=o=>Object.keys(RC).map(k=>`${RC[k][0]} ${o[k]}`).join(' · ');
 function bsum(l){const bs=ST.B[l].filter(b=>b.c>0&&b.k);return{n:bs.length,t:bs.reduce((a,b)=>a+b.c,0),...byCat(bs)}}
-function truckPlan(){const TP=ST.P.filter(p=>!p.closed),cap=[15,20,20,25,25],slot={};let k=0;const rem=TP.map(p=>p.h);
- for(let i=4;i>=0;i--)for(let r=0;r<2;r++){while(k<rem.length&&rem[k]<=0)k++;if(k<rem.length){const v=Math.min(cap[i],rem[k]);rem[k]-=v;slot[i+'.'+r]={v,col:TP[k].col}}}
- return{TP,cap,slot,over:rem.reduce((x,y)=>x+Math.max(0,y),0)}}
-function truck(){const{TP,cap,slot,over}=truckPlan(),w=92,g=6,x0=78;
- let c='';for(let r=0;r<2;r++)cap.forEach((cp,i)=>{const q=slot[i+'.'+r],v=q?q.v:'—';c+=`<rect x="${x0+i*(w+g)}" y="${58+r*52}" width="${w}" height="46" rx="6" fill="${q?q.col:'#16384a'}"/><text x="${x0+i*(w+g)+w/2}" y="${86+r*52}" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">${v}</text>`});
+/* v1.14.0 · Varios camiones y acomodo a mano (pedido del usuario, 23/oct/2026: «different embarques and also move the boxes around
+   inside the truck… dividir UN pallet… CADA box inside the truck editable by hand»).
+   p.tk = camión del embarque (uidS; sin tk = el primer camión, así los datos de antes se ven igual). p.ly = hieleras del embarque en
+   cada una de las 10 celdas (índice = fila*5 + columna; columna 0 = cola, 4 = cabina). Si ningún embarque abierto del camión tiene ly,
+   el acomodo es automático desde la cabina, como antes; al intercambiar o escribir una celda se fija el acomodo de todo ese camión. */
+const TCAP=[15,20,20,25,25],lySum=l=>l.reduce((a,b)=>a+b,0),cellNm=s=>`fila ${Math.floor(s/5)+1} · columna ${s%5+1}`;
+let TSEL=null,TED=null;/* celda elegida {tk,s} · camión con «Mover hieleras» abierto */
+/* Llena lo que falta de cada embarque en el espacio libre, desde la cabina; un embarque por celda en cada pasada (como antes) */
+function tFill(TP,ly){let k=0;for(let i=4;i>=0;i--)for(let r=0;r<2;r++){const s=r*5+i,f=TCAP[i]-ly.reduce((a,l)=>a+l[s],0);while(k<TP.length&&TP[k].h-lySum(ly[k])<=0)k++;if(f>0&&k<TP.length)ly[k][s]+=Math.min(f,TP[k].h-lySum(ly[k]))}}
+function trucks(){const s=[...new Set(ST.P.filter(p=>!p.closed).map(p=>p.tk||''))].sort();return s.length?s:['']}
+const tName=tk=>'Camión '+(trucks().indexOf(tk)+1);
+function truckPlan(tk=''){const TP=ST.P.filter(p=>!p.closed&&(p.tk||'')===tk),man=TP.some(p=>p.ly),ly=TP.map(p=>p.ly?p.ly.slice():Array(10).fill(0));
+ if(!man)tFill(TP,ly);const dif=TP.map((p,k)=>p.h-lySum(ly[k]));
+ return{TP,tk,cap:TCAP,ly,man,dif,cells:Array.from({length:10},(_,s)=>TP.map((p,k)=>({col:p.col,v:ly[k][s]})).filter(x=>x.v>0)),over:man?0:dif.reduce((a,d)=>a+Math.max(0,d),0)}}
+/* Avisos del camión (pantalla y PDF) */
+function tIss(pl){const a=[];if(pl.over>0)a.push(`La carga excede la capacidad del camión por ${pl.over} hieleras.`);
+ if(pl.man)pl.TP.forEach((p,k)=>{const d=pl.dif[k];if(d>0)a.push(`Faltan ${d} hieleras de ${p.n} por acomodar en el camión.`);if(d<0)a.push(`Sobran ${-d} hieleras de ${p.n} en el camión: el embarque tiene ${p.h}.`)});
+ pl.cells.forEach((q,s)=>{const t=lySum(q.map(z=>z.v));if(t>TCAP[s%5])a.push(`La celda ${cellNm(s)} tiene ${t} hieleras y caben ${TCAP[s%5]}.`)});return a}
+/* Fija el acomodo de todo el camión (lo que hoy se ve) antes de cambiarlo a mano */
+function tFix(tk){const pl=truckPlan(tk);pl.TP.forEach((p,k)=>p.ly=pl.ly[k]);return pl}
+/* Una celda dividida entre embarques se pinta en franjas proporcionales; la cuenta es el total de la celda */
+const tSlices=(q,w)=>{const t=lySum(q.map(z=>z.v));let x=0;return q.map(z=>{const o={x,w:w*z.v/t,col:z.col};x+=o.w;return o})};
+function truck(pl=truckPlan()){const{TP,cap,cells}=pl,w=92,g=6,x0=78,sel=TSEL&&TSEL.tk===pl.tk?TSEL.s:-1;
+ let c='';for(let r=0;r<2;r++)cap.forEach((cp,i)=>{const s=r*5+i,q=cells[s],t=lySum(q.map(z=>z.v)),x=x0+i*(w+g),y=58+r*52;
+  c+=(q.length?tSlices(q,w).map(z=>`<rect x="${x+z.x}" y="${y}" width="${z.w}" height="46" rx="${q.length>1?2:6}" fill="${z.col}"/>`).join(''):`<rect x="${x}" y="${y}" width="${w}" height="46" rx="6" fill="#16384a"/>`)
+   +(t>cp||s===sel?`<rect x="${x+1.5}" y="${y+1.5}" width="${w-3}" height="43" rx="6" fill="none" stroke="${s===sel?'#ffd166':'#e5484d'}" stroke-width="3"/>`:'')
+   +`<text x="${x+w/2}" y="${y+28}" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">${t||'—'}</text>`});
  return `<div class="tw"><svg viewBox="0 0 800 235" role="img" aria-label="Camión: cola a la izquierda, cabina a la derecha"><rect x="0" y="198" width="800" height="3" fill="#2b4a5e"/>
  <rect x="46" y="38" width="540" height="134" rx="8" fill="#cfe3ea"/><rect x="50" y="42" width="532" height="126" rx="6" fill="#0b2a3a"/>${c}
  <rect x="34" y="34" width="14" height="142" rx="3" fill="#9db6c2"/><rect x="24" y="48" width="10" height="16" rx="2" fill="#e5484d"/><rect x="24" y="146" width="10" height="16" rx="2" fill="#e5484d"/><rect x="24" y="100" width="10" height="10" rx="2" fill="#ffd166"/>
  <rect x="586" y="150" width="46" height="22" fill="#3b5a6a"/><path d="M628 172V84Q628 68 644 68H698L752 116V172Z" fill="#1c7f9a"/><path d="M670 78H696L730 112H670Z" fill="#bfe6f2"/><rect x="744" y="126" width="10" height="34" rx="2" fill="#0b2a3a"/><circle cx="746" cy="138" r="6" fill="#ffd166"/><rect x="738" y="166" width="20" height="8" rx="2" fill="#9db6c2"/>
  ${[110,160,480,530,680,730].map(x=>`<circle cx="${x}" cy="182" r="17" fill="#04121a"/><circle cx="${x}" cy="182" r="6" style="fill:var(--mut)"/>`).join('')}
- <text x="24" y="24" style="fill:var(--sand)" font-size="13" font-weight="700">COLA · puertas traseras</text><text x="600" y="24" style="fill:var(--sand)" font-size="13" font-weight="700">CABINA</text><text x="400" y="228" text-anchor="middle" style="fill:var(--mut)" font-size="12">Hieleras por celda · 2 filas × 5 columnas = 210</text></svg></div>
- <div class="legend">${TP.map(p=>`<span><i style="background:${p.col}"></i>${E(p.n)}${p.z0?' · zona '+E(p.z0.toLowerCase()):''}</span>`).join('')}</div>${TP.length?'':`<p class="mut">${ST.P.length?'No hay embarques abiertos: el camión está vacío.':'Sin embarques.'}</p>`}${over>0?`<p class="er">⚠ La carga excede la capacidad del camión por ${over} hieleras.</p>`:''}`}
-function embarques(){const OP=ST.P.filter(p=>!p.closed),tot=OP.reduce((a,p)=>a+gross(p),0),HS=histList('emb',ST.P.map((p,i)=>i).reverse(),shipActive);
- return `<div class="wrap">${guide(4,'Embarque y camión','Aquí ves cómo va cargado el camión. Abre una consignación para revisar sus hieleras, el peso bruto y cerrar el empaque: al cerrar se manda el informe por correo.','','')}${ST.P.length?pdfBar('embs'):''}
- ${OP.filter(p=>shipObs(p)).map(p=>obsBan(p,'Indicaciones para la carga · '+p.n)).join('')}<div class="cd"><h3>Plan de carga (embarques abiertos) · ${OP.reduce((a,p)=>a+p.h,0)} hieleras · ${tot.toFixed(1)} kg de peso bruto</h3>${truck()}</div>
- <h2>Consignaciones</h2>${ST.P.length?'':'<p class="mut">Sin embarques.</p>'}<div class="bps">${HS.items.map(i=>[ST.P[i],i]).map(([p,i])=>`<div class="bp" tabindex="0" data-go="emb:${i}" style="--c:${p.col}">${shipObs(p)?`<div class="bpo"><span aria-hidden="true">${IC.warn}</span> ${E(shipObs(p))}</div>`:''}<div><small>Destino</small><span class="big">${p.n.split(' · ')[0]}</span></div><div><small>Consignatario</small><b>${p.n.split(' · ')[1]}</b></div><div><small>Hieleras</small><b>${p.h}</b> · ${gross(p).toFixed(1)} kg</div><div><small>Hieleras empacadas</small><b>${boxesOf(i).length}</b> · ${sent(i)} langostas<br><span class="chip ${p.closed?'ok':'al'}">${p.closed?'Empaque cerrado':'⚠ Abierto: pendiente de cerrar'}</span>${shipIssues(i).length?`<br><span class="al">⚠ ${shipIssues(i).length} ${shipIssues(i).length==1?'alerta':'alertas'}</span>`:''}</div></div>`).join('')}</div>${HS.bar}</div>`}
+ <text x="24" y="24" style="fill:var(--sand)" font-size="13" font-weight="700">COLA · puertas traseras</text><text x="600" y="24" style="fill:var(--sand)" font-size="13" font-weight="700">CABINA</text><text x="400" y="228" text-anchor="middle" style="fill:var(--mut)" font-size="12">Hieleras por celda · 2 filas × 5 columnas = 210</text></svg></div>`}
+/* Tarjeta de un camión: dibujo, embarques que lleva (con «Pasar a»), avisos y el acomodo a mano */
+function truckCard(tk){const pl=truckPlan(tk),{TP,ly}=pl,ts=trucks(),n=ts.indexOf(tk)+1,mv=can('box')&&TP.length,ed=mv&&TED===tk,iss=tIss(pl),sel=ed&&TSEL&&TSEL.tk===tk?TSEL.s:-1;
+ return `<div class="cd tcard" id="tk_${n}"><div class="head"><h3>Camión ${n} · Plan de carga (embarques abiertos) · ${TP.reduce((a,p)=>a+p.h,0)} hieleras · ${TP.reduce((a,p)=>a+gross(p),0).toFixed(1)} kg de peso bruto</h3>${mv?`<button class="btn s" data-ta="ed:${tk}" aria-expanded="${ed}">${ed?'Listo':'Mover hieleras'}</button>`:''}</div>${truck(pl)}
+ <div class="legend tleg">${TP.map((p,k)=>`<span><i style="background:${p.col}"></i>${E(p.n)}${p.z0?' · zona '+E(p.z0.toLowerCase()):''} · ${p.h} hieleras${can('lot')?`<label class="tmv">Pasar a<select data-tk="${E(p.u)}" aria-label="Camión de ${E(p.n)}">${ts.map((t,j)=>`<option value="${t}"${t===tk?' selected':''}>Camión ${j+1}</option>`).join('')}<option value="+">Camión nuevo</option></select></label>`:''}</span>`).join('')}</div>
+ ${TP.length?'':`<p class="mut">${ST.P.length?'No hay embarques abiertos: el camión está vacío.':'Sin embarques.'}</p>`}${iss.map(t=>`<p class="er">⚠ ${E(t)}</p>`).join('')}
+ ${mv&&iss.length&&!ed?`<div class="bar"><button class="chip al chipb" data-ta="ed:${tk}">⚠ Acomodar en el camión ›</button></div>`:''}
+ ${ed?`<p class="mut">Toca una celda y luego otra para <b>intercambiarlas</b>. Con una celda elegida puedes escribir cuántas hieleras de cada embarque lleva (para dividir una tarima).</p>
+ <div class="tgh" aria-hidden="true"><span>‹ Cola</span><span>Cabina ›</span></div><div class="tgrid" role="group" aria-label="Celdas del camión ${n}">${[0,1].map(r=>[0,1,2,3,4].map(i=>{const s=r*5+i,q=pl.cells[s],t=lySum(q.map(z=>z.v));
+  return `<button class="tcel${t>TCAP[i]?' ov':''}" data-tc="${tk}:${s}" aria-pressed="${s===sel}" aria-label="Celda ${cellNm(s)}: ${t} de ${TCAP[i]} hieleras"><b>${t} / ${TCAP[i]}</b>${q.map(z=>`<span><i style="background:${z.col}"></i>${z.v}</span>`).join('')}</button>`}).join('')).join('')}</div>
+ ${sel>=0?`<div class="tsel"><h4>Celda ${cellNm(sel)} · caben ${TCAP[sel%5]}</h4><div class="f">${TP.map((p,k)=>`<label class="zin"><span class="cs" style="--c:${p.col}" aria-hidden="true"></span>${E(p.n)}<input type="number" min="0" max="999" inputmode="numeric" value="${ly[k][sel]}" data-tly="${E(p.u)}:${sel}"></label>`).join('')}</div></div>`:''}
+ <div class="bar">${pl.dif.some(d=>d>0)&&pl.man?`<button class="btn s" data-ta="fill:${tk}">Acomodar lo que falta</button>`:''}${pl.man?`<button class="btn s" data-ta="auto:${tk}">Volver al acomodo automático</button>`:''}</div>`:''}</div>`}
+function bpCard(p,i,ts){return `<div class="bp" tabindex="0" data-go="emb:${i}" style="--c:${p.col}">${shipObs(p)?`<div class="bpo"><span aria-hidden="true">${IC.warn}</span> ${E(shipObs(p))}</div>`:''}<div><small>Destino</small><span class="big">${p.n.split(' · ')[0]}</span></div><div><small>Consignatario</small><b>${p.n.split(' · ')[1]}</b></div><div><small>Hieleras</small><b>${p.h}</b> · ${gross(p).toFixed(1)} kg${!p.closed&&ts.length>1?` · <span class="chip">${tName(p.tk||'')}</span>`:''}</div><div><small>Hieleras empacadas</small><b>${boxesOf(i).length}</b> · ${sent(i)} langostas<br><span class="chip ${p.closed?'ok':'al'}">${p.closed?'Empaque cerrado':'⚠ Abierto: pendiente de cerrar'}</span>${shipIssues(i).length?`<br><span class="al">⚠ ${shipIssues(i).length} ${shipIssues(i).length==1?'alerta':'alertas'}</span>`:''}</div></div>`}
+function embarques(){const OP=ST.P.filter(p=>!p.closed),ts=trucks(),ix=ST.P.map((p,i)=>i).reverse(),HC=histList('emb',ix.filter(i=>ST.P[i].closed),shipActive);
+ return `<div class="wrap">${guide(4,'Embarque y camión','Aquí ves cómo va cargado cada camión. Abre una consignación para revisar sus hieleras, el peso bruto y cerrar el empaque: al cerrar se manda el informe por correo y pasa a «Embarques cerrados».','','')}${ST.P.length?pdfBar('embs'):''}
+ ${OP.filter(p=>shipObs(p)).map(p=>obsBan(p,'Indicaciones para la carga · '+p.n)).join('')}${ts.map(truckCard).join('')}
+ <h2>Consignaciones abiertas</h2>${OP.length?`<div class="bps">${ix.filter(i=>!ST.P[i].closed).map(i=>bpCard(ST.P[i],i,ts)).join('')}</div>`:`<p class="mut">${ST.P.length?'No hay embarques abiertos.':'Sin embarques.'}</p>`}
+ <h2>Embarques cerrados</h2>${HC.items.length?`<div class="bps">${HC.items.map(i=>bpCard(ST.P[i],i,ts)).join('')}</div>`:'<p class="mut">Sin embarques cerrados recientes.</p>'}${HC.bar}</div>`}
 function ordsInShip(i){const lk=shipLinks(i),p=ST.P[i],ed=can('lot')&&!p.closed,jn=joinable(i);
  return `<div class="cd"><h2 class="h3">Órdenes en este embarque</h2>${lk.length?`<div class="tbl"><table class="pkt"><thead><tr><th>Orden (empaque)</th><th>Consignatario</th><th>Hieleras pedidas</th><th>Empacadas</th><th aria-label="Acciones"></th></tr></thead><tbody>${lk.map(x=>{const ls=x.o.lines.filter(l=>l.city==x.city&&l.cons==x.cons),t=ls.reduce((a,l)=>a+l.boxes,0),n=ls.reduce((a,l)=>a+Math.min(l.boxes,ordAssigned(x.o,l).length),0);
   return `<tr><td><b>${fd(x.o.etd)}</b></td><td>${ls.map(l=>E(lnName(l))).join(', ')}</td><td>${t}</td><td>${n} ${lineSt(n,t,(pl=>pl?goLine(x.o,pl):null)(ls.find(l=>ordAssigned(x.o,l).length<l.boxes)))}</td><td><div class="bar" style="margin:0"><button class="btn s" data-go="orden:${x.o.id}">Abrir orden</button>${ed&&lk.length>1?`<button class="lnk" data-sh="sep:${x.o.id}:${x.k}">Separar</button>`:''}</div></td></tr>`}).join('')}</tbody></table></div>`:'<p class="mut">Sin órdenes.</p>'}
@@ -1676,7 +1795,7 @@ const tRowOut=x=>['a','s','p'].some(k=>tOut(x[k]));
 function temperatura(tk){if(!ST.T)ST.T=[];if(tk&&TK.includes(tk))TFIL=tk;const ed=can('fin'),all=tempAll().filter(x=>!TFIL||x.tank===TFIL),HT=histList('temp',all,x=>(x.t||'').slice(0,10)>=cutoff(7)),dt=TK.includes(tk)?tk:TFIL||TQSEL,ob=all.filter(x=>(x.t||'').slice(0,10)>=cutoff(7)&&tRowOut(x)),hn=tempNow();
  return `<div class="wrap">${guide(0,'Monitoreo de temperatura de tanques','Control interno: registra en °F el termómetro flotante, la superficie del agua y la temperatura interna del producto, con fecha y hora. Las temperaturas de cada entrada aparecen aquí solas.','','')}${all.length?pdfBar('temp',TFIL||'','Documento de monitoreo de temperatura'):''}
  ${TRNG&&ob.length?`<div class="alb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${ob.length==1?'1 lectura fuera de rango':`${ob.length} lecturas fuera de rango`} en los últimos 7 días</b><p style="margin:4px 0 0">Rango normal: ${TRNG[0]} a ${TRNG[1]} °F. <button class="alk" data-jump="#tq_tbl">Ver las lecturas en rojo ›</button></p></div></div>`:''}
- ${ed?`<div class="cd"><h3>Nueva lectura</h3><div class="f"><label>Tanque<select id="tq_t">${TK.map(t=>`<option value="${t}"${t===dt?' selected':''}>Tanque ${t.replace(/^T/,'')}</option>`).join('')}</select></label><label>Fecha${dIn('tq_d',hn.slice(0,10))}</label><label>Hora${hIn('tq_h',hn.slice(11,16))}</label><label>${TLBL.a} °F<input id="tq_a" type="number" step="0.1" style="width:130px"></label><label>${TLBL.s} °F<input id="tq_s" type="number" step="0.1" style="width:130px"></label><label>${TLBL.p} °F<input id="tq_p" type="number" step="0.1" style="width:130px"></label><button class="btn" data-a="tq">Guardar lectura</button></div><p class="er">${E(msg)}</p></div>`:''}
+ ${ed?`<div class="cd tqn"><h3>Nueva lectura</h3><div class="f"><label>Tanque<select id="tq_t">${TK.map(t=>`<option value="${t}"${t===dt?' selected':''}>Tanque ${t.replace(/^T/,'')}</option>`).join('')}</select></label><label>Fecha${dIn('tq_d',hn.slice(0,10))}</label><label>Hora${hIn('tq_h',hn.slice(11,16))}</label><label>${TLBL.a} °F<input id="tq_a" type="number" step="0.1" class="tqin"></label><label>${TLBL.s} °F<input id="tq_s" type="number" step="0.1" class="tqin"></label><label>${TLBL.p} °F<input id="tq_p" type="number" step="0.1" class="tqin"></label><button class="btn" data-a="tq">Guardar lectura</button></div><p class="er">${E(msg)}</p></div>`:''}
  <div class="cd"><div class="bar tqfil" role="group" aria-label="Ver tanque"><button class="chipb${TFIL?'':' on'}" data-tqf="" aria-pressed="${!TFIL}">Todos</button>${TK.map(t=>`<button class="chipb${TFIL===t?' on':''}" data-tqf="${t}" aria-pressed="${TFIL===t}">Tanque ${t.replace(/^T/,'')}</button>`).join('')}</div>
  <div class="tbl" id="tq_tbl"><table><thead><tr><th>Fecha</th><th>Hora</th><th>Tanque</th><th>${TLBL.a}</th><th>${TLBL.s}</th><th>${TLBL.p}</th><th>Origen</th><th aria-label="Acciones"></th></tr></thead><tbody>${HT.items.map(x=>`<tr class="${x.src=='ent'?'tqent':''}${tRowOut(x)?' tqrow':''}"><td>${E(fd(x.t.slice(0,10)))}</td><td>${E(x.src=='ent'&&x.t.endsWith('T00:00')?'—':x.t.slice(11,16))}</td><td>${E(x.tank.replace(/^T/,''))}</td><td>${tCell(x.a)}</td><td>${tCell(x.s)}</td><td>${tCell(x.p)}</td><td>${x.src=='ent'?`<button class="lnk" data-go="lote:${E(x.lot)}">Entrada · ${E(x.lot)}</button>`:`Lectura · ${E(x.by)}`}</td><td>${x.src=='lec'&&me.role=='admin'?`<button class="lnk" data-tqdel="${x.id}">Eliminar</button>`:''}</td></tr>`).join('')||`<tr><td colspan="8" class="mut">${all.length?'Sin lecturas en los últimos 7 días.':TFIL?`Sin lecturas del tanque ${TFIL.replace(/^T/,'')}.`:'Sin lecturas.'}</td></tr>`}</tbody></table>${HT.bar}</div>
  <p class="mut" style="margin:8px 0 0">«Entrada» = temperatura capturada al registrar ese lote; se corrige editando el lote. «Lectura» = capturada aquí.</p></div>${evid('temp','Fotos y notas de temperatura')}</div>`}
@@ -1701,16 +1820,50 @@ function admin(){const u=uf?(ST.U.find(x=>x.id==uf.id)||{}):null,yes=(a,b,c)=>`<
  <div class="cd"><div class="bar" style="margin-top:0"><h3 style="margin:0">Usuarios</h3><button class="btn" data-a="nu">+ Nuevo usuario</button></div>
  ${uf?`<div class="panel"><div class="f"><label>Nombre<input id="un" value="${E(u.name||'')}"></label><label>Correo<input id="ue" value="${E(u.email||'')}"></label><label>${u.id?'Nueva contraseña':'Contraseña'}<input id="up" type="password" autocomplete="new-password" placeholder="${u.id?'Vacío = no cambiarla':'Mínimo 8 caracteres'}"></label><label>Rol<select id="ur">${Object.entries(ROLE).map(([k,v])=>`<option value="${k}" ${u.role==k?'selected':''}>${v}</option>`).join('')}</select></label><label>Recibe informes<span style="padding-top:6px">${sw(u.notify!==false&&(u.notify||!u.id),'un')}</span></label><button class="btn" data-a="su">Guardar</button><button class="btn s" data-a="cu">Cancelar</button></div><p class="er">${E(msg)}</p></div>`:''}
  <div class="tbl"><table class="lf"><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Informes</th><th aria-label="Acciones"></th></tr></thead><tbody>${ST.U.map(x=>`<tr><td>${E(x.name)}</td><td>${E(x.email)}</td><td>${ROLE[x.role]}</td><td>${x.notify?'Sí':'No'}</td><td><button class="lnk" data-eu="${x.id}">Editar</button> ${x.id==me.id?'':conf=='u'+x.id?`<button class="btn d" data-du2="${x.id}">Confirmar</button>`:`<button class="lnk" data-du="${x.id}">Eliminar</button>`}</td></tr>`).join('')}</tbody></table></div></div>
- <div class="g2"><div class="cd"><h3>Qué puede hacer cada rol</h3><div class="tbl"><table><thead><tr><th>Acción</th><th>Admin</th><th>Piso</th><th>Consulta</th></tr></thead><tbody>${yes('Ver todo',1,1)}${yes('Empacar hieleras y capturar conteos finales',1,0)}${yes('Registrar entradas (lotes nuevos)',1,0)}${yes('Editar / eliminar lotes',0,0)}${yes('Cerrar lotes y empaques',0,0)}${yes('Gestionar usuarios',0,0)}</tbody></table></div></div>
+ <div class="g2"><div class="cd"><h3>Qué puede hacer cada rol</h3><div class="tbl"><table><thead><tr><th>Acción</th><th>Admin</th><th>Piso</th><th>Consulta</th></tr></thead><tbody>${yes('Ver todo',1,1)}${yes('Empacar hieleras y capturar conteos finales',1,0)}${yes('Registrar entradas (lotes nuevos)',1,0)}${yes('Editar / eliminar lotes',0,0)}${yes('Cerrar lotes y empaques',0,0)}${yes('Gestionar usuarios',0,0)}</tbody></table></div><p class="mut"><b>Cliente (comprador):</b> solo ve los kilos disponibles por talla y lo recibido en la semana, en inglés. No ve proveedores, lotes, tanques, órdenes ni nada más (lo bloquea la base).</p></div>
  <div class="cd"><h3>Informes de cierre (${ST.O.length})</h3><p class="mut">Al cerrar un empaque se guarda aquí su informe. Mándalo por correo con su PDF; los destinatarios sugeridos son los usuarios con “Recibe informes”.</p>${ST.O.map(o=>`<details><summary>${E(o.subject)} · ${o.t}</summary><p class="mut">Destinatarios sugeridos: ${o.to.map(E).join(', ')||'—'}</p><pre>${E(o.body)}</pre>${(q=>q?`<button class="btn s" data-pdf="dl:${q}">${IC.pdf} Descargar PDF</button> <button class="btn" data-pdf="mail:${q}">${IC.mail} Enviar por correo</button>`:'')(o.pu?(pIx(o.pu)>=0?'embu:'+E(o.pu):''):o.pn&&ST.P.some(p=>p.n===o.pn)?'embn:'+E(o.pn):'')}</details>`).join('')||'<p class="mut">Sin informes.</p>'}</div></div>
- ${provCard()}
- ${(()=>{const w=pesoStd(),t=Math.round((w.h+w.g+w.p+w.c)*10)/10;return `<div class="cd" id="pesos"><h3>Peso de la hielera</h3><p class="mut">Peso estándar de cada hielera de exportación. En el piso no se pesa: con esto se calcula el peso de cada embarque, los kg netos y brutos de las órdenes y los PDF. Aplica a todos los equipos y a los embarques abiertos; los cerrados conservan su peso.</p>
- <div class="f">${WK.map(([k,l])=>`<label>${l} (kg)<input type="number" step="0.1" min="0" max="100" inputmode="decimal" id="pw_${k}" value="${w[k]}" style="width:120px"></label>`).join('')}</div>
- <p style="margin:6px 0 10px">Producto por omisión: <b id="pw_n">${w.p}</b> kg por hielera (en cada orden se elige 15 o 16) · hielera + gel + producto + caja: <b id="pw_tt">${t}</b> kg. Las tarimas y las cajas de cartón se cuentan en cada orden.</p><p class="er" id="pw_m"></p><div class="bar"><button class="btn" data-a="pw">Guardar peso de la hielera</button></div></div>`})()}
+ ${histCard()}${provCard()}${espCard()}${consCard()}
 <div class="cd"><h3>Datos y respaldo</h3>${CLOUD?`<p>Los datos se guardan en la base compartida: todos los equipos y todas las cuentas ven lo mismo. Si un equipo se queda sin internet, guarda lo que captures y lo sube solo cuando regresa la conexión.</p><p class="mut">${syncInfo()}</p><p class="mut">Descarga un respaldo de vez en cuando (por ejemplo, al terminar cada semana). Restaurar un respaldo reemplaza los datos de <b>todos</b> los equipos; los usuarios no cambian.</p>`:`<p>Los datos se guardan en este equipo y la plataforma funciona sin internet.</p><p class="mut">Descarga un respaldo con frecuencia (por ejemplo, al terminar cada día) y guárdalo fuera de la tablet. Para pasar los datos a otro equipo, restaura ahí el respaldo; una restauración reemplaza todo lo que haya en ese equipo.</p>`}<div class="bar"><button class="btn s" data-bk="dl">${IC.pdf} Descargar respaldo (.json)</button><label class="btn s" style="cursor:pointer">Restaurar respaldo<input class="vh" type="file" accept="application/json,.json" data-bk="up"></label></div></div>
  ${oldDataCard()}${advCard()}<p class="mut" style="text-align:right">PROPESA · Plataforma marítima · versión ${APPV}</p></div>`}
 /* v1.8.5 · Ya no existe «Borrar todos los datos» en la app (pedido del usuario: «quita completamente el botón; no quiero que
    alguien lo pueda hacer, solo lo haría yo manualmente»). Cómo hacerlo a mano desde Supabase: docs/SUPABASE.md §9. */
+/* v1.16.0 · Administración → Historial de cambios (pedido del usuario 23/oct/2026: «quién, cuándo y qué valor se cambió», memoria corta).
+   Lee rpc/cambios (migrations/20261023_historial_corto.sql): la base guarda cada versión 30 días y la borra sola. Solo se pide al tocar el botón.
+   HC: null = sin cargar · {e} = error · [{k, v, antes, cuando, quien}] */
+let HC=null;
+const HCN={lot:'Lote',origin:'Proveedor',tank:'Tanque',rdate:'Fecha',tempT:'Temp. tanque',tempP:'Temp. producto',kgbox:'Kg por caja',desp:'Desperdicio',final:'Conteo final',closed:'Cerrado',etd:'Salida',lines:'Líneas',n:'Nombre',alive:'Vivas al llegar',size:'Talla',type:'Tipo',text:'Texto',subject:'Asunto',ob:'Observaciones',time:'Hora',date:'Fecha'};
+const HCT={B:{c:'Piezas vivas',k:'Categoría',d:'Embarque',o:'Orden',seq:'Número'},P:{h:'Hieleras',z:'Hieleras por talla',c:'Conceptos de peso',col:'Color',tk:'Camión',ly:'Acomodo en camión'},L:{m:'Gramos'}};/* mismo campo, otro significado según el tipo */
+const hcLbl=(k,v)=>{v=v||{};const i=k.indexOf('/'),id=k.slice(i+1);return({R:'Lote '+id,L:'Movimiento · lote '+(v.lot||'')+(v.size?' · '+v.size:''),B:'Hielera · lote '+(v.lot||''),OR:'Orden '+fd(v.etd||''),P:'Embarque '+(v.n||''),O:'Informe '+(v.subject||''),T:'Temperatura · '+(v.tank||''),M:'Nota',V:'Proveedor '+(v.n||''),E:'Especie '+(v.n||''),W:'Pesos estándar',C:'Colores de consignatarios'})[k.slice(0,i)]||k};
+const hcVal=x=>x==null?'—':x===true?'Sí':x===false?'No':(s=>s.length>60?s.slice(0,59)+'…':s)(typeof x=='string'?x:JSON.stringify(x));
+const hcDiff=(a,b,t)=>{a=a||{};b=b||{};const N={...HCN,...(t=='T'?TLBL:t=='W'?Object.fromEntries(WK):HCT[t]||{})};return [...new Set([...Object.keys(a),...Object.keys(b)])].filter(f=>JSON.stringify(a[f])!==JSON.stringify(b[f])).map(f=>`${N[f]||f}: ${hcVal(a[f])} → ${hcVal(b[f])}`)};
+function histCard(){if(!CLOUD)return'';const r=Array.isArray(HC)?HC:null;
+ return `<div class="cd" id="hist"><div class="bar" style="margin-top:0"><h3 style="margin:0">Historial de cambios</h3><button class="btn s" data-hc="1">${r?'Actualizar':'Ver cambios recientes'}</button></div><p class="mut">Quién cambió qué y cuándo, en los últimos 30 días. Lo más viejo se borra solo.</p>${HC&&HC.e?`<p class="er">${E(HC.e)}</p>`:''}
+ ${r?r.length?`<div class="tbl"><table class="lf"><thead><tr><th>Cuándo</th><th>Quién</th><th>Qué</th><th>Cambio</th></tr></thead><tbody>${r.map(x=>{const v=x.v,a=x.antes,d=v!=null&&a!=null?hcDiff(a,v,x.k.split('/')[0]):[];
+  return `<tr><td>${E(new Date(x.cuando).toLocaleString('es-MX',{dateStyle:'short',timeStyle:'short'}))}</td><td>${E((ST.U.find(u=>u.id===x.quien)||{}).name||'—')}</td><td><b>${v==null?'Borró':a==null?'Creó':'Cambió'}</b> ${E(hcLbl(x.k,v||a))}</td><td>${d.slice(0,6).map(E).join('<br>')}${d.length>6?`<br><span class="mut">y ${d.length-6} más</span>`:''}</td></tr>`}).join('')}</tbody></table></div>`:'<p class="mut">Sin cambios en los últimos 30 días.</p>':''}</div>`}
+document.addEventListener('click',async e=>{const x=e.target.closest('[data-hc]');if(!x||!me||me.role!='admin')return;x.disabled=true;x.textContent='Cargando…';
+ try{const a=await sbPost('/rest/v1/rpc/cambios',{lim:200});HC=Array.isArray(a)?a:[]}
+ catch(err){HC={e:err.status==null?'No hay conexión. Inténtalo otra vez cuando haya internet.':err.status==404?'El historial todavía no está activado en la base.':'No se pudo cargar el historial: '+err.message}}render()});
+/* v1.15.0 · Administración → Consignatarios: el color de cada uno (ver consCol). Se guarda al cerrar el selector de color. */
+function consCard(){const ad=me&&me.role=='admin';
+ return `<div class="cd" id="conss"><h3>Consignatarios</h3><p class="mut">El color de cada consignatario (el de su tape) pinta sus embarques en Embarque, en el plan del camión y en los PDF. Los embarques cerrados conservan su color.</p>
+ <div class="tbl"><table class="lf"><thead><tr><th>Color</th><th>Consignatario</th><th>Destinos</th></tr></thead><tbody>${CONS.map((c,i)=>{const v=consCol(i);return `<tr><td>${ad?`<input type="color" class="ccol" value="${v||XC[i%XC.length]}" data-cc="${i}" aria-label="Color de ${E(c.k)}">`:v?`<span class="cs" style="--c:${v}" aria-hidden="true"></span>`:''}</td><td><b>${E(c.k)}</b>${v?'':' <span class="mut">· Sin elegir</span>'}<br><span class="mut">${E(c.n)}</span></td><td>${c.p.map(x=>x=='*'?'Todos':x+' · '+PORTS[x]).join(', ')}</td></tr>`}).join('')}</tbody></table></div></div>`}
+document.addEventListener('change',e=>{const x=e.target.closest('[data-cc]');if(!x||!me||me.role!='admin')return;const i=+x.dataset.cc,v=x.value;if(!CONS[i]||!HEX6.test(v))return;
+ ST.CC={...(ST.CC||{}),[i]:v.toLowerCase()};ST.P.forEach((p,j)=>{if(!p.closed&&shipLinks(j).length)syncShipIdx(j)});save();toast(`✔ Color de ${CONS[i].k} guardado`);render()});
+/* v1.18.0 · Administración → Especies: lista, agregar, editar (nombre y nombre en inglés) y ocultar (sus lotes la conservan). */
+function espCard(){const ad=me&&me.role=='admin',ed=ESF==null?null:ESF==='new'?{id:'new',n:'',en:''}:esBy(ESF),used=id=>ST.R.filter(r=>esOf(r).id===id).length;
+ return `<div class="cd" id="esps"><div class="bar" style="margin-top:0"><h3 style="margin:0">Especies</h3>${ad&&!ed?'<button class="btn" data-esa="new">+ Nueva especie</button>':''}</div>
+ <p class="mut">Se elige en cada entrada. Los kilos de los tanques se separan por especie. El nombre en inglés es el que ven los compradores.</p>
+ ${ed&&ad?`<div class="panel"><div class="f"><label>Nombre<input id="es_n" value="${E(ed.n)}" maxlength="60" style="min-width:220px"></label><label>Nombre en inglés (compradores)<input id="es_e" value="${E(ed.en||'')}" maxlength="60" placeholder="Red lobster" style="min-width:220px"></label><button class="btn" data-esa="sv">Guardar especie</button><button class="btn s" data-esa="no">Cancelar</button></div><p class="er" id="es_m">${E(msg)}</p></div>`:''}
+ <div class="tbl"><table class="lf"><thead><tr><th>Especie</th><th>En inglés</th><th>Lotes</th><th>En la lista</th><th aria-label="Acciones"></th></tr></thead><tbody>${esAll().map(x=>`<tr><td><b>${E(x.n)}</b></td><td>${E(x.en||'—')}</td><td>${used(x.id)}</td><td>${x.off?'Oculta':'Sí'}</td><td>${ad?`<button class="lnk" data-esa="ed:${x.id}">Editar</button> <button class="lnk" data-esa="off:${x.id}">${x.off?'Mostrar':'Ocultar'}</button>`:''}</td></tr>`).join('')}</tbody></table></div></div>`}
+document.addEventListener('click',e=>{const x=e.target.closest('[data-esa]');if(!x||!me||me.role!='admin')return;const[a,v]=x.dataset.esa.split(':'),own=()=>{if(!Array.isArray(ST.ES)||!ST.ES.length)ST.ES=ES0.map(q=>({...q}));return ST.ES};
+ if(a=='new'||a=='ed'){ESF=a=='new'?'new':+v;msg='';render();const i=document.getElementById('es_n');if(i){i.scrollIntoView({block:'center'});try{i.focus({preventScroll:true})}catch(z){}}return}
+ if(a=='no'){ESF=null;msg='';return render()}
+ if(a=='off'){const L=own(),q=L.find(y=>String(y.id)===v);if(!q)return;if(!q.off&&L.filter(y=>!y.off).length<=1){toast('No se puede: debe quedar al menos una especie en la lista.');return}if(q.off)delete q.off;else q.off=true;save();toast(q.off?`✔ ${q.n} oculta`:`✔ ${q.n} en la lista`);return render()}
+ if(a=='sv'){const n=g('es_n').trim().replace(/\s+/g,' '),en=g('es_e').trim().replace(/\s+/g,' '),id=ESF==='new'?null:ESF;
+  if(!n)return fail('Escribe el nombre de la especie.','es_n');if(/[<>"'`&\\]/.test(n+en))return fail('Quita los signos < > " \' ` & \\ del nombre.','es_n');
+  if(esAll().some(q=>q.id!==id&&q.n.toLowerCase()==n.toLowerCase()))return fail('Ya hay una especie con ese nombre.','es_n');
+  const L=own();if(id==null)L.push({id:uidN(),n:n.slice(0,60),en:en.slice(0,60)});else{const q=L.find(y=>y.id===id);if(!q)return;q.n=n.slice(0,60);q.en=en.slice(0,60)}
+  ESF=null;msg='';save();toast(`✔ Especie guardada: ${n}`);render()}});
 /* v1.11.0 · Administración → Proveedores: lista, agregar, editar (nombre, clave, RFC, permiso de pesca) y ocultar. */
 function provCard(){const ad=me&&me.role=='admin',ps=pvAll(),ed=PVF==null?null:PVF==='new'?{id:'new',n:'',k:'',rfc:'',per:''}:pvBy(PVF),used=id=>ST.R.filter(r=>{const p=pvMatch(r);return p&&String(p.id)===String(id)}).length;
  return `<div class="cd" id="provs"><div class="bar" style="margin-top:0"><h3 style="margin:0">Proveedores</h3>${ad&&!ed?'<button class="btn" data-pva="new">+ Nuevo proveedor</button>':''}</div>
@@ -1735,6 +1888,27 @@ function setupSave(){const n=g('s0n').trim(),e=g('s0e').trim(),pw=g('s0p'),pq=g(
  if(CLOUD)return cloudSetup(n,e.toLowerCase(),pw);
  ST.U=[{id:1,name:n,email:e,role:'admin',notify:true}];save();me=ST.U[0];setPiso(false);V={v:'inicio'};toast('✔ Administrador creado');render()}
 function loginView(){return `<div class="login" role="main"><div class="cd"><div style="max-width:190px;margin:0 auto 6px">${LOGO}</div><p class="mut">Plataforma marítima · acceso por rol</p><div class="f" style="flex-direction:column;align-items:stretch"><label>Correo<input id="le" autocomplete="username" value="${E(LOGIN_EM)}"></label><label>Contraseña<input id="lp" type="password" autocomplete="current-password"></label><button class="btn" data-a="lg">Entrar</button></div><p class="er" id="lm">${E(LOGIN_MSG)}</p></div></div>`}
+/* v1.13.0 · Pantalla de la cuenta Cliente: compradores de fuera, en inglés (pedido del usuario, 22/oct/2026). Solo la hoja de
+   disponibilidad: kilos por talla que se pueden vender ahora y lo recibido en los últimos 7 días (según el reloj de quien la ve).
+   Con la base compartida la baja dispNow; en el modo local de pruebas se calcula aquí mismo. Sin menú ni Ajustes. */
+const ZEN=['Small','Medium','Large','Jumbo'],kgEN=g=>(g/1000).toLocaleString('en-US',{maximumFractionDigits:1}),
+ dotEN=i=>`<span class="szd" style="background:${SZC[i][1]}" aria-hidden="true"></span>`;
+function cliAgo(){if(!DAT)return '';const m=Math.floor((Date.now()-DAT)/6e4);return m<1?'just now':m<60?m+' min ago':m<1440?Math.floor(m/60)+' h ago':new Date(DAT).toLocaleDateString('en-US',{month:'short',day:'numeric'})}
+function cliView(){const d=CLOUD?DISP:WN.D(dispCalc()),z=d?d.z:[0,0,0,0],ss=d&&d.s||[],sn=ss.map(x=>x[0]),tot=Math.max(0,z.reduce((a,v)=>a+v,0)-(d?d.u:0)),
+ w0=(x=>{x.setDate(x.getDate()-6);return dLoc(x)})(new Date()),wk=d?d.e.filter(x=>x[0]>=w0):[],
+ st=!CLOUD?'<span class="chip ok">● Live</span>':!SYNC_FIRST?'<span class="chip">Loading…</span>':offline()?'<span class="chip">Offline · showing the last data received</span>':`<span class="chip ok">● Live${DAT?' · last change '+cliAgo():''}</span>`,
+ box=g=>{const n=h15(g).n;return n?`≈ ${n} ${n==1?'box':'boxes'} of 15 kg`:''},
+ day=dt=>new Date(dt+'T12:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+ return `<div class="cli" role="main" lang="en"><div class="cd">
+ <div class="clih"><div class="clilg">${LOGO}</div><button class="btn s" data-a="lo">Sign out</button></div>
+ <h1>Available stock</h1><p class="mut clis">Live ${E(sn.length?sn.map(x=>x.toLowerCase()).join(', ').replace(/, ([^,]*)$/,' and $1'):'red lobster')} in our tanks, ready to sell. Ensenada, Mexico.</p><div class="clis">${st}</div>
+ ${d?`<ul class="clil">${z.map((g,i)=>`<li>${dotEN(i)}<span><b>${ZEN[i]}</b><small>${S[i]} g</small></span><span class="clik"><b>${kgEN(g)} kg</b><small>${box(g)}</small></span></li>`).join('')}
+ ${d.u?`<li class="clir"><span></span><span>Reserved, size not assigned yet</span><span class="clik"><b>− ${kgEN(d.u)} kg</b></span></li>`:''}
+ <li class="clit"><span></span><b>Total available</b><span class="clik"><b>${kgEN(tot)} kg</b></span></li></ul>
+ ${ss.length>1?`<h2>In our tanks by species</h2><ul class="clil">${ss.map(([n,q])=>`<li><span></span><span><b>${E(n)}</b><small>${q.map((g,i)=>g?`${dotEN(i)} ${ZEN[i]} ${kgEN(g)} kg`:'').filter(Boolean).join(' · ')}</small></span><span class="clik"><b>${kgEN(q[0]+q[1]+q[2]+q[3])} kg</b></span></li>`).join('')}</ul><p class="mut">Orders not shipped yet are subtracted only from the sizes above, not by species.</p>`:''}
+ <h2>Received in the last 7 days</h2>${wk.length?`<ul class="clil">${wk.map(([dt,q])=>`<li><span></span><span><b>${day(dt)}</b><small>${q.map((g,i)=>g?`${dotEN(i)} ${ZEN[i]} ${kgEN(g)} kg`:'').filter(Boolean).join(' · ')}</small></span><span class="clik"><b>${kgEN(q[0]+q[1]+q[2]+q[3])} kg</b></span></li>`).join('')}</ul>`:'<p class="mut">Nothing received in the last 7 days.</p>'}`
+ :`<p class="mut">${CLOUD&&!SYNC_FIRST?'Loading the stock…':'No stock information yet.'}</p>`}
+ </div></div>`}
 /* ===== PDF de cada paso: se genera aquí mismo, sin librerías ni internet. Es el mismo archivo que se descarga y el que se manda por correo. ===== */
 const PW={h:[278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584,761,556,556,222,556,333,1000,556,556,333,1000,667,333,1000,556,611,556,556,222,222,333,333,350,556,1000,333,1000,500,333,944,556,500,667,278,333,556,556,556,556,260,556,333,737,370,556,584,333,737,333,400,584,333,333,333,556,537,278,333,333,365,556,834,834,834,611,667,667,667,667,667,667,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,500,556,556,556,556,278,278,278,278,556,556,556,556,556,556,556,584,611,556,556,556,556,500,556,500],b:[278,333,474,556,556,889,722,238,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,333,333,584,584,584,611,975,722,722,722,722,667,611,778,722,278,556,722,611,833,722,778,667,778,722,667,611,722,667,944,667,667,611,333,278,333,584,556,333,556,611,556,611,556,333,611,611,278,278,556,278,889,611,611,611,611,389,556,333,611,556,778,556,556,500,389,280,389,584,761,556,611,278,556,500,1000,556,556,333,1000,667,333,1000,611,611,611,611,278,278,500,500,350,556,1000,333,1000,556,333,944,611,500,667,278,333,556,556,556,556,280,556,333,737,370,556,584,333,737,333,400,584,333,333,333,611,556,278,333,333,365,556,834,834,834,611,722,722,722,722,722,722,1000,722,667,667,667,667,278,278,278,278,722,722,778,778,778,778,778,584,778,722,722,722,722,667,667,611,556,556,556,556,556,556,889,556,556,556,556,556,278,278,278,278,611,611,611,611,611,611,611,584,611,611,611,611,611,556,611,556]};
 const PWIN={'–':150,'—':151,'‘':145,'’':146,'“':147,'”':148,'•':149,'…':133,'→':62,'−':45};
@@ -1783,7 +1957,7 @@ function PdfRep(o){const W=o.land?841.89:595.28,H=o.land?595.28:841.89,M=36,CW=W
    y+=8},
   truck(pl){const s=CW/800,h=235*s;need(h+8);const y0=y,X=v=>M+v*s,V=v=>y0+v*s,B=(x,yy,w,hh,r,c)=>RRECT(X(x),V(yy),w*s,hh*s,r*s,c),C=(cx,cy,r,c)=>CIRC(X(cx),V(cy),r*s,c);
    B(0,198,800,3,0,'#2b4a5e');B(46,38,540,134,8,'#cfe3ea');B(50,42,532,126,6,'#0b2a3a');
-   for(let r=0;r<2;r++)pl.cap.forEach((cp,i)=>{const q=pl.slot[i+'.'+r],x=78+i*98;B(x,58+r*52,92,46,6,q?q.col:'#16384a');TC(X(x+46),V(86+r*52),q?String(q.v):'—',18*s,1,'#ffffff')});
+   for(let r=0;r<2;r++)pl.cap.forEach((cp,i)=>{const q=pl.cells[r*5+i],x=78+i*98,t=lySum(q.map(z=>z.v));if(q.length)tSlices(q,92).forEach(z=>B(x+z.x,58+r*52,z.w,46,q.length>1?2:6,z.col));else B(x,58+r*52,92,46,6,'#16384a');TC(X(x+46),V(86+r*52),t?String(t):'—',18*s,1,'#ffffff')});
    B(34,34,14,142,3,'#9db6c2');B(24,48,10,16,2,'#e5484d');B(24,146,10,16,2,'#e5484d');B(24,100,10,10,2,'#ffd166');
    B(586,150,46,22,0,'#3b5a6a');POLY([[X(628),V(172)],[X(628),V(84)],[X(628),V(73.33),X(633.33),V(68),X(644),V(68)],[X(698),V(68)],[X(752),V(116)],[X(752),V(172)]],'#1c7f9a');
    POLY([[X(670),V(78)],[X(696),V(78)],[X(730),V(112)],[X(670),V(112)]],'#bfe6f2');B(744,126,10,34,2,'#0b2a3a');C(746,138,6,'#ffd166');B(738,166,20,8,2,'#9db6c2');
@@ -1809,9 +1983,9 @@ const lineOf=k=>{const[oid,lid]=String(k).split('.').map(Number),o=ST.OR.find(x=
 async function pdfEntrada(){const R=PdfRep({title:'Registro de recepción',sub:'Paso 1 · Entrada de producto',land:true,logo:await pdfLogo()}),rs=ST.R.filter(r=>!r.ne),rec=rs.reduce((a,r)=>a+rcv(r.lot),0),des=rs.reduce((a,r)=>a+(r.desp||0),0);
  R.stats([['Lotes recibidos',rs.length],['Kg recibidos',kgs(rec)],['Kg desperdicio',des.toFixed(2)],['Kg en tanques hoy',kgs(rs.reduce((a,r)=>a+bal(r.lot),0))]]);
  R.h2('Lotes recibidos');
- R.table([{h:'Fecha',w:1.1},{h:'Hora',w:.7},{h:'Proveedor',w:2},{h:'Tanque',w:.9,al:'c'},{h:'T°F tanque',w:.8,al:'r'},{h:'T°F producto',w:.9,al:'r'},{h:'Lote de recepción',w:1.9},{h:'Kg por caja en tanque',w:1.1,al:'r'},...SL.map(s=>({h:s,w:1,al:'r'})),{h:'Kg total',w:1,al:'r'},{h:'Kg desperdicio',w:1.3,al:'r'}],
-  rs.map(r=>[r.date||fd(r.rdate),dash(r.time),r.origin,String(r.tank).replace(/^T/,''),dash(r.tempT),dash(r.tempP),{t:r.lot,b:1},dash(r.kgbox),...S.map(z=>kgs(rcv(r.lot,z))),{t:kgs(rcv(r.lot)),b:1},dash(r.desp)]),
-  {foot:['Total','','','','','','','',...S.map(z=>kgs(rs.reduce((a,r)=>a+rcv(r.lot,z),0))),kgs(rec),des.toFixed(2)],fs:8});
+ R.table([{h:'Fecha',w:1.1},{h:'Hora',w:.7},{h:'Proveedor',w:2},{h:'Especie',w:1.3},{h:'Tanque',w:.9,al:'c'},{h:'T°F tanque',w:.8,al:'r'},{h:'T°F producto',w:.9,al:'r'},{h:'Lote de recepción',w:1.9},{h:'Kg por caja en tanque',w:1.1,al:'r'},...SL.map(s=>({h:s,w:1,al:'r'})),{h:'Kg total',w:1,al:'r'},{h:'Kg desperdicio',w:1.3,al:'r'}],
+  rs.map(r=>[r.date||fd(r.rdate),dash(r.time),r.origin,esOf(r).n,String(r.tank).replace(/^T/,''),dash(r.tempT),dash(r.tempP),{t:r.lot,b:1},dash(r.kgbox),...S.map(z=>kgs(rcv(r.lot,z))),{t:kgs(rcv(r.lot)),b:1},dash(r.desp)]),
+  {foot:['Total','','','','','','','','',...S.map(z=>kgs(rs.reduce((a,r)=>a+rcv(r.lot,z),0))),kgs(rec),des.toFixed(2)],fs:8});
  const pu=[...new Set(rs.map(pvMatch).filter(Boolean))];if(pu.length){R.h2('Proveedores');R.table([{h:'Proveedor',w:3},{h:'Clave',w:.8},{h:'RFC',w:1.6},{h:'Permiso de pesca',w:2.2}],pu.map(p=>[{t:p.n,b:1},p.k,p.rfc||'—',p.per||'—']),{fs:8.5})}
  R.notes('recepcion','Notas de Entrada');return{u8:R.build(),name:pdfName('Entrada'),title:'Registro de recepción'}}
 function consBlock(R,city,cons){const c=CONS[cons];R.p(`${city} · ${PORTS[city]||''} — ${c.n}`,{b:1,sz:10,gap:1});R.p(`${c.a}${c.c?' · '+c.c:''}${c.u?' · ID '+c.u:''}`,{sz:8,c:MUT,gap:5})}
@@ -1859,11 +2033,11 @@ async function pdfEmbarque(i){const p=ST.P[i];if(!p)throw new Error('ese embarqu
 async function pdfEmbarques(){const R=PdfRep({title:'Plan de embarques',sub:'Paso 4 · Embarque',logo:await pdfLogo()}),tot=ST.P.reduce((a,p)=>a+gross(p),0);
  R.stats([['Embarques',ST.P.length],['Hieleras',ST.P.reduce((a,p)=>a+p.h,0)],['Peso bruto kg',tot.toFixed(1)],['Cerrados',`${ST.P.filter(p=>p.closed).length} de ${ST.P.length}`]]);
  ST.P.filter(p=>!p.closed&&shipObs(p)).forEach(p=>obsPdf(R,'INDICACIONES PARA LA CARGA · '+p.n,shipObs(p)));
- const pl=truckPlan(),OP=pl.TP;
- R.h2(`Plan de carga (embarques abiertos) · ${OP.reduce((a,p)=>a+p.h,0)} hieleras · ${OP.reduce((a,p)=>a+gross(p),0).toFixed(1)} kg de peso bruto`);
- R.truck(pl);
- if(OP.length)R.legend(OP.map(p=>[p.col,p.n+(p.z0?' · zona '+p.z0.toLowerCase():'')]));else R.p('No hay embarques abiertos: el camión está vacío.',{c:MUT});
- if(pl.over>0)R.alert(`La carga excede la capacidad del camión por ${pl.over} hieleras.`,[]);
+ trucks().forEach(tk=>{const pl=truckPlan(tk),OP=pl.TP,is=tIss(pl);
+  R.h2(`${tName(tk)} · Plan de carga (embarques abiertos) · ${OP.reduce((a,p)=>a+p.h,0)} hieleras · ${OP.reduce((a,p)=>a+gross(p),0).toFixed(1)} kg de peso bruto`);
+  R.truck(pl);
+  if(OP.length)R.legend(OP.map(p=>[p.col,p.n+(p.z0?' · zona '+p.z0.toLowerCase():'')+' · '+p.h+' hieleras']));else R.p('No hay embarques abiertos: el camión está vacío.',{c:MUT});
+  if(is.length)R.alert('Revisar la carga del '+tName(tk),is)});
  R.h2('Embarques');
  R.table([{h:'Embarque',w:3},{h:'Hieleras',w:.9,al:'r'},{h:'Peso bruto kg',w:1.1,al:'r'},{h:'Hieleras',w:.8,al:'r'},{h:'Langostas',w:1,al:'r'},{h:'Estado',w:1.2},{h:'Alertas',w:.8,al:'r'}],ST.P.map((p,i)=>[{t:p.n,b:1},p.h,gross(p).toFixed(1),boxesOf(i).length,sent(i),{t:p.closed?'Cerrado':'Abierto',b:1,c:p.closed?GRN:AMB},{t:shipIssues(i).length,b:1,c:shipIssues(i).length?RED:GRN}]));
  R.p('El informe detallado de cada embarque se descarga desde su propia página.',{sz:8.5,c:MUT});return{u8:R.build(),name:pdfName('Plan_de_embarques'),title:'Plan de embarques'}}
@@ -1922,12 +2096,13 @@ let PE={key:null,lot:null,chg:false,rows:{},cf:null},PEN=null;
 const pendLines=()=>{const r=[];ST.OR.slice().sort((a,b)=>a.etd<b.etd?-1:1).forEach(o=>o.lines.forEach(l=>{const n=ordAssigned(o,l).length,si=(o.sh||{})[l.city+'|'+l.cons];if(n<l.boxes&&!(si!=null&&ST.P[si]&&ST.P[si].closed))r.push({o,l,n})}));return r};
 const openLots=()=>lots().filter(x=>!R_(x).closed);
 const ptile=(go,ic,t,s,cls,dis)=>`<button class="pt ${cls||''}" data-go="${go}" ${dis?'disabled':''}><i>${ic}</i><b>${t}</b><span>${s}</span></button>`;
-function pisoHome(){const pl=pendLines(),pb=pl.reduce((a,x)=>a+x.l.boxes-x.n,0),op=ST.P.filter(p=>!p.closed&&boxesOf(ST.P.indexOf(p)).length).length,fc=ST.R.filter(r=>!r.closed&&!r.ne&&r.final==null).length;
+function pisoHome(){const pl=pendLines(),pb=pl.reduce((a,x)=>a+x.l.boxes-x.n,0),op=ST.P.filter(p=>!p.closed&&boxesOf(ST.P.indexOf(p)).length).length,fc=ST.R.filter(r=>!r.closed&&!r.ne&&r.final==null).length,hoy=tempNow().slice(0,10),tn=tempAll().filter(x=>x.t.slice(0,10)===hoy).length;
  return `<div class="pw">${ST.P.filter(p=>!p.closed).map(p=>obsBan(p,'Indicaciones para la carga · '+p.n)).join('')}<h1 class="ph">¿Qué vas a hacer?</h1><div class="pg">
  ${ptile('pemp',IC.cajas,'Empacar hieleras',pl.length?`${pl.length} ${pl.length==1?'cliente':'clientes'} · faltan ${pb} hieleras`:'No hay hieleras pendientes','p1',!can('box'))}
  ${ptile('pent',IC.recepcion,'Registrar entrada',`${openLots().length} ${openLots().length==1?'lote':'lotes'} en tanques${penPend().length?` · ${penPend().length} sin guardar`:''}`,'p2',!can('ent'))}
  ${ptile('embarques',IC.embarques,'Cerrar embarque',op?`${op} listo${op==1?'':'s'} para revisar`:'Sin embarques por cerrar','p3')}
  ${ptile('cierre',IC.cierre,'Conteo final',fc?`${fc} ${fc==1?'lote':'lotes'} por contar`:'Sin lotes por contar','p3',!can('fin'))}
+ ${ptile('temperatura',IC.temperatura,'Temperatura',tn?`${tn} ${tn==1?'lectura':'lecturas'} hoy`:'Sin lecturas hoy','p3')}
  </div></div>`}
 /* --- Empacar --- */
 /* --- Empacar (modo piso): cada tarjeta es un lugar fijo. Al tener piezas + categoría se guarda sola y queda gris con ✔, editable ahí mismo. --- */
@@ -2043,7 +2218,7 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('kpad')||e.c
  if(/^[0-9]$/.test(e.key)){e.preventDefault();kpType(e.key)}else if(e.key=='Backspace'){e.preventDefault();kpType('bk')}});
 /* --- Registrar entradas: hoja para capturar varias entradas a la vez (Modo piso) --- */
 const PNK=['origin','tank','lot','k0','k1','k2','k3','tempT','tempP','kgbox','desp'],PND=['tempT','tempP','kgbox','desp','rdate','time'],PNX=['tempT','tempP','kgbox','desp'];
-function penRow(){const d=new Date();return{u:++PEN.n,st:'',er:{},open:true,d:{origin:'',tank:'',lot:'',k0:'',k1:'',k2:'',k3:'',tempT:'',tempP:'',kgbox:'',desp:'',rdate:fd(dLoc(d)),time:d.toTimeString().slice(0,5)}}}
+function penRow(){const d=new Date();return{u:++PEN.n,st:'',er:{},open:true,d:{origin:'',tank:'',lot:'',k0:'',k1:'',k2:'',k3:'',tempT:'',tempP:'',kgbox:'',desp:'',sp:String((esOn()[0]||esAll()[0]).id),rdate:fd(dLoc(d)),time:d.toTimeString().slice(0,5)}}}
 function PEN0(){PEN={n:0,rows:[],cf:null,cur:null,busy:false};PEN.rows.push(penRow());return PEN}
 const penR=u=>PEN&&PEN.rows.find(r=>r.u===u),penFull=r=>PNK.some(k=>String(r.d[k]).trim()!==''),penKg=r=>[0,1,2,3].reduce((a,i)=>a+(+r.d['k'+i]||0),0),
  penState=r=>r.st=='ok'?'ok':Object.keys(r.er).length?'bad':penFull(r)?'pnd':'new',
@@ -2069,9 +2244,9 @@ function lotErr(d){const er={},l=String(d.lot||'').trim().toUpperCase();
  if(vac('kgbox'))er.kgbox='Escribe los kg por caja en tanque.';else if(!(+d.kgbox>0))er.kgbox='Los kg por caja deben ser más de 0.';
  if(vac('desp'))er.desp='Escribe los kg de desperdicio (0 si no hubo).';else if(!(+d.desp>=0))er.desp='No puede ser negativo.';
  return er}
-const LOT_F={rdate:'fd',time:'fh',origin:'fo',tank:'ft',tempT:'ftt',tempP:'ftp',lot:'fl',kgbox:'fkb',k0:'fk0',k1:'fk1',k2:'fk2',k3:'fk3',kg:'fk0',desp:'fdes'};/* campo de la vista completa para cada error */
+const LOT_F={sp:'fsp',rdate:'fd',time:'fh',origin:'fo',tank:'ft',tempT:'ftt',tempP:'ftp',lot:'fl',kgbox:'fkb',k0:'fk0',k1:'fk1',k2:'fk2',k3:'fk3',kg:'fk0',desp:'fdes'};/* campo de la vista completa para cada error */
 function addLot(d){const l=String(d.lot).trim().toUpperCase(),nv=v=>v===''||v==null?null:+v,ex=R_(l),pq=d.pv!=null?pvBy(d.pv):null,pv=pq?pq.id:null,
- m={origin:String(d.origin).trim(),tank:d.tank,rdate:d.rdate,time:d.time||'',date:fd(d.rdate),tempT:nv(d.tempT),tempP:String(d.tempP??'').trim(),kgbox:nv(d.kgbox),desp:nv(d.desp)};
+ m={origin:String(d.origin).trim(),sp:(esBy(d.sp)||esOn()[0]||esAll()[0]).id,tank:d.tank,rdate:d.rdate,time:d.time||'',date:fd(d.rdate),tempT:nv(d.tempT),tempP:String(d.tempP??'').trim(),kgbox:nv(d.kgbox),desp:nv(d.desp)};
  /* v1.11.0: un lote que se empezó a empacar sin entrada se completa con esta entrada; conserva su id y sus hieleras */
  if(ex&&ex.ne){Object.assign(ex,m);if(pv!=null)ex.pv=pv;else delete ex.pv;delete ex.ne;ST.B[l]=ST.B[l]||[];S.forEach((s,i)=>{const k=+d['k'+i]||0;if(k>0)post('RECEPCION',l,s,k,0,ex.id)});return l}
  const id=newLotId();ST.R.push({id,lot:l,...m,final:null,closed:false,...(pv!=null?{pv}:{})});
@@ -2088,7 +2263,7 @@ function penTr(r,i){const u=r.u,ok=r.st=='ok',er=r.er,n=i+1,cf=PEN.cf===u,
  num='type="number" min="0" step="0.01" inputmode="decimal" enterkeyhint="next"',mc=penMc(r);
  return `<tr class="per${ok?' sv':''}${PEN.cur===u?' cur':''}${r.open?' op':''}" data-pu="${u}">
  <td class="c-no"><b>${n}</b><span class="pst" id="ps_${u}">${penChip(r)}</span></td>
- <td class="c-or">${el('Proveedor')}<select ${at('origin','Proveedor')}>${pvOpts(pvBy(r.d.origin)?r.d.origin:'','',1)}</select>${ms('origin')}</td>
+ <td class="c-or">${el('Proveedor')}<select ${at('origin','Proveedor')}>${pvOpts(pvBy(r.d.origin)?r.d.origin:'','',1)}</select>${ms('origin')}${el('Especie')}<select class="pesp" ${at('sp','Especie')}>${esOpts(r.d.sp)}</select></td>
  <td class="c-tk">${el('Tanque')}<select ${at('tank','Tanque')}><option value=""${r.d.tank?'':' selected'}>—</option>${TK.map(t=>`<option value="${t}"${r.d.tank==t?' selected':''}>${t.replace(/^T/,'')}</option>`).join('')}</select>${ms('tank')}</td>
  <td class="c-lo">${el('Lote')}<input ${at('lot','Lote')} value="${E(r.d.lot)}" autocapitalize="characters" autocomplete="off" spellcheck="false" enterkeyhint="next"${n==1&&!ok?' placeholder="WLRCO051026"':''}>${ms('lot')}</td>
  ${S.map((s,i)=>`<td class="c-k sz${i}">${el(`${szDot(i)} ${s.toUpperCase()} kg`)}<input ${at('k'+i,'Kg talla '+s.toUpperCase())} ${num} value="${E(r.d['k'+i])}">${ms('k'+i)}</td>`).join('')}
@@ -2100,7 +2275,7 @@ function pisoEnt(){if(!PEN)PEN0();const R=PEN.rows,sv=R.filter(r=>r.st=='ok').le
  return `<div class="pw pent">${PISO?'':'<button class="back" data-go="recepcion">‹ Volver a Entrada</button>'}<div class="penh"><h1 class="ph">Registrar entradas</h1><p class="mut2">Una fila por lote. Pasa de un campo al siguiente con Tab o Enter; las filas vacías no se guardan.</p></div>
  ${bad?`<div class="penal" id="pn_al" role="alert"><b>⚠ <span id="pn_aln">${bad} ${bad==1?'entrada tiene':'entradas tienen'}</span> datos por corregir.</b><button class="chip al chipb" data-pa="jump">Revisar ›</button></div>`:''}
  ${sv?`<div class="pesv"><b>✔ ${sv} ${sv==1?'entrada guardada':'entradas guardadas'}</b><span class="mut">Ya están en tanques y listas para empacar.</span><span class="sp"></span><button class="btn s" data-go="pemp">Empacar hieleras</button></div>`:''}
- ${NPV!=null&&NPV!=='f'?npvHtml():''}<div class="pnt"><table class="pnt-t"><thead><tr><th class="c-no" scope="col">#</th><th scope="col">Proveedor</th><th class="c-tk" scope="col">Tanque</th><th scope="col">Lote</th>${S.map((s,i)=>`<th class="c-k" scope="col"><span>${szDot(i)} ${s.toUpperCase()}</span><small>kg · ${SZC[i][0]}</small></th>`).join('')}<th class="c-tot" scope="col">Kg total</th><th class="c-ac" aria-label="Acciones"></th></tr></thead><tbody>${R.map(penTr).join('')}</tbody></table></div>
+ ${NPV!=null&&NPV!=='f'?npvHtml():''}<div class="pnt"><table class="pnt-t"><thead><tr><th class="c-no" scope="col">#</th><th scope="col">Proveedor y especie</th><th class="c-tk" scope="col">Tanque</th><th scope="col">Lote</th>${S.map((s,i)=>`<th class="c-k" scope="col"><span>${szDot(i)} ${s.toUpperCase()}</span><small>kg · ${SZC[i][0]}</small></th>`).join('')}<th class="c-tot" scope="col">Kg total</th><th class="c-ac" aria-label="Acciones"></th></tr></thead><tbody>${R.map(penTr).join('')}</tbody></table></div>
  <div class="pnav pebar"><button class="pbtn s" data-pa="add">+ Agregar entrada</button><span class="pecnt" id="pn_cnt">${penCnt()}</span><button class="pbtn" data-pa="save" id="pn_save"${np?'':' disabled'}>✔ Guardar entradas<span id="pn_n">${np?` (${np})`:''}</span></button></div></div>`}
 function penFocus(u,k){const el=document.querySelector(`[data-pr="${u}:${k}"]`);if(!el)return;el.scrollIntoView({block:'center'});try{el.focus({preventScroll:true})}catch(z){}}
 function penJump(){const r=PEN&&PEN.rows.find(x=>x.st!='ok'&&Object.keys(x.er).length);if(!r)return;const k=['origin','tank','lot','k0','k1','k2','k3','kg',...PND].find(k=>r.er[k]);
@@ -2140,7 +2315,7 @@ document.addEventListener('keydown',e=>{const t=e.target;if(e.key!='Enter'||!PEN
  if(e.ctrlKey||e.metaKey)return penSave();
  const all=[...document.querySelectorAll('#app [data-pr]:not([disabled])')].filter(x=>x.offsetParent!==null),i=all.indexOf(t);
  if(i>=0&&i<all.length-1){all[i+1].focus();return}const b=document.querySelector('[data-pa=add]');if(b)b.click()});
-const PTIT={piso:'Inicio',pemp:'Empacar hieleras',pent:'Registrar entrada',embarques:'Cerrar embarque',emb:'Cerrar embarque',cierre:'Conteo final'};
+const PTIT={piso:'Inicio',pemp:'Empacar hieleras',pent:'Registrar entrada',embarques:'Cerrar embarque',emb:'Cerrar embarque',cierre:'Conteo final',temperatura:'Temperatura'};
 function pisoShell(inner){return `<div class="pshell"><header class="phd"><button class="plg lgb" data-go="piso" aria-label="PROPESA · ir al inicio" title="Ir al inicio">${LOGOD}</button><b class="ptit">${PTIT[V.v]||''}</b><span class="sp"></span>${V.v!='piso'?`<button class="pbtn s ph1" data-go="piso">${IC.inicio} Inicio</button>`:''}${setBtn(true)}${me.role!='piso'?'<button class="iosrow on dk" role="switch" aria-checked="true" data-mode="full"><span class="iostx"><b>Modo piso</b><small>Encendido</small></span><span class="iossw" aria-hidden="true"><i></i></span></button>':''}${avatarBtn(true)}</header><main id="main" tabindex="-1">${inner}</main></div>`}
 
 /* v1.8.2: al cambiar de modo te quedas en la misma pantalla y no se pierde lo escrito.
@@ -2150,7 +2325,7 @@ function modeDest(on){const v=V.v,id=V.id;
  if(on){if(v=='pent')return'pent';if(v=='empacar'&&id)return'pemp:'+id;if(v=='empaque')return'pemp';
   if(v=='recepcion'&&form&&form.t=='lot'&&!form.edit&&penFromForm())return'pent';return'piso'}
  if(v=='pent')return'pent';if(v=='pemp')return id?'empacar:'+id:'empaque';return'inicio'}
-function penFromForm(){const q=i=>{const e=document.getElementById(i);return e?String(e.value):''},d={origin:q('fo'),tank:q('ft'),lot:q('fl').toUpperCase(),tempT:q('ftt'),tempP:q('ftp'),kgbox:q('fkb'),desp:q('fdes'),rdate:q('fd'),time:q('fh')};
+function penFromForm(){const q=i=>{const e=document.getElementById(i);return e?String(e.value):''},d={origin:q('fo'),sp:q('fsp'),tank:q('ft'),lot:q('fl').toUpperCase(),tempT:q('ftt'),tempP:q('ftp'),kgbox:q('fkb'),desp:q('fdes'),rdate:q('fd'),time:q('fh')};
  S.forEach((s,i)=>d['k'+i]=q('fk'+i));if(!PNK.some(k=>String(d[k]).trim()!==''))return false;
  if(!PEN)PEN0();let r=PEN.rows.find(x=>x.st!='ok'&&!penFull(x));if(!r){r=penRow();PEN.rows.push(r)}
  Object.assign(r.d,d,{rdate:d.rdate||r.d.rdate,time:d.time||r.d.time});r.er={};r.open=PND.some(k=>String(r.d[k]).trim()==='');PEN.cur=r.u;return true}
@@ -2245,7 +2420,7 @@ function hdTitle(steps,s){const x=s?steps.find(z=>z[1]==s):null,O={inicio:['inic
   if(l){const op=lots().filter(z=>!R_(z).closed),lt=PKD.key==V.id&&PKD.lot||(op.length==1?op[0]:'');sub=E(lnName(l))+(lt?' · Lote '+E(lt):'')}}
  return `<div class="hdt"><span class="hdti" aria-hidden="true">${ic}</span><span class="hdtt"><b>${t}</b>${sub?`<small id="hdsub">${sub}</small>`:''}</span></div>`}
 const PG={piso:pisoHome,pemp:pisoEmp,pent:pisoEnt,inicio,recepcion,lote,empaque,empacar,embarques,emb:i=>emb(+i),ordenes,orden:i=>orden(+i),cierre,temperatura,admin,buscar},STEP={recepcion:1,lote:1,pent:1,ordenes:2,orden:2,empaque:3,empacar:3,embarques:4,emb:4};
-function render(){pesosSync();RX={};try{render0()}finally{RX=null}if(V.v=='admin'&&V.id=='pesos'){const x=document.getElementById('pesos');if(x)requestAnimationFrame(()=>{const m=document.querySelector('main');if(m)m.scrollTop+=x.getBoundingClientRect().top-m.getBoundingClientRect().top-12;const f=document.getElementById('pw_h');if(f)f.focus({preventScroll:true})});V.id=null}navSync();uiSoon()}
+function render(){pesosSync();RX={};try{render0()}finally{RX=null}navSync();uiSoon()}
 /* v1.8.1 · Botón de atrás (Android, navegador): cada pantalla nueva queda en el historial del navegador, así «atrás» regresa
    a la pantalla anterior de la app en vez de salir. Si hay algo abierto encima (foto en grande, Ajustes, menú del perfil),
    «atrás» primero lo cierra. Desde la primera pantalla después de entrar, «atrás» sale de la app como siempre.
@@ -2281,6 +2456,7 @@ const uiAct=()=>{LAST_ACT=Date.now();uiSoon()};['input','change','click','keydow
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden'){clearTimeout(UI_T);uiSave()}});
 window.addEventListener('pagehide',()=>{clearTimeout(UI_T);uiSave()});
 function render0(){const A=document.getElementById('app');if(!me){A.innerHTML=(CLOUD?NEEDSETUP:!(ST.U&&ST.U.length))?setupView():loginView();return}
+ if(me.role=='cliente'){A.innerHTML=cliView();return}
  if(V.v=='admin'&&me.role!='admin')V={v:'inicio'};const o=document.querySelector('main'),sc=o?o.scrollTop:0,s=STEP[V.v]||0,T=orderedAll(),PA=packedAll();
  const steps=[['recepcion',1,'Entrada',`${ST.R.length} lotes`],['ordenes',2,'Órdenes',ST.OR.length?`${ST.OR.length} ${ST.OR.length==1?'orden':'órdenes'}`:'Sin órdenes'],['empaque',3,'Empaque',T?`${PA}/${T} hieleras`:'Sin hieleras pedidas',T>PA],['embarques',4,'Embarque',`${ST.P.filter(p=>p.closed).length}/${ST.P.length} cerrados`,ST.P.some(p=>!p.closed)]];
  if(PISO)A.innerHTML=pisoShell(topBanners()+PG[V.v](V.id));else A.innerHTML=`<div class="shell"><a class="skip" href="#main">Saltar al contenido</a><aside class="sb" aria-label="Menú principal"><button class="lt lgb" data-go="inicio" aria-label="PROPESA · ir al inicio" title="Ir al inicio">${LOGOD}</button><h4>Operación</h4><button class="iosrow" role="switch" aria-checked="false" data-mode="piso"><span class="iosic">${IC.cajas}</span><span class="iostx"><b>Modo piso</b><small>Botones grandes</small></span><span class="iossw" aria-hidden="true"><i></i></span></button><button class="fs ${V.v=='inicio'?'on':''}" data-go="inicio" ${V.v=='inicio'?'aria-current="page"':''}><i>${IC.inicio}</i><span><b>Panel</b><small>Siguiente paso</small></span></button>${steps.map(([k,n,t,sub,pn])=>`<button class="fs ${s==n?'on':''}${pn?' pn':''}" data-go="${k}" ${s==n?'aria-current="page"':''}><i>${IC[k]}<em>${n}</em></i><span><b>${t}</b><small>${pn?'⚠ ':''}${sub}</small></span></button>`).join('')}<h4>Revisión</h4><button class="fs ${V.v=='cierre'?'on':''}" data-go="cierre" ${V.v=='cierre'?'aria-current="page"':''}><i>${IC.cierre}</i><span><b>Mortalidad final</b><small>${ST.R.filter(r=>r.closed).length}/${ST.R.filter(r=>!r.ne).length} lotes cerrados</small></span></button><span class="sp"></span><h4>Sistema</h4><button class="fs sm ${V.v=='temperatura'?'on':''}" data-go="temperatura" ${V.v=='temperatura'?'aria-current="page"':''}><i>${IC.temperatura}</i><span><b>Temperatura</b></span></button>${me.role=='admin'?`<button class="fs sm ${V.v=='admin'?'on':''}" data-go="admin" ${V.v=='admin'?'aria-current="page"':''}><i>${IC.admin}</i><span><b>Administración</b></span></button>`:''}<div style="height:12px"></div></aside><div class="scr" data-sb="0"></div><div class="ct"><header class="hd"><button class="mb" data-sb="1" aria-label="Menú">☰</button>${hdTitle(steps,s)}<input id="sq" type="search" placeholder="Buscar lote o envío" aria-label="Buscar"><div class="usr">${setBtn(false)}${avatarBtn(false)}</div></header><main id="main" tabindex="-1">${topBanners()}${PG[V.v](V.id)}</main></div></div>`;
@@ -2297,9 +2473,17 @@ function closeLot(l){const r=R_(l),c=calc(l);if(!c)return toast('Captura primero
 function closeP(i){const p=ST.P[i],bad=[];for(const l in ST.B)ST.B[l].forEach((b,n)=>{if(b.d===i&&!(b.c>0&&b.k))bad.push(`${l} #${n+1}`)});
  if(bad.length)return toast('Faltan datos en hieleras: '+bad.slice(0,4).join(', '));if(!boxesOf(i).length)return toast('Empaca hieleras para este envío antes de cerrar.');
  {const os=[...new Set(shipLinks(i).map(z=>z.o))],fx=os.map(o=>[o,f6Miss(o,true)]).find(z=>z[1].length);if(fx&&!confirm(`Falta en la hoja de empaque del ${fd(fx[0].etd)}: ${fx[1].map(k=>F6L[k].toLowerCase()).join(', ')}.\n\nLa hoja es requerida para el archivo. ¿Cerrar de todos modos? En el PDF saldrá marcada como incompleta.`))return}
- p.closed=true;const x=boxesOf(i),by=byCat(x.map(o=>o.b));const to=ST.U.filter(u=>u.notify).map(u=>u.email);
+ p.closed=true;const x=boxesOf(i),by=byCat(x.map(o=>o.b)),out=salidaAuto(p,x);const to=ST.U.filter(u=>u.notify).map(u=>u.email);
  const body=`Empaque cerrado: ${p.n}\nFecha: ${now()}\nCerrado por: ${me.name}\n${shipObs(p)?`\n*** INDICACIONES PARA LA CARGA: ${shipObs(p)} ***\n`:''}\nÓrdenes de empaque: ${[...new Set(shipLinks(i).map(z=>fd(z.o.etd)))].join(', ')}\nHieleras: ${p.h}\nPeso bruto: ${gross(p).toFixed(1)} kg\nLotes: ${[...new Set(x.map(o=>o.l))].join(', ')}\nCajas empacadas: ${x.length}\nLangostas: ${sent(i)} (${catTxt(by)})\n\n`+[...new Set(shipLinks(i).map(z=>z.o))].map(f6Txt).join('\n\n')+`\n\nDetalle por hielera:\n`+x.map(o=>`  ${o.l}: ${o.b.c} piezas ${RC[o.b.k][0]}`).join('\n');
- const pdfn=pdfName('Embarque',p.n);ST.O.unshift({u:uidS(),subject:`[PROPESA] Informe de empaque ${p.n}`,t:now(),to,body:body+`\n\nAdjunto: ${pdfn}`,pn:p.n,att:pdfn,pu:p.u});save();toast('✔ Empaque cerrado. Manda el informe con «Enviar por correo».');render()}
+ const pdfn=pdfName('Embarque',p.n);ST.O.unshift({u:uidS(),subject:`[PROPESA] Informe de empaque ${p.n}`,t:now(),to,body:body+`\n\nAdjunto: ${pdfn}`,pn:p.n,att:pdfn,pu:p.u});save();toast(`✔ Empaque cerrado${out?`. Salieron ${f(out,1)} kg de los tanques`:''}. Manda el informe con «Enviar por correo».`);render()}
+/* v1.13.0 · Decisión del usuario (22/oct/2026; cambia la del 14/oct «las salidas se registran a mano»): al cerrar un embarque, sus
+   hieleras salen solas del tanque. Un movimiento SALIDA_EMBARQUE por lote y talla (talla = categoría de la hielera; kg = kg de producto
+   de su línea), marcado con rc 'E/<embarque>' para quitarlo al reabrir. Nunca deja un lote en negativo; lotes cerrados o sin entrada
+   no se tocan (no cuentan en tanques). Así la disponibilidad que ven los compradores (dispCalc) no cuenta langosta que ya se fue. */
+function salidaAuto(p,x){const by={};let t=0;
+ x.forEach(({l,b})=>{const i=TKEY.indexOf(b.k),r=R_(l);if(i<0||!r||r.ne||r.closed)return;const q=lineOf(b.o).l,k=i+'|'+l;by[k]=(by[k]||0)+Math.round((q?lnKp(q):pesoStd().p)*1000)});
+ for(const k in by){const j=k.indexOf('|'),l=k.slice(j+1),s=S[+k.slice(0,j)],g=Math.min(by[k],bal(l,s));if(g>0){post('SALIDA_EMBARQUE',l,s,-g/1000,0,'E/'+p.u);t+=g}}
+ return t}
 async function saveUCloud(n,e,pw,r,nt,isNew){const b=document.querySelector('[data-a=su]');if(b)b.disabled=true;
  try{await fnUsers(isNew?'create':'update',{id:uf.id,name:n,email:e.toLowerCase(),password:pw||undefined,role:r,notify:nt});uf=null;msg='';await loadProfiles();toast('✔ Usuario guardado');render()}
  catch(x){if(b)b.disabled=false;fail(x.message||'No se pudo guardar.','un')}}
@@ -2326,7 +2510,7 @@ const t=e.target,q=s=>t.closest(s);let x;
   if(k=='tq')return saveTemp();if(k=='sv')return saveLot();if(k=='mv')return mv();if(k=='dl'){conf='lot';return render()}if(k=='dl2')return delLot();
   if(k=='cl')return closeLot(x.dataset.lot||V.id);if(k=='ol'){R_(V.id).closed=false;save();return render()}
   
-  if(k=='cp')return closeP(+V.id);if(k=='op'){ST.P[+V.id].closed=false;save();return render()}
+  if(k=='cp')return closeP(+V.id);if(k=='op'){const p=ST.P[+V.id];p.closed=false;ST.L=ST.L.filter(m=>m.rc!=='E/'+p.u);save();return render()}/* reabrir regresa al tanque lo que salió solo al cerrar */
   if(k=='pw'){if(me.role!='admin')return;const m=document.getElementById('pw_m'),w={};for(const[q,l]of WK){const e=document.getElementById('pw_'+q),v=e.value.trim(),n=+v;
    if(v===''||!isFinite(n)||n<0||n>100){m.textContent=`Revisa «${l}»: debe ser un número entre 0 y 100 kg.`;e.focus();return}w[q]=Math.round(n*1000)/1000}
    if(!(w.p>0)){m.textContent='El peso del producto debe ser mayor que 0.';document.getElementById('pw_p').focus();return}

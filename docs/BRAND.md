@@ -28,4 +28,4 @@ Todos los valores viven como variables CSS en `:root` al inicio de `index.html`.
 
 ### Vista previa al compartir el link · desde la v1.8.6
 - `og-image.png` (1200×630, ~175 KB): el logo PROPESA en blanco (el mismo `LG` de la app, versión `LOGOD`) y «Plataforma marítima», sobre azul marino `#0B1D59` con un degradado suave. Se genera con Chromium desde el logo de la app; menos de 300 KB por el límite de WhatsApp.
-- Etiquetas `og:*` y `twitter:*` en `index.html` con la dirección completa `https://propesa.vercel.app/og-image.png?v=1`. Si cambia la imagen, sube `?v=`: WhatsApp, Facebook y Slack guardan la vista previa vieja varios días.
+- Etiquetas `og:*` y `twitter:*` en `index.html` con la dirección completa `https://propesa.org/og-image.png?v=1` (dominio propio desde la v1.13.2; antes `propesa.vercel.app`). Si cambia la imagen, sube `?v=`: WhatsApp, Facebook y Slack guardan la vista previa vieja varios días.

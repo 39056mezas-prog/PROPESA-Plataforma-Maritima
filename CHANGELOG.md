@@ -1,5 +1,124 @@
 # Cambios
 
+## 1.18.0 · 24 de octubre de 2026
+
+### Agregado
+- **Especie en cada entrada.** El formulario de Entrada y la hoja de entradas de Modo piso piden la **especie** (Langosta Roja de inicio). En la hoja de Modo piso va debajo del proveedor («Proveedor y especie»). Se ve en la tabla de Entrada, en el lote y en los lotes de cada tanque; se corrige con «Editar». Los lotes de antes son Langosta Roja. Pedido del usuario.
+- **Administración → Especies** (solo el Administrador): agregar, editar el nombre y el nombre en inglés (el que ven los compradores) y ocultar. Una especie oculta ya no se ofrece en nuevas entradas; sus lotes la conservan.
+- **Kilos por especie.** El tablero de tanques separa los kilos de cada tanque por especie y talla (con sus hieleras de 15 kg) y arriba suma cada especie en todos los tanques. La pantalla de los compradores dice qué especies hay («Live red lobster and blue lobster…») y, con más de una, agrega «In our tanks by species» por talla.
+- **PDF:** el Registro de recepción (Entrada) trae la columna «Especie». La Hoja de empaque (Formato 06) toma la especie de los lotes empacados en la orden (antes siempre «Langosta Roja»), en pantalla, PDF y correo.
+
+### Corregido
+- La clase de las casillas de temperatura de la v1.17.1 (`tqv`) era la misma que la de «Vacío» en el detalle del tanque y le cambiaba el ancho. Ahora se llama `tqin`.
+
+### Decisiones (ver `docs/DECISIONES.md`)
+- Las órdenes **no llevan especie**: lo pedido que no ha salido resta de los totales por talla, no de una especie. Los kilos por especie de los compradores son lo que hay en tanques.
+
+### Datos
+- `ST.ES` (opcional) = `[{id, n, en, off}]`; sin ella se usa `ES0` (Langosta Roja). `R[].sp` (opcional) = id de la especie; sin `sp` = especie 1. En `cleanST`, `WN.E`/`WN.R`, `encodeST` y `decodeST`; viajan como registros `E/<id>` y dentro de `R/<lote>`. La hoja `D/disp` agrega `s` = [[nombre en inglés, g por talla]]. **Sin cambios en Supabase.**
+
+### Pruebas
+- `especies_t.py` (nueva, 94 verificaciones): Administración (agregar, repetido, editar, ocultar, la última no se oculta, Consulta no cambia), Entrada en vista completa y Modo piso, editar la especie, lotes de antes, tablero de tanques por especie, PDF de Entrada, Formato 06 (pantalla, PDF y correo), hoja de compradores y su pantalla, registros compartidos, respaldo, sin desbordes en 1180 y 390 px y en 820 px oscuro con texto de 20 px. `inicio_t` (versión 1.18.0). 41 grupos.
+- `entradas_t.py`: Enter en el proveedor pasa a la especie y de ahí al tanque. `temperatura_t.py`: usa la fecha de ayer en vez del 16/10/2026 fijo (desde el 24/oct quedaba fuera de la lista de 7 días y la prueba fallaba también en la versión anterior).
+
+## 1.17.1 · 23 de octubre de 2026
+
+### Cambiado
+- **Temperatura en Modo piso con casillas grandes.** En «Nueva lectura», dentro de Modo piso, el tanque, la fecha, la hora, las tres temperaturas, «Hoy», «Ahora» y «Guardar lectura» miden 60 px de alto, con números más grandes y casillas más anchas, para usarlas con guantes. La vista completa se queda igual. Pedido del usuario.
+
+### Pruebas
+- `piso_t.py`: en Modo piso todas las casillas y botones de «Nueva lectura» miden 60 px o más y los números 20 px o más; la vista completa conserva sus casillas de 130 px. Revisado en 390, 820 y 1440 px, con texto «Muy grande» y en tema oscuro, sin desbordes. `inicio_t` (versión 1.17.1).
+
+## 1.17.0 · 23 de octubre de 2026
+
+### Agregado
+- **Temperatura en Modo piso.** Un quinto botón en el inicio de Modo piso, «Temperatura», con cuántas lecturas van hoy («2 lecturas hoy» / «Sin lecturas hoy»; cuenta también las temperaturas de las entradas). Abre la misma pantalla de Temperatura de siempre dentro del Modo piso (sin menú, con «Inicio»): «Nueva lectura», la tabla de los últimos 7 días, el PDF y las fotos. Mismos permisos que antes: Administrador y Encargado de piso capturan; Consulta solo ve. En tablet y computadora el botón va a todo lo ancho debajo de «Cerrar embarque» y «Conteo final». Pedido del usuario (con `/ponytail ultra`).
+
+### Pruebas
+- `piso_t.py`: el botón sale con el conteo de hoy y a todo lo ancho, abre Temperatura dentro de Modo piso, guarda una lectura, sin desborde, en 1180 y 390 px. `inicio_t` (versión 1.17.0). 40 grupos.
+
+## 1.16.0 · 23 de octubre de 2026
+
+### Agregado
+- **Historial de cambios en Administración.** Una tarjeta «Historial de cambios» con el botón «Ver cambios recientes»: lista los últimos 200 cambios de los últimos 30 días, lo más nuevo arriba, con **cuándo**, **quién**, **qué** (Creó / Cambió / Borró y qué registro: lote, hielera, orden, embarque, temperatura…) y **el cambio** campo por campo («Temp. tanque: 58 → 60»). Solo el Administrador; solo con la base compartida. No pide nada a la base hasta tocar el botón. Pedido del usuario: «ver quién, cuándo y qué valor se cambió… que no ocupe espacio en la base, memoria corta, para arreglar errores».
+
+### Base compartida
+- **Sin tabla nueva:** usa `app_records_hist` (v1.4.1), que ya guardaba cada versión anterior. Migración `supabase/migrations/20261023_historial_corto.sql`: el historial **se borra solo después de 30 días**, la hoja de disponibilidad `D/disp` (la recalcula la app) ya no entra al historial, y la función `cambios(lim)` arma la lista (solo devuelve filas al Administrador). Antes: 114 versiones, 112 kB de una base de 12 MB. **Aplicada en `propesa_bc` el 23/oct** con permiso del usuario (no borró nada: lo más viejo era del 16/oct); revisado ahí que un Administrador recibe la lista (187 cambios) y una cuenta Consulta, ninguno.
+
+### Pruebas
+- `historial_t.py` (nueva): con el Supabase de mentira, Piso crea un lote y el Administrador lo cambia y borra una lectura; la lista muestra quién, qué y «58 → 60», sin `D/disp`; Piso no recibe nada aunque lo pida directo; aviso sin internet; 1440/820/390 px con texto de 20 px, tema oscuro, botón de 44 px; no sale en modo local. `supabase_falso.py` guarda versiones anteriores y responde `rpc/cambios`. `inicio_t` (versión 1.16.0). 40 grupos.
+
+## 1.15.0 · 23 de octubre de 2026
+
+### Agregado
+- **Color de cada consignatario.** Administración → «Consignatarios»: un selector de color por consignatario (el color de su tape). Al cambiarlo, sus embarques abiertos se pintan de ese color en Embarque, en el plan del camión y en los PDF; los embarques nuevos de ese consignatario nacen con él. Los cerrados conservan su color. Mientras no se elija, todo se ve como antes. Solo el Administrador. Pedido del usuario; resuelve la pregunta abierta 10.
+
+### Datos
+- `ST.CC` (opcional) = {índice del consignatario: '#rrggbb'}, en `cleanST`, `WN.C`, `encodeST` y `decodeST`. Se comparte como el registro `C/colores`: sin cambios en Supabase.
+
+### Pruebas
+- `colores_t.py` (nueva): tarjeta, selector de 44 px o más, abierto toma el color y cerrado no, embarque nuevo, Embarque lo pinta, viaja como `C/colores`, valores malos se ignoran, respaldo, otro rol no lo cambia; en 1440/820/390. `inicio_t` (versión 1.15.0). 39 grupos.
+
+## 1.14.0 · 23 de octubre de 2026
+
+### Agregado
+- **Varios camiones.** Embarque muestra un plan de carga por camión (Camión 1, Camión 2…). En cada camión, junto a cada consignación, «Pasar a» la cambia de camión o abre un «Camión nuevo» (solo el Administrador). Las consignaciones nuevas llegan al Camión 1. Los datos de antes se ven igual: todo en un solo camión. Pedido del usuario.
+- **Mover hieleras dentro del camión.** «Mover hieleras» abre las 10 celdas en botones grandes (cola a la izquierda, cabina a la derecha): tocar una celda y luego otra las intercambia; con una celda elegida se escribe cuántas hieleras de cada consignación lleva, para dividir una tarima. Avisos en rojo si faltan o sobran hieleras de una consignación o si una celda pasa su capacidad, con «Acomodar lo que falta» y «Volver al acomodo automático». Administrador y Encargado de piso. El acomodo automático es el de siempre (desde la cabina).
+- **«Embarques cerrados» aparte.** En Embarque, las consignaciones abiertas y las cerradas salen en secciones separadas; las cerradas dejan el camión.
+- El PDF del Plan de embarques trae un plan por camión, con sus avisos.
+
+### Datos
+- `P[].tk` (camión) y `P[].ly` (hieleras por celda, 10 números), opcionales, en `cleanST`, `WN.P` y `decodeST`. Viajan dentro de `P/<u>`: sin cambios en Supabase.
+
+### Pruebas
+- `camiones_t.py` (nueva): el automático da lo mismo que antes (300 combinaciones), camión nuevo y regresar, intercambiar, dividir, avisos, capacidad, celdas de 44 px o más, sin scroll de lado en 1180/820/390, cerrados aparte, Consulta sin controles, datos compartidos y limpios, PDF con dos camiones. `inicio_t` (versión 1.14.0). 38 grupos, TODO BIEN.
+
+## 1.13.3 · 23 de octubre de 2026
+
+### Cambiado
+- **Los pesos de la hielera se editan solo en Embarque.** Se quitó la tarjeta «Peso de la hielera» de Administración; ahora se cambian en Embarque → «Peso del embarque» → «Editar pesos» (solo el Administrador), que es donde se usan. El panel ahora muestra el producto por omisión y el total por hielera (se actualiza al escribir) y que aplica a todos los equipos y a los embarques abiertos. Pedido del usuario. Sin cambios en datos ni en cómo se calcula el peso.
+
+### Pruebas
+- `pesos_t.py`: Administración ya no tiene la tarjeta; todo se edita desde «Editar pesos» en Embarque. `inicio_t` (versión 1.13.3). 37 grupos, TODO BIEN.
+
+## 1.13.2 · 22 de octubre de 2026
+
+### Corregido
+- **Al compartir el link, la vista previa ya apunta a propesa.org.** Las etiquetas `og:url`, `og:image` y `twitter:image` decían `propesa.vercel.app`, así que WhatsApp, Facebook y Slack mandaban a la dirección de Vercel. La imagen (`og-image.png`) es la misma.
+
+### Documentación
+- **`docs/ROADMAP.md` puesto al día con el código.** Se había quedado en la v1.4.0 y marcaba como pendientes cosas que ya funcionan: base compartida (Auth, reglas por rol, sincronización), ids estables, historial de cambios en la base, editar y eliminar órdenes, salida de kilos al cerrar el embarque (pregunta 3, resuelta). Quedan como pendientes reales el correo con PDF (pregunta 16), importar datos viejos, la pantalla del historial, las alertas de temperatura (pregunta 11) y la ocupación de tanques (pregunta 17).
+
+### Pruebas
+- `vista_previa_t.py`: las etiquetas usan propesa.org y el encabezado ya no menciona `vercel.app`. `inicio_t` (versión 1.13.2).
+
+## 1.13.1 · 22 de octubre de 2026
+
+### Corregido
+- **Empaque (vista completa) con el teclado abierto: las hieleras completadas ya muestran su categoría** (● Verde, ● Rojo…) además de «✔ Completada». Antes la categoría se ocultaba en las completadas y solo se veía más abajo. Pedido del usuario.
+
+### Cambiado
+- **Empaque (vista completa): el avance «✔ N completadas · N pendientes · N % completado» y su barra van arriba de las hieleras, quietos**, justo debajo de «Hieleras de …». Antes flotaban abajo, debajo del teclado. «Guardar hieleras» se queda abajo. Pedido del usuario.
+
+### Pruebas
+- `categoria_completada_t.py` (nueva): con el teclado abierto, dos hieleras completadas muestran Verde y Rojo; el avance está arriba de las hieleras y no se mueve al desplazar; sin desbordes, en 390/820/1440 px. 37 grupos.
+
+## 1.13.0 · 22 de octubre de 2026
+
+Modo para compradores de fuera (China): ven en vivo lo que hay en los tanques para hacer ventas.
+
+### Nuevo
+- **Rol «Cliente (comprador)».** El Administrador lo da de alta en Administración como cualquier usuario. Al entrar ve una sola pantalla **en inglés**, sin menú: **Available stock** (kilos por talla Small / Medium / Large / Jumbo, con hieleras de 15 kg aproximadas y el total disponible), **Received in the last 7 days** (kilos recibidos por día y talla) y «Live · last change hace X min». Se actualiza sola cada pocos segundos.
+- **Disponible = lo que hay en tanques menos lo pedido que todavía no sale.** Una orden aparta sus hieleras (por talla) hasta que su embarque se cierra. Lo pedido sin tallas sale como «Reserved, size not assigned yet» y solo resta del total.
+- **Al cerrar un embarque, sus hieleras salen solas del tanque** (decisión del usuario del 22/oct; antes la salida se registraba a mano). Un movimiento «Salida a embarque» por lote y talla, con los kg de producto de su orden. El aviso dice cuántos kg salieron. **Reabrir** el embarque regresa esos kilos. Nunca deja un lote en negativo; los lotes cerrados o sin entrada no se tocan.
+
+### Seguridad (base compartida)
+- **La cuenta Cliente solo puede leer su hoja de disponibilidad.** La base no le entrega proveedores, lotes, tanques, órdenes, consignatarios, notas, fotos ni los datos del personal, aunque los pida directamente. Migración `supabase/migrations/20261022_cliente.sql` y función `usuarios` con el rol nuevo, **aplicadas en `propesa_bc` el 22/oct** con permiso del usuario. Administrador, Piso y Consulta ven lo mismo que antes.
+- De paso, el espacio de archivos «reportes» (vacío) ya solo lo ven Administrador, Piso y Consulta; antes lo podía ver cualquier cuenta.
+
+### Pruebas
+- `disponible_t.py` (nueva): cálculo de la disponibilidad, salida automática al cerrar y al reabrir, lote que no queda en negativo, línea sin tallas, pantalla en inglés sin datos internos (390/820/1440 px, claro y oscuro, texto de 20 px), y con un Supabase de mentira: el Cliente solo recibe su hoja y su perfil, no puede escribir, ve los cambios en vivo, y dos Administradores a la vez no se pisan la hoja. 36 grupos, 2020 verificaciones, TODO BIEN; rendimiento con un año de datos dentro de los límites.
+
 ## 1.12.0 · 18 de octubre de 2026
 
 Pedidos del usuario después de usar la app en su celular.

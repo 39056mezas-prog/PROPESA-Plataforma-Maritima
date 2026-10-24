@@ -1,4 +1,5 @@
-"""Peso estándar de la hielera (v1.8.7): uno solo, en Administración, solo el Administrador lo cambia.
+"""Peso estándar de la hielera (v1.8.7): uno solo, solo el Administrador lo cambia.
+Desde la v1.13.3 se edita solo en Embarque → «Editar pesos» (ya no está en Administración).
 Embarque lo muestra sin casillas; Órdenes y PDF lo usan; los embarques cerrados conservan su peso; se guarda en el respaldo.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/pesos_t.py"""
 from playwright.sync_api import sync_playwright
@@ -12,6 +13,8 @@ def chk(c, m):
 def entrar(pg, em, pw):
     pg.goto(BASE); pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso","0")}', seed); pg.reload()
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
+def pesos(pg, i):  # abre «Editar pesos» en el embarque i (abierto)
+    pg.evaluate(f"EWP=true;go('emb:{i}')"); pg.wait_for_timeout(150)
 
 with sync_playwright() as p:
     b = p.chromium.launch()
@@ -24,8 +27,10 @@ with sync_playwright() as p:
         pg.evaluate(f"go('emb:{i}')"); card = pg.locator('#emb_peso')
         chk(card.locator('input').count() == 0 and 'Se calcula solo' in card.inner_text() and 'Tarimas' not in card.inner_text(), f'{vw} Embarque: el peso se explica y no tiene casillas')
         chk(card.locator('[data-a=ewp]').count() == 1, f'{vw} el Administrador ve «Editar pesos» (v1.12.0)')
-        pg.evaluate("go('admin:pesos')"); pg.wait_for_timeout(300)
-        chk(pg.evaluate("V.v") == 'admin' and pg.evaluate("document.activeElement.id") == 'pw_h', f'{vw} lleva a Administración → «Peso de la hielera», en el primer campo')
+        pg.evaluate("go('admin')"); pg.wait_for_timeout(150)
+        chk(pg.locator('#pesos, #admin_pw, #app [data-a=pw]').count() == 0 and 'Peso de la hielera' not in pg.inner_text('#app'), f'{vw} Administración ya no tiene «Peso de la hielera» (v1.13.3)')
+        pg.evaluate(f"go('emb:{i}')"); pg.click('#emb_peso [data-a=ewp]'); pg.wait_for_timeout(100)
+        chk(pg.locator('#emb_peso #pw_h').count() == 1 and pg.locator('#emb_peso #pw_tt').inner_text() == '19.6', f'{vw} «Editar pesos» en Embarque trae los 5 pesos y el total por hielera')
         # validación
         pg.fill('#pw_p', '0'); pg.click('[data-a=pw]'); chk('mayor que 0' in pg.inner_text('#pw_m') and pg.evaluate("!ST.W"), f'{vw} producto en 0 no se guarda')
         pg.fill('#pw_p', 'abc' if False else ''); pg.click('[data-a=pw]'); chk('Revisa' in pg.inner_text('#pw_m'), f'{vw} un campo vacío no se guarda')
@@ -35,7 +40,7 @@ with sync_playwright() as p:
         if j >= 0:
             pg.evaluate(f"ST.P[{j}].closed=true;save()"); g_cerrado = pg.evaluate(f"gross(ST.P[{j}])")
         # cambiar: producto 16.5, gel 1.2 → 16.5 netos, 1.4+1.2+16.5+0.7 = 19.8 brutos
-        pg.evaluate("go('admin:pesos')"); pg.wait_for_timeout(200)
+        pesos(pg, i)
         pg.fill('#pw_p', '16.5'); pg.fill('#pw_g', '1.2')
         chk(pg.inner_text('#pw_tt') == '19.8' and pg.inner_text('#pw_n') == '16.5', f'{vw} el total se ve al escribir: {pg.inner_text("#pw_tt")}')
         pg.click('[data-a=pw]')
@@ -44,13 +49,13 @@ with sync_playwright() as p:
         if j >= 0: chk(pg.evaluate(f"gross(ST.P[{j}])") == g_cerrado, f'{vw} el embarque cerrado conserva su peso ({g_cerrado} kg)')
         pg.evaluate(f"go('emb:{i}')"); chk(pg.locator('#emb_peso').count() == 1 and f'{round(19.8 * h, 1):.1f}' in pg.inner_text('#emb_peso') and pg.locator('.alk:has-text("Peso bruto")').count() == 0, f'{vw} el embarque muestra 19.8 kg y no hay aviso de discrepancia')
         # embarque cerrado: si después cambia el estándar, conserva el peso con el que se cerró
-        g198 = pg.evaluate(f"gross(ST.P[{i}])"); pg.evaluate(f"ST.P[{i}].closed=true;save();go('admin:pesos')"); pg.wait_for_timeout(200)
+        g198 = pg.evaluate(f"gross(ST.P[{i}])"); pesos(pg, i); pg.evaluate(f"ST.P[{i}].closed=true;save()")
         pg.fill('#pw_p', '16'); pg.fill('#pw_g', '1.5'); pg.click('[data-a=pw]')
         chk(pg.evaluate("KGB") == 19.6 and pg.evaluate(f"gross(ST.P[{i}])") == g198, f'{vw} embarque cerrado conserva su peso ({g198} kg) aunque el estándar vuelva a 19.6')
         pg.evaluate(f"go('emb:{i}')"); chk('Pesos con los que se cerró' in pg.inner_text('#emb_peso') and pg.locator('#emb_peso [data-a=ewp]').count() == 0, f'{vw} cerrado: dice que son los pesos del cierre')
         pg.evaluate(f"ST.P[{i}].closed=false;save();render()"); chk(pg.locator('[data-a^="pwfix:"]').count() == 1, f'{vw} al reabrirlo ofrece «Usar el peso estándar»')
         pg.click('[data-a^="pwfix:"]'); chk(abs(pg.evaluate(f"gross(ST.P[{i}])") - round(19.6 * h, 1)) < 0.05 and pg.locator('[data-a^="pwfix:"]').count() == 0, f'{vw} y queda con el estándar actual')
-        pg.evaluate("go('admin:pesos')"); pg.wait_for_timeout(200); pg.fill('#pw_p', '16.5'); pg.fill('#pw_g', '1.2'); pg.click('[data-a=pw]')
+        pesos(pg, i); pg.fill('#pw_p', '16.5'); pg.fill('#pw_g', '1.2'); pg.click('[data-a=pw]')
         o = pg.evaluate("ST.OR.find(o=>o.lines.length).id"); pg.evaluate(f"go('orden:{o}')")
         chk('producto 16.5 kg' in pg.inner_text('#app'), f'{vw} Órdenes (línea de antes) usa el nuevo producto por omisión')
         # se guarda en el respaldo

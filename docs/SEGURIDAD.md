@@ -12,7 +12,7 @@
 | Otros | `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`, `Cross-Origin-Opener-Policy: same-origin` | `vercel.json` |
 | Versión vieja en caché | `index.html` con `Cache-Control: no-cache` | `vercel.json` |
 | Acceso | **Supabase Auth** (correo y contraseña en el servidor). Mínimo 8 caracteres (desde la v1.7.0; antes 6) y contraseñas fáciles prohibidas (las revisa la función `usuarios`). La app ya no guarda ni revisa contraseñas (v1.4.1); el modo local de pruebas, solo en `localhost`, entra con el correo | Supabase, `index.html` |
-| Quién ve y quién escribe | **RLS** en la base: ver solo con perfil; escribir solo Administrador y Piso; perfiles solo Administrador. Fotos (v1.8.0): espacio de archivos privado, mismas reglas, solo imágenes de hasta 2 MB y solo en `notas/`. La llave de servicio vive solo en la función `usuarios` | Supabase (`supabase/migrations/`) |
+| Quién ve y quién escribe | **RLS** en la base: ver solo con perfil; **Cliente (v1.13.0) solo lee el registro `D/disp` y su propio perfil, sin fotos ni «reportes»** (`20261022_cliente.sql`); escribir solo Administrador y Piso; perfiles solo Administrador. Fotos (v1.8.0): espacio de archivos privado, mismas reglas, solo imágenes de hasta 2 MB y solo en `notas/`. La llave de servicio vive solo en la función `usuarios` | Supabase (`supabase/migrations/`) |
 | Borrado por accidente | Confirmación para quitar/eliminar; escribir BORRAR para borrar todo | `index.html` |
 
 `pruebas/csp_t.py` confirma que la app funciona con estas cabeceras y que un script externo sí se bloquea.
@@ -27,6 +27,8 @@
 - **Lo que llega de la base se revisa como un respaldo (v1.4.1, reforzado en v1.5.0):** `WN` quita `< > " ' ` & \` de claves, fechas y nombres, deja solo colores `#abc123`, fotos que de verdad son imagen y, desde la v1.5.0, **números donde van números** (`wnn`/`wn0`: temperaturas, kg, desperdicio, vivas, peso de componentes), que antes aceptaban texto y permitían esconder código en el tablero de tanques. Desde la v1.5.1 también revisa que los valores tengan sentido (mismas reglas que `cleanST`): ciudad y consignatario que existen, cajas ≥ 1, fechas que son fechas, categoría R/V/B/A, talla y tipo de movimiento válidos, y `wi` siempre devuelve texto o vacío. Lo que no se puede usar, `WN` lo devuelve como `null` y ese equipo lo ignora (no lo sube ni lo borra). Antes, una cuenta de piso podía guardar directo en la base un nombre de embarque con código escondido que corría en la pantalla del Administrador y se llevaba su sesión (`sincronizacion_t.py` lo prueba en todas las pantallas).
 - Historial (v1.4.1): cada cambio o borrado deja la versión anterior en `app_records_hist`, con quién la reemplazó. Solo el Administrador lo lee (ver `SUPABASE.md` §7).
 - `'unsafe-inline'` sigue en la CSP porque todo el JS/CSS está en línea y usa algunos `onload`/`onclick` en plantillas. Quitarlo exigiría nonces o hashes.
+
+- **Cliente (v1.13.0):** lo que ve sale de una hoja que calculan los equipos de Administrador y Piso (`dispCalc` → `D/disp`). Lo que no esté en esa hoja no le llega. **No agregues campos a `dispCalc`/`WN.D` con datos internos** (proveedor, lote, tanque, consignatario, precios): cualquier Cliente los vería. La pantalla de acceso y la ventana para instalar siguen en español.
 
 ## 3. Reglas al programar
 

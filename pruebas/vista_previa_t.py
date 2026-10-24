@@ -14,6 +14,9 @@ for k in ['og:type', 'og:title', 'og:description', 'og:url', 'og:image', 'og:ima
 img = meta.get('og:image', '')
 chk(img.startswith('https://') and meta.get('twitter:image') == img, 'la imagen va con dirección completa https (WhatsApp y Facebook no aceptan rutas relativas)')
 chk(meta.get('og:url', '').rstrip('/') == img.split('/og-image')[0], 'og:url y la imagen apuntan al mismo sitio')
+# v1.13.2: el dominio público es propesa.org; la vista previa no debe mandar a la dirección de Vercel
+chk(meta.get('og:url') == 'https://propesa.org/' and img.startswith('https://propesa.org/'), f"og:url y la imagen usan propesa.org ({meta.get('og:url')})")
+chk('vercel.app' not in head, 'el encabezado ya no menciona propesa.vercel.app')
 chk(meta.get('twitter:card') == 'summary_large_image', 'tarjeta grande en X/Twitter')
 f = os.path.join(ROOT, 'og-image.png')
 chk(os.path.exists(f), 'og-image.png existe en la carpeta del sitio')

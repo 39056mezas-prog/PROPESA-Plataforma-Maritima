@@ -678,3 +678,79 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Quitado:** `ordCsv` y su botón; botón `data-pa=clear`; «Eliminar orden» con `PISO`.
 - **Decisiones tomadas sin preguntar (revisar con el usuario):** «propesa.org» — la ventana sale en cualquier dirección donde esté la app; el dominio se conecta en Vercel. El grupo «Revisión» del menú se queda (solo se quitó «Se calcula sola»). La ventana de instalar vuelve a salir 7 días después de «Ahora no».
 - **Pruebas:** `v112_t.py` (109). Ajustadas: `e2e`, `estados_caja_t`, `teclado_t`, `hoja_t`, `ordenes_t`, `editar_orden_t`, `recarga_t`, `pesos_t`, `temperatura_t`, `avisos_t`, `correcciones_t`, `piso_t`, `entradas_t`, `cambio_modo_t`, `proveedores_t`, `inicio_t`.
+
+## Ronda del 22/oct/2026 · v1.13.0: compradores de fuera ven la disponibilidad en vivo
+**Pedido del usuario:** «modo consulta» donde las cuentas de consultores entren y tengan los datos preparados. Al revisar: Consulta ya existía, pero entraba al Panel del operador y la base le dejaba leer todo. **Respuestas:** (1) son gente de fuera, como en China; (2) la semana; (3) lo que va entrando, en vivo: «lo que tengo en los tanques para tenerlo a mis consultores y hacer ventas». Decisiones: **1 A** (al cerrar el embarque la salida se registra sola; disponible = tanques − lo pedido que no sale), **2 No** (sin temperatura), **3 Inglés**, **4 Sí** (cambiar las reglas de seguridad).
+- **Rol `cliente`** (`ROLE`, «Cliente (comprador)»). `render0` → `cliView()`: pantalla única en inglés (`lang="en"`), sin menú ni Ajustes: Available stock por talla (`ZEN`, `kgEN`, hieleras de 15 kg con `h15`), «Reserved, size not assigned yet», Total available, Received in the last 7 days (por el reloj de quien la ve), «Live · last change …» (`cliAgo`), «Sign out». Estilos `.cli*`.
+- **Hoja `D/disp`:** `dispCalc()` en una pasada por `ST.L` (no usa `bal` por lote, para que `encodeST` siga rápido con un año de datos): tanques como el tablero (lotes abiertos con existencia, `max(0)` por talla) − líneas de órdenes cuyo embarque no está cerrado (`z` × `lnKp`; sin tallas → `u`); `e` = RECEPCION por fecha, 14 días hasta la entrada más reciente. **No depende de la fecha ni del equipo** para que todos calculen igual. `WN.D`, `encodeST` la agrega; `decodeST` la deja en `_orph`. `applyRows` llama a `syncStage` al final (la hoja cambia con lo que llega de otros; antes se quedaba vieja hasta el siguiente guardado). Consulta no la cuenta como cambio (si no, volvía a bajar todo). `flush` no avisa «otro equipo lo cambió antes» si solo chocó la hoja.
+- **Cuenta Cliente en la base compartida:** `syncNow` → `dispNow()` (mismo `pull`, desde el último `rev` de la hoja; no baja ni sube `ST`); `flush` y `upFotos` no corren con Cliente; `signOut` limpia `DISP`/`DREV`.
+- **Salida automática (`salidaAuto`)** en `closeP`: SALIDA_EMBARQUE por lote y talla (`TKEY`), kg de producto de la línea (`lineOf`, `lnKp`), `rc = 'E/<u>'`, recortada a la existencia; sin lotes cerrados ni sin entrada. Reabrir (`op`) quita los movimientos con ese `rc`. Aviso: «Salieron X kg de los tanques».
+- **Base:** `migrations/20261022_cliente.sql` aplicada en `propesa_bc` (migración `cliente`): rol en `profiles_role_check`; «ver» de `app_records` (cliente solo `D/disp`), de `profiles` (cliente solo el suyo), «fotos ver» y «leer reportes» solo admin/piso/consulta. Comprobada en la base real dentro de una transacción que no se guardó: el Cliente solo recibe `D/disp` (también con `pull(0)`) y su perfil, 0 archivos; el Administrador ve todo. Función `usuarios` versión 4 (acepta `cliente`, `verify_jwt` apagado como antes). La base estaba vacía (0 registros con datos), así que no hubo embarques viejos que corregir.
+- **Decisiones tomadas sin preguntar (revisar con el usuario):** hieleras de 15 kg en la pantalla del comprador (como el tablero de tanques); «últimos 7 días» en vez de lunes a domingo; tallas en inglés Small / Medium / Large / Jumbo con sus gramos; el desperdicio no resta de la disponibilidad (el tablero de tanques tampoco lo resta); acceso y ventana de instalar siguen en español.
+- **Pruebas:** `disponible_t.py` (nueva, Supabase de mentira en el puerto 8792); `supabase_falso.py` con las reglas del Cliente.
+
+
+## Ronda del 22/oct/2026 · v1.13.1: la hielera completada muestra su categoría
+
+- **Pedido:** en Empaque, ver si la Hielera 1 quedó Verde o Roja en la misma tarjeta, no solo más abajo.
+- **Causa:** con el teclado abierto, una regla de estilo ocultaba la categoría de toda tarjeta sin botón marcado; las completadas no tienen botones, así que también se ocultaba la suya.
+- **Arreglo:** esa regla ya no aplica a las completadas (una línea de CSS). Sin cambios de texto, datos ni flujo. Prueba nueva `categoria_completada_t.py`.
+- **Segundo pedido:** el avance (completadas · pendientes · %) flotaba debajo del teclado y no le gustaba. Ahora va arriba de las hieleras, quieto, debajo de «Hieleras de …»; «Guardar hieleras» sigue abajo. Ajustada `estados_caja_t.py` (el avance se lee de su nuevo lugar).
+
+## Ronda del 22/oct/2026 · v1.13.2: dominio propesa.org y ROADMAP al día
+**Revisión del usuario** (con la v1.12.0 de su zip): cinco grupos de pruebas bien, pero no se confirmó la suite completa; la vista previa del link apunta a `propesa.vercel.app`; y según `ROADMAP.md` faltaban base compartida, ids estables, correo con PDF, importar datos, bitácora de auditoría y las preguntas 3, 11 y 17.
+- **Suite completa:** 37 grupos, 2050 verificaciones, TODO BIEN; `inicio_t` y `vista_previa_t` repetidas después del cambio.
+- **Dominio:** `og:url`, `og:image`, `og:image:secure_url` y `twitter:image` → `https://propesa.org/`. `propesa.org` ya sirve la misma página que `propesa.vercel.app`. `vista_previa_t` lo vigila.
+- **ROADMAP:** estaba en la v1.4.0. Base compartida, ids estables (`uidN`/`uidS`), historial (`app_records_hist`) y la pregunta 3 ya estaban hechos; se marcaron. La sincronización usa `pull` cada 4 s, no Realtime. Pendientes reales: correo con PDF (falta remitente y cuenta del servicio de correo, pregunta 16), importar datos (faltan los archivos), pantalla del historial, alertas de temperatura (pregunta 11), ocupación de tanques (pregunta 17).
+- **Sin cambios** en Supabase, en pantallas ni en datos.
+
+## Ronda del 23/oct/2026 · v1.13.3: los pesos se editan en Embarque
+
+- **Pedido:** «No me gusta que esté en Administración; quiero que esté en el paso donde se necesita» (tarjeta «Peso de la hielera»).
+- **Arreglo:** Embarque ya tenía «Editar pesos» (v1.12.0, `pwPanel`), así que se borró la tarjeta `#pesos` de Administración y su salto `admin:pesos` en `render()`. La línea del producto por omisión y el total por hielera (`#pw_n`, `#pw_tt`) pasó a `pwPanel`. Mismo guardado (`data-a=pw`), misma validación, mismo registro `W/pesos`.
+- **Ojo:** el panel solo aparece en embarques abiertos; los pesos de siempre (`W0`) siguen valiendo mientras no haya ninguno.
+- **Pruebas:** `pesos_t.py` ajustada; suite completa 37 grupos, TODO BIEN.
+
+## Ronda del 23/oct/2026 · v1.14.0: varios camiones, mover hieleras y embarques cerrados aparte
+
+- **Pedido:** «I want to be able to have different embarques and also move the boxes around inside the truck. After an embarque is done I want it to also go to its own window or section.» Se preguntó antes: varios camiones (no uno por consignación); tocar y mover, «pero a veces tienen que dividir UN pallet, entonces que cada box inside the truck sea editable a mano también»; los cerrados en una sección aparte dentro de Embarque.
+- **Datos:** `p.tk` (camión, `uidS()`; sin tk = el primero) y `p.ly` (10 números: hieleras de la consignación en cada celda, índice fila×5+columna, columna 0 = cola). Sin `ly` en ninguna consignación del camión = acomodo automático (`tFill`, igual que el `truckPlan` de antes; la prueba lo compara con 300 combinaciones). Al intercambiar o escribir una celda, `tFix` fija el acomodo de todo ese camión.
+- **Código:** `trucks`, `tName`, `truckPlan(tk)` (devuelve `cells`, `ly`, `dif`, `man`, `over`), `tIss` (avisos para pantalla y PDF), `truck(pl)`, `truckCard(tk)`, `bpCard`; eventos `data-ta` (`ed`, `fill`, `auto`), `data-tc` (celda), `data-tly` (hieleras a mano) y `data-tk` (Pasar a). `newShip` pone las nuevas en el Camión 1. `R.truck` del PDF pinta las celdas divididas en franjas.
+- **Decisiones tomadas sin preguntar (revisar con el usuario):** «Pasar a» solo el Administrador; mover hieleras también el Encargado de piso (aunque hoy entra a Modo piso, que no tiene el camión). Los camiones se numeran por orden y se renumeran cuando uno se vacía. Una consignación cerrada sale del camión; si se reabre regresa a su camión.
+- **Pruebas:** `camiones_t.py` nueva; suite completa 38 grupos.
+
+## Ronda del 23/oct/2026 · v1.15.0: color de cada consignatario
+
+- **Pedido:** «cada comprador tiene un color distinto; que se pueda cambiar el color del consignatario, en los ajustes de Administración». Resuelve la pregunta abierta 10 (color de tape).
+- **Hecho:** tarjeta «Consignatarios» en Administración con un selector de color por consignatario (solo el Administrador). Los embarques abiertos de ese consignatario toman el color en Embarque, el plan del camión y los PDF; los nuevos nacen con él; los cerrados no cambian. `ST.CC`, registro `C/colores`, sin cambios en Supabase.
+- **No se hizo:** color para proveedores (hoy no se pinta en ningún lado), editar nombres o datos de los consignatarios, quitar un color ya elegido.
+- **Pruebas:** `colores_t.py` (nueva), 39 grupos.
+
+## Ronda del 23/oct/2026 · v1.16.0: historial de cambios en Administración
+
+- **Pedido:** «an admin panel where they can see who, when, and what value was changed… not taking up space on my database… short-term memory, to fix mistakes, or just a screen where I can see the history» (con `/ponytail ultra`).
+- **Hecho:** tarjeta «Historial de cambios» en Administración (solo Administrador, solo con base compartida): últimos 200 cambios de 30 días con cuándo, quién, qué y el cambio campo por campo. Sin tabla nueva: reutiliza `app_records_hist`; migración `20261023_historial_corto.sql` (se borra solo a los 30 días, sin `D/disp`, función `cambios`).
+- **No se hizo (a propósito):** botón para deshacer un cambio desde la pantalla; filtros por persona o por fecha; aviso en vivo. Con ver el valor anterior se corrige a mano; si hace falta, se agrega después.
+- **Pruebas:** `historial_t.py` (nueva), 40 grupos.
+
+## Ronda del 23/oct/2026 · v1.17.0: Temperatura en Modo piso
+
+- **Pedido:** «add the temperature section en modo piso» (con `/ponytail ultra`).
+- **Hecho:** botón «Temperatura» en el inicio de Modo piso con las lecturas de hoy; abre la pantalla de Temperatura de siempre dentro del Modo piso, igual que «Cerrar embarque» y «Conteo final». Sin cambios en datos ni en Supabase.
+- **No se hizo (a propósito):** una pantalla nueva de botones grandes o teclado fijo solo para temperatura. La captura de siempre ya funciona con el Encargado de piso; si en el piso cuesta trabajo (casillas chicas, guantes), se hace después con lo que digan.
+- **Pruebas:** `piso_t.py` (+7 verificaciones), 40 grupos.
+
+## Ronda del 23/oct/2026 · v1.17.1: casillas grandes en Temperatura (Modo piso)
+
+- **Pedido:** «si hazlas más grandes» (las casillas de «Nueva lectura» en Modo piso).
+- **Hecho:** solo dentro de Modo piso, casillas y botones de 60 px, números de 1.4rem y casillas más anchas (`.pshell #main .tqn`; el `#main` hace falta para ganarle a la regla general `input:not(…)`). La vista completa no cambia.
+- **No se hizo (a propósito):** teclado fijo como el de Empaque; se usa el teclado de la tablet.
+- **Pruebas:** `piso_t.py` (+5 verificaciones).
+
+## Ronda del 24/oct/2026 · v1.18.0: especie en cada entrada
+
+- **Pedido:** «when I fill out an entradas I also need to have an input "especie" and for this to also be included in the final pdf. I want to be able to have different species in the tanks» (con `/ponytail ultra`). Respuestas del usuario: lista en Administración, especie en el PDF de Entrada y en la Hoja de empaque, kilos separados por especie.
+- **Hecho:** Administración → Especies (como Proveedores); selector de especie en Entrada (vista completa y Modo piso); especie en tabla, lote y lotes del tanque; tablero de tanques y hoja de compradores por especie; columna en el PDF de Entrada; Formato 06 con la especie de los lotes empacados. Datos `ST.ES`, `R[].sp`, registros `E/<id>`, `D/disp.s`. Sin cambios en Supabase.
+- **No se hizo (a propósito):** especie en las órdenes. Sin ella, lo pedido no se puede restar por especie: la pantalla de compradores lo dice («Orders not shipped yet are subtracted only from the sizes above, not by species»). Si se necesita disponible por especie, hay que agregar la especie a cada orden (pregunta 18 de `ROADMAP.md`). Tampoco tallas distintas por especie: todas usan las mismas 4.
+- **Visto y no tocado:** en Modo piso con celular y texto «Muy grande», el botón «Más datos · Faltan N» se sale de la tarjeta; en 820 px, el ✕ de la fila también. Ya pasaba antes de esta ronda.
+- **Pruebas:** `especies_t.py` (nueva), 41 grupos.

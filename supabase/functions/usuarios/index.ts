@@ -8,7 +8,7 @@ const cors = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
-const ROLES = ["admin", "piso", "consulta"];
+const ROLES = ["admin", "piso", "consulta", "cliente"]; // cliente (v1.13.0): compradores de fuera, solo ven la disponibilidad
 const WEAK = ["admin123", "piso123", "ver123", "123456", "1234567", "12345678", "123456789", "password", "contraseña", "propesa", "propesa1", "langosta", "qwerty", "abc123", "111111", "000000"];
 
 const out = (status: number, body: unknown) =>

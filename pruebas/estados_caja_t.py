@@ -60,7 +60,7 @@ with sync_playwright() as p:
         chk('1 completada' in pg.inner_text('#pksum') and '3 pendientes' in pg.inner_text('#pksum') and '25% completado' in pg.inner_text('#pksum'),tag+' resumen 25 %: '+pg.inner_text('#pksum').replace('\n',' '))
         f1=fill(pg);chk(abs(f1-0.25)<0.02,tag+f' la barra delgada marca 25 % ({f1:.2f})');chk(abs(btnw(pg)-b0)<1,tag+' el botón Guardar no cambia de tamaño con el avance')
         chk(not overlap(pg,'#toast','#pkb'),tag+' el aviso no tapa la barra de abajo')
-        exp=pg.evaluate("(()=>{const b=document.querySelector('.pkb'),p=+b.dataset.p;return p})()");chk(abs(exp-0.25)<1e-6,tag+' avance sale de los datos guardados (0.25)')
+        exp=pg.evaluate("(()=>{const b=document.querySelector('#pkp'),p=+b.dataset.p;return p})()");chk(abs(exp-0.25)<1e-6,tag+' avance sale de los datos guardados (0.25)')
         # completadas distinguibles a simple vista: fondo distinto al de una pendiente
         bg=pg.evaluate("(()=>{const c=s=>{const e=document.querySelector(s),td=getComputedStyle(e.querySelector('td')).backgroundColor;return td!='rgba(0, 0, 0, 0)'?td:getComputedStyle(e).backgroundColor};return [c('.pkdn.is-done'),c('#pkr1')]})()")
         chk(bg[0]!=bg[1],tag+' fondo de completada ≠ pendiente '+str(bg))
