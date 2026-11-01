@@ -1,53 +1,5 @@
 # Cambios
 
-## 1.18.0 · 24 de octubre de 2026
-
-### Agregado
-- **Especie en cada entrada.** El formulario de Entrada y la hoja de entradas de Modo piso piden la **especie** (Langosta Roja de inicio). En la hoja de Modo piso va debajo del proveedor («Proveedor y especie»). Se ve en la tabla de Entrada, en el lote y en los lotes de cada tanque; se corrige con «Editar». Los lotes de antes son Langosta Roja. Pedido del usuario.
-- **Administración → Especies** (solo el Administrador): agregar, editar el nombre y el nombre en inglés (el que ven los compradores) y ocultar. Una especie oculta ya no se ofrece en nuevas entradas; sus lotes la conservan.
-- **Kilos por especie.** El tablero de tanques separa los kilos de cada tanque por especie y talla (con sus hieleras de 15 kg) y arriba suma cada especie en todos los tanques. La pantalla de los compradores dice qué especies hay («Live red lobster and blue lobster…») y, con más de una, agrega «In our tanks by species» por talla.
-- **PDF:** el Registro de recepción (Entrada) trae la columna «Especie». La Hoja de empaque (Formato 06) toma la especie de los lotes empacados en la orden (antes siempre «Langosta Roja»), en pantalla, PDF y correo.
-
-### Corregido
-- La clase de las casillas de temperatura de la v1.17.1 (`tqv`) era la misma que la de «Vacío» en el detalle del tanque y le cambiaba el ancho. Ahora se llama `tqin`.
-
-### Decisiones (ver `docs/DECISIONES.md`)
-- Las órdenes **no llevan especie**: lo pedido que no ha salido resta de los totales por talla, no de una especie. Los kilos por especie de los compradores son lo que hay en tanques.
-
-### Datos
-- `ST.ES` (opcional) = `[{id, n, en, off}]`; sin ella se usa `ES0` (Langosta Roja). `R[].sp` (opcional) = id de la especie; sin `sp` = especie 1. En `cleanST`, `WN.E`/`WN.R`, `encodeST` y `decodeST`; viajan como registros `E/<id>` y dentro de `R/<lote>`. La hoja `D/disp` agrega `s` = [[nombre en inglés, g por talla]]. **Sin cambios en Supabase.**
-
-### Pruebas
-- `especies_t.py` (nueva, 94 verificaciones): Administración (agregar, repetido, editar, ocultar, la última no se oculta, Consulta no cambia), Entrada en vista completa y Modo piso, editar la especie, lotes de antes, tablero de tanques por especie, PDF de Entrada, Formato 06 (pantalla, PDF y correo), hoja de compradores y su pantalla, registros compartidos, respaldo, sin desbordes en 1180 y 390 px y en 820 px oscuro con texto de 20 px. `inicio_t` (versión 1.18.0). 41 grupos.
-- `entradas_t.py`: Enter en el proveedor pasa a la especie y de ahí al tanque. `temperatura_t.py`: usa la fecha de ayer en vez del 16/10/2026 fijo (desde el 24/oct quedaba fuera de la lista de 7 días y la prueba fallaba también en la versión anterior).
-
-## 1.17.1 · 23 de octubre de 2026
-
-### Cambiado
-- **Temperatura en Modo piso con casillas grandes.** En «Nueva lectura», dentro de Modo piso, el tanque, la fecha, la hora, las tres temperaturas, «Hoy», «Ahora» y «Guardar lectura» miden 60 px de alto, con números más grandes y casillas más anchas, para usarlas con guantes. La vista completa se queda igual. Pedido del usuario.
-
-### Pruebas
-- `piso_t.py`: en Modo piso todas las casillas y botones de «Nueva lectura» miden 60 px o más y los números 20 px o más; la vista completa conserva sus casillas de 130 px. Revisado en 390, 820 y 1440 px, con texto «Muy grande» y en tema oscuro, sin desbordes. `inicio_t` (versión 1.17.1).
-
-## 1.17.0 · 23 de octubre de 2026
-
-### Agregado
-- **Temperatura en Modo piso.** Un quinto botón en el inicio de Modo piso, «Temperatura», con cuántas lecturas van hoy («2 lecturas hoy» / «Sin lecturas hoy»; cuenta también las temperaturas de las entradas). Abre la misma pantalla de Temperatura de siempre dentro del Modo piso (sin menú, con «Inicio»): «Nueva lectura», la tabla de los últimos 7 días, el PDF y las fotos. Mismos permisos que antes: Administrador y Encargado de piso capturan; Consulta solo ve. En tablet y computadora el botón va a todo lo ancho debajo de «Cerrar embarque» y «Conteo final». Pedido del usuario (con `/ponytail ultra`).
-
-### Pruebas
-- `piso_t.py`: el botón sale con el conteo de hoy y a todo lo ancho, abre Temperatura dentro de Modo piso, guarda una lectura, sin desborde, en 1180 y 390 px. `inicio_t` (versión 1.17.0). 40 grupos.
-
-## 1.16.0 · 23 de octubre de 2026
-
-### Agregado
-- **Historial de cambios en Administración.** Una tarjeta «Historial de cambios» con el botón «Ver cambios recientes»: lista los últimos 200 cambios de los últimos 30 días, lo más nuevo arriba, con **cuándo**, **quién**, **qué** (Creó / Cambió / Borró y qué registro: lote, hielera, orden, embarque, temperatura…) y **el cambio** campo por campo («Temp. tanque: 58 → 60»). Solo el Administrador; solo con la base compartida. No pide nada a la base hasta tocar el botón. Pedido del usuario: «ver quién, cuándo y qué valor se cambió… que no ocupe espacio en la base, memoria corta, para arreglar errores».
-
-### Base compartida
-- **Sin tabla nueva:** usa `app_records_hist` (v1.4.1), que ya guardaba cada versión anterior. Migración `supabase/migrations/20261023_historial_corto.sql`: el historial **se borra solo después de 30 días**, la hoja de disponibilidad `D/disp` (la recalcula la app) ya no entra al historial, y la función `cambios(lim)` arma la lista (solo devuelve filas al Administrador). Antes: 114 versiones, 112 kB de una base de 12 MB. **Aplicada en `propesa_bc` el 23/oct** con permiso del usuario (no borró nada: lo más viejo era del 16/oct); revisado ahí que un Administrador recibe la lista (187 cambios) y una cuenta Consulta, ninguno.
-
-### Pruebas
-- `historial_t.py` (nueva): con el Supabase de mentira, Piso crea un lote y el Administrador lo cambia y borra una lectura; la lista muestra quién, qué y «58 → 60», sin `D/disp`; Piso no recibe nada aunque lo pida directo; aviso sin internet; 1440/820/390 px con texto de 20 px, tema oscuro, botón de 44 px; no sale en modo local. `supabase_falso.py` guarda versiones anteriores y responde `rpc/cambios`. `inicio_t` (versión 1.16.0). 40 grupos.
-
 ## 1.15.0 · 23 de octubre de 2026
 
 ### Agregado

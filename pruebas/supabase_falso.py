@@ -1,7 +1,7 @@
 """Supabase de mentira para las pruebas de sincronización (solo lo que usa la app).
 Uso: python3 -I pruebas/supabase_falso.py 8790
 Imita: /auth/v1/token, /auth/v1/logout, /rest/v1/profiles, /rest/v1/rpc/pull, /rest/v1/rpc/push, /rest/v1/rpc/has_admin,
-/rest/v1/rpc/cambios (v1.16.0), /functions/v1/usuarios y el espacio de archivos «fotos» (/storage/v1/object…, v1.8.0).
+/functions/v1/usuarios y el espacio de archivos «fotos» (/storage/v1/object…, v1.8.0).
 Reglas: consulta no puede escribir (403 / 42501); cliente (v1.13.0) solo lee 'D/disp' y su propio perfil, sin fotos; fotos: ver con perfil, subir y borrar Administrador y Piso
 (igual que migrations/20261015_fotos.sql); máximo 2 MB; solo imágenes; no se sobrescribe (409).
 Control para las pruebas: GET /__estado (registros y escrituras), POST /__reset."""
@@ -11,7 +11,7 @@ from urllib.parse import urlparse, parse_qs
 
 LOCK = threading.Lock()
 def fresh():
-    return {'users': {}, 'recs': {}, 'rev': 0, 'writes': 0, 'tokens': {}, 'refresh': {}, 'files': {}, 'file_gets': 0, 'log': [], 'hist': []}
+    return {'users': {}, 'recs': {}, 'rev': 0, 'writes': 0, 'tokens': {}, 'refresh': {}, 'files': {}, 'file_gets': 0, 'log': []}
 DB = fresh()
 TOKEN_LIFE = 3600
 
@@ -146,11 +146,6 @@ class H(BaseHTTPRequestHandler):
                 now = time.time()
                 rows = sorted((r for r in DB['recs'].values() if r['rev'] > since and (u['role'] != 'cliente' or r['k'] == 'D/disp')), key=lambda r: r['rev'])[:lim]   # v1.13.0: cliente solo lee 'D/disp'
                 return self.out(200, [{'k': r['k'], 'v': r['v'], 'rev': r['rev'], 'age': now - r['t']} for r in rows])
-            if p.path == '/rest/v1/rpc/cambios':   # igual que public.cambios: solo el Administrador recibe filas
-                if u['role'] != 'admin': return self.out(200, [])
-                xs = sorted([r for r in DB['recs'].values() if r['k'] != 'D/disp'] + DB['hist'], key=lambda r: -r['rev'])[:min(max(int(b.get('lim', 200)), 1), 500)]
-                prev = lambda x: next((h['v'] for h in sorted(DB['hist'], key=lambda h: -h['rev']) if h['k'] == x['k'] and h['rev'] < x['rev']), None)
-                return self.out(200, [{'k': x['k'], 'v': x['v'], 'antes': prev(x), 'cuando': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(x['t'])), 'quien': x.get('by')} for x in xs])
             if p.path == '/rest/v1/rpc/push':   # igual que public.push (migrations/20261014b_sin_pisar.sql)
                 if u['role'] not in ('admin', 'piso'):
                     return self.out(403, {'code': '42501', 'message': 'new row violates row-level security policy for table "app_records"'})
@@ -161,9 +156,8 @@ class H(BaseHTTPRequestHandler):
                     cur = DB['recs'].get(r['k'])
                     if cur and cur['v'] == r['v']: continue
                     if cur and 'b' in r and cur['v'] != r['b']: lost.append({'k': r['k'], 'v': cur['v']}); continue
-                    if cur and r['k'] != 'D/disp': DB['hist'].append(cur)   # como app_records_stamp (20261023_historial_corto.sql)
                     DB['rev'] += 1; DB['writes'] += 1
-                    DB['recs'][r['k']] = {'k': r['k'], 'v': r['v'], 'rev': DB['rev'], 't': time.time(), 'by': u['id']}; DB['log'].append('registro ' + r['k'])
+                    DB['recs'][r['k']] = {'k': r['k'], 'v': r['v'], 'rev': DB['rev'], 't': time.time()}; DB['log'].append('registro ' + r['k'])
                 return self.out(200, lost)
         self.out(404, {'message': 'no'})
     def fn(self, b, u):

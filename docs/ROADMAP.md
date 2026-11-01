@@ -1,6 +1,6 @@
 # ROADMAP.md · Lo que sigue
 
-Estado: **v1.18.0** (24/oct/2026), con base compartida en Supabase desde la v1.4.0 (todos los equipos ven lo mismo) y rol Cliente desde la v1.13.0. Pregunta antes de implementar cualquier punto que dependa de una **pregunta abierta**.
+Estado: **v1.15.0** (23/oct/2026), con base compartida en Supabase desde la v1.4.0 (todos los equipos ven lo mismo) y rol Cliente desde la v1.13.0. Pregunta antes de implementar cualquier punto que dependa de una **pregunta abierta**.
 
 > **Revisado el 22/oct/2026 contra el código.** Este archivo se había quedado en la v1.4.0 y todavía marcaba como pendientes cosas que ya funcionan (base compartida, ids estables, historial de cambios, editar/eliminar órdenes, salida de kilos al cerrar el embarque). Si algo de aquí contradice `index.html` o `SUPABASE.md`, gana el código.
 
@@ -25,7 +25,6 @@ Estado: **v1.18.0** (24/oct/2026), con base compartida en Supabase desde la v1.4
 | 15 | Modo piso: ¿«Cerrar embarque» y «Conteo final» necesitan su propio asistente paso a paso? | Modo piso |
 | 16 | **Correo con PDF:** ¿desde qué dirección sale (p. ej. `informes@propesa.org`)? ¿Resend o el SMTP que ya tengan? Hace falta verificar el dominio `propesa.org` en el servicio de correo (registros DNS) | Base compartida |
 | 17 | **Capacidad de cada tanque** (kg o hieleras, T1–T6): para mostrar en el tablero de Entrada qué tan lleno está cada uno | Entrada |
-| 18 | **Especie en las órdenes (24/oct, v1.18.0):** hoy las órdenes no llevan especie, así que lo pedido solo resta de los totales por talla y los compradores ven por especie solo lo que hay en tanques. ¿Se necesita elegir la especie en cada orden para ver el disponible por especie? | Órdenes, compradores |
 
 ## 2. Prioridades
 
@@ -41,8 +40,7 @@ Estado: **v1.18.0** (24/oct/2026), con base compartida en Supabase desde la v1.4
 - [x] Fotos a Supabase Storage (v1.8.0).
 - [x] Rol Cliente con RLS propia (v1.13.0).
 - [x] **Historial de cambios en la base** (`app_records_hist`, v1.4.1): guarda quién cambió o borró cada registro y cómo estaba. Hoy se consulta con SQL (`SUPABASE.md` §7).
-- [x] **Pantalla del historial** (v1.16.0): Administración → «Historial de cambios», últimos 30 días (se borra solo).
-- [ ] Botón para regresar un registro a su versión anterior desde la pantalla (hoy: se ve el valor viejo y se vuelve a capturar, o SQL, `SUPABASE.md` §7).
+- [ ] Pantalla en Administración para ver el historial y recuperar versiones viejas (hoy solo por SQL).
 - [ ] Correo real con el PDF (Edge Function + Resend/SMTP) → **bloqueado por la pregunta 16** y por la cuenta del servicio de correo.
 - [ ] Importar datos históricos (PDF/Excel y respaldos de las tablets) → **falta que el usuario comparta los archivos**. Los respaldos `.json` de una tablet ya se pueden restaurar desde la app.
 

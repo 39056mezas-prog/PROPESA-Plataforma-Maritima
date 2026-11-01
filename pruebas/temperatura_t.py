@@ -12,9 +12,6 @@ def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
     if not c: fails.append(m)
 
-import datetime as _dt
-_y=_dt.date.today()-_dt.timedelta(days=1);AYER=_y.isoformat();AYER_MX=_y.strftime('%d/%m/%Y')  # antes 16/10/2026 fijo: salía de la lista de 7 días
-
 with sync_playwright() as p:
     b = p.chromium.launch()
     for vw in [(1180, 820), (390, 844)]:
@@ -24,12 +21,12 @@ with sync_playwright() as p:
         pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
         # --- nueva entrada en T6 con temperaturas
         pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
-        pg.fill('#fl', 'wlrtemp1'); pg.select_option('#fo', '1'); pg.select_option('#ft', 'T6'); pg.fill('#fd', AYER); pg.fill('#fh', '07:40')
+        pg.fill('#fl', 'wlrtemp1'); pg.select_option('#fo', '1'); pg.select_option('#ft', 'T6'); pg.fill('#fd', '2026-10-16'); pg.fill('#fh', '07:40')
         pg.fill('#ftt', '57.3'); pg.fill('#ftp', '58-60'); pg.fill('#fkb', '18'); pg.fill('#fdes', '0'); pg.fill('#fk1', '200'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
         chk(pg.evaluate("!!R_('WLRTEMP1')") and pg.evaluate("ST.T.length") == 0, f'{vw} se guarda la entrada (sin copiar nada a las lecturas)')
         # Temperatura la muestra sola
         pg.evaluate("go('temperatura')"); tx = pg.inner_text('#app')
-        chk('Entrada · WLRTEMP1' in tx and '57.3 °F' in tx and '58-60 °F' in tx and AYER_MX in tx and '07:40' in tx, f'{vw} Temperatura muestra la de la entrada (agua, producto, fecha y hora, lote)')
+        chk('Entrada · WLRTEMP1' in tx and '57.3 °F' in tx and '58-60 °F' in tx and '16/10/2026' in tx and '07:40' in tx, f'{vw} Temperatura muestra la de la entrada (agua, producto, fecha y hora, lote)')
         chk(pg.locator('tr.tqent [data-tqdel]').count() == 0, f'{vw} la de la entrada no se elimina desde Temperatura (se corrige en el lote)')
         pg.click('button.lnk:has-text("Entrada · WLRTEMP1")'); chk(pg.evaluate("V.v") == 'lote' and pg.evaluate("V.id") == 'WLRTEMP1', f'{vw} «Entrada · lote» abre el lote')
         # el lote muestra la temperatura de su tanque
@@ -37,7 +34,7 @@ with sync_playwright() as p:
         # lectura manual desde el lote: el tanque ya viene elegido
         pg.click('[data-go="temperatura:T6"] >> text=Registrar lectura'); chk(pg.evaluate("V.v") == 'temperatura' and pg.input_value('#tq_t') == 'T6', f'{vw} «+ Registrar lectura» abre Temperatura con el tanque 6 elegido')
         chk(pg.evaluate("TFIL") == 'T6' and pg.locator('[data-tqf="T6"][aria-pressed=true]').count() == 1, f'{vw} y la lista filtrada en el tanque 6')
-        pg.fill('#tq_d', AYER); pg.fill('#tq_h', '12:10'); pg.fill('#tq_a', '56.1'); pg.fill('#tq_s', '55.9'); pg.click('[data-a=tq]')
+        pg.fill('#tq_d', '2026-10-16'); pg.fill('#tq_h', '12:10'); pg.fill('#tq_a', '56.1'); pg.fill('#tq_s', '55.9'); pg.click('[data-a=tq]')
         chk(pg.evaluate("ST.T.length") == 1 and 'Lectura · Ana Torres' in pg.inner_text('#app'), f'{vw} la lectura manual se sigue guardando (para seguimiento)')
         rows = pg.evaluate("[...document.querySelectorAll('#app tbody tr')].map(r=>r.innerText)")
         chk(len(rows) >= 2 and '12:10' in rows[0] and 'WLRTEMP1' in rows[1], f'{vw} lista en orden: la más reciente arriba')
