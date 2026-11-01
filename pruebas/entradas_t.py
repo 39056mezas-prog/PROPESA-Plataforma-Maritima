@@ -35,7 +35,7 @@ with sync_playwright() as p:
     pg=b.new_page(viewport={'width':1180,'height':820});pg.on('pageerror',lambda e:errs.append(str(e)));pg.on('console',lambda m:m.type=='error' and errs.append(m.text))
     login(pg,(1180,820))
     chk(pg.locator('tr.per').count()==1,'empieza con una fila')
-    chk(pg.locator('thead th').count()==10 and pg.locator('thead th').first.is_visible(),'tabla con encabezados visibles')
+    chk(pg.locator('thead th').count()==11 and pg.locator('thead th').first.is_visible(),'tabla con encabezados visibles')
     chk(pg.is_disabled('[data-pa=save]'),'Guardar deshabilitado sin datos')
     # agregar filas: foco automático en la nueva fila
     pg.click('[data-pa=add]');chk(pg.evaluate("document.activeElement.dataset.pr")=='2:origin','foco en la fila nueva')
@@ -85,7 +85,8 @@ with sync_playwright() as p:
     chk(pg.is_disabled('[data-pa=save]'),'nada por guardar')
     # Enter avanza; al final crea fila nueva
     pg.select_option('[data-pr="5:origin"]','1');pg.focus('[data-pr="5:origin"]');pg.keyboard.press('Enter')
-    chk(pg.evaluate("document.activeElement.dataset.pr")=='5:tank','Enter pasa al siguiente campo')
+    chk(pg.evaluate("document.activeElement.dataset.pr")=='5:sp','Enter pasa al siguiente campo (v1.18.0: la especie, debajo del proveedor)')
+    pg.keyboard.press('Enter');chk(pg.evaluate("document.activeElement.dataset.pr")=='5:tank','de la especie pasa al tanque')
     pg.focus('[data-pr="5:time"]');pg.keyboard.press('Enter');chk(pg.locator('tr.per').count()==6 and pg.evaluate("document.activeElement.dataset.pr")=='6:origin','Enter al final crea fila')
     # Quitar con confirmación
     pg.click('[data-pa="rm:5"]');chk(pg.locator('[data-pa="rmy:5"]').count()==1,'pide confirmar al quitar fila con datos')

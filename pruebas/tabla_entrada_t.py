@@ -10,7 +10,7 @@ def chk(c,m):print(('PASS ' if c else 'FAIL ')+m)
 PRI=['0-650','651-850','851-1250','1251-UP'];SEC=['491-610','611-850','851-1220','1221-UP']
 MEDIR="""()=>{const t=document.querySelector('table.ent'),w=t.closest('.tbl'),lh=e=>parseFloat(getComputedStyle(e).lineHeight);
  const lines=e=>{const r=document.createRange();r.selectNodeContents(e);const ys=new Set([...r.getClientRects()].map(x=>Math.round(x.top)));return ys.size};
- const sz=[...t.querySelectorAll('th.szh')].map(th=>{const a=th.querySelector('.szh1'),b=th.querySelector('.szh2'),d=th.querySelector('.szd');
+ const sz=[...t.querySelectorAll('th.szh')].filter(th=>th.querySelector('.szh2')).map(th=>{const a=th.querySelector('.szh1'),b=th.querySelector('.szh2'),d=th.querySelector('.szd');
    const ra=a.getBoundingClientRect(),rb=b.getBoundingClientRect(),rd=d.getBoundingClientRect(),rt=th.getBoundingClientRect();
    return {a:a.textContent,b:b.textContent.replace(' / ',''),la:lines(a),lb:lines(b),below:rb.top>=ra.bottom-1,
      dotIn:rd.left>=rt.left&&rd.right<=rt.right,dotMid:Math.abs((rd.top+rd.bottom)/2-(ra.top+rb.bottom)/2)<4,

@@ -46,7 +46,7 @@ with sync_playwright() as p:
         # remove card 3
         tap(pg,3);pg.click('#kpad [data-pe^="cf:"]');pg.click('#kpad [data-pe^="rm:"]');print('after rm',pg.evaluate('JSON.stringify(PE.rows)'),pg.evaluate('document.querySelector(".ppc[data-slot=\\"3\\"]").value'),pg.evaluate('document.querySelector(".ppc[data-slot=\\"3\\"]").getAttribute("value")'));chk(all(x[0]!=3 for x in boxes(pg)) and pg.locator('#pps3.sv').count()==0,'remove frees slot 3')
         tap(pg,3);pg.click('#kpad [data-kp="k:R"]');print('after R',boxes(pg),pg.evaluate('JSON.stringify(PE.rows)'),pg.locator('.ppc').count())
-        for no,c in [(3,30),(4,40),(5,50)]:
+        for no,c in [(3,30),(4,34),(5,35)]:  # v1.27.0: máximo 35 por hielera
             pg.fill(f'.ppc[data-slot="{no}"]',str(c));pg.press(f'.ppc[data-slot="{no}"]','Enter')
         chk(len(boxes(pg))==5,'5 saved '+str(boxes(pg)))
         chk(pg.locator('.pdone').count()==1 and pg.locator('.pbx.sv').count()==5,'done banner + cards still visible')

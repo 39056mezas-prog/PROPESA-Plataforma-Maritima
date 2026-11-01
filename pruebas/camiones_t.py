@@ -38,10 +38,11 @@ with sync_playwright() as p:
         # pasar el embarque de 12 a un camión nuevo
         u = pg.evaluate("ST.P.find(p=>p.n.includes('PRUEBA1')).u")
         pg.select_option(f'select[data-tk="{u}"]', '+'); pg.wait_for_timeout(100)
-        chk(pg.locator('.tcard').count() == 2 and 'Camión 2' in pg.inner_text('#tk_2 h3') and 'PRUEBA1' in pg.inner_text('#tk_2') and 'PRUEBA1' not in pg.inner_text('#tk_1 .tleg'), f'{vw} «Camión nuevo» crea el Camión 2 con ese embarque')
+        # v1.26.0: con dos camiones, cada uno en su pestaña (se ve uno a la vez) y el nuevo se abre solo
+        chk(pg.locator('.ttab').count() == 2 and pg.locator('.tcard').count() == 1 and 'Camión 2' in pg.inner_text('#tk_2 h3') and 'PRUEBA1' in pg.inner_text('#tk_2') and pg.evaluate("truckPlan(trucks()[0]).TP.every(p=>!p.n.includes('PRUEBA1'))"), f'{vw} «Camión nuevo» crea el Camión 2 con ese embarque')
         chk('12 hieleras' in pg.inner_text('#tk_2 h3') and pg.locator('#tk_2 svg text', has_text='12').count() >= 1, f'{vw} el Camión 2 lleva sus 12 hieleras')
         pg.select_option(f'select[data-tk="{u}"]', pg.evaluate("trucks()[0]")); chk(pg.locator('.tcard').count() == 1, f'{vw} regresarlo al Camión 1 quita el camión vacío')
-        pg.select_option(f'select[data-tk="{u}"]', '+')
+        pg.select_option(f'select[data-tk="{u}"]', '+'); pg.click('#ttab_1')
         # mover hieleras en el Camión 1: tocar dos celdas
         pg.click('#tk_1 [data-ta^="ed:"]'); chk(pg.locator('#tk_1 .tcel').count() == 10, f'{vw} «Mover hieleras» muestra las 10 celdas')
         chk(pg.evaluate("Math.min(...[...document.querySelectorAll('#tk_1 .tcel')].map(e=>e.getBoundingClientRect().height))") >= 44, f'{vw} las celdas miden 44 px o más')
@@ -79,9 +80,9 @@ with sync_playwright() as p:
     chk(r['c'] == [True, '[1,2,3,4,5,6,7,8,9,0]', False, False], f'cleanST guarda lo válido y descarta camión o acomodo mal formados {r["c"]}')
     chk(r['d'] == [True, True], 'decodeST trae el camión y una copia del acomodo')
     chk('"tk"' not in r['old'] and '"ly"' not in r['old'], 'un embarque de antes se sube igual que antes (sin campos nuevos)')
-    # PDF con dos camiones
-    raw = pg.evaluate("(async()=>{ST.P[2].tk=uidS();const r=await pdfEmbarques();return Array.from(r.u8)})()"); raw = bytes(raw)
-    chk(b'Cami\xf3n 1 \xb7 Plan de carga' in raw and b'Cami\xf3n 2 \xb7 Plan de carga' in raw, 'el PDF trae un plan de carga por camión')
+    # PDF con dos camiones: v1.26.0 (pedido del usuario), un PDF por camión
+    raw = pg.evaluate("(async()=>{ST.P[2].tk=uidS();const a=await pdfEmbarques(trucks()[0]),b=await pdfEmbarques(trucks()[1]);return [Array.from(a.u8),Array.from(b.u8)]})()"); r1, r2 = bytes(raw[0]), bytes(raw[1])
+    chk(b'Cami\xf3n 1 \xb7 Plan de carga' in r1 and b'Cami\xf3n 2 \xb7 Plan de carga' not in r1 and b'Cami\xf3n 2 \xb7 Plan de carga' in r2 and b'Cami\xf3n 1 \xb7 Plan de carga' not in r2, 'cada camión tiene su propio PDF con su plan de carga')
     b.close()
 chk(not errs, f'sin errores de JavaScript {errs[:3]}')
 print('FALLAS:', len(fails))

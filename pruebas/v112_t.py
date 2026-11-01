@@ -69,7 +69,7 @@ with sync_playwright() as p:
         chk(pg.input_value('#ol_n') == '15' and pg.evaluate("document.getElementById('ol_n').readOnly"), f'{vw} el total sale solo de las tallas: {pg.input_value("#ol_n")}')
         pg.fill('#ol_z1', ''); chk(pg.input_value('#ol_n') == '10', f'{vw} y se actualiza al cambiarlas')
         pg.fill('#ol_z1', '5'); pg.fill('#ol_tar', '1'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(80)
-        l = pg.evaluate(f"{O}.lines[0]"); chk(l['boxes'] == 15 and l['z'] == [10, 5, 0, 0], f'{vw} la línea guarda total 15 y sus tallas: {l}')
+        l = pg.evaluate(f"{O}.lines[0]"); chk(l['boxes'] == 15 and l['z'] == [10, 5, 0, 0, 0], f'{vw} la línea guarda total 15 y sus tallas: {l}')
         # sin tallas: se escribe el total
         o2 = pg.evaluate("(()=>{const o={id:uidN(),etd:'2026-10-21',lines:[],sh:{}};ST.OR.push(o);save();return o.id})()"); pg.evaluate(f"go('orden:{o2}')")
         chk(not pg.evaluate("document.getElementById('ol_n').readOnly"), f'{vw} sin tallas el total se puede escribir')
@@ -79,7 +79,7 @@ with sync_playwright() as p:
         chk(not any('tallas' in x for x in pg.evaluate(f"shipIssues({si}).map(x=>x.t)")), f'{vw} el embarque no avisa de tallas mientras se empaca')
         pg.evaluate(f"go('empacar:{o2}.1')"); pg.evaluate("PKD.lot='WLRCO051026A'")
         pg.fill('#pk_c0', '25'); pg.click('#pkr0 [data-pk="k:0:R"]'); pg.wait_for_timeout(100)
-        chk(pg.evaluate(f"ST.P[{si}].z") == [0, 1, 0, 0], f'{vw} sin tallas pedidas, el embarque toma las tallas de lo empacado: {pg.evaluate(f"ST.P[{si}].z")}')
+        chk(pg.evaluate(f"ST.P[{si}].z") == [0, 1, 0, 0, 0], f'{vw} sin tallas pedidas, el embarque toma las tallas de lo empacado: {pg.evaluate(f"ST.P[{si}].z")}')
         chk(sin_desborde(pg), f'{vw} sin desborde')
         # ---------- 4. Empaque: se completan solas y «Listo» ----------
         o3 = nueva_orden(pg, 3); pg.evaluate(f"go('empacar:{o3}.1')"); pg.click('[data-pk="lot:WLRCO051026A"]')

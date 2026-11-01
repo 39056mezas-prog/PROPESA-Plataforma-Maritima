@@ -1,17 +1,18 @@
 """Supabase de mentira para las pruebas de sincronización (solo lo que usa la app).
 Uso: python3 -I pruebas/supabase_falso.py 8790
 Imita: /auth/v1/token, /auth/v1/logout, /rest/v1/profiles, /rest/v1/rpc/pull, /rest/v1/rpc/push, /rest/v1/rpc/has_admin,
-/functions/v1/usuarios y el espacio de archivos «fotos» (/storage/v1/object…, v1.8.0).
-Reglas: consulta no puede escribir (403 / 42501); cliente (v1.13.0) solo lee 'D/disp' y su propio perfil, sin fotos; fotos: ver con perfil, subir y borrar Administrador y Piso
+/rest/v1/rpc/cambios (v1.16.0), /functions/v1/usuarios y el espacio de archivos «fotos» (/storage/v1/object…, v1.8.0).
+Reglas: precios ('$/<lote>', con o sin prefijo de maquila) solo el Administrador los lee y escribe (v1.19.0); consulta no puede escribir (403 / 42501); cliente (v1.13.0) solo lee 'D/disp' y su propio perfil, sin fotos; fotos: ver con perfil, subir y borrar Administrador y Piso
 (igual que migrations/20261015_fotos.sql); máximo 2 MB; solo imágenes; no se sobrescribe (409).
 Control para las pruebas: GET /__estado (registros y escrituras), POST /__reset."""
-import json, sys, time, uuid, threading
+import json, sys, time, uuid, threading, re
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
 LOCK = threading.Lock()
+PRECIO = re.compile(r'^(q[0-9]+:)?\$/')   # v1.19.0: registros de precio de compra (solo el Administrador)
 def fresh():
-    return {'users': {}, 'recs': {}, 'rev': 0, 'writes': 0, 'tokens': {}, 'refresh': {}, 'files': {}, 'file_gets': 0, 'log': []}
+    return {'users': {}, 'recs': {}, 'rev': 0, 'writes': 0, 'tokens': {}, 'refresh': {}, 'files': {}, 'file_gets': 0, 'log': [], 'hist': []}
 DB = fresh()
 TOKEN_LIFE = 3600
 
@@ -144,10 +145,17 @@ class H(BaseHTTPRequestHandler):
             if p.path == '/rest/v1/rpc/pull':
                 since, lim = int(b.get('since', 0)), int(b.get('lim', 500))
                 now = time.time()
-                rows = sorted((r for r in DB['recs'].values() if r['rev'] > since and (u['role'] != 'cliente' or r['k'] == 'D/disp')), key=lambda r: r['rev'])[:lim]   # v1.13.0: cliente solo lee 'D/disp'
+                rows = sorted((r for r in DB['recs'].values() if r['rev'] > since and (u['role'] != 'cliente' or r['k'] == 'D/disp') and (u['role'] == 'admin' or not PRECIO.match(r['k']))), key=lambda r: r['rev'])[:lim]   # v1.13.0: cliente solo lee 'D/disp'; v1.19.0: precios solo el Administrador
                 return self.out(200, [{'k': r['k'], 'v': r['v'], 'rev': r['rev'], 'age': now - r['t']} for r in rows])
+            if p.path == '/rest/v1/rpc/cambios':   # igual que public.cambios: solo el Administrador recibe filas
+                if u['role'] != 'admin': return self.out(200, [])
+                xs = sorted([r for r in DB['recs'].values() if r['k'] != 'D/disp'] + DB['hist'], key=lambda r: -r['rev'])[:min(max(int(b.get('lim', 200)), 1), 500)]
+                prev = lambda x: next((h['v'] for h in sorted(DB['hist'], key=lambda h: -h['rev']) if h['k'] == x['k'] and h['rev'] < x['rev']), None)
+                return self.out(200, [{'k': x['k'], 'v': x['v'], 'antes': prev(x), 'cuando': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(x['t'])), 'quien': x.get('by')} for x in xs])
             if p.path == '/rest/v1/rpc/push':   # igual que public.push (migrations/20261014b_sin_pisar.sql)
                 if u['role'] not in ('admin', 'piso'):
+                    return self.out(403, {'code': '42501', 'message': 'new row violates row-level security policy for table "app_records"'})
+                if u['role'] != 'admin' and any(PRECIO.match(r.get('k', '')) for r in b.get('rows', [])):   # v1.19.0 (20261026_precios.sql)
                     return self.out(403, {'code': '42501', 'message': 'new row violates row-level security policy for table "app_records"'})
                 if (DB.get('falla_push') and u['role'] == 'piso') or '\\u0000' in json.dumps(b):   # Postgres no guarda \u0000 en jsonb
                     return self.out(400, {'code': '22P05', 'message': 'unsupported Unicode escape sequence'})
@@ -156,8 +164,9 @@ class H(BaseHTTPRequestHandler):
                     cur = DB['recs'].get(r['k'])
                     if cur and cur['v'] == r['v']: continue
                     if cur and 'b' in r and cur['v'] != r['b']: lost.append({'k': r['k'], 'v': cur['v']}); continue
+                    if cur and r['k'] != 'D/disp': DB['hist'].append(cur)   # como app_records_stamp (20261023_historial_corto.sql)
                     DB['rev'] += 1; DB['writes'] += 1
-                    DB['recs'][r['k']] = {'k': r['k'], 'v': r['v'], 'rev': DB['rev'], 't': time.time()}; DB['log'].append('registro ' + r['k'])
+                    DB['recs'][r['k']] = {'k': r['k'], 'v': r['v'], 'rev': DB['rev'], 't': time.time(), 'by': u['id']}; DB['log'].append('registro ' + r['k'])
                 return self.out(200, lost)
         self.out(404, {'message': 'no'})
     def fn(self, b, u):

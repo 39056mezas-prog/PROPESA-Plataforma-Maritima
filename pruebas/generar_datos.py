@@ -22,7 +22,7 @@ with sync_playwright() as p:
         pg.click('.sb [data-go=ordenes]');pg.fill('#no_etd',etd);pg.click('[data-oa=new]')
         for j,(cli,n) in enumerate(rows):
             (pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.select_option('#ol_city','PVG');pg.select_option('#ol_cons',index=j);pg.fill('#ol_n',str(n));pg.fill('#ol_z0',str(n));pg.click('[data-oa=ln]')
-    pg.click('[data-sh^=join]')
+    pg.click('main .shp [data-go^="emb:"] >> nth=0');pg.click('[data-shq^="ask:join"] >> nth=0');pg.click('#shq [data-shq=ok]')  # v1.24.0: se junta en el embarque
     pg.click('.sb [data-go=empaque]')
     for _ in range(8):
         btns=pg.locator('[data-go^="empacar:"]:has-text("Empacar"), [data-go^="empacar:"]:has-text("Seguir")')

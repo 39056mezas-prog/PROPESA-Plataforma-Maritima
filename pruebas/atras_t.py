@@ -20,13 +20,13 @@ with sync_playwright() as p:
         pg.goto(BASE); pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso","0")}', seed); pg.reload()
         pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
         start = pg.evaluate('history.length'); lot = pg.evaluate('ST.R[0].lot')
-        chk(pg.evaluate(V) == ['inicio', '', False], f'{vw} entra al Panel')
+        chk(pg.evaluate(V) == ['general', '', False], f'{vw} el Administrador entra al Panel general (v1.19.0)')
         # navegar: Panel → Entrada → lote → Órdenes
         pg.evaluate("go('recepcion')"); pg.evaluate(f"go('lote:{lot}')"); pg.evaluate("go('ordenes')")
         chk(pg.evaluate('history.length') == start + 3, f'{vw} cada pantalla nueva queda en el historial')
         back(pg); chk(pg.evaluate(V) == ['lote', lot, False], f'{vw} atrás → regresa al lote')
         back(pg); chk(pg.evaluate(V) == ['recepcion', '', False], f'{vw} atrás → Entrada')
-        back(pg); chk(pg.evaluate(V) == ['inicio', '', False] and pg.locator('.sb').count() == 1, f'{vw} atrás → Panel (sigue dentro de la app)')
+        back(pg); chk(pg.evaluate(V) == ['general', '', False] and pg.locator('.sb').count() == 1, f'{vw} atrás → Panel general (sigue dentro de la app)')
         pg.go_forward(wait_until='commit'); pg.wait_for_timeout(250); chk(pg.evaluate(V) == ['recepcion', '', False], f'{vw} adelante también funciona')
         # volver a dibujar la misma pantalla no agrega pasos
         n = pg.evaluate('history.length'); pg.evaluate('render();render();softRender()'); chk(pg.evaluate('history.length') == n, f'{vw} redibujar la misma pantalla no agrega pasos al historial')
@@ -44,8 +44,8 @@ with sync_playwright() as p:
             pg.click('.mb'); chk(pg.evaluate("document.getElementById('app').classList.contains('sbo')"), f'{vw} menú lateral abierto')
             back(pg); chk(not pg.evaluate("document.getElementById('app').classList.contains('sbo')") and pg.evaluate(V)[0] == 'cierre', f'{vw} atrás cierra el menú lateral')
         # Modo piso: Inicio de piso → Empacar → atrás → Inicio de piso; y atrás regresa a la vista completa
-        pg.evaluate("switchMode(true)"); pg.wait_for_timeout(1000); chk(pg.evaluate(V) == ['piso', '', True], f'{vw} cambia a Modo piso')
-        pg.evaluate("go('pent')"); back(pg); chk(pg.evaluate(V) == ['piso', '', True] and pg.locator('.pshell,.phd').count() >= 1, f'{vw} Modo piso: atrás regresa al inicio de piso')
+        pg.evaluate("switchMode(true)"); pg.wait_for_timeout(1000); chk(pg.evaluate(V) == ['pcon', '', True], f'{vw} cambia a Modo piso (desde Mortalidad final abre Conteo final, v1.21.0)')
+        pg.evaluate("go('pent')"); back(pg); chk(pg.evaluate(V) == ['pcon', '', True] and pg.locator('.pshell,.phd').count() >= 1, f'{vw} Modo piso: atrás regresa a la pantalla de piso anterior')
         back(pg); chk(pg.evaluate(V) == ['cierre', '', False] and pg.locator('.sb').count() == 1, f'{vw} atrás desde Modo piso regresa a la vista completa donde estabas')
         # un lote que ya no existe: atrás no truena, va a Entrada
         pg.evaluate(f"go('lote:{lot}')"); pg.evaluate("go('inicio')")

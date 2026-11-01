@@ -2,6 +2,8 @@
 en el tablero de tanques y monitoreo de temperatura (fecha, hora, flotante, superficie, producto; rango 48.4–56.6 °F; PDF interno).
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/ordenes_t.py"""
 from playwright.sync_api import sync_playwright
+import datetime as _dt
+_y=_dt.date.today()-_dt.timedelta(days=1);AYER=_y.isoformat();AYER_MX=_y.strftime('%d/%m/%Y')  # antes 17/10/2026 fijo: salía de la lista de 7 días
 import os, sys, re
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 seed = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos', 'seed.json')).read()
@@ -38,7 +40,7 @@ with sync_playwright() as p:
         pg.fill('#ol_z3', '4'); pg.fill('#ol_tar', '6'); chk(pg.input_value('#ol_n') == '110' and '59.4' in pg.inner_text('#ol_pb') and '1760.0' in pg.inner_text('#ol_pb'), f'{vw} la tabla de peso bruto se arma mientras se escribe')
         pg.click('[data-oa=ln]'); pg.wait_for_timeout(80)
         l = pg.evaluate(f"{O}.lines[0]")
-        chk(l == {'id': 1, 'city': 'PVG', 'cons': 0, 'boxes': 110, 'z': [0, 76, 30, 4], 'kp': 16, 'tar': 6, 'cc': 0}, f'{vw} se guarda destino, consignatario, total, tallas, producto, tarimas y cartón: {l}')
+        chk(l == {'id': 1, 'city': 'PVG', 'cons': 0, 'boxes': 110, 'z': [0, 76, 30, 4, 0], 'kp': 16, 'tar': 6, 'cc': 0}, f'{vw} se guarda destino, consignatario, total, tallas, producto, tarimas y cartón: {l}')
         chk(pg.evaluate(f"ordG({O})") == 2138.4, f'{vw} peso bruto igual a la hoja: 154 + 165 + 59.4 + 1760 + 0 = 2138.4 ({pg.evaluate(f"ordG({O})")})')
         tx = pg.inner_text('#app'); chk('2138.4 kg de peso bruto' in tx and '1760 kg neto' in tx, f'{vw} la orden muestra el peso bruto y neto')
         # segundo consignatario: producto de 15 kg y cajas de cartón (como «PVG ABEL» de la hoja, con cartón 0.7)
@@ -51,7 +53,7 @@ with sync_playwright() as p:
         pg.click('[data-oa=no]')
         # el embarque toma tallas y peso de la orden
         si = pg.evaluate(f"{O}.sh['PVG|0']")
-        chk(pg.evaluate(f"ST.P[{si}].z") == [0, 76, 30, 4] and abs(pg.evaluate(f"gross(ST.P[{si}])") - pg.evaluate(f"lnG({O}.lines[0])")) < 0.05, f'{vw} el embarque toma tallas y peso bruto de la orden')
+        chk(pg.evaluate(f"ST.P[{si}].z") == [0, 76, 30, 4, 0] and abs(pg.evaluate(f"gross(ST.P[{si}])") - pg.evaluate(f"lnG({O}.lines[0])")) < 0.05, f'{vw} el embarque toma tallas y peso bruto de la orden')
         pg.evaluate(f"go('emb:{si}')"); chk(pg.locator('[data-zs]').count() == 0 and 'Vienen de la orden' in pg.inner_text('#emb_tallas'), f'{vw} en Embarque las tallas ya no se capturan')
         chk('Tarimas' in pg.inner_text('#emb_peso') and pg.locator('[data-a^="pwfix:"]').count() == 0, f'{vw} el peso del embarque trae tarimas y no avisa discrepancia')
         # tallas empacadas contra las pedidas
@@ -69,15 +71,15 @@ with sync_playwright() as p:
         pg.evaluate("go('temperatura')")
         for k in ['Termómetro flotante', 'Superficie del agua', 'Interna del producto']: chk(k in pg.inner_text('#app'), f'{vw} Temperatura pide «{k}»')
         chk(pg.locator('#tq_d[data-dt=d]').count() == 1 and pg.locator('#tq_h[data-dt=h]').count() == 1, f'{vw} fecha y hora por separado (v1.12.0: se escriben)')
-        pg.fill('#tq_d', '2026-10-17'); pg.fill('#tq_h', '06:30'); pg.fill('#tq_a', '52.1'); pg.fill('#tq_s', '58.2'); pg.fill('#tq_p', '50'); pg.click('[data-a=tq]')
-        chk('Lectura guardada' in pg.inner_text('#toast') and 'rango' not in pg.inner_text('#toast').lower(), f'{vw} rango pendiente: al guardar no habla de rango: {pg.inner_text("#toast")}')
+        pg.fill('#tq_d', AYER); pg.fill('#tq_h', '06:30'); pg.fill('#tq_a', '61.5'); pg.fill('#tq_s', '58.2'); pg.fill('#tq_p', '67'); pg.click('[data-a=tq]')
+        chk('Lectura guardada' in pg.inner_text('#toast') and 'ADVERTENCIA' in pg.inner_text('#toast') and 'ALERTA' in pg.inner_text('#toast'), f'{vw} v1.25.0 rangos internos: al guardar avisa las zonas: {pg.inner_text("#toast")}')
         row = pg.inner_text('#tq_tbl tbody tr >> nth=0')
-        chk('17/10/2026' in row and '06:30' in row and '58.2 °F' in row and pg.locator('.tqout').count() == 0, f'{vw} la tabla separa fecha y hora, sin rojos mientras el rango esté pendiente: {row!r}')
-        chk(pg.locator('.alb:has-text("fuera de rango")').count() == 0 and 'rango' not in pg.inner_text('#app').lower(), f'{vw} sin aviso de rango en la página')
+        chk(AYER_MX in row and '06:30' in row and '58.2 °F' in row and 'ADVERTENCIA' in row.upper() and 'ALERTA' in row.upper() and pg.locator('#tq_tbl .tqout').count() == 2, f'{vw} la tabla separa fecha y hora y marca 61.5 (advertencia) y producto 67 (alerta); 58.2 es normal: {row!r}')
+        chk(pg.locator('.alb:has-text("Alerta o Crítico")').count() == 1, f'{vw} aviso rojo de lecturas en Alerta o Crítico')
         tx = pdf_text(pg, 'temp', '')
-        for s_ in ['Monitoreo de temperatura', 'flotante', 'Superficie del agua', 'Interna del producto', '58.2']:
+        for s_ in ['Monitoreo de temperatura', 'flotante', 'Superficie del agua', 'Interna del producto', '58.2', 'Advertencia']:
             chk(s_.lower() in tx.lower(), f'{vw} el PDF de monitoreo trae «{s_}»')
-        chk('rango' not in tx.lower(), f'{vw} el PDF no habla de rango mientras esté pendiente')
+        chk('rangos internos' in tx.lower() and 'alerta' in tx.lower(), f'{vw} el PDF trae los rangos internos y marca la zona')
         chk(not pg.evaluate("document.documentElement.scrollWidth>innerWidth"), f'{vw} sin desborde horizontal')
         pg.close()
     # datos: las líneas nuevas se comparten y sobreviven a un respaldo; valores raros se descartan; las viejas conservan su cliente

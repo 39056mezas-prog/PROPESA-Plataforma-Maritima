@@ -27,10 +27,10 @@ with sync_playwright() as p:
     ctx, pg = start(b, 'admin@propesa.mx', 'admin123', 'empacar:3.1')
     chk(pg.evaluate("matchMedia('(hover: none) and (pointer: coarse)').matches"), 'el celular simulado es táctil y sin mouse')
     ins = pg.locator('input.pkc'); chk(ins.count() >= 2 and all(ins.nth(k).get_attribute('readonly') is not None for k in range(ins.count())), 'vista completa: las casillas de piezas son de solo lectura en el celular')
-    first = pg.evaluate("KPT.t")
-    kp(pg, '55'); chk(pg.input_value('#pk_c0') == '55' if pg.locator('#pk_c0').count() else True, 'el teclado de la app escribe aunque la casilla sea de solo lectura')
+    first = pg.evaluate("KPT.t"); h0 = pg.inner_text('#kpt')  # v1.27.0: con el lote más viejo ya elegido, la hielera se guarda y la siguiente es otra vez la fila 0
+    kp(pg, '25'); chk(pg.input_value('#pk_c0') == '25' if pg.locator('#pk_c0').count() else True, 'el teclado de la app escribe aunque la casilla sea de solo lectura')
     pg.tap('#kpad [data-kp="k:R"]'); pg.wait_for_timeout(150)
-    a = pg.evaluate(act); chk(pg.evaluate("KPT.t") != first, f'al tocar la categoría pasa a la siguiente hielera ({first} → {pg.evaluate("KPT.t")})')
+    a = pg.evaluate(act); chk(pg.evaluate("KPT.t") != first or pg.inner_text('#kpt') != h0, f'al tocar la categoría pasa a la siguiente hielera ({h0} → {pg.inner_text("#kpt")})')
     chk(a is None or a['ro'], f'la hielera siguiente tiene el cursor pero es de solo lectura: Android no abre su teclado ({a})')
     kp(pg, '40'); pg.tap('#kpad [data-kp="k:V"]'); pg.wait_for_timeout(150)
     a = pg.evaluate(act); chk(a is None or a['ro'], f'y lo mismo en la siguiente ({a})')

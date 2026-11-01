@@ -318,10 +318,10 @@ try:
         A.evaluate("(()=>{const o=ST.OR.find(o=>o.etd=='2026-10-17'&&o.lines.some(l=>l.city=='XMN'));o.lines.forEach(l=>{delete l.z;delete l.kp;delete l.tar;delete l.cc});save();render()})()")  # orden con el formato de antes: tallas a mano en Embarque
         A.evaluate(f"(()=>{{const i=ST.P.findIndex(p=>p.u=={uj}),l=ST.R.find(r=>!r.lot.startsWith('ZZ')).lot;ST.B[l].push({{c:30,k:'R',d:i,o:null,seq:uidN()}});ST.P.forEach(p=>{{if(p.alive===9)p.alive=null}});save()}})()")
         dummy = lambda u: {'k': 'P/' + u, 'v': {'u': u, 'n': 'HKG · PRUEBA · 01/01', 'z0': '', 'col': '#1c7f9a', 'exp': 0, 'h': 0, 'z': [0, 0, 0, 0], 'c': [], 'alive': None, 'closed': False}}
-        for fld, val, du in (('[data-alive]', '9', '000000'), ('[data-zs$=":1"]', '4', '0000000')):
+        for fld, val, du in (('[data-alive="%s"]' % ut, '9', '000000'), ('[data-zs$=":1"]', '4', '0000000')):  # v1.24.0: las vivas se capturan en Mortalidad final
             raw_push(D, [dummy(du)]); ix = lambda u: f"ST.P.findIndex(p=>p.u=={json.dumps(u)})"
             chk(until(A, f"{ix(du)}>=0&&{ix(du)}<{ix(ut)}"), f'llega un embarque nuevo que queda antes en la lista ({fld})')
-            t = A.evaluate(ix(ut)); A.evaluate(f"go('emb:{t}')"); A.fill(fld, val)   # el cursor sigue en el campo
+            t = A.evaluate(ix(ut)); A.evaluate("go('cierre')" if 'alive' in fld else f"go('emb:{t}')"); A.fill(fld, val)   # el cursor sigue en el campo
             raw_push(D, [{'k': 'P/' + du, 'v': None}])                                                         # otro equipo lo quita
             chk(until(A, f"ST.P.findIndex(p=>p.u=={uj})=={t - 1}"), f'la lista de embarques se recorre mientras escribe ({fld})')
             A.press(fld, 'Tab'); A.wait_for_timeout(200)

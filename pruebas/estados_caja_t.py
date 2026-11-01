@@ -94,7 +94,7 @@ with sync_playwright() as p:
         f4=fill(pg);chk(f4>0.98,tag+f' al 100 % la barra está llena ({f4:.2f})')
         chk(pg.locator('[data-pk=addall]').count()==0 and '4 de 4 hieleras completadas' in pg.inner_text('.pkall'),tag+' al 100 % dice 4 de 4')
         # se puede corregir aun completa (sin botón Guardar abajo)
-        s2=boxes(pg)[-1][0];pg.click(f'#pkd{s2} .pked');pg.fill('#pk_e','40');pg.click('[data-pk=upd]');chk([x for x in boxes(pg) if x[0]==s2][0][1]==40 and len(boxes(pg))==4,tag+' corrige con la línea completa')
+        s2=boxes(pg)[-1][0];pg.click(f'#pkd{s2} .pked');pg.fill('#pk_e','34');pg.click('[data-pk=upd]');chk([x for x in boxes(pg) if x[0]==s2][0][1]==34 and len(boxes(pg))==4,tag+' corrige con la línea completa')
         # Quitar desde la corrección (con confirmación) → vuelve a pendiente y la barra baja
         pg.click(f'#pkd{s2} .pked');pg.click('[data-pk^="del:"]');pg.click('[data-pk^="rm:"]')
         chk(len(boxes(pg))==3 and '75% completado' in pg.inner_text('#pksum') and pg.locator('.pkrow').count()==1,tag+' quitar hielera → 75 % y 1 pendiente')
