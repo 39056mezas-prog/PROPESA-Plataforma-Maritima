@@ -84,6 +84,8 @@ Pantalla con botones grandes para el personal de piso (entra solo con el rol *En
 - *Empacar:* cliente → lote (se salta si solo hay uno) → una tarjeta grande por cada caja del cliente (piezas + ROJO / VERDE / BLANCO). Cada caja **se guarda sola** al tener piezas y categoría y se queda en gris con ✔ en su lugar; se corrige ahí mismo o se quita con «Quitar». «Poner a todas las vacías» aplica una categoría de un toque.
 - En Órdenes y Empaque, el aviso rojo «X de Y cajas empacadas» es un botón que lleva directo al cliente al que le faltan cajas.
 - *Registrar entrada:* hoja con una fila por lote (proveedor, tanque, lote, kg por talla); «+ Agregar entrada» para más filas, «Más» para temperaturas, kg por caja, desperdicio, fecha y hora, y «Guardar entradas» guarda todas las filas completas (las que tienen errores se quedan marcadas en rojo).
+- *Cerrar embarque* (paso a paso, v1.21.0): embarque → revisar hieleras y lo que va de cada lote → pendientes → cerrar (solo el Administrador; el piso ve «Avísale al Administrador»).
+- *Conteo final* (paso a paso, v1.21.0): lote → kg contados → confirmar con la mortalidad → guardar.
 - Colores de talla: 491-610 Blanco · 611-850 Rojo · 851-1220 Verde · 1221-UP Amarillo.
 
 ## Ajustes

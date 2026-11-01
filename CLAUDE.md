@@ -1,7 +1,7 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.15.0** (23 de octubre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.28.0** (29 de octubre de 2026).
 
 ## Qué es
 
@@ -9,6 +9,8 @@ Plataforma web para **PROPESA** (Proveedor del Pescador S.A. de C.V., Ensenada, 
 Sigue cada lote por este flujo, que **no se cambia sin permiso del usuario**:
 
 **Entrada → Órdenes → Empaque → Embarque**
+
+**Maquilas (v1.19.0):** cada maquila (PROPESA, Abel, David, Luis Arce) guarda aparte sus datos; `ST` es la maquila abierta y `STX` las demás (ver `docs/DATOS.md`). Todo lo nuevo que sea de la operación va dentro de la maquila; lo de la empresa o lo físico (usuarios, proveedores, consignatarios, tanques) se comparte en `SHF`.
 
 **Mortalidad final va aparte** (decidido por el usuario el 16/oct/2026): no es un paso del flujo; se calcula sola con el conteo final de cada lote y las vivas al llegar de cada envío, y se revisa cuando se necesite (menú → «Revisión»).
 
@@ -57,7 +59,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 
 ```bash
 python3 -m http.server 8765                 # servir en http://localhost:8765
-sh pruebas/correr_todo.sh                   # 39 grupos de pruebas, debe terminar en «TODO BIEN»
+sh pruebas/correr_todo.sh                   # 58 grupos de pruebas, debe terminar en «TODO BIEN»
 python3 -I pruebas/rendimiento_t.py         # rendimiento con un año de datos
 node pruebas/accesibilidad.mjs pruebas/datos/backup.json   # Lighthouse (npm i lighthouse puppeteer-core)
 ```

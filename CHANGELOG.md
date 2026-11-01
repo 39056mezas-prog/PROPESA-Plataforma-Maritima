@@ -1,5 +1,250 @@
 # Cambios
 
+## 1.28.0 · 29 de octubre de 2026
+
+Pedido del usuario (29/oct): quitar la gris del teclado de Empaque y tener otro lugar para agregar hieleras grises, como extra.
+
+### Cambiado
+- **La categoría Gris (despatada) ya no se elige al empacar:** salió del teclado, de los botones de cada hielera y de «Poner a todas las vacías» (vista completa y Modo piso). Sigue existiendo en Entrada, tanques, Mortalidad final y precios.
+
+### Agregado
+- **Hieleras grises · extra**, abajo de las hieleras del cliente (vista completa y Modo piso): se escriben las piezas y «+ Agregar hielera gris». Sale del lote elegido arriba. Quitar pide confirmación.
+  - **No cuentan para las hieleras pedidas:** la línea sigue «1 de 4» y se completa sin ellas; en Modo piso no ocupan lugar. En «Hieleras por talla» sale «+ 1 hielera gris extra».
+  - **Sí van con el cliente:** en el packing list (con su número de hielera), en las hieleras, tallas y peso bruto del embarque (con el mismo peso por hielera de la línea), y sus kilos salen del tanque (despatada) al cerrar el embarque.
+- Ojo: una hielera gris empacada antes de esta versión ahora cuenta como extra (si una línea la usaba como pedida, vuelve a decir que falta 1).
+
+### Pruebas
+- Nueva: `v128_t.py`. Actualizada: `inicio_t.py` (versión 1.28.0).
+
+## 1.27.1 · 29 de octubre de 2026
+
+Pedido del usuario (29/oct): «Hieleras por talla» más visual y colorido, y que diga qué falta empacar.
+
+### Cambiado
+- **Hieleras por talla** (al empacar y en la orden) ya no es una tabla de «Pedidas / Empacadas»:
+  - Arriba, un aviso grande: «Faltan 3 hieleras por empacar · Empaca: 1 Chica · 1 Grande · 1 Jumbo», con una ficha del color de cada talla, el conteo «1 de 4 empacadas» y una barra de avance pintada por talla. Azul mientras falta, verde con «✔ Ya están todas las tallas», rojo si hay hieleras de más (y aun así dice lo que falta).
+  - Una tarjeta por talla, teñida con su color: nombre, gramaje, «1 de 1» y «Falta N», «✔ Lista» o «⚠ De más +N». Un cuadrito por hielera: lleno con ✓ = empacada, punteado = falta, rojo con + = de más. Con más de 24 hieleras en una talla se ve una barra.
+  - Usa los colores de talla de cada maquila (Administración → Tallas). Claro y oscuro; en celular se esconde el gramaje.
+
+### Pruebas
+- Nueva: `v1271_t.py`. Actualizada: `inicio_t.py` (versión 1.27.1).
+
+## 1.27.0 · 29 de octubre de 2026
+
+Pedidos de la junta con el usuario (29/oct). «Cooperativa» = maquila: tallas y colores por maquila (Administración → Tallas), Mortalidad final aparte por maquila, el Panel general con todas y «+ Nuevo consignatario» **ya existían**; no se tocaron.
+
+### Agregado
+- **Lo más viejo primero en Empaque.** Los lotes salen del más viejo al más nuevo (por fecha de entrada) y el primero con kilos queda elegido, con «Más viejo · usar primero». Se puede cambiar. En Modo piso se sigue preguntando «¿De qué lote sacas las langostas?», con el más viejo primero y marcado «usar primero».
+- **Días máximos en tanque por proveedor** (Administración → Proveedores; vacío = sin límite). Si un lote los pasa: aviso rojo en el lote con «Ir a Empaque», notificación, y en Empaque sale antes que los demás con «⚠ 5 días · aguanta 3». En su último día dice «Último día en tanque» y también va primero.
+- **Orden variada:** en la línea de la orden, «Repartir tallas: lo más viejo primero» llena las hieleras por talla con lo más viejo de los tanques (descuenta lo que otras órdenes ya pidieron). Se pueden cambiar antes de guardar. Si no alcanza, dice cuántas sí.
+- **Máximo 35 langostas por hielera**: no se guarda una hielera con más (vista completa, Modo piso y al corregir; avisa al guardar).
+
+### Pruebas
+- Nueva: `v127_t.py`. Actualizadas: `cajas_auto_t.py` (40 y 50 piezas → 34 y 35), `estados_caja_t.py` (corregir a 34 piezas), `teclado_movil_t.py` (55 → 25 piezas), `inicio_t.py` (versión 1.27.0).
+
+## 1.26.0 · 29 de octubre de 2026
+
+Dos pedidos del usuario: los camiones en pestañas con su propio PDF y una campana de notificaciones.
+
+### Agregado
+- **Camiones en pestañas.** Con dos camiones o más, arriba del plan de carga sale una pestaña por camión (como las del navegador): se ve un camión a la vez, con sus consignaciones abiertas y **su propio PDF** («PDF del Camión 2», archivo `Plan_de_carga_Camion_2`). «Pasar a → Camión nuevo» abre la pestaña del camión nuevo. Con un solo camión, la pantalla y el PDF quedan como antes. Los embarques cerrados siguen abajo, fuera de las pestañas.
+- **Notificaciones (campana con contador)** en el encabezado, en la vista completa y en Modo piso. Trae, de la maquila abierta:
+  - **Falta capturar o resolver:** entradas con fecha, hora o código por revisar; existencia negativa (Administrador); órdenes sin líneas o con hieleras por empacar; pendientes de cada embarque (peso, tallas, hoja de empaque, salida incompleta…); embarques ya empacados que falta cerrar. No se descartan: se quitan solos al resolverlos.
+  - **Recientes · 7 días:** entradas y órdenes nuevas, y embarques cerrados.
+  - Tocar una lleva a donde se resuelve. Lo reciente queda visto al tocarlo o con «Marcar todo como visto» (se guarda en el equipo, por usuario). El contador = pendientes + recientes sin ver.
+
+### Pruebas
+- Nueva: `v126_t.py`. Actualizadas: `camiones_t.py` y `v125_t.py` (un camión a la vez, en pestañas), `inicio_t.py` (versión 1.26.0).
+
+## 1.25.0 · 27–28 de octubre de 2026
+
+Prueba de la v1.24.0 con los Excel de Martha **capturados por la pantalla** (77 recepciones, 54 envíos con 3,728 hieleras una por una, 62 salidas) y pedidos del usuario.
+
+### Agregado
+- **Una orden con hieleras de varias maquilas.** En Empaque salen aparte los lotes «De otra maquila» (con «MAQUILA DAVID»). Al cerrar el embarque los kg salen del tanque de esa maquila (y reabrir los regresa). El lote de la otra maquila enseña «En órdenes de otra maquila»; tocarlo entra a su maquila.
+- **Panel general: tanques de todas las maquilas juntas** (mapa T1–T6; al tocar un tanque, cada maquila con sus tallas y lotes).
+- **Otro tanque con kg exactos por talla** en la entrada (vista completa y Modo piso). Ya no se reparte solo.
+- **Camión compartido entre maquilas**: el plan de carga junta los embarques abiertos de todas; «Pasar a» funciona entre maquilas.
+- **Fecha en las salidas** (congelar, basura, recuperación, débil): el Balance de un periodo pasado ya las cuenta.
+- **Cambio de talla** en el lote (resorteo en el tanque) para resolver la «salida incompleta»; luego «Volver a descontar».
+- **Aviso de código de lote mal escrito** (p. ej. WLRCOO51026 o sin la clave del proveedor) y se puede corregir el código mientras el lote no tenga hieleras.
+- **Rangos de temperatura internos** (28–29/oct), sacados de las temperaturas del Excel. **Agua:** Óptimo hasta 57 · Normal 57.1–60 · Advertencia 60.1–62 · Alerta 62.1–64 · Crítico más de 64 °F. **Producto:** Óptimo hasta 60 · Normal 60.1–63 · Advertencia 63.1–66 · Alerta 66.1–68 · Crítico más de 68 °F. Advertencia en ámbar; Alerta y Crítico en rojo con aviso. En Temperatura (con la tabla, y la de la industria como referencia), tablero de tanques, al guardar entrada o lectura y en el PDF.
+- **La orden ya no pide hieleras de Despatada** (29/oct): es merma. En Empaque se sigue pudiendo marcar una hielera Gris; las órdenes viejas que la pedían la siguen enseñando.
+- **Despatada = merma** en Mortalidad final (28/oct): esperado para el conteo final sin despatada; merma = mortalidad + despatada recibida, en % de lo recibido (lote, tabla, gráficas, Modo piso y PDF).
+
+### Corregido
+- «Camión nuevo» con un solo embarque no hacía nada: ahora sale apagado («va solo»).
+- «Langostas vivas al llegar» solo enseñaba los últimos 30 envíos: ahora todos.
+- PDF de Envíos de Abel contaba cajas ÷ 16: ahora con el kg de producto (÷ 15).
+
+### Pruebas
+- Nueva: `v125_t.py`. Actualizadas: `traslados_t.py` (kg por talla), `avisos_entrada_t.py` (aviso de código), `inicio_t.py` (versión 1.25.0), `ordenes_t.py` y `temperatura_t.py` (rangos), `salidas_t.py` (esperado sin despatada). **56 grupos, ~2,860 verificaciones, TODO BIEN** (`fotos_t` a veces falla en la corrida completa por tiempos de la base de mentira; sola pasa).
+- Prueba con los Excel por la pantalla en la v1.25.0: `docs/PRUEBA_EXCEL_v1.25.0.md` (balance 17–27 sep = 88.27 a favor).
+
+## 1.24.0 · 27 de octubre de 2026
+
+Cinco pedidos del usuario: logotipo de cada maquila, vivas al llegar en Revisión, ver qué falta por empacar, juntar/separar embarques claro y los colores de las consignaciones.
+
+### Agregado
+- **Logotipo de cada maquila.** Emblema con sus iniciales (Abel: hexágono ámbar «A»; David: círculo turquesa «D»; Luis Arce: escudo lila «LA»; una maquila nueva toma el siguiente) + «MAQUILA» + el nombre. Va en el menú (con una franja de su color arriba), en el encabezado de Modo piso, en el celular (barra de arriba; tocarlo cambia de maquila), en «Cambiar de maquila», en el Panel general y en Administración → Maquilas. PROPESA conserva su logo.
+- **Lo que falta por empacar.** La orden tiene arriba «Lo que falta por empacar»: cada consignatario con lo que falta por talla (p. ej. «Falta: 1 Chica · 3 Mediana · 1 Grande · 1 Jumbo») y su botón para empacar; «✔ Todo empacado» cuando ya está. Órdenes y Empaque también dicen lo que falta por talla en cada renglón.
+
+### Cambiado
+- **Langostas vivas al llegar al destino** (con el % que reporta el cliente y la temperatura de arribo) se captura en **Revisión → Mortalidad final**, un renglón por envío. El embarque ya no lo captura: avisa y lleva ahí («Ir a Mortalidad final ›»).
+- **Juntar y separar embarques en un solo lugar: el embarque.** «Órdenes en este embarque» tiene «Sacar de este embarque» en cada orden y «Puedes juntar aquí» con las órdenes del mismo destino y consignatario. Antes de cambiar nada enseña **Ahora → Así queda** (hieleras y nombre de cada embarque) con «Sí, juntar / Sí, sacarla» o «Cancelar»; después dice qué pasó y deja **Deshacer** (y «Ver el embarque nuevo ›»). La orden ya no tiene selector ni «Unir»: dice en qué embarque va y lleva a él.
+
+### Corregido
+- **Los colores de las consignaciones no coincidían con Administración.** Sin color elegido, cada embarque tomaba un color por turno (dos del mismo consignatario podían salir distintos) y Administración enseñaba otro. Ahora el color se toma siempre del consignatario, el mismo que enseña Administración, en Embarque, el plan del camión, Modo piso y Revisión; también en los embarques cerrados y cuando otro equipo cambia el color.
+- Tocar el campo «Temperatura de arribo» volvía a dibujar la pantalla y lo cerraba.
+
+### Pruebas
+- **55 grupos, 2,793 verificaciones, TODO BIEN.** Nueva: `v124_t.py`. Actualizadas: `e2e.py`, `envios_t.py`, `maquilas_t.py`, `sincronizacion_t.py`, `generar_datos.py`. `inicio_t.py` revisa la versión 1.24.0.
+
+## 1.23.0 · 26 de octubre de 2026
+
+Pedido del usuario: «necesito que el nombre de la maquila esté en grande y que sea claro distinguir».
+
+### Cambiado
+- **PDF: la maquila en grande.** Debajo del logo, una banda azul marino con «MAQUILA» y el nombre en letras grandes (PROPESA, ABEL, DAVID, LUIS ARCE) y «Datos solo de esta maquila». En las demás páginas, «MAQUILA ABEL» en una etiqueta azul arriba a la derecha. Ya no va escondido en el subtítulo.
+- Formato 06 (hoja de empaque) en el PDF: las columnas de talla también van a color.
+
+### Pruebas
+- `pdf_tallas_t.py` revisa la banda; `excel_reales_t.py` busca «MAQUILA ABEL». `inicio_t.py` revisa la versión 1.23.0. **54 grupos, 2,722 verificaciones, TODO BIEN.**
+
+## 1.22.0 · 26 de octubre de 2026
+
+Pedido del usuario: «quiero que en los pdf salga el color respectivo de cada talla y también gramaje… determinado a cada maquila… que toda la tabla sea de cada color respectivo para que sea más visual».
+
+### Agregado
+- **Leyenda de tallas en los PDF:** arriba de cada PDF con tallas (Entrada, Órdenes, Packing list, Embarque, Recepción, Envíos, Existencia, Congelación) sale una tarjeta por talla con su color, nombre, gramaje (p. ej. «611-850 g») y nombre del color. Son las tallas de la maquila del PDF: si Abel tiene Chica café de «26-32 piezas», su PDF lo dice así.
+- **Tablas a color:** cada columna de talla (y de categoría: Rojo, Verde, Blanco…) lleva el encabezado de su color y toda la columna teñida de ese color; el total, un poco más fuerte. En Órdenes, cada renglón de talla va de su color; en el detalle por hielera y en Congelación, la celda de categoría o talla va de su color.
+
+### Corregido
+- El gramaje solo lleva «g» cuando es un rango de números (antes salía «26-32 PIEZAS g»).
+
+### Pruebas
+- Nueva: `pdf_tallas_t.py` (PROPESA y Abel con tallas propias). `inicio_t.py` revisa la versión 1.22.0. **54 grupos, 2,720 verificaciones, TODO BIEN.**
+
+## 1.21.0 · 26 de octubre de 2026
+
+Respuestas del usuario a la segunda tanda de preguntas (6, 9, 12 y 15).
+
+### Agregado
+- **Lotes por envío.** El embarque tiene la tabla «Por lote»: hieleras, langostas, kg de producto y tallas de cada lote, con total; cada lote lleva a su pantalla. También en el PDF del embarque (sección «Por lote») y en el informe por correo al cerrar.
+- **Modo piso · Cerrar embarque paso a paso.** Elegir embarque → revisar hieleras (con lo que va de cada lote) → pendientes (cada uno con su botón) → cerrar. Solo el Administrador cierra; el piso ve «Avísale al Administrador». La hoja de empaque incompleta sigue solo preguntando.
+- **Modo piso · Conteo final paso a paso.** Elegir lote (con lo esperado) → kg contados en una casilla grande (Enter avanza; no acepta más de lo esperado) → confirmar con la mortalidad → «✔ Conteo guardado» con «Contar otro lote», «Corregir» y, para el Administrador, «Cerrar lote».
+- Cambiar de modo te deja en lo mismo: Embarque ↔ Cerrar embarque, Mortalidad final o un lote ↔ Conteo final.
+
+### Decidido
+- Cerrar con la hoja de empaque incompleta **solo pregunta** (pregunta 9). Órdenes de fechas distintas en un embarque: **se permiten sin aviso** (pregunta 12).
+
+### Corregido
+- En Modo piso, las tarjetas grandes de cliente y de lote mostraban un recuadro azul detrás del nombre (el estilo de la pantalla de compradores se aplicaba ahí también).
+
+### Pruebas
+- Nueva: `piso_pasos_t.py`. `inicio_t.py` revisa la versión 1.21.0.
+
+## 1.20.0 · 26 de octubre de 2026
+
+Respuestas del usuario a las preguntas pendientes («hazme las preguntas para continuar»): balance de Luis Arce igual que el de PROPESA, los tres avisos, sin rango de temperatura por ahora, y especie en cada orden.
+
+### Agregado
+- **Aviso: fecha que no cuadra con el código del lote.** Si la fecha de entrada no es la del código (WLR + clave + ddmmyy; p. ej. WLRCO220926 capturado el 22/06), sale en rojo en el lote y en Entrada. El Administrador toca «Corregir ›» (abre la edición) o «Está bien así». También se avisa al guardar (vista completa y hoja de Modo piso); no bloquea.
+- **Aviso: hora de madrugada.** Una entrada entre 00:00 y 04:59 pregunta «¿fue a las 13:30?». Mismo lugar y mismos botones. «Está bien así» se recuerda con la fecha u hora aceptada: si se vuelve a cambiar a otra rara, avisa otra vez.
+- **Aviso: salida incompleta.** Al cerrar un embarque, lo que no se pudo descontar del tanque (lote sin entrada, lote ya cerrado o sin kilos suficientes) queda anotado y sale como pendiente del embarque, con el lote, la talla, los kg y el motivo; lleva al lote. Después de corregir la entrada, «Volver a descontar del tanque» lo vuelve a intentar sin descontar doble. Reabrir el embarque lo borra. El embarque cerrado con pendiente sigue a la vista en la lista aunque sea viejo.
+- **Especie en cada orden.** Con más de una especie, la orden nueva pide la especie (las de antes son Langosta Roja). Al empacar, en la vista completa y en Modo piso, solo salen los lotes abiertos de esa especie; los lotes sin entrada o «sin lote» que se crean al empacar toman la especie de la orden. La especie se cambia en la orden mientras no tenga hieleras. La lista de órdenes, el PDF de órdenes y la hoja de empaque dicen la especie.
+- **Hoja de los compradores por especie:** lo pedido (con tallas y sin tallas) ya resta de su especie; antes solo restaba de los totales por talla.
+
+### Decidido
+- **Balance de Luis Arce:** se queda la fórmula del balance de PROPESA (cuenta despatada y congelados); la hoja de Luis Arce del Excel tenía el error (pregunta 21).
+- **Rango de temperatura:** sigue sin rango por ahora (pregunta 11).
+
+### Datos
+- `R.av` (avisos aceptados, `'f:<fecha>'` / `'h:<hora>'`), `P.sf` (lo que faltó descontar: `[lote, talla, gramos, ne|c|b]`, solo en embarques cerrados), `OR.sp` (especie de la orden). Están en `WN`, `cleanST` y `decodeST`. Sin cambios en Supabase.
+- `D/disp.s` lleva un tercer dato por especie: lo apartado sin talla.
+
+### Pruebas
+- Nuevas: `avisos_entrada_t.py` y `especie_orden_t.py`. `inicio_t.py` revisa la versión 1.20.0. **52 grupos, 2,620 verificaciones, TODO BIEN.**
+
+## 1.19.0 · 26 de octubre de 2026
+
+Pedidos del usuario después de probar la app con los dos Excel que usa Martha (`RECEPCION_Y_ENVIOS_LANGOSTA_2026-27` y `RECEPCIONES_DE_LANGOSTA_2026-2027`).
+
+### Agregado
+- **Maquilas separadas.** PROPESA, Abel, David y Luis Arce (lista editable en Administración → Maquilas). Cada maquila tiene sus propios lotes, movimientos, órdenes, hieleras, embarques, informes y notas: **no se mezclan**, y el mismo código de lote puede estar en dos maquilas (16 de los 19 lotes de Abel tienen el código de un lote de PROPESA). Se comparten usuarios, proveedores, especies, consignatarios, destinos, pesos de la hielera y temperatura de los tanques.
+- **Cambiar de maquila tocando el logo** (menú y Modo piso). En PROPESA y en el Panel general se ve el logo de PROPESA; **en otra maquila, su nombre va en lugar del logo** (pedido del usuario).
+- **Panel general** (solo el Administrador; es a donde entra al iniciar sesión): todas las maquilas juntas (kg en tanques, recibido en 7 días, hieleras empacadas, embarques abiertos, total) y una tabla de tanques con los kg de cada maquila. «Entrar ›» abre cada una.
+- **Tallas de cada maquila** (Administración → «Tallas de <maquila>»): nombre, rango (491-610 o «26-32 piezas»), color (el del tape y la categoría de la hielera), nombre del color y nombre en inglés; agregar y ocultar. Entrada, hoja de Modo piso, tablero de tanques, orden, empaque, embarque, PDF y compradores usan las tallas de la maquila abierta.
+- **Despatada como talla** (gris): entra al tanque, se pide en la orden, se empaca y sale al cerrar el embarque. «Kg desperdicio» se queda como estaba.
+- **Salidas que no son embarque** en cada lote: para congelar, basura (descompuesta), a recuperación y débil, con nota o folio. Restan del tanque y ya no cuentan como mortalidad. Totales y lista en Mortalidad final y en su PDF.
+- **Consignatarios y destinos editables** (Administración): nuevo consignatario (clave, razón social, destinos, dirección, contacto, USCI), editar, ocultar; nuevo destino (ej. TPE · Taipéi), editar, ocultar.
+- **% de mortalidad que reporta el cliente y temperatura de arribo** en cada embarque (también cerrado). Salen en Mortalidad final y en los PDF.
+- **Precio de compra** en cada lote: USD por kg, USD por kg de despatada, facturado o sin factura, nota y total en dólares. **Solo el Administrador, también en la base**: el precio va en su propio registro (`$/<lote>`) y la base no se lo da ni se lo deja escribir a Piso, Consulta ni Cliente (migración `20261026_precios.sql`, **aplicada en `propesa_bc` el 26/oct** con permiso del usuario; comprobado ahí: Piso y Consulta ven los lotes y 0 precios, el Administrador los ve, Piso no puede escribir un precio y sí lo demás).
+- **Lotes en varios tanques y traslados**: en la Entrada (vista completa y hoja de Modo piso) «Otro tanque» con sus kg, su temperatura y sus kg por caja (como «1/2», «57.6/60.3», «34/36» del Excel). En el lote, «Pasar a otro tanque» (kg o todo) con lista y «Deshacer». El tablero de tanques, el Panel general y la hoja de existencia reparten los kilos de cada lote por tanque (tallas en proporción); las salidas y los embarques se toman primero del tanque principal.
+- **Hojas para imprimir** (menú → Revisión): las hojas del Excel de Martha en PDF, de la maquila abierta y del periodo elegido: Recepción, Envíos, Existencia en tanques por tallas (cajas de 16 y de 15 kg), Congelación y no apta, Precio de compra (solo el Administrador) y Balance (con la existencia física contada).
+- Los PDF de otra maquila dicen «Maquila <nombre>» y su archivo lleva el nombre; conservan el logo de PROPESA (decisión del usuario).
+
+### Decidido
+- **Sin tape por envío** (se probó y se quitó el mismo día): el color del embarque es el de su consignatario, como en la v1.15.0. Pedido del usuario: «el color ya va con cada consignatario».
+
+### Corregido
+- Datos de consignatarios contra la lista en papel: teléfono (+86 13691775559) y código postal (518000) de Yishunhai, USCI de Xinbang (91440101MA9UUJN96Y). Yishunhai también va a XMN (11 envíos del Excel).
+
+### Datos (sin cambios en Supabase)
+- Maquilas: `ST` es la maquila abierta (`MQ`); las demás viven en `STX`. Los registros de PROPESA conservan su clave (`R/<lote>`); los de otra maquila llevan prefijo (`q2:R/<lote>`). Nuevos registros compartidos `Q/<id>` (maquilas), `K/<n>` (consignatarios) y `X/<código>` (destinos); por maquila `Z/tallas`. `L.type` acepta `CONGELACION`, `BASURA`, `RECUPERACION`, `DEBIL` y `L.nt`; `P.ta`, `P.mc`; precio en `R.pr` que viaja como `$/<lote>`; traslados `ST.TQ` como `TQ/<id>`. `D/disp` sale solo de PROPESA y trae los nombres de sus tallas (`n`). El respaldo trae todas las maquilas (`_X`, `_MQ`). Detalle en `docs/DATOS.md`.
+
+### Pruebas
+- Nuevas: `maquilas_t` (también con dos equipos y el Supabase de mentira), `tallas_t`, `salidas_t`, `consignatarios_t`, `envios_t` (% del cliente y arribo), `hojas_t`, `precios_t` (precios solo para el Administrador, con el Supabase de mentira), `traslados_t` y **`excel_reales_t`**: carga los datos reales del Excel (`pruebas/datos/excel_reales.json`, sin precios) y compara cada número de las hojas con las fórmulas del Excel. **50 grupos, 2,541 verificaciones, TODO BIEN.**
+- `ordenes_t` usaba la fecha fija 17/10/2026 (ya fuera de los 7 días): ahora usa ayer. Las pruebas que esperaban 4 tallas ahora esperan 5 (Despatada); las del logo y de atrás siguen el menú de maquilas y el Panel general. `fotos_t` a veces falla dentro de la tanda completa por tiempo (también en la 1.18.0); sola pasa.
+
+## 1.18.0 · 24 de octubre de 2026
+
+### Agregado
+- **Especie en cada entrada.** El formulario de Entrada y la hoja de entradas de Modo piso piden la **especie** (Langosta Roja de inicio). En la hoja de Modo piso va debajo del proveedor («Proveedor y especie»). Se ve en la tabla de Entrada, en el lote y en los lotes de cada tanque; se corrige con «Editar». Los lotes de antes son Langosta Roja. Pedido del usuario.
+- **Administración → Especies** (solo el Administrador): agregar, editar el nombre y el nombre en inglés (el que ven los compradores) y ocultar. Una especie oculta ya no se ofrece en nuevas entradas; sus lotes la conservan.
+- **Kilos por especie.** El tablero de tanques separa los kilos de cada tanque por especie y talla (con sus hieleras de 15 kg) y arriba suma cada especie en todos los tanques. La pantalla de los compradores dice qué especies hay («Live red lobster and blue lobster…») y, con más de una, agrega «In our tanks by species» por talla.
+- **PDF:** el Registro de recepción (Entrada) trae la columna «Especie». La Hoja de empaque (Formato 06) toma la especie de los lotes empacados en la orden (antes siempre «Langosta Roja»), en pantalla, PDF y correo.
+
+### Corregido
+- La clase de las casillas de temperatura de la v1.17.1 (`tqv`) era la misma que la de «Vacío» en el detalle del tanque y le cambiaba el ancho. Ahora se llama `tqin`.
+
+### Decisiones (ver `docs/DECISIONES.md`)
+- Las órdenes **no llevan especie**: lo pedido que no ha salido resta de los totales por talla, no de una especie. Los kilos por especie de los compradores son lo que hay en tanques.
+
+### Datos
+- `ST.ES` (opcional) = `[{id, n, en, off}]`; sin ella se usa `ES0` (Langosta Roja). `R[].sp` (opcional) = id de la especie; sin `sp` = especie 1. En `cleanST`, `WN.E`/`WN.R`, `encodeST` y `decodeST`; viajan como registros `E/<id>` y dentro de `R/<lote>`. La hoja `D/disp` agrega `s` = [[nombre en inglés, g por talla]]. **Sin cambios en Supabase.**
+
+### Pruebas
+- `especies_t.py` (nueva, 94 verificaciones): Administración (agregar, repetido, editar, ocultar, la última no se oculta, Consulta no cambia), Entrada en vista completa y Modo piso, editar la especie, lotes de antes, tablero de tanques por especie, PDF de Entrada, Formato 06 (pantalla, PDF y correo), hoja de compradores y su pantalla, registros compartidos, respaldo, sin desbordes en 1180 y 390 px y en 820 px oscuro con texto de 20 px. `inicio_t` (versión 1.18.0). 41 grupos.
+- `entradas_t.py`: Enter en el proveedor pasa a la especie y de ahí al tanque. `temperatura_t.py`: usa la fecha de ayer en vez del 16/10/2026 fijo (desde el 24/oct quedaba fuera de la lista de 7 días y la prueba fallaba también en la versión anterior).
+
+## 1.17.1 · 23 de octubre de 2026
+
+### Cambiado
+- **Temperatura en Modo piso con casillas grandes.** En «Nueva lectura», dentro de Modo piso, el tanque, la fecha, la hora, las tres temperaturas, «Hoy», «Ahora» y «Guardar lectura» miden 60 px de alto, con números más grandes y casillas más anchas, para usarlas con guantes. La vista completa se queda igual. Pedido del usuario.
+
+### Pruebas
+- `piso_t.py`: en Modo piso todas las casillas y botones de «Nueva lectura» miden 60 px o más y los números 20 px o más; la vista completa conserva sus casillas de 130 px. Revisado en 390, 820 y 1440 px, con texto «Muy grande» y en tema oscuro, sin desbordes. `inicio_t` (versión 1.17.1).
+
+## 1.17.0 · 23 de octubre de 2026
+
+### Agregado
+- **Temperatura en Modo piso.** Un quinto botón en el inicio de Modo piso, «Temperatura», con cuántas lecturas van hoy («2 lecturas hoy» / «Sin lecturas hoy»; cuenta también las temperaturas de las entradas). Abre la misma pantalla de Temperatura de siempre dentro del Modo piso (sin menú, con «Inicio»): «Nueva lectura», la tabla de los últimos 7 días, el PDF y las fotos. Mismos permisos que antes: Administrador y Encargado de piso capturan; Consulta solo ve. En tablet y computadora el botón va a todo lo ancho debajo de «Cerrar embarque» y «Conteo final». Pedido del usuario (con `/ponytail ultra`).
+
+### Pruebas
+- `piso_t.py`: el botón sale con el conteo de hoy y a todo lo ancho, abre Temperatura dentro de Modo piso, guarda una lectura, sin desborde, en 1180 y 390 px. `inicio_t` (versión 1.17.0). 40 grupos.
+
+## 1.16.0 · 23 de octubre de 2026
+
+### Agregado
+- **Historial de cambios en Administración.** Una tarjeta «Historial de cambios» con el botón «Ver cambios recientes»: lista los últimos 200 cambios de los últimos 30 días, lo más nuevo arriba, con **cuándo**, **quién**, **qué** (Creó / Cambió / Borró y qué registro: lote, hielera, orden, embarque, temperatura…) y **el cambio** campo por campo («Temp. tanque: 58 → 60»). Solo el Administrador; solo con la base compartida. No pide nada a la base hasta tocar el botón. Pedido del usuario: «ver quién, cuándo y qué valor se cambió… que no ocupe espacio en la base, memoria corta, para arreglar errores».
+
+### Base compartida
+- **Sin tabla nueva:** usa `app_records_hist` (v1.4.1), que ya guardaba cada versión anterior. Migración `supabase/migrations/20261023_historial_corto.sql`: el historial **se borra solo después de 30 días**, la hoja de disponibilidad `D/disp` (la recalcula la app) ya no entra al historial, y la función `cambios(lim)` arma la lista (solo devuelve filas al Administrador). Antes: 114 versiones, 112 kB de una base de 12 MB. **Aplicada en `propesa_bc` el 23/oct** con permiso del usuario (no borró nada: lo más viejo era del 16/oct); revisado ahí que un Administrador recibe la lista (187 cambios) y una cuenta Consulta, ninguno.
+
+### Pruebas
+- `historial_t.py` (nueva): con el Supabase de mentira, Piso crea un lote y el Administrador lo cambia y borra una lectura; la lista muestra quién, qué y «58 → 60», sin `D/disp`; Piso no recibe nada aunque lo pida directo; aviso sin internet; 1440/820/390 px con texto de 20 px, tema oscuro, botón de 44 px; no sale en modo local. `supabase_falso.py` guarda versiones anteriores y responde `rpc/cambios`. `inicio_t` (versión 1.16.0). 40 grupos.
+
 ## 1.15.0 · 23 de octubre de 2026
 
 ### Agregado
