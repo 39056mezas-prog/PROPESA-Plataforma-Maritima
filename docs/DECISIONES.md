@@ -4,6 +4,13 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 
 | Fecha | Decisión | Por qué / quién |
 |---|---|---|
+| 26/10/2026 | **Precios solo el Administrador, también en la base** (reglas de Supabase cambiadas con su permiso). **Los PDF de otras maquilas conservan el logo de PROPESA.** **Lotes en varios tanques y traslados entre tanques** (tanque principal + traslados; los kilos de cada tanque salen de repartir lo que hay; salidas primero del principal) | Usuario: «1. solo administración puede ver. 2. mantenlo. 3. continúa» |
+| 26/10/2026 | **Maquilas separadas** (PROPESA, Abel, David, Luis Arce; lista en Administración): cada una con sus lotes, órdenes, empaque, embarques e informes, sin mezclarse; el mismo código de lote puede repetirse entre maquilas. **Se cambia tocando el logo**; en otra maquila su nombre va en lugar del logo, en PROPESA y en el Panel general el logo de PROPESA. **El Administrador entra al Panel general** (todas juntas). Compartido: usuarios, proveedores, especies, consignatarios, destinos, pesos y temperatura de tanques. Los compradores solo ven PROPESA | Usuario: «si me meto a cada una no quiero que se mezclen»; «que salga el nombre de la maquila en donde está el logo» |
+| 26/10/2026 | **Tallas por maquila** (nombre, rango, color = tape, inglés; agregar, ocultar; no se borran ni se reordenan). **Despatada es una talla** (se guarda, se empaca y se vende); «Kg desperdicio» se queda como estaba (merma al recibir) | Usuario: «en cada maquila cambiar rango y colores… la maquila a veces especifica las categorías»; pregunta 3: sí |
+| 26/10/2026 | **Salidas que no son embarque**: para congelar, basura, a recuperación y débil, con nota o folio; solo el Administrador (mismo permiso que los movimientos). No cuentan como mortalidad | Usuario: «todos los que encontraste en el Excel» |
+| 26/10/2026 | **Consignatarios y destinos los agrega el Administrador**; Yishunhai también a XMN. **Sin tape por envío: el color es el del consignatario** (se hizo y se quitó el mismo día, a pedido del usuario). **% de mortalidad del cliente y temperatura de arribo** por embarque. **Precio de compra** por recepción (solo el Administrador en la app) | Usuario: preguntas 4, 6 y 7: sí; 5: «quita el color del tape, ya va con cada consignatario» |
+| 26/10/2026 | **Hojas del Excel de Martha como PDF para imprimir** (no Excel): Recepción, Envíos, Existencia, Congelación, Precio de compra, Balance. **Sus fórmulas son la referencia**: `excel_reales_t.py` compara la app con ellas usando sus datos reales | Usuario: «solo PDF… para imprimir»; «usa sus fórmulas como fuente de verdad» |
+| 24/10/2026 | **Especie en cada entrada**, de una lista que solo cambia el Administrador (Langosta Roja de inicio; los lotes de antes son Langosta Roja). Sale en el PDF de Entrada y en la Hoja de empaque (de los lotes empacados). **Tanques y compradores separan kilos por especie.** Las órdenes no llevan especie: lo pedido resta solo de los totales por talla | Usuario: «diferentes especies en los tanques»; respuestas: lista en Administración · Entrada y Hoja de empaque · separar por especie |
 | 22/10/2026 | **Empaque: el avance (completadas · pendientes · %) va arriba de las hieleras y no se mueve**; antes flotaba abajo, debajo del teclado. «Guardar hieleras» sigue abajo | Usuario (captura con el avance encerrado) |
 | 22/10/2026 | **Rol Cliente para compradores de fuera (China)**: ven en vivo, en inglés, los kilos disponibles por talla y lo recibido en los últimos 7 días, para hacer ventas. **Disponible = tanques − lo pedido que no ha salido.** **Al cerrar un embarque la salida del tanque se registra sola** (cambia la del 14/oct «salidas a mano»); reabrir la regresa. Sin temperatura, proveedor, lote ni tanque para el comprador. La base solo le deja leer su hoja (reglas de seguridad cambiadas con su permiso) | Usuario: «gente de fuera como en China», «la semana», «lo que va entrando en vivo… para tenerlo a mis consultores y hacer ventas»; 1 A · 2 No · 3 Inglés · 4 Sí |
 | 18/10/2026 | **Fechas y horas se escriben** (sin calendario ni reloj del teléfono) con «Hoy»/«Ahora». **Empaque: cada hielera se completa sola** (también en la vista completa) y al terminar se cierra el teclado con «Listo». **Orden: el total sale de las tallas**; tallas opcionales; tarimas y cartón aparte. **Empacar sin lote** y conectarlo después. Proveedor nuevo desde la Entrada (Administrador). Pesos editables desde Embarque. Ventana para instalar la app. Sin CSV, sin «Quitar guardadas», sin «Eliminar orden» en Modo piso, sin «Revisión aparte / se calcula sola» | Usuario, después de usarla en su celular |
@@ -64,6 +71,23 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 | 14 oct 2026 | «Último que guarda gana» por registro; lo pendiente del equipo gana sobre lo que llega mientras no se suba | Simple y suficiente: cada caja, movimiento y nota es su propio registro |
 | 14 oct 2026 | Los datos viejos de cada tablet **no se mezclan** con la base; se pueden descargar o borrar desde Administración | Eran de prueba y cada tablet tenía otros |
 
+| 26 oct 2026 | **Avisos de la entrada:** fecha que no cuadra con el código del lote y hora de madrugada (00:00–04:59). No bloquean; el Administrador corrige o acepta («Está bien así») | Usuario, después de los errores del Excel de Martha |
+| 26 oct 2026 | **Salida incompleta:** lo que no se pudo descontar al cerrar el embarque queda como pendiente del embarque, con «Volver a descontar del tanque» | Usuario |
+| 26 oct 2026 | **Especie en cada orden** (cambia la del 24/oct): empacar solo de lotes de esa especie; lo pedido resta de su especie para los compradores | Usuario: «Sí, en cada orden» |
+| 26 oct 2026 | **Balance de Luis Arce = fórmula de PROPESA** (cuenta despatada y congelados) | Usuario |
+| 26 oct 2026 | **Sin rango de temperatura** por ahora (se preguntó otra vez) | Usuario |
+| 26 oct 2026 | **Lotes por envío:** cada embarque dice cuánto lleva de cada lote (hieleras, langostas, kg de producto, tallas) en la pantalla, el PDF y el informe por correo | Usuario: «Sí, en el envío y en el PDF» (pregunta 6) |
+| 26 oct 2026 | **Cerrar con la hoja de empaque incompleta solo pregunta** (no bloquea); el PDF la marca como incompleta | Usuario: «Solo pregunta (como hoy)» (pregunta 9) |
+| 26 oct 2026 | **Órdenes de fechas distintas en un embarque:** se permiten, sin aviso | Usuario (pregunta 12) |
+| 26 oct 2026 | **PDF: nombre de la maquila en grande** (banda debajo del logo y etiqueta en las demás páginas); el logo de PROPESA se queda | Usuario: «que sea claro distinguir» |
+| 26 oct 2026 | **PDF a color por talla:** leyenda con color y gramaje de las tallas de la maquila del PDF; columnas de talla con encabezado del color y teñidas | Usuario: «que toda la tabla sea de cada color respectivo para que sea más visual» |
+| 26 oct 2026 | **Modo piso paso a paso** para «Cerrar embarque» (hieleras → pendientes → cerrar) y «Conteo final» (kg → confirmar). El piso revisa pero solo el Administrador cierra embarques | Usuario: «Sí, los dos» (pregunta 15) |
+
+| 27 oct 2026 | **Logotipo por maquila** (emblema con iniciales, forma y color propios + «MAQUILA» + nombre) en menú, Modo piso, celular, menú de maquilas, Panel general y Administración; PROPESA conserva su logo. Los PDF no cambian | Usuario: «make the logo be like "maquila Abel"… easy to recognize when you switch» |
+| 27 oct 2026 | **Vivas al llegar, % del cliente y temperatura de arribo se capturan en Revisión → Mortalidad final**, no en el embarque | Usuario: «quiero que esté aparte en la pestaña de revisión, no en la sección de embarque» |
+| 27 oct 2026 | **Juntar y separar embarques solo en el embarque**, con Ahora → Así queda, confirmar y Deshacer; la orden solo dice en qué embarque va | Usuario: «pico botones al azar y no sé qué hacen» |
+| 27 oct 2026 | **El color de toda consignación (abierta o cerrada) es el del consignatario en Administración**; cambia la regla de la v1.15.0 de que los cerrados conservaban su color | Usuario: «very critical… colors don't match the admin settings» |
+
 ## Rechazadas (no repetir sin preguntar)
 
 | Propuesta | Resultado |
@@ -77,3 +101,11 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 | Ajustes dentro del menú del perfil | Regresó a la barra |
 | Teclado numérico propio en Modo piso | Quitado |
 | Botones de «entrar como…» en el acceso | Quitados (/review) |
+
+## 28/oct/2026 (v1.25.0)
+- **Despatada es merma** (usuario): entra en Mortalidad final. Decidido por Claude, por confirmar: el conteo final cuenta langostas enteras (esperado sin despatada) y la merma suma la despatada recibida.
+- **Orden sin despatada (29/oct, usuario):** la orden no pide hieleras de Despatada; Empaque conserva la categoría Gris (el usuario pidió dejarla).
+- **Conteo final = solo langostas enteras** (confirmado por el usuario el 29/oct).
+- **Temperatura (29/oct):** el usuario pidió rangos internos basados en el Excel para que no todo salga en rojo; aplican a agua y producto (cada uno con su escala). Con los datos del Excel: agua en rojo 1 de 60, producto en rojo 9 de 53. La tabla de la industria se deja de referencia.
+- **Prueba con Excel (29/oct):** los envíos sin tallas en el Excel no se capturan (usuario).
+- **Hieleras de otra maquila:** la orden y el embarque son de la maquila que los crea; los kg salen del tanque de la maquila dueña del lote al cerrar.

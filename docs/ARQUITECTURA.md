@@ -129,6 +129,7 @@ Escritor propio `PdfRep` (sin librerías): Helvetica con codificación WinAnsi y
 | `propesa-theme` | `light` / `dark` / sin valor (sigue al equipo) |
 | `propesa-fs` | Tamaño de texto (15, 17 o 20) |
 | `propesa-piso` | Preferencia de Modo piso del equipo |
+| `propesa-nt-<id>` | Notificaciones vistas por ese usuario (v1.26.0): `{t: ms de «Marcar todo como visto», k: claves tocadas ('R:<lote>', 'O:<orden>', 'C:<informe>')}` |
 | `propesa-z` | Tamaño viejo (solo se lee para migrar) |
 | `propesa-ses` | Sesión abierta: `{u: id del usuario, exp}` (en la base compartida, además debe existir `propesa-sb` del mismo usuario). Vence 12 h (`SES_H`) después del último toque o tecla (`LAST_ACT`). Se borra al cerrar sesión |
 | `propesa-ui` | Dónde estaba y lo que se estaba escribiendo: `V`, `form`, `uf`, `PKD`, `PE`, `PEN`, `OD`, `OA`, `HIST`, `ND` (sin fotos), scroll de `main` y `f` = valor de cada campo de `#app` (clave = `#id` o etiqueta + atributos `data-*`). Se borra al cerrar sesión |
@@ -180,3 +181,59 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 | Fotos (v1.8.0) | `FQ` cola por subir (IndexedDB `fotos-cola`), `FC` fotos listas para mostrar, `fotoSrc`/`fImg` (src o gris + `data-fp`), `fotoLoad` (IndexedDB `F/<ruta>` o bajada con sesión), `upFotos` (sube antes que `flush`), `fotoMigra` (fotos viejas dentro de notas), `fotoDel`. `outN()` cuenta también las fotos por subir. Detalle: `SUPABASE.md` §8 |
 | Acceso | `sbAuth`, `sbToken` (renueva el token solo), `sbFetch`, `cloudLogin`, `cloudSetup`, `checkSetup` (`rpc/has_admin`), `signOut`, `dropSes` |
 | Usuarios | `loadProfiles()` llena `ST.U`; `fnUsers(action)` llama a la función `usuarios` (`create`, `update`, `delete`, `setup`) |
+
+## 12. Maquilas, tallas y hojas para imprimir (v1.19.0)
+
+| Pieza | Qué hace |
+|---|---|
+| `MQ`, `STX`, `mqSet(id)` | Maquila abierta (`ST`) y las demás (`STX`). `mqSet` pasa lo compartido (`SHF`), guarda los borradores de la que se deja (`DRX`) y llama `stSync()` |
+| `withST(st, fn)` | Corre `fn` con otra maquila como si fuera `ST` (índices `RX` nuevos, tallas de esa maquila); lo usan el Panel general (`mqStats`), el menú del logo (`mqKg`) y `encodeAll` |
+| `encodeAll()` / `mqParts(src)` | Todas las maquilas ⇄ registros. La activa se codifica en cada guardado; las demás solo cuando cambian (`ENC_X`). Prefijo `q<id>:` excepto la maquila 1 |
+| `stSync()` = `cnSync()` + `szSync()` | Consignatarios/destinos (`CONS`, `PORTS`) y tallas (`S`, `RC`, `TKEY`, `TNM`, `SZC`, `SON`… y el CSS `#szcss`) de lo que está abierto. Se llama en `render()`, al cambiar de maquila, al recibir cambios y al restaurar |
+| `mqLogo(cls)` · `#mqmenu` | Botón del logo (menú y Modo piso) y su menú «Cambiar de maquila» (`data-mq`, `data-mqgo`). En otra maquila muestra su nombre (`.mqnm`) en lugar del logo |
+| Rutas nuevas | `general` (Panel general, solo Administrador, a donde entra: `home0()`), `hojas` (Hojas para imprimir) |
+| Administración | `mqCard` (`data-mqa`), `szCard` (`data-sza`), `consCard` (`data-cna`, `data-cnp`), `destCard` (`data-dsa`) |
+| Lote | Movimientos con `MVO`/`mvL`/`L.nt`; `prCard`/`prSave` (`data-a=prs`) |
+| Embarque | `data-mc`, `data-ta` (% del cliente y temperatura de arribo; se redibuja con `setTimeout` para no chocar con el `blur`) |
+| PDF | `pdfHRec`, `pdfHEnv`, `pdfHExi`, `pdfHCon`, `pdfHPre`, `pdfHBal` (claves `hrec`… en `pdfMake`; argumento `desde|hasta|existencia física`). `PdfRep` agrega «Maquila <nombre>» al subtítulo y `pdfName` al archivo |
+| Tanques | `tqDist`, `tqShare`, `tqOf`, `tqTxt`, `recTk`/`recTT`/`recKB` (entrada en dos tanques); `tqCard`/`tqMove` (`data-a=tqmv`), `data-tqx` deshacer (no confundir con `data-tqdel`, que borra lecturas de temperatura) |
+| Precio | `WN.$` y el registro `$/<lote>`; `decodeST` lo une a su lote |
+
+## 13. Avisos y especie de la orden (v1.20.0)
+
+- `lotDt(lote)` lee la fecha del código (WLR + clave + ddmmyy); `lotWarn(r)` da los avisos del lote (fecha y hora de madrugada) sin los aceptados en `r.av`. `lotWarnBox(r)` los pinta en el lote (con `data-a="el"` y `data-av="<lote>|<clave>"`); `lotWarnBan()` en Entrada.
+- `salidaAuto(p, x)` descuenta lo que puede y deja el resto en `p.sf`; `shipIssues` lo muestra como «Salida incompleta» y `shipAlert` pone «Volver a descontar del tanque» (`data-sfa="<p.u>"`), que quita los movimientos `E/<p.u>` y vuelve a llamar `salidaAuto`. `shipActive` deja a la vista los cerrados con `sf`.
+- `ordSp(o)` / `ordEs(o)` = especie de la orden; `ordLots(o)` = lotes abiertos de esa especie (empacar, `pkAuto`, «agregar todas», encabezado y Modo piso). `neSave` y el lote «sin lote» toman la especie de la orden. `spMany()` decide si se ve el selector. `dispCalc` resta lo pedido de su especie (`su` = sin talla).
+
+## 14. Lotes por envío y paso a paso en Modo piso (v1.21.0)
+
+- `shipByLot(i)` agrupa las hieleras del embarque por lote: `{l, h (hieleras), c (langostas), g (gramos de producto, lnKp de su línea), z (langostas por talla)}`. La usan `lotsInShip(i)` (tabla «Por lote» del embarque, `#emb_lotes`), `pdfEmbarque` (sección «Por lote») y el informe por correo de `closeP`. `lzTxt(z)` = texto por talla. No guarda nada nuevo.
+- Rutas de Modo piso `pcer[:p.u]` → `pisoCer` y `pcon[:lote]` → `pisoCon`. El estado del paso vive en `PCE={u,s}` y `PCO={lot,s,kg,er}` (no se guarda). Botones `data-pce` (1, 2, 3, `cerrar` → `closeP`) y `data-pco` (1, 2, `guardar`); `pcoNext()` valida igual que `data-fin`. `pStep`/`pNav` pintan el encabezado y la barra Atrás/Siguiente (`.pnav`).
+- `modeDest`: embarques/emb abierto ↔ `pcer`, cierre/lote abierto ↔ `pcon`. `fixRoute` regresa a la lista si el embarque o lote ya no existe. En la vista completa, `pcer`/`pcon` caen a Embarque / Mortalidad final.
+- La regla `.cli` de la pantalla de compradores ahora es `div.cli`: pintaba un fondo azul detrás del código del lote o cliente en las tarjetas grandes de Modo piso.
+
+## 15. PDF a color por talla (v1.22.0)
+
+- `R.tallas()` dibuja la leyenda (tarjeta por talla visible de `szAll()`: color, nombre, `szGr(r)`, nombre del color; con «Maquila X» fuera de PROPESA). Se llama antes de los `stats` de cada PDF con tallas.
+- En `R.table`, una columna con `zc:'#color'` lleva el encabezado de ese color (texto `fgOn`, borde gris si es claro) y la columna teñida con `pdfTint(color, .22/.30)` (total `.45`). Las celdas aceptan `bg`. Las columnas de talla usan `zc:ZBG[i]`; las de categoría `zc:RC[k][1]`.
+- `szGr(r)` = gramaje: «491-610 g», «1221-UP g»; un rango que no es de números (p. ej. «26-32 piezas») se deja igual.
+- v1.23.0: `PdfRep` ya no mete «Maquila X» en el subtítulo; `head()` dibuja en la primera página una banda azul marino con «MAQUILA» y `mqName(MQ)` en mayúsculas (20 pt, se achica si no cabe) y en las demás una etiqueta «MAQUILA X» arriba a la derecha.
+
+## 16. Logotipo de maquila, llegada en Revisión, faltantes, juntar/separar y colores (v1.24.0)
+
+- **Maquilas:** `mqCol(id)` (paleta `MQC`, PROPESA = cian), `mqIni(n)` (iniciales), `mqBadge(id)` (SVG: hexágono, círculo o escudo según `(id+1)%3`), `mqLT(id)` (logotipo del menú y Modo piso) y `mqTag(id)` (emblema + nombre en listas). Se calculan del id: no hay nada nuevo en `ST`. `.sb.mqa`, `.phd.mqa` y `.hd.mqa` llevan la franja `--mq`; `.hmq` es el emblema de la barra en celular (abre el mismo menú, `data-mq`).
+- **Colores:** `consColor(i)` = `ST.CC[i]` o `XC[i % XC.length]` (lo que enseña Administración). `pCol(p)` lo toma del consignatario de la primera orden del embarque al dibujar (`shipCC`); `p.col` queda solo para embarques sin órdenes. `syncShipIdx` también guarda `p.col = consColor`.
+- **Llegada:** `envCli()` en `cierre()` es la captura (`data-alive`, `data-mc`, `data-tar`), un renglón por envío con hieleras o cerrado (últimos 30). `emb()` solo pinta `.arrn` con «Ir a Mortalidad final ›» (`data-go` + `data-jumpto`, que baja hasta la tarjeta).
+- **Faltantes:** `lnFalta(o,l)` → `{f, z:[[talla, faltan]]}`; `faltaLn`, `faltaOrd` y `ordFalta(o)` (tarjeta `#ord_falta`).
+- **Juntar/separar:** `ordsInShip(i)` (`#ordship`) con `data-shq="ask:join|sep:<orden>:<ciudad|consignatario>:<u del embarque>"`; `SHQ` = pregunta abierta (`shAsk` pinta Ahora → Así queda), `ok` llama `moveGroup`, `SHD` = último cambio con `undo:{oid,k,to}` (`shDone`). Se olvidan al salir de Embarque (`render`). `shipPanel` (orden) solo informa y lleva al embarque. Ya no existe `data-sh`.
+
+## 17. Camiones en pestañas y notificaciones (v1.26.0)
+- **Pestañas:** `embarques()` pinta `.ttabs` (`role=tablist`, `data-ttab=<tk>`, `#ttab_N`) solo con 2+ camiones; `TTAB` = camión que se ve (`tTab()` cae al primero si ya no existe). Dentro de `#tpanel`: PDF del camión (`pdfBar('embs', tk)`), indicaciones, `truckCard(tk)` y sus consignaciones abiertas. «Camión nuevo» (`data-tk` = `+`) pone `TTAB` en el nuevo. Flechas/Inicio/Fin cambian de pestaña.
+- **PDF:** `pdfEmbarques(tk)`: con un camión, el de siempre (todos los embarques); con 2+, solo ese camión y sus embarques abiertos (`Plan_de_carga_Camion_N`).
+- **Notificaciones:** `ntBtn(dk)` (campana + `.ntc`) en `.hd .usr` y en `pisoShell`; panel en `#ntmenu` (`ntHTML`, `placeNt`, `openNt`/`closeNt`, Escape y «atrás» lo cierran). `ntFalta()` = `{ti, tx, go, jump}` de `lotWarn`, existencia negativa, `pendLines`, órdenes sin líneas, `shipIssues` y embarques listos para cerrar. `ntRecent()` = `{k, t, c:'n'|'d', …}` de 7 días: entradas (hora = id del primer `RECEPCION`), órdenes (`o.id`) y embarques cerrados (`ST.O[].u`). Tocar (`data-ntgo`) marca visto (`data-ntk`), cierra y hace `go()`; `data-ntj` baja a la parte de la pantalla. Todo se calcula al dibujar: nada nuevo en `ST`.
+
+## 18. Lo más viejo primero, días por proveedor, orden variada y 35 por hielera (v1.27.0)
+- **Edad del lote:** `lotDays(r)` = días entre `r.rdate` y hoy (`dLoc`); `lotDue(l)` = `{d, dm, st}` con `dm` = `pv.dm` del proveedor (`pvMatch`) y `st` `'v'` (pasó) / `'u'` (último día) / `''`. `lotOld(l)` = texto del aviso rojo (solo si pasó y tiene kilos); va en `lote()` y en `ntFalta()`.
+- **Orden:** `fifo(lotes)` = primero los que pasaron o están en su último día, luego por fecha y hora de entrada; los «sin entrada» al final. `ordLots(o)` lo usa (propios y de otras maquilas por separado), así que la vista completa, Modo piso y `zAuto` ven el mismo orden. `lot1(op)` = único lote propio o el primero con kilos (queda elegido en la vista completa; en Modo piso se sigue preguntando si hay varios, `pisoEmp`). `lotTag(x, primero)` pinta «Más viejo · usar primero», «Último día en tanque» o «⚠ N días · aguanta D».
+- **Orden variada:** `zAuto(o, n, kp)` reparte n hieleras de kp kg recorriendo `ordLots(o)` (propios, con entrada) y las tallas de la orden (sin despatada); antes descuenta lo que otras órdenes pidieron por talla y no han empacado (`lnPz`). Devuelve `{z, falta}`. Botón `data-oa="za:ol|le"` en `lnForm`: lee el formulario (`lnRead`), llena `D.z` y vuelve a dibujar; no guarda hasta «Agregar» / «Guardar».
+- **35 por hielera:** `PZMAX`/`PZMSG`; se revisa en `pkAuto`, `pkUpd`, «Guardar hieleras», `peTry`, y la corrección en piso (`.psc` y `kpCatPress`); el teclado deja escribir y avisa al guardar.

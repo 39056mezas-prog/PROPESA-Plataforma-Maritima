@@ -10,7 +10,7 @@
 | `public.app_records` | **Todos los datos de la operación**, un registro por cosa (ver §2). `k` = clave, `v` = contenido (null = borrado), `rev` = número de cambio que solo crece, `updated_at`, `updated_by` |
 | Disparador `app_records_stamp` | Pone `rev`, `updated_at` y `updated_by` en cada escritura (la app no los puede falsear) |
 | `public.push(rows)` (v1.4.1) | Guarda los cambios de la app **solo si el registro sigue como el equipo lo vio** (`b`). Si otro equipo lo cambió antes, no lo guarda y devuelve lo que hay en la base. Corre con los permisos de quien llama |
-| `public.app_records_hist` (v1.4.1) | **Historial:** cada vez que un registro cambia o se borra, el disparador copia aquí cómo estaba (`k`, `v`, `rev`, quién y cuándo). Solo el Administrador lo puede leer; nadie lo edita desde la app. Cómo recuperar algo: ver §7 |
+| `public.app_records_hist` (v1.4.1) | **Historial:** cada vez que un registro cambia o se borra, el disparador copia aquí cómo estaba (`k`, `v`, `rev`, quién y cuándo). Solo el Administrador lo puede leer; nadie lo edita desde la app. **Desde la v1.16.0 guarda solo 30 días** (se borra solo) y no guarda `D/disp`; la función `cambios(lim)` arma la lista de Administración → «Historial de cambios». Cómo recuperar algo: ver §7 |
 | `public.pull(since, lim)` | Cambios con `rev > since`, en orden, con `age` (segundos desde que se escribieron) |
 | `public.has_admin()` | ¿Ya hay Administrador? (para mostrar la Configuración inicial) — se puede llamar sin sesión |
 | `public.profiles` | Usuarios de la app: `id` (= cuenta de Supabase Auth), `name`, `email`, `role` (`admin`/`piso`/`consulta`), `notify` |
@@ -23,9 +23,13 @@
 
 Las tablas del primer esquema (`lots`, `movements`, `orders`, `order_lines`, `shipments`, `shipment_orders`, `boxes`, `notes`, `reports`), la función `piso_solo_conteo`, el disparador `al_crear_usuario` y su función `nuevo_perfil` **se borraron el 15/oct/2026** (`supabase/migrations/20261014d_quitar_tablas_viejas.sql`, la aplicó el usuario en Supabase). Antes se verificó que estaban vacías y que nada dependía de ellas. En la base quedan solo `app_records`, `app_records_hist` y `profiles`. El espacio de archivos `reportes` se queda (servirá para las fotos).
 
-**Reconstruir la base desde cero** (por ejemplo, en un proyecto nuevo): correr en el SQL Editor, en este orden, `supabase/schema.sql`, `migrations/20261012b_solo_admin_cambia_rol.sql`, `20261014_sincronizacion.sql`, `20261014b_sin_pisar.sql`, `20261014c_historial.sql`, `20261014d_quitar_tablas_viejas.sql`, `20261015_fotos.sql` y `20261022_cliente.sql`; después publicar la función `usuarios` y, si la base nueva tiene otra dirección, cambiarla en `index.html` (`SBC`), `vercel.json` (CSP) y `api/despierta.js`. Probado el 15/oct/2026 en un Postgres 16 local: deja las mismas tablas, funciones, disparadores y reglas que `propesa_bc`.
+**Reconstruir la base desde cero** (por ejemplo, en un proyecto nuevo): correr en el SQL Editor, en este orden, `supabase/schema.sql`, `migrations/20261012b_solo_admin_cambia_rol.sql`, `20261014_sincronizacion.sql`, `20261014b_sin_pisar.sql`, `20261014c_historial.sql`, `20261014d_quitar_tablas_viejas.sql`, `20261015_fotos.sql`, `20261022_cliente.sql`, `20261023_historial_corto.sql` y `20261026_precios.sql`; después publicar la función `usuarios` y, si la base nueva tiene otra dirección, cambiarla en `index.html` (`SBC`), `vercel.json` (CSP) y `api/despierta.js`. Probado el 15/oct/2026 en un Postgres 16 local: deja las mismas tablas, funciones, disparadores y reglas que `propesa_bc`.
 
 Migraciones aplicadas: `esquema_inicial_propesa`, `piso_borra_sus_cajas` (12/oct) y, el 14/oct, `app_records_tabla`, `app_records_reglas`, `ver_solo_con_perfil`, `sellar_funcion_stamp`. Todo junto y comentado en `supabase/migrations/20261014_sincronizacion.sql`. El 15/oct se aplicó `20261014d_quitar_tablas_viejas.sql` desde el SQL Editor, así que no sale en la lista de migraciones del panel; lo que hizo se verificó con SQL.
+
+**v1.19.0 (aplicada el 26/oct, con permiso del usuario):** `precios_solo_admin` (archivo `20261026_precios.sql`): los registros de precio (`$/<lote>` y `q<id>:$/<lote>`) solo los lee y escribe el Administrador. Comprobado en `propesa_bc` dentro de transacciones que se deshicieron: Piso y Consulta ven los lotes y 0 precios, el Administrador los ve; `push` de un precio como Piso → 42501; Piso sigue guardando lo demás.
+
+**v1.16.0 (aplicada el 23/oct, con permiso del usuario):** `historial_corto` (archivo `20261023_historial_corto.sql`): historial de 30 días, sin `D/disp`, función `cambios`. No borró nada (lo más viejo era del 16/oct).
 
 **v1.4.1 (aplicadas el 14/oct):** `sin_pisar` (función `push`, archivo `20261014b_sin_pisar.sql`) e `historial` (tabla `app_records_hist`, archivo `20261014c_historial.sql`). Se probaron en la base real dentro de una transacción que se deshizo. Función `usuarios` publicada en su versión 2 (se quitó un borrado repetido del perfil: la base ya lo borra en cascada al eliminar la cuenta). Se intentó quitar el disparador `al_crear_usuario` (llama a `nuevo_perfil`, que no hace nada) y la base canceló el paso; se quitó el 15/oct con `20261014d`.
 
@@ -43,7 +47,13 @@ Desde la v1.6.0 la app ya no tiene el camino viejo que subía sin revisar choque
 | `O/<u>` | informe de cierre | `ST.O` |
 | `T/<id>` | lectura de temperatura | `ST.T` |
 | `W/pesos` | peso estándar de la caja (`{h, g, p, c}`, v1.8.7) | `ST.W` |
+| `E/<id>` | especie (`{id, n, en, off}`, v1.18.0) | `ST.ES` |
 | `C/colores` | color de cada consignatario (`{índice: "#rrggbb"}`, v1.15.0) | `ST.CC` |
+| `Q/<id>` · `K/<n>` · `X/<código>` | maquilas · consignatarios · destinos (v1.19.0, compartidos) | `ST.MQL` · `ST.CN` · `ST.DS` |
+| `Z/tallas` | tallas de una maquila (v1.19.0) | `ST.SZ` |
+| `$/<lote>` | precio de compra del lote (v1.19.0; **solo Administrador**) | `ST.R[].pr` |
+| `TQ/<id>` | traslado de kg entre tanques (v1.19.0) | `ST.TQ` |
+| `q<id>:<clave>` | **v1.19.0:** cualquier registro de una maquila que no es PROPESA (`q2:R/<lote>`, `q2:OR/<id>`…). Los de PROPESA conservan su clave de siempre. Sin cambios en tablas ni reglas: la clave es texto libre | `STX[id]` |
 | `D/disp` | hoja de disponibilidad para los compradores (v1.13.0): `{z: g por talla, u: g pedidos sin talla, e: [[fecha, g por talla]]}`. La calcula cada equipo (`dispCalc`), no vive en `ST` | — |
 | `M/<id>` | nota y su `key` (las de embarque usan `emb:@<u>`). Desde la v1.8.0 `imgs` trae **referencias** `sb:notas/<id>/<n>.jpg`, no la foto (ver §8) | `ST.M` |
 
@@ -52,6 +62,7 @@ Los usuarios **no** van en registros: `ST.U` se llena con `profiles`.
 ## 3. Reglas de seguridad (RLS)
 
 - **Ver:** Administrador, Piso y Consulta ven todo; una cuenta creada fuera de la app no ve nada. **Cliente (v1.13.0, `20261022_cliente.sql`) solo ve `D/disp` y su propio perfil**; no ve fotos ni «reportes». `pull()` corre con los permisos de quien llama, así que al Cliente solo le devuelve esa fila.
+- **Precios (v1.19.0):** los registros `$/<lote>` (con o sin prefijo de maquila) solo los lee y escribe el Administrador.
 - **Escribir registros:** Administrador y Encargado de piso. **Consulta** no puede escribir (403).
 - **Perfiles:** solo los cambia el Administrador (y la función `usuarios`). Ya no se crean solos al registrarse (el disparador `al_crear_usuario` se borró el 15/oct); el disparador `perfil_rol` (función `solo_admin_cambia_rol`, archivo `20261012b_solo_admin_cambia_rol.sql`) rechaza que alguien con sesión que no sea Administrador cambie un rol.
 - El resto de los permisos por rol (quién edita órdenes, cierra lotes…) lo cuida la app, igual que antes.
@@ -77,8 +88,7 @@ Los usuarios **no** van en registros: `ST.U` se llena con `profiles`.
 ## 6. Pendientes
 
 - **Correo real** del informe con su PDF (Edge Function + Resend/SMTP; falta remitente y dominio).
-- El historial (`app_records_hist`) no se limpia solo: revisar su tamaño cada año.
-- Pantalla en Administración para ver y recuperar versiones viejas (hoy se hace con SQL, §7).
+- Botón para regresar a una versión vieja desde la pantalla del historial (hoy se ve en Administración y se recupera con SQL, §7). El historial ya se limpia solo a los 30 días (v1.16.0).
 - Copias de seguridad automáticas (plan de Supabase) además del respaldo `.json`.
 
 ## 7. Recuperar algo que se pisó o se borró (v1.4.1)

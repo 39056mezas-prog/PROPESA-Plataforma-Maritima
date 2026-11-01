@@ -94,7 +94,9 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - `P[].c` = componentes de las líneas del embarque sin renglones en 0; `P[].z` = suma de tallas de sus líneas cuando todas las tienen.
 
 ## v1.11.0 · proveedores y lotes sin entrada
-- `ST.PV` (opcional): `[{id, n nombre oficial, k clave del lote (1–4 letras), rfc, per permiso de pesca, off oculto}]`. Si no existe se usa `PV0` (Ensenada CO, Emancipación EM, Leyes de Reforma LE); se crea al primer cambio en Administración. Ids nuevos con `uidN()`. Se comparte como un registro por proveedor `V/<id>` (`WN.V = pvClean`); `cleanST` la limpia (`pvClean`, sin ids repetidos).
+- `ST.PV` (opcional): `[{id, n nombre oficial, k clave del lote (1–4 letras), rfc, per permiso de pesca, dm días máximos en tanque (1–60, opcional desde la v1.27.0; sin dm = sin límite), off oculto}]`. Si no existe se usa `PV0` (Ensenada CO, Emancipación EM, Leyes de Reforma LE); se crea al primer cambio en Administración. Ids nuevos con `uidN()`. Se comparte como un registro por proveedor `V/<id>` (`WN.V = pvClean`); `cleanST` la limpia (`pvClean`, sin ids repetidos).
+- `ST.ES` (opcional, v1.18.0): `[{id, n nombre, en nombre en inglés para compradores, off oculta}]`. Si no existe se usa `ES0` (Langosta Roja · Red lobster, id 1); se crea al primer cambio en Administración → Especies. Ids nuevos con `uidN()`. Un registro por especie `E/<id>` (`WN.E = esClean`); `cleanST` la limpia (`esClean`, sin ids repetidos).
+- `R[].sp` (opcional, v1.18.0): id de la especie. Sin `sp` = especie 1 (`esOf(r)`). Los lotes nuevos siempre lo guardan.
 - `R[].pv` (opcional): id del proveedor. `R[].origin` sigue guardando el nombre (lo usan PDF y reportes, y es lo único que tienen los lotes de antes). `pvMatch(r)` da el proveedor por `pv` o, en un lote de antes, por nombre exacto.
 - `R[].ne` (opcional): lote **sin entrada** (se empezó a empacar sin recepción): sin kilos, `rdate` vacío. Al capturar su entrada con el mismo código, `addLot` lo completa (conserva `id` y hieleras) y quita `ne`.
 - Los dos campos solo se escriben cuando existen: los lotes de antes se suben exactamente igual. No cambió Supabase.
@@ -112,3 +114,30 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 ## v1.15.0 · color de cada consignatario
 
 - `ST.CC` (opcional): `{índice en CONS: '#rrggbb'}`. Solo el Administrador lo cambia (Administración → Consignatarios). `syncShipIdx` copia ese color a `p.col` de los embarques abiertos; los cerrados conservan el suyo. Sin color elegido, `p.col` sigue saliendo de `XC` por turno. Se comparte como `C/colores` (`WN.C = ccClean`: solo índices de `CONS` y `#rrggbb`); `cleanST` la limpia igual. Sin migración: es opcional.
+
+## v1.19.0 · maquilas, tallas, salidas, consignatarios, envíos y precios
+- **Maquilas:** `ST` es la maquila abierta (`MQ`, recordada en `propesa-mq`); las demás viven en `STX = {id: ST de esa maquila}`. `mqSet(id)` cambia: pasa a la nueva lo compartido (`SHF`: `U, W, CC, PV, ES, T, MQL, CN, DS`) y guarda lo que se estaba escribiendo de cada maquila (`DRX`). `withST(st, fn)` corre algo con otra maquila (Panel general, subir registros). Lista: `ST.MQL = [{id, n, off}]` (sin ella, `MQ0`: PROPESA 1, Abel 2, David 3, Luis Arce 4). Registros: los de la maquila 1 sin prefijo (como siempre); los de otra con prefijo `q<id>:` (`q2:R/<lote>`). Compartidos sin prefijo (`SHT`: `W C V E T Q D K X`); `D/disp` solo de la maquila 1. `encodeAll()` / `mqParts()` arman y separan; `applyRows` solo vuelve a armar las maquilas que cambiaron. Copia del equipo (IndexedDB): `{st, since, x: STX, mq}`. Modo local y respaldo: `ST` + `_X` (otras maquilas) + `_MQ`. Un respaldo viejo (sin `_X`) es solo PROPESA.
+- **Tallas:** `ST.SZ = [{id, k, n, r, c, cn, en, off}]` por maquila, registro `Z/tallas` (con prefijo). `id` = talla de los movimientos (`L.size`), `k` = categoría de la hielera (`b.k`). Sin `ST.SZ` = `SZ0` (las 4 de siempre + Despatada `desp`/`D`). No se borran ni se reordenan: `z` de líneas y embarques es por posición (las viejas de 4 se leen con 0 en las nuevas). `S, RC, TKEY, TNM, SZC, ZBG, ZFG, SL, ZEN, SON` salen de la lista (`szSync`, también arma su CSS en `#szcss`). `WN`/`cleanST` ya no exigen tallas de una lista fija (cada maquila tiene las suyas): validan el formato.
+- **Movimientos:** `LTYPES` + `CONGELACION, BASURA, RECUPERACION, DEBIL`; `L.nt` (nota o folio, 120).
+- **Consignatarios y destinos:** `ST.CN = [{k, n, p, a, c, u, off}]` (posición = número que guardan las órdenes) en registros `K/<posición>`; `ST.DS = [{c, n, off}]` en `X/<código>`. Sin ellos, `CONS0` y `PORTS0`. `CONS` y `PORTS` salen de ahí (`cnSync`). Las líneas de orden se validan por formato (ciudad de 2–5 letras, consignatario 0–999).
+- **Embarque:** `P.ta` (temperatura de arribo, texto 30), `P.mc` (% de mortalidad que reporta el cliente, 0–100).
+- **Lote:** `R.pr = {u, d, f, nt}` (USD/kg, USD/kg de despatada, `F`/`S`, nota).
+- **Compradores:** `D/disp.n = [[inglés, rango, color]]` de las tallas de PROPESA.
+- **Precio en la base:** `R.pr` no viaja dentro de `R/<lote>`: va en su propio registro `$/<lote>` (`{lot, u, d, f, nt}`; `q<id>:$/<lote>` en otra maquila). `decodeST` lo vuelve a poner en su lote. La base solo se lo da al Administrador.
+- **Traslados entre tanques:** `ST.TQ = [{id, t, lot, de, a, kg, by, nt, tt, kb}]` por maquila, registros `TQ/<id>`. `nt:'Entrada'` = el otro tanque capturado en la entrada (`tt`, `kb`: su temperatura y kg por caja; salen en Temperatura y en la tabla de Entrada como «1/2», «57.6/60.3», «34/36»). `tqDist(lote)` = kg de hoy por tanque (todo empieza en `r.tank` y cada traslado pasa sus kg sin pasar de lo que hay); `tqShare(lote, tanque)` = proporción para repartir las tallas.
+
+## v1.20.0 · avisos y especie de la orden
+- **Lote:** `R.av` = avisos aceptados con «Está bien así»: `'f:<aaaa-mm-dd>'` (fecha que no cuadra con el código) y `'h:<HH:MM>'` (hora de madrugada); se guardan con el valor aceptado para que un cambio vuelva a avisar (`avClean`, `lotWarn`, `lotDt`).
+- **Embarque:** `P.sf = [[lote, talla, gramos, motivo]]` = lo que `salidaAuto` no pudo descontar al cerrar (`ne` sin entrada, `c` lote cerrado, `b` no alcanzó). Solo en embarques cerrados (`sfClean`); reabrir lo borra.
+- **Orden:** `OR.sp` = especie (id de `ES`). Sin `sp` = especie 1 (`ordSp`). `ordLots(o)` = lotes abiertos de esa especie.
+- **Compradores:** `D/disp.s = [[nombre, gramos por talla, apartado sin talla?]]`; lo pedido ya resta de su especie.
+
+## v1.25.0 · varias maquilas en una orden, tanques por talla, salidas con fecha
+- **Hieleras de otra maquila:** en `ST.B` de la maquila de la orden, con clave `LOTE@idMaquila` (`XLR`, `xk`). `R_`/`bal` la resuelven en `STX[id]` (`xR`, `xBal`; la talla por posición). Viaja en `B/<seq>` con `lot:'LOTE@id'`; `decodeST` y `cleanST` la conservan aunque el lote no exista en esta maquila. `salidaAuto` descuenta del `L` de esa maquila (`rc:'E/<u>'`, nota con maquila y embarque) y marca `ENC_X[id]` para subirla; `salidaOff(u)` la quita de todas.
+- **Traslado de la entrada por talla:** `TQ.z = {talla: kg}` (`tqZc` en `cleanST` y `WN.TQ`). `tqDistZ(l)` = {talla: {tanque: g}}; `tqDist(l)` suma tallas; `tqZ(l,t,z)`. Traslados sin `z` (de antes o «Pasar a otro tanque») reparten en la proporción del tanque de origen.
+- **Movimientos:** tipo `RECLASIFICACION` («Cambio de talla», en pares − / +; no es salida). Las salidas manuales pueden llevar fecha pasada: `L.t` = «dd/mm/aa, 12:00».
+- **Lote:** `R.av` acepta `c:<lote>` (aviso de código aceptado). Corregir el código (`lotRename`) cambia `R`, `L`, `TQ`, `B` y notas; solo sin hieleras.
+- **Camiones:** `tOpen()` = embarques abiertos de todas las maquilas; `P.tk` y `P.ly` se guardan en la maquila de cada embarque (`tDirty`).
+- **Mortalidad:** `espK(l)` = existencia sin despatada (esperado del conteo final); `calc(l)` agrega `desp` (despatada recibida), `mer` y `pm`.
+- **Temperatura:** `TZS.a` (agua) y `TZS.p` (producto), 5 zonas cada una; `tZv(v,k)` zona más alta, `tLv` su nivel, `tOut(v,k)` = Alerta o Crítico, `tAdv` = Advertencia; `TZI` = referencia de la industria (solo se muestra).
+- Sin cambios en Supabase.

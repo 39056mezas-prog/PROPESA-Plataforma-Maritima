@@ -29,3 +29,16 @@ Todos los valores viven como variables CSS en `:root` al inicio de `index.html`.
 ### Vista previa al compartir el link · desde la v1.8.6
 - `og-image.png` (1200×630, ~175 KB): el logo PROPESA en blanco (el mismo `LG` de la app, versión `LOGOD`) y «Plataforma marítima», sobre azul marino `#0B1D59` con un degradado suave. Se genera con Chromium desde el logo de la app; menos de 300 KB por el límite de WhatsApp.
 - Etiquetas `og:*` y `twitter:*` en `index.html` con la dirección completa `https://propesa.org/og-image.png?v=1` (dominio propio desde la v1.13.2; antes `propesa.vercel.app`). Si cambia la imagen, sube `?v=`: WhatsApp, Facebook y Slack guardan la vista previa vieja varios días.
+
+### PDF a color por talla · desde la v1.22.0
+- Los PDF con tallas llevan arriba la leyenda de la maquila: una tarjeta por talla del color de esa talla (nombre, gramaje y nombre del color; las claras con borde gris).
+- En las tablas, cada columna de talla o categoría lleva el encabezado de su color y la columna teñida (22–30%; el total 45%). El resto de la tabla sigue en azul marino.
+
+### Maquila en los PDF · desde la v1.23.0
+- Debajo del logo y la línea azul: banda azul marino `#0B1D59` con «MAQUILA» (8 pt, azul claro) y el nombre en mayúsculas (20 pt, blanco). Páginas siguientes: etiqueta azul marino «MAQUILA X» arriba a la derecha.
+
+### Logotipo de cada maquila · desde la v1.24.0
+- PROPESA conserva su logo. Las demás llevan **emblema + «MAQUILA» + nombre**: el emblema tiene sus iniciales en azul marino `#0B1D59` y una ola, sobre una forma y un color propios (Abel: hexágono ámbar `#F5A623` «A»; David: círculo turquesa `#2DD4BF` «D»; Luis Arce: escudo lila `#C4B5FD` «LA»; las nuevas siguen la paleta `MQC`).
+- «MAQUILA» va en mayúsculas espaciadas del color de la maquila; el nombre en blanco, grande. El menú lleva una franja de 4 px de ese color arriba; Modo piso y la barra de arriba, abajo.
+- Los colores de maquila no se parecen a los de talla (blanco, rojo, verde, amarillo) para no confundirlos. Los PDF no cambian (banda «MAQUILA X» de la v1.23.0).
+

@@ -46,9 +46,10 @@ Pantalla de botones grandes para el Encargado de piso (entra directo); el admin 
 | Botón | Flujo |
 |---|---|
 | **Empacar cajas** | Cliente → lote (se salta si hay uno) → una tarjeta por cada caja del cliente y el **teclado fijo** (v1.3.0): a la derecha en tablet horizontal y computadora, abajo en tablet vertical y celular. Se escriben las piezas en el teclado y se toca ROJO/VERDE/BLANCO: la caja se guarda sola, queda con ✔ Completada (borde verde) y el teclado pasa a la siguiente vacía. Tocar una caja guardada la abre en el teclado («Corrigiendo»; el primer número reemplaza al anterior y la categoría guarda la corrección); «Quitar caja» está en el teclado, con confirmación. La caja activa va en cian. |
-| **Registrar entrada** | Hoja de captura: una fila por lote (proveedor, tanque, lote, kg de las 4 tallas, total) y «Más» para temperaturas, kg por caja, desperdicio, fecha y hora. **Desde la v1.8.2 todos son obligatorios**: si la fila ya tiene algo y falta alguno, el botón dice «Más · Faltan N» en rojo. La hoja existe también en la vista completa: al apagar Modo piso estando aquí, te quedas en la misma hoja con las mismas filas. «+ Agregar entrada», «Guardar entradas» guarda cada fila por separado; errores junto al campo; estados Vacía / Sin guardar / ⚠ Revisar / ✔ Guardada. En pantallas angostas o con texto «Muy grande», cada fila es una tarjeta. |
-| **Cerrar embarque** | Abre la pantalla normal sin menú. |
-| **Conteo final** | Abre la pantalla normal sin menú. |
+| **Registrar entrada** | Hoja de captura: una fila por lote (proveedor y debajo la especie —v1.18.0—, tanque, lote, kg de las 4 tallas, total) y «Más» para temperaturas, kg por caja, desperdicio, fecha y hora. **Desde la v1.8.2 todos son obligatorios**: si la fila ya tiene algo y falta alguno, el botón dice «Más · Faltan N» en rojo. La hoja existe también en la vista completa: al apagar Modo piso estando aquí, te quedas en la misma hoja con las mismas filas. «+ Agregar entrada», «Guardar entradas» guarda cada fila por separado; errores junto al campo; estados Vacía / Sin guardar / ⚠ Revisar / ✔ Guardada. En pantallas angostas o con texto «Muy grande», cada fila es una tarjeta. |
+| **Cerrar embarque** | Paso a paso (v1.21.0): elegir el embarque → 1. revisar las hieleras (empacadas de pedidas, langostas, peso y cuánto va de cada lote) → 2. pendientes, cada uno con su botón a donde se corrige (la hoja de empaque incompleta no impide cerrar) → 3. «Cerrar embarque» (solo el Administrador; el piso ve «Avísale al Administrador»). Al cerrar: «✔ Embarque cerrado» con «Cerrar otro embarque». |
+| **Conteo final** | Paso a paso (v1.21.0): elegir el lote (solo los que faltan por contar, con lo esperado) → 1. kg contados en una casilla grande (Enter avanza; no acepta más de lo esperado y conserva lo escrito) → 2. confirmar con la mortalidad calculada → «✔ Conteo guardado» con «Contar otro lote» y «Corregir» (el Administrador también «Cerrar lote»). |
+| **Temperatura** (v1.17.0) | Abre la pantalla normal de Temperatura sin menú. Dice cuántas lecturas van hoy (incluye las de las entradas). Es el quinto botón: en tablet y computadora va a todo lo ancho. En Modo piso las casillas y botones de «Nueva lectura» miden 60 px (v1.17.1). |
 
 Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con degradado, cuadros de ícono, buena vista en tema oscuro.
 
@@ -78,7 +79,13 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - Campos blancos, flechas propias, números sin flechitas.
 - Azul solo en secciones de marca; fondo y textos neutros.
 - Pendientes y discrepancias en rojo llamativo, con ícono y texto. Mortalidad final no va en rojo como faltante.
-- Colores de consignaciones parecidos a los originales.
+- Colores de consignaciones parecidos a los originales; **siempre el del consignatario en Administración** (v1.24.0).
+- **Cada maquila con su logotipo** (emblema + «MAQUILA» + nombre) y una franja de su color (v1.24.0).
+- **Antes de juntar o separar embarques se enseña cómo queda (Ahora → Así queda) y se puede deshacer** (v1.24.0). Nada de botones que cambian cosas grandes sin decir qué hacen.
+- **La orden dice arriba lo que falta por empacar, por talla** (v1.24.0).
+- **Cada camión en su pestaña, con su propio PDF**, cuando hay dos o más (v1.26.0). Con uno, como antes.
+- **Lo más viejo primero**: en Empaque los lotes salen ordenados y el más viejo ya elegido, con «usar primero»; los que pasaron los días de su proveedor, en rojo y antes que todos (v1.27.0).
+- **Campana de notificaciones con contador**: lo que falta y lo reciente; cada una lleva a donde se resuelve. Lo que falta no se descarta (se quita al resolverlo) (v1.26.0).
 - Optimizada para tablet; se adapta a computadora y celular.
 - El admin **no** entra en Modo piso automáticamente.
 - Un usuario no técnico debe poder usarla: textos simples, un paso a la vez.
