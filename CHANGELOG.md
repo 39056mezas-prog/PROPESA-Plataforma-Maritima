@@ -1,5 +1,51 @@
 # Cambios
 
+## 1.30.0 · 1 de noviembre de 2026
+
+Pedido del usuario (1/nov): «la cuenta de consulta o cliente no debería de mirar información sensitiva; solo es para que puedan ver qué hay y vender, no mis precios ni mis maquilas». Etapa 1 del plan de construcción.
+
+### Cambiado
+- **Consulta y Cliente son una sola cuenta: «Solo inventario».** En Administración → Usuarios se elige el rol y las maquilas que ve (una o varias). Entra a «Disponible», **en español**: kilos y hieleras por talla de esas maquilas, **sumados y sin decir de qué maquila son**, y lo recibido en 7 días. No ve ninguna otra pantalla.
+- Una cuenta sin maquilas no ve inventario («Pídele al Administrador que te lo asigne»). Una cuenta de Consulta vieja se trata igual.
+- Cada maquila tiene su hoja de disponible (antes solo PROPESA).
+
+### Base compartida (aplicada el 1/nov/2026 con permiso del usuario)
+- `supabase/migrations/20261101_solo_inventario.sql`: columna `mq` en perfiles; la cuenta de solo inventario solo lee las hojas de sus maquilas y su propio perfil, sin fotos; las cuentas Consulta pasan a Solo inventario con PROPESA. Ensayada en la base real dentro de una transacción que se deshizo: Consulta pasa de leer 279 registros a 1; piso y Administrador sin cambios.
+
+### Pruebas
+- Nueva: `v130_t.py` (pantalla, alta con maquilas, suma de dos maquilas, sin datos sensibles, y con la base de mentira: solo le llega la hoja de su maquila). `supabase_falso.py` imita las reglas nuevas. Actualizadas las pruebas que usaban la Consulta vieja.
+
+## 1.29.0 · 1 de noviembre de 2026
+
+Pedidos del usuario después de probar la plataforma (1/nov).
+
+### Arreglado
+- **«Crear orden» se quedaba sin formulario.** Si se tocaba «Editar» en una orden y se salía sin guardar ni cancelar, la siguiente orden nueva no enseñaba «Destino y consignatario» (y «Falta el destino · Agregar» no llevaba a nada). Ahora lo abierto en una orden no pasa a otra.
+- **El aviso de arriba se encimaba en la barra de arriba** (Modo piso y celular): ahora sale siempre debajo de la barra y encima de todo lo demás.
+
+### Agregado
+- **Llenar hieleras solo con el teclado** (vista completa y Modo piso): tocar la hielera → escribir las piezas → la letra del color (**R** Rojo, **V** Verde, **B** Blanco, **A** Amarillo; la primera letra del nombre del color de la maquila) → **Enter** guarda y pasa a la siguiente. La letra solo elige; Enter guarda. Con mouse, cada botón de color enseña su letra.
+- **Piezas empacadas:** «55 piezas empacadas» junto a «completadas · pendientes» (Empaque y Modo piso) y en «Lo que falta por empacar» de la orden.
+- **Cambiar el consignatario de una línea aunque ya tenga hieleras empacadas** («Editar consignatario u hieleras» en la orden). Las hieleras se van al embarque del nuevo consignatario; no deja poner uno que ya está en la orden ni pasar a un embarque cerrado.
+- **Atajos para editar la orden:** «Cambiar consignatario o editar la orden ›» en Empaque y «Cambiar ›» junto al consignatario en la hoja de empaque. En Órdenes el botón dice «Abrir o editar».
+
+### Cambiado
+- **Hoja de empaque:**
+  - Hora inicial y final en **12 h con a. m./p. m.** («730» se escribe 7:30). Se sigue guardando en 24 h; la tarjeta, el correo y el PDF la enseñan en 12 h.
+  - **Placas** en mayúsculas mientras se escriben.
+  - **Tanques de origen** se tocan (T1…T6, se pueden varios) en vez de escribirse. La app sigue proponiendo los de los lotes empacados.
+  - **Al completarla se cierra** con una animación corta y queda una tarjeta: horas, quién realizó, evaluación y placas, con «✔ Hoja de empaque completa» y «Ver o corregir hoja».
+- **Embarque · «Mover hieleras»:** se hace en el camión mismo: el dibujo se vuelve las 10 celdas para tocar (cola a la izquierda, cabina a la derecha) y lo de la celda elegida sale pegado al camión. Ya no sale otra cuadrícula abajo.
+
+### Pruebas
+- Nueva: `v129_t.py`. Actualizadas: `hoja_t.py` (hora en 12 h, hoja que se cierra), `inicio_t.py` (versión 1.29.0).
+
+## 1.28.1 · 29 de octubre de 2026 (incluida el 1/nov en la 1.29.0)
+
+### Arreglado
+- **Aviso falso «No se pudo guardar la copia de este equipo · La memoria del navegador está llena».** La memoria no estaba llena: el navegador (sobre todo el iPad al dormir o quedar en segundo plano) cierra su conexión con la memoria del equipo y la app seguía usando la conexión cerrada. Ahora abre una nueva y vuelve a guardar. El aviso solo sale si de verdad no se puede guardar.
+- Prueba en `v129_t.py`: con la 1.28.0 falla («The database connection is closing») y ahora pasa.
+
 ## 1.28.0 · 29 de octubre de 2026
 
 Pedido del usuario (29/oct): quitar la gris del teclado de Empaque y tener otro lugar para agregar hieleras grises, como extra.
