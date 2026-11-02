@@ -15,7 +15,7 @@ fails, errs = [], []
 def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
     if not c: fails.append(m)
-USERS = "[{id:1,name:'Ana Torres',email:'admin@propesa.mx',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',role:'piso',notify:true},{id:4,name:'Compras',email:'compras@cliente.cn',role:'cliente',notify:false}]"
+USERS = "[{id:1,name:'Ana Torres',email:'admin@propesa.mx',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',role:'piso',notify:true},{id:4,name:'Compras',email:'compras@cliente.cn',role:'cliente',notify:false,mq:[1]}]"
 FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:%s}))" % USERS  # usuarios SOLO para pruebas
 def login(pg, em):
     pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
@@ -61,7 +61,7 @@ with sync_playwright() as p:
         chk(r_ is True, f'PDF {k_} con Despatada se arma sin errores ({r_})')
     # compradores
     d = json.loads(pg.evaluate("JSON.stringify(WN.D(dispCalc()))"))
-    chk(d['n'][4][0] == 'Broken legs' and len(d['z']) == 5, 'la hoja de compradores manda los nombres en inglés de las tallas')
+    chk(d['n'][4][0] == 'Despatada' and len(d['z']) == 5, 'la hoja de compradores manda los nombres de las tallas (en español desde la v1.30.0)')
     # Administración → Tallas de Abel
     pg.evaluate("mqSet(2);go('admin')"); pg.wait_for_timeout(150)
     chk('Tallas de Abel' in pg.inner_text('#szs'), 'Administración: «Tallas de Abel»')
@@ -109,7 +109,7 @@ with sync_playwright() as p:
         pg.evaluate("go('admin')"); pg.locator('#szs').scroll_into_view_if_needed(); pg.screenshot(path=os.path.join(OUT, f'tallas_admin_{w}.png'))
     # comprador
     pg.evaluate("mqSet(1);me=null;render()"); login(pg, 'compras@cliente.cn')
-    t = pg.inner_text('body'); chk('Broken legs' in t and 'Small' in t, 'el comprador ve las tallas en inglés (Broken legs)')
+    t = pg.inner_text('body'); chk('Despatada' in t and 'Chica' in t and 'Broken legs' not in t, 'el comprador ve las tallas en español (v1.30.0)')
     b.close()
 chk(not errs, 'sin errores de JavaScript: ' + '; '.join(errs[:5]))
 print(f'\n{len(fails)} fallas')

@@ -35,7 +35,7 @@ try:
         def device(name, em, pw):
             ctx = b.new_context(viewport={'width': 1180, 'height': 820}); ctx.add_init_script(INIT); q = ctx.new_page()
             q.on('pageerror', lambda e: errs.append(name + ' JS ' + str(e))); q.on('dialog', lambda d: d.accept()); q.goto(APP)
-            q.fill('#le', em); q.fill('#lp', pw); q.click('[data-a=lg]'); until(q, "!!me&&!!document.querySelector('.sb,.pshell')"); return ctx, q
+            q.fill('#le', em); q.fill('#lp', pw); q.click('[data-a=lg]'); until(q, "!!me&&!!document.querySelector('.sb,.pshell,.cli')"); return ctx, q
         ca, A = device('A', 'admin@propesa.mx', 'clave-admin1'); cp, P = device('P', 'piso@propesa.mx', 'clave-piso1'); cc, C = device('C', 'consulta@propesa.mx', 'clave-ver1')
         cb, B = device('B', 'admin2@propesa.mx', 'clave-admin2')
         A.evaluate("mqSet(1);go('recepcion')"); A.click('[data-a=nf]'); A.fill('#fl', 'WLRCO261026'); A.select_option('#fo', '1'); A.fill('#fkb', '36'); A.fill('#ftt', '58'); A.fill('#ftp', '59'); A.fill('#fdes', '0'); A.fill('#fk0', '500'); A.fill('#fk4', '10'); A.click('[data-a=sv]'); A.wait_for_timeout(200)
@@ -46,7 +46,7 @@ try:
         chk('pr' not in recs['R/WLRCO261026']['v'], 'el registro del lote ya no trae el precio')
         chk(until(B, "R_('WLRCO261026')&&R_('WLRCO261026').pr&&R_('WLRCO261026').pr.u==43"), 'otro Administrador recibe el precio')
         chk(until(P, "!!R_('WLRCO261026')") and P.evaluate("R_('WLRCO261026').pr") is None, 'Piso recibe el lote pero no el precio')
-        chk(until(C, "!!R_('WLRCO261026')") and C.evaluate("R_('WLRCO261026').pr") is None, 'Consulta tampoco recibe el precio')
+        time.sleep(2); chk(C.evaluate("ST.R.length") == 0, 'Consulta (solo inventario, v1.30.0) no recibe ni el lote ni el precio')
         raw = P.evaluate("""async()=>{const t=JSON.parse(localStorage.getItem('propesa-sb')).at;const r=await fetch(PROPESA_SB.url+'/rest/v1/rpc/pull',{method:'POST',headers:{apikey:'k',Authorization:'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify({since:0,lim:1000})});return (await r.json()).map(x=>x.k)}""")
         chk(not any(k.startswith('$/') for k in raw), 'Piso no lo recibe ni pidiéndolo directo a la base')
         st = P.evaluate("""async()=>{const t=JSON.parse(localStorage.getItem('propesa-sb')).at;const r=await fetch(PROPESA_SB.url+'/rest/v1/rpc/push',{method:'POST',headers:{apikey:'k',Authorization:'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify({rows:[{k:'$/WLRCO261026',v:{lot:'WLRCO261026',u:1}}]})});return r.status}""")

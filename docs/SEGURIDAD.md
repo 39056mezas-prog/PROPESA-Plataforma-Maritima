@@ -28,6 +28,7 @@
 - Historial (v1.4.1): cada cambio o borrado deja la versión anterior en `app_records_hist`, con quién la reemplazó. Solo el Administrador lo lee (ver `SUPABASE.md` §7).
 - `'unsafe-inline'` sigue en la CSP porque todo el JS/CSS está en línea y usa algunos `onload`/`onclick` en plantillas. Quitarlo exigiría nonces o hashes.
 
+- **Solo inventario (v1.30.0):** lo que ve sale de las hojas `D/disp` de cada maquila (`dispCalc`). **No agregues datos internos a `dispCalc`/`WN.D`**, ni el nombre de la maquila: la app suma las hojas para no decir de cuál es cada kilo.
 - **Cliente (v1.13.0):** lo que ve sale de una hoja que calculan los equipos de Administrador y Piso (`dispCalc` → `D/disp`). Lo que no esté en esa hoja no le llega. **No agregues campos a `dispCalc`/`WN.D` con datos internos** (proveedor, lote, tanque, consignatario, precios): cualquier Cliente los vería. La pantalla de acceso y la ventana para instalar siguen en español.
 
 ## 3. Reglas al programar

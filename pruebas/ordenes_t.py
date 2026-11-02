@@ -93,7 +93,7 @@ with sync_playwright() as p:
     chk(pg.evaluate("lnG({id:1,city:'PVG',cons:2,cli:'HXH',boxes:4})") == round(4 * 19.6, 1), 'una línea de antes conserva su peso (19.6 kg por hielera, sin tarimas)')
     pg.close()
     # Pedido 17/oct: con la cuenta de Consulta el usuario entró a Modo piso y no podía salir
-    for em, pw in [('consulta@propesa.mx', 'ver123'), ('admin@propesa.mx', 'admin123')]:  # el Encargado de piso se queda en Modo piso (decisión del 12/oct)
+    for em, pw in [('admin@propesa.mx', 'admin123')]:  # v1.30.0: Consulta ya no entra a la operación  # el Encargado de piso se queda en Modo piso (decisión del 12/oct)
         for vw in [(1180, 820), (390, 844)]:
             pg = b.new_page(viewport={'width': vw[0], 'height': vw[1]}); pg.on('pageerror', lambda e: errs.append(str(e))); entrar(pg, em, pw)
             if pg.locator('#le').count(): continue

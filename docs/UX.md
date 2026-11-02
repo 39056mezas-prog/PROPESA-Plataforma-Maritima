@@ -85,6 +85,10 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - **La orden dice arriba lo que falta por empacar, por talla** (v1.24.0).
 - **Cada camión en su pestaña, con su propio PDF**, cuando hay dos o más (v1.26.0). Con uno, como antes.
 - **Lo más viejo primero**: en Empaque los lotes salen ordenados y el más viejo ya elegido, con «usar primero»; los que pasaron los días de su proveedor, en rojo y antes que todos (v1.27.0).
+- **Llenar hieleras solo con el teclado** (v1.29.0): número → letra del color (R, V, B, A) → Enter guarda y pasa a la siguiente. La letra solo elige; Enter guarda.
+- **La hoja de empaque se cierra al completarla** (v1.29.0): queda una tarjeta corta con «Ver o corregir hoja». Horas en 12 h con a. m./p. m.; placas en mayúsculas; tanques de origen se tocan.
+- **El aviso (toast) sale debajo de la barra de arriba**, nunca encima (v1.29.0).
+- **Mover hieleras en el camión mismo** (v1.29.0), no en otra cuadrícula abajo.
 - **Campana de notificaciones con contador**: lo que falta y lo reciente; cada una lleva a donde se resuelve. Lo que falta no se descarta (se quita al resolverlo) (v1.26.0).
 - Optimizada para tablet; se adapta a computadora y celular.
 - El admin **no** entra en Modo piso automáticamente.

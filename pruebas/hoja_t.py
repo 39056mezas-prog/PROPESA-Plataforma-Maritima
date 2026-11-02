@@ -4,6 +4,7 @@
 - Lo que falta sale en rojo con «Completar ›»; cerrar el embarque con la hoja incompleta pide confirmación.
 - Todo sale en el informe de cierre (correo) y en los PDF; las indicaciones de carga salen en grande en Embarque, camión y Modo piso.
 - Se comparte entre equipos (WN) y sobrevive a un respaldo (cleanST); Consulta no edita; con el embarque cerrado no se cambia.
+- v1.29.0: la hora se ve en 12 h con a. m./p. m. (se guarda en 24 h) y la hoja completa se cierra en una tarjeta corta.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/hoja_t.py"""
 from playwright.sync_api import sync_playwright
 import os, sys, re
@@ -53,7 +54,7 @@ with sync_playwright() as p:
         # terminar con DEF
         pg.evaluate(f"go('empacar:{oid}.{lids[1]}')"); pg.evaluate("PKD.lot=openLots()[0]"); pg.fill('#pk_c0', '30'); pg.click('#pkr0 [data-pk^="k:"] >> nth=2'); (pg.locator('[data-pk=addall]').count() and pg.click('[data-pk=addall]')); pg.wait_for_timeout(100)
         chk(pg.locator('#f6card').count() == 1 and 'Terminar empaque' in pg.inner_text('#f6card'), f'{vw} al terminar la última hielera aparece «Terminar empaque»')
-        chk(re.match(r'^\d{2}:\d{2}$', pg.input_value('#f6_hf')) and pg.input_value('#f6_re') == 'Ana Torres', f'{vw} hora final y quién realizó vienen llenos: {pg.input_value("#f6_hf")} / {pg.input_value("#f6_re")}')
+        chk(re.match(r'^\d{1,2}:\d{2}$', pg.input_value('#f6_hf')) and pg.locator('#f6_hf_ap').count() == 1 and pg.input_value('#f6_re') == 'Ana Torres', f'{vw} hora final y quién realizó vienen llenos: {pg.input_value("#f6_hf")} / {pg.input_value("#f6_re")}')
         chk(pg.locator('[data-f6$=":S"]').count() == 1 and pg.locator('[data-f6$=":NS"]').count() == 1 and pg.locator('[data-f6$=":ND"]').count() == 1 and pg.locator('[data-f6$=":NA"]').count() == 1, f'{vw} botones S, NS, N/D y N/A')
         bh = pg.evaluate("Math.min(...[...document.querySelectorAll('[data-f6^=\"ev:\"]')].map(b=>b.getBoundingClientRect().height))")
         chk(bh >= 56, f'{vw} los botones de evaluación son grandes: {bh}px')
@@ -65,7 +66,7 @@ with sync_playwright() as p:
         # datos del transporte
         pg.fill('#f6_pl', 'zry68f3'); pg.fill('#f6_ch', 'Alejandro S.'); pg.fill('#f6_tel', '646-294-1282'); pg.fill('#f6_tp', '48 - 49 °F')
         if not pg.input_value('#f6_tq'): pg.fill('#f6_tq', 'T1 - 50 °F')
-        pg.fill('#f6_ob', 'Hielera #2: <b>1 débil</b>'); pg.click('[data-f6^="sv:"]'); pg.wait_for_timeout(80)
+        pg.fill('#f6_ob', 'Hielera #2: <b>1 débil</b>'); pg.click('[data-f6^="sv:"]'); pg.wait_for_timeout(600)  # v1.29.0: la hoja completa se cierra con una animación corta
         f = pg.evaluate(f"{O}.f")
         chk(f.get('pl') == 'ZRY68F3', f'{vw} las placas se guardan en mayúsculas: {f.get("pl")}')
         chk(pg.evaluate(f"f6Miss({O},true).length") == 0 and 'Hoja de empaque completa' in pg.inner_text('#app'), f'{vw} hoja completa')
@@ -88,11 +89,11 @@ with sync_playwright() as p:
         pg.click('[data-a=cp]'); pg.wait_for_timeout(200)
         chk(pg.evaluate(f"ST.P[{si}].closed") and not dialogs, f'{vw} con la hoja completa se cierra sin preguntar')
         body = pg.evaluate("ST.O[0].body")
-        for s in ['HOJA DE EMPAQUE', 'Langosta Roja', 'ZRY68F3', 'Alejandro S.', '646-294-1282', '48 - 49 °F', 'Evaluación: S (Satisfactorio)', 'Hora inicial: ' + hi, 'INDICACIONES PARA LA CARGA: Echar 2 tarimas', 'Realizó: Ana Torres', 'Tanques de origen: T1']:
+        for s in ['HOJA DE EMPAQUE', 'Langosta Roja', 'ZRY68F3', 'Alejandro S.', '646-294-1282', '48 - 49 °F', 'Evaluación: S (Satisfactorio)', 'Hora inicial: ' + pg.evaluate('h=>h12(h)', hi), 'INDICACIONES PARA LA CARGA: Echar 2 tarimas', 'Realizó: Ana Torres', 'Tanques de origen: T1']:
             chk(s in body, f'{vw} el informe de correo trae «{s}»')
         pg.evaluate(f"Object.values({O}.sh).forEach(i=>ST.P[i].closed=true);save();render()")  # la orden lleva dos consignatarios: dos embarques
         chk(pg.locator('#f6_pl').count() == 0 or pg.is_disabled('#f6_pl'), f'{vw} con el embarque cerrado la hoja ya no se cambia')
-        pg.evaluate(f"go('orden:{oid}')"); chk(pg.is_disabled('#f6_pl') and pg.locator('[data-f6^="sv:"]').count() == 0, f'{vw} en la orden la hoja queda de solo lectura')
+        pg.evaluate(f"go('orden:{oid}')"); chk((pg.locator('#f6_pl').count() == 0 or pg.is_disabled('#f6_pl')) and pg.locator('[data-f6^="sv:"]').count() == 0, f'{vw} en la orden la hoja queda de solo lectura')
         tx = pdf_text(pg, 'emb', si)
         for s in ['Formato 06', 'ZRY68F3', 'INDICACIONES PARA LA CARGA', 'Satisfactorio', 'CONNOTACIONES', 'Alejandro S.']:
             chk(s in tx, f'{vw} el PDF del embarque trae «{s}»')
@@ -134,9 +135,9 @@ with sync_playwright() as p:
     pg.close()
     pg = b.new_page(); pg.on('pageerror', lambda e: errs.append(str(e))); entrar(pg, 'consulta@propesa.mx', 'ver123')
     if not pg.locator('#le').count():
-        pg.evaluate("setPiso(false);ST.P.forEach(p=>p.closed=false);go('orden:'+ST.OR[0].id)")
-        chk(pg.locator('#f6card').count() == 1 and pg.is_disabled('#f6_pl') and pg.locator('[data-f6^="sv:"]').count() == 0, 'Consulta ve la hoja pero no la cambia')
-        pg.evaluate("go('emb:0')"); chk(pg.is_disabled('#emb_obs') and pg.locator('[data-obs]').count() == 0, 'Consulta no cambia las indicaciones')
+        pg.evaluate("go('orden:'+ST.OR[0].id)")   # v1.30.0: Consulta es «Solo inventario»
+        chk(pg.locator('#f6card').count() == 0 and pg.locator('.cli').count() == 1, 'Consulta (solo inventario) no ve la hoja')
+        pg.evaluate("go('emb:0')"); chk(pg.locator('#emb_obs').count() == 0, 'Consulta no ve las indicaciones')
     pg.close()
     b.close()
 chk(not errs, 'sin errores de JavaScript: ' + '; '.join(errs[:3]))

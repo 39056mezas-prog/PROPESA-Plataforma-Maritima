@@ -61,6 +61,9 @@ Los usuarios **no** van en registros: `ST.U` se llena con `profiles`.
 
 ## 3. Reglas de seguridad (RLS)
 
+- **Cómo aplicar la v1.30.0:** panel de Supabase → proyecto `propesa_bc` → SQL Editor → New query → pegar todo `supabase/migrations/20261101_solo_inventario.sql` → Run. Se puede aplicar antes o después de publicar la app: la versión publicada sigue funcionando (la Consulta queda como Cliente de PROPESA) y la nueva lee los perfiles sin `mq` si todavía no existe (`NO_MQ`).
+- **v1.30.0 (`20261101_solo_inventario.sql`, aplicada el 1/nov/2026 con permiso del usuario; verificado: Consulta 1 registro, 1 perfil, 0 fotos; piso y admin 279):** «Solo inventario» (roles `cliente` y `consulta`) lee solo `D/disp` y `q<id>:D/disp` de las maquilas de `profiles.mq` (`my_mqs()`), su propio perfil, y nada de fotos ni «reportes». Las cuentas `consulta` pasan a `cliente` con `{1}`. Lo de abajo describe lo anterior.
+
 - **Ver:** Administrador, Piso y Consulta ven todo; una cuenta creada fuera de la app no ve nada. **Cliente (v1.13.0, `20261022_cliente.sql`) solo ve `D/disp` y su propio perfil**; no ve fotos ni «reportes». `pull()` corre con los permisos de quien llama, así que al Cliente solo le devuelve esa fila.
 - **Precios (v1.19.0):** los registros `$/<lote>` (con o sin prefijo de maquila) solo los lee y escribe el Administrador.
 - **Escribir registros:** Administrador y Encargado de piso. **Consulta** no puede escribir (403).

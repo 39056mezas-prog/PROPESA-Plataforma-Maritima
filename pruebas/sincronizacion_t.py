@@ -35,7 +35,7 @@ def device(b, name, **kw):
     pg.goto(APP); return ctx, pg
 def login(pg, em, pw):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
-    return until(pg, "!!document.querySelector('.sb,.pshell,[data-avatar]')")
+    return until(pg, "!!document.querySelector('.sb,.pshell,[data-avatar],.cli')")
 def new_lot(pg, code, kgs=(100, 200, 300, 400)):
     pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
     for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
@@ -135,11 +135,9 @@ try:
 
         # --- consulta y piso ven lo mismo
         cc, C = device(b, 'C'); chk(login(C, 'consulta@propesa.mx', 'clave-ver1'), 'consulta entra')
-        chk(until(C, "ST.R.length==3&&ST.OR.length==3"), 'consulta ve los mismos lotes y órdenes')
+        time.sleep(2); chk(C.evaluate("ST.R.length+ST.OR.length") == 0 and C.locator('.cli').count() == 1, 'v1.30.0: consulta es «Solo inventario»: no le llegan lotes ni órdenes')
         for r in ['inicio', 'recepcion', 'ordenes', 'empaque', 'embarques', 'cierre', 'temperatura']: C.evaluate(f"go('{r}')")
-        time.sleep(2); chk(mock('/__estado')['writes'] == w1, 'consulta no escribe nada en la base')
-        C.evaluate("R_('WLRCO141026A').desp=99;save()"); time.sleep(6)
-        chk(mock('/__estado')['writes'] == w1 and until(C, "R_('WLRCO141026A').desp==7"), 'si consulta cambia algo por error, no se sube y vuelve a lo de la base')
+        time.sleep(2); chk(mock('/__estado')['writes'] == w1 and C.locator('.cli').count() == 1, 'consulta no escribe nada en la base ni sale de «Disponible»')
         cp, D = device(b, 'D'); chk(login(D, 'piso@propesa.mx', 'clave-piso1'), 'encargado de piso entra (Modo piso)')
         chk(until(D, "ST.R.length==3&&Object.values(ST.B).flat().length==2"), 'piso ve los mismos datos')
 

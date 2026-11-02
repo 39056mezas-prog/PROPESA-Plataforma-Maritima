@@ -827,3 +827,25 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Ojo:** las grises empacadas antes ahora son extra. La numeración de hieleras sigue siendo la del packing list (una gris toma su número).
 - **Pruebas:** `v128_t.py` nueva.
 
+## Ronda · 1/nov/2026 · v1.29.0 · Pruebas del usuario: orden nueva, hoja de empaque, teclado y camión
+
+- **Pedido** (con `/ponytail ultra`): hora en 12 h; placas en mayúsculas; tanques de origen para elegir; que la hoja «se quite de la cara» al terminar; el aviso de arriba se corta; llenar hieleras solo con teclado (número → letra del color → Enter); conteo de piezas; mover hieleras dentro del camión; difícil encontrar cómo editar la orden y cambiar el consignatario después de empacar; bug: «Crear orden» y ya no se puede capturar nada.
+- **Bug de la orden:** `OA.ed` (línea en «Editar») se quedaba de otra orden (y se guarda con la sesión), y `orden()` solo enseñaba el formulario con `OA.ed==null`. Arreglo: `go()` limpia `OA`/`LED` al cambiar de pantalla u orden, y `orden()` ignora un `OA.ed` que no es de esa orden.
+- **Aviso:** `--pkmt` (debajo de la barra) solo se medía con `#pkb`; en Modo piso valía 80 px fijos y la barra mide 130 px en celular. `toast()` la mide siempre; `z-index` 57.
+- **Teclado:** `kpLet()` (letra → categoría, de `RCPK()` y `rcN`), `kpPick(q)` (elige sin guardar; `KPT.pk`), y Enter = `kpCatPress(kpCat())`. Escucha en captura para ganar al Enter de cada casilla. La letra del botón va en `data-kl` + `::after`, solo con `(hover:hover) and (pointer:fine)`.
+- **Hoja:** `h12`/`h24`, `F6O` (orden con la hoja abierta otra vez; `'in'+id` = animación de entrada una vez), `f6up` (mayúsculas), botones `data-f6="to:…"` (guardan al tocar; `to` ya no se lee de una casilla; lo propuesto se guarda como antes).
+- **Camión:** `tTruckEd()` reemplaza el dibujo con «Mover hieleras»; `.tsel` sale dentro.
+- **Consignatario:** `lnForm` en «Editar» trae `le_cons`; al guardar, `shipFor` del nuevo, `b.d` de las hieleras de la línea (`lkey`) y `syncShip` del viejo (se quita si queda vacío), igual que `moveGroup`. Atajo `data-edl="orden.línea"`.
+- **Sin cambios en `ST`** ni en Supabase.
+- **Ojo:** el zip que subió el usuario es la 1.28.0; la 1.28.1 (aviso falso de memoria llena) no venía en él.
+- **Pruebas:** `v129_t.py` nueva; `hoja_t.py` actualizada.
+- **1/nov (tarde):** se volvió a meter el arreglo de la **1.28.1** (no venía en el zip): `idb()` suelta la conexión al cerrarse (`onclose`/`onversionchange`) e `idbTx()` abre otra y reintenta una vez si la transacción falla por conexión cerrada (`idbGet`/`idbPut`). Prueba en `v129_t.py`.
+
+## Ronda · 1/nov/2026 · v1.30.0 · Cuenta de solo inventario (etapa 1 del plan)
+
+- **Pedido:** «sí, por favor arreglar eso» (Consulta veía proveedores, consignatarios, informes y fotos). Decisiones del 1/nov: Consulta y Cliente = una sola cuenta, en español, con maquilas asignadas por el Administrador, sumadas sin nombre, sin nada sensible.
+- **App:** `inv()` (cliente o consulta) manda a `cliView()`, ahora en español y con `dispMerge()` (suma por talla nombre+rango). `D/disp` se escribe por maquila (`q<id>:D/disp`, `encodeST`/`encodeAll`); `DISPK` las reconoce en `flush`, `syncStage` y `dispNow` (`DSH`). Perfiles con `mq` (`umq`); el Administrador las guarda con `PATCH /rest/v1/profiles` después de la función `usuarios` (la función no cambió). Local: `dispLocal()` con `withST`. `go()` ya no falla sin `main`.
+- **Base:** `20261101_solo_inventario.sql` (`profiles.mq`, `my_mqs()`, reglas «ver» de registros y perfiles, fotos y reportes solo admin/piso, historial y `cambios()` sin ninguna hoja `D/disp`). Ensayo en `propesa_bc` dentro de una transacción deshecha con un error a propósito: Consulta 279 → 1 registro, 4 → 1 perfil, 0 fotos; piso y admin 279. **Al aplicarla, la confirmación se canceló sola; no se aplicó.** Es compatible con la versión publicada (la cuenta queda como Cliente de PROPESA).
+- **Pruebas:** `v130_t.py`; `supabase_falso.py` (`INV`, `ve_hoja`, `PATCH` de perfiles).
+- **Seguridad al publicar:** si la app nueva llega antes que la actualización de la base, `loadProfiles` vuelve a pedir los perfiles sin `mq` (`NO_MQ`) y nadie se queda fuera; al guardar una cuenta de solo inventario avisa que faltan sus maquilas. Prueba en `v130_t.py` (`/__sin_mq`).
+- **Aplicada (1/nov, 19:10):** el usuario pidió «vuelve a intentarlo» y aprobó. Verificado entrando como cada cuenta (transacción deshecha): Consulta → `cliente` `{1}`, 1 registro (`D/disp`), 1 perfil, 0 fotos, `pull` 1 fila; piso y admin 279. Supabase avisa de `my_mqs()` como de `my_role()` (devuelve solo lo de quien llama).

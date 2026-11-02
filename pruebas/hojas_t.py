@@ -54,7 +54,7 @@ with sync_playwright() as p:
     pg.evaluate("go('lote:WLREM190926')"); pg.wait_for_timeout(100)
     chk(pg.locator('#prc').count() == 0, 'Consulta no ve el precio de compra')
     pg.evaluate("go('hojas')"); pg.wait_for_timeout(100)
-    chk(pg.locator('.hjr').count() == 5 and pg.locator('[data-pdf*=":hpre:"]').count() == 0, 'Consulta ve 5 hojas (sin Precio de compra)')
+    chk(pg.locator('.hjr').count() == 0 and pg.locator('.cli').count() == 1, 'Consulta (solo inventario, v1.30.0) no ve las hojas')
     r = pg.evaluate("(async()=>{try{await pdfMake('hpre','');return 'armó'}catch(e){return e.message}})()")
     chk('Solo el Administrador' in r, 'el PDF de precios no se arma para otro rol')
     b.close()

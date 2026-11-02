@@ -62,14 +62,14 @@ with sync_playwright() as p:
     # hoja de los compradores: lo pedido resta de su especie
     d = pg.evaluate("dispCalc()")
     s = {x[0]: x for x in d['s']}
-    chk(s['Blue lobster'][1][0] == 50000 - 2 * 16000 and s['Red lobster'][1][0] == 100000, f'lo pedido por talla resta de Langosta Azul y no de la Roja: {d["s"]}')
-    chk(len(s['Blue lobster']) == 3 and s['Blue lobster'][2] == 16000, 'la hielera sin talla queda apartada en Langosta Azul')
+    chk(s['Langosta Azul'][1][0] == 50000 - 2 * 16000 and s['Langosta Roja'][1][0] == 100000, f'lo pedido por talla resta de Langosta Azul y no de la Roja: {d["s"]}')
+    chk(len(s['Langosta Azul']) == 3 and s['Langosta Azul'][2] == 16000, 'la hielera sin talla queda apartada en Langosta Azul')
     chk(d['z'][0] == 150000 - 32000 and d['u'] == 16000, 'los totales por talla siguen igual que antes')
     w = pg.evaluate("WN.D(dispCalc()).s")
     chk(any(len(x) == 3 and x[2] == 16000 for x in w), 'el apartado por especie viaja en la hoja D/disp')
-    pg.evaluate("ST.U.push({id:3,name:'Compras',email:'compras@cliente.cn',role:'cliente',notify:false});save();signOut()"); pg.wait_for_timeout(150); login(pg, 'compras@cliente.cn')
+    pg.evaluate("ST.U.push({id:3,name:'Compras',email:'compras@cliente.cn',role:'cliente',notify:false,mq:[1]});save();signOut()"); pg.wait_for_timeout(150); login(pg, 'compras@cliente.cn')
     t = pg.inner_text('body')
-    chk('Blue lobster' in t and 'already subtracted from each species' in t and '2 kg' in t, 'la pantalla del comprador dice que ya se restó por especie')
+    chk('Langosta Azul' in t and 'ya está restado de cada especie' in t and '2 kg' in t, 'la pantalla del comprador dice que ya se restó por especie')
     pg.set_viewport_size({'width': 390, 'height': 844}); chk(not overflow(pg), 'pantalla del comprador sin desborde en 390px'); pg.set_viewport_size({'width': 1440, 'height': 900})
     pg.screenshot(path=f'{OUT}/especie_orden_cliente.png', full_page=True)
     pg.evaluate("signOut()"); pg.wait_for_timeout(150); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1)")

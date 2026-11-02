@@ -57,7 +57,7 @@ with sync_playwright() as p:
         for r_ in ['emb:0', 'cierre']:
             pg.evaluate(f"go('{r_}')"); pg.wait_for_timeout(120); chk(not overflow(pg), f'{r_} sin scroll de lado en {w_} px')
     pg.evaluate("me=null;render()"); login(pg, 'ver@propesa.mx'); pg.evaluate("go('cierre')"); pg.wait_for_timeout(100)
-    chk(pg.locator('[data-mc]').is_disabled() and pg.locator('[data-tar]').is_disabled() and pg.locator('[data-alive]').is_disabled(), 'Consulta no los cambia')
+    chk(pg.locator('[data-mc],[data-tar],[data-alive]').count() == 0 and pg.locator('.cli').count() == 1, 'Consulta (solo inventario, v1.30.0) ni los ve')
     b.close()
 chk(not errs, 'sin errores de JavaScript: ' + '; '.join(errs[:5]))
 print(f'\n{len(fails)} fallas')

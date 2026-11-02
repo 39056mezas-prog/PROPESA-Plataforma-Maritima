@@ -23,7 +23,7 @@ def until(pg, js, t=12):
         except Exception: pass
         time.sleep(0.25)
     return False
-USERS = "[{id:1,name:'Ana Torres',email:'admin@propesa.mx',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',role:'piso',notify:true},{id:4,name:'Compras Shanghai',email:'compras@cliente.cn',role:'cliente',notify:false}]"
+USERS = "[{id:1,name:'Ana Torres',email:'admin@propesa.mx',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',role:'piso',notify:true},{id:4,name:'Compras Shanghai',email:'compras@cliente.cn',role:'cliente',notify:false,mq:[1]}]"
 FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:%s}))" % USERS  # usuarios SOLO para pruebas
 def login(pg, em, pw='x'):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
@@ -81,7 +81,7 @@ try:
         chk(len(pg.evaluate(SAL)) == 1 and pg.evaluate("bal('WLRCO221026','491-610')") == 68000, 'cerrar otra vez saca una sola vez')
         # nunca deja un lote en negativo: lote con 10 kg y 2 hieleras (32 kg)
         pg.evaluate("go('admin')")
-        chk(pg.locator('#ur').count() == 0 and 'Cliente (comprador):' in pg.inner_text('#app'), 'Administración explica el rol Cliente')
+        chk(pg.locator('#ur').count() == 0 and 'Solo inventario:' in pg.inner_text('#app'), 'Administración explica la cuenta de solo inventario')
         pg.click('[data-a=nu]'); chk('cliente' in pg.evaluate("[...document.querySelectorAll('#ur option')].map(o=>o.value)"), 'el Administrador puede dar de alta una cuenta Cliente'); pg.click('[data-a=cu]')
         pg.evaluate("ST.R.find(r=>r.lot=='WLRCO221026').closed=true;save()")
         new_lot(pg, 'WLRLE221026', (10, 0, 0, 0)); new_order(pg, '2026-10-23', 2); pack_all(pg)
@@ -101,9 +101,9 @@ try:
         chk(until(pg, "!!document.querySelector('.cli')"), 'la cuenta Cliente entra directo a su pantalla')
         t = pg.inner_text('#app')
         chk(pg.locator('.sb,.pshell,[data-avatar],#sq').count() == 0, 'sin menú, sin buscador y sin Ajustes')
-        chk(all(x in t for x in ('Available stock', 'Small', 'Medium', 'Large', 'Jumbo', 'Total available', 'Received in the last 7 days', 'Sign out')), 'en inglés: tallas, total y lo recibido en la semana')
-        chk('50 kg' in t and '≈ 3 boxes of 15 kg' in t and 'Reserved, size not assigned yet' in t and '184 kg' in t, 'kg por talla, hieleras de 15 kg, reservado y total (4 × 50 − 16 = 184 kg)')
-        chk(pg.get_attribute('.cli', 'lang') == 'en', 'la pantalla dice que está en inglés (lectores de pantalla)')
+        chk(all(x in t for x in ('Disponible', 'Chica', 'Mediana', 'Grande', 'Jumbo', 'Total disponible', 'Recibido en los últimos 7 días', 'Cerrar sesión')), 'en español (v1.30.0): tallas, total y lo recibido en la semana')
+        chk('50 kg' in t and '≈ 3 hieleras de 15 kg' in t and 'Apartado, todavía sin talla' in t and '184 kg' in t, 'kg por talla, hieleras de 15 kg, reservado y total (4 × 50 − 16 = 184 kg)')
+        chk(pg.get_attribute('.cli', 'lang') is None, 'la pantalla ya no se marca en inglés (v1.30.0)')
         for bad in ('WLR', 'SCPP', 'Ensenada SCL', 'Tanque', 'PVG', 'YISHUNHAI', 'Ana Torres', 'Entrada', 'Órdenes'):
             chk(bad not in t, 'no muestra «%s»' % bad)
         chk('NaN' not in t and 'undefined' not in t, 'sin NaN ni undefined')
@@ -127,7 +127,7 @@ try:
             pg.goto(APP); pg.evaluate("const T=toast;window.toast=t=>{window._toast(t);T(t)}"); return ctx, pg, toasts
         ca, A, ta = device('A'); cb, B, tb = device('B')
         login(A, 'admin@propesa.mx', 'clave-admin1'); chk(until(A, "!!me&&!!document.querySelector('.sb')"), 'A: entra el Administrador')
-        A.evaluate("go('admin')"); A.click('[data-a=nu]'); A.fill('#un', 'Compras Shanghai'); A.fill('#ue', 'compras@cliente.cn'); A.fill('#up', 'Compras-2026'); A.select_option('#ur', 'cliente'); A.click('[data-a=su]')
+        A.evaluate("go('admin')"); A.click('[data-a=nu]'); A.fill('#un', 'Compras Shanghai'); A.fill('#ue', 'compras@cliente.cn'); A.fill('#up', 'Compras-2026'); A.select_option('#ur', 'cliente'); A.check('#umq input[value="1"]'); A.click('[data-a=su]')
         chk(until(A, "ST.U.some(u=>u.role=='cliente')"), 'A: alta de la cuenta Cliente con la función usuarios')
         login(B, 'admin2@propesa.mx', 'clave-admin2'); chk(until(B, "!!me&&!!document.querySelector('.sb')"), 'B: entra el segundo Administrador')
         new_lot(A, 'WLRCO221026', (100, 200, 300, 400))
@@ -145,8 +145,8 @@ try:
         # --- el comprador
         cc, C, tc = device('C')
         login(C, 'compras@cliente.cn', 'Compras-2026')
-        chk(until(C, "!!document.querySelector('.cli')&&document.body.innerText.includes('Total available')"), 'C: el comprador entra a «Available stock»')
-        chk(until(C, "document.body.innerText.includes('78 kg')&&document.body.innerText.includes('Live · last change just now')"), 'C: ve 78 kg chicos y «Live · last change just now»')
+        chk(until(C, "!!document.querySelector('.cli')&&document.body.innerText.includes('Total disponible')"), 'C: el comprador entra a «Disponible»')
+        chk(until(C, "document.body.innerText.includes('78 kg')&&document.body.innerText.includes('En vivo · último cambio hace un momento')"), 'C: ve 78 kg chicos y «En vivo · último cambio hace un momento»')
         chk(C.evaluate("ST.R.length+ST.OR.length+ST.P.length+ST.L.length") == 0, 'C: no baja lotes, órdenes, embarques ni movimientos')
         r = C.evaluate("sbPost('/rest/v1/rpc/pull',{since:0,lim:2000}).then(a=>a.map(x=>x.k))")
         chk(r == ['D/disp'], 'C: pidiendo todo a la base, solo recibe D/disp: %s' % r)

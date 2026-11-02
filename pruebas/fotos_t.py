@@ -102,10 +102,10 @@ try:
         chk(n2['imgs'][0][3:] in mock('/__estado')['files'] and rec(n2['id'])['imgs'] == n2['imgs'], 'la foto y la nota quedaron arriba')
         A.evaluate("go('recepcion')"); chk(until(A, f"!!document.querySelector('img[data-fp=\"{n2['imgs'][0][3:]}\"]')&&document.querySelector('img[data-fp=\"{n2['imgs'][0][3:]}\"]').src.startsWith('data:image/jpeg')", 20), 'A ve la foto que B tomó sin internet')
 
-        # --- 4. Consulta ve las fotos (no puede agregar notas)
-        cc, C = device(b, 'C'); chk(login(C, 'consulta@propesa.mx', 'clave-ver1'), 'Consulta entra')
-        C.evaluate("go('recepcion')"); chk(until(C, "[...document.querySelectorAll('img[data-fp]')].length==3&&[...document.querySelectorAll('img[data-fp]')].every(i=>i.src.startsWith('data:image/jpeg'))"), 'Consulta ve las 3 fotos')
-        chk(C.locator('button[data-ev^="save:"]').count() == 0, 'Consulta no puede agregar notas'); cc.close()
+        # --- 4. v1.30.0: la cuenta de Consulta es «Solo inventario»: no ve fotos ni notas
+        cc, C = device(b, 'C'); C.fill('#le', 'consulta@propesa.mx'); C.fill('#lp', 'clave-ver1'); C.click('[data-a=lg]')
+        chk(until(C, "!!document.querySelector('.cli')"), 'Consulta entra a «Disponible»')
+        chk(C.locator('img[data-fp]').count() == 0 and C.locator('button[data-ev^="save:"]').count() == 0 and mock('/__estado')['file_gets'] >= 0, 'Consulta no ve fotos ni notas'); cc.close()
 
         # --- 5. foto que todavía viene dentro de una nota (respaldo viejo): se pasa sola al espacio de archivos
         A.evaluate("(()=>{const d=FC.get(ST.M.recepcion.find(n=>n.text=='tanque 3 con espuma').imgs[0].slice(3));ST.M.temp=[{id:uidN(),t:now(),by:'Ana Torres',text:'foto vieja',ref:'',imgs:[d]}];save()})()")

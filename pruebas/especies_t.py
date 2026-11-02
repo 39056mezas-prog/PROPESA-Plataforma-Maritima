@@ -10,7 +10,7 @@ import os, re, json, tempfile
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT = os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-'); os.makedirs(OUT, exist_ok=True)
 seed = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos', 'seed.json')))
-seed['U'].append({'id': 4, 'name': 'Compras Shanghai', 'email': 'compras@cliente.cn', 'pw': 'x', 'role': 'cliente', 'notify': False})  # usuario SOLO para pruebas
+seed['U'].append({'id': 4, 'name': 'Compras Shanghai', 'email': 'compras@cliente.cn', 'pw': 'x', 'role': 'cliente', 'notify': False, 'mq': [1]})  # usuario SOLO para pruebas
 seed = json.dumps(seed)
 fails, errs = [], []
 def chk(c, m):
@@ -110,14 +110,14 @@ with sync_playwright() as p:
 
         # ---------- 6. Compradores: kilos por especie ----------
         d = pg.evaluate("WN.D(dispCalc())")
-        chk([x[0] for x in d['s']] == ['Red lobster', 'Blue lobster'], f'la hoja de compradores separa por especie en inglés {[x[0] for x in d["s"]]}')
+        chk([x[0] for x in d['s']] == ['Langosta Roja', 'Langosta Azul'], f'la hoja de compradores separa por especie (en español desde la v1.30.0) {[x[0] for x in d["s"]]}')
         ks = pg.evaluate("Math.round(ST.R.filter(r=>!r.closed&&bal(r.lot)>0).reduce((a,r)=>a+S.reduce((b,z)=>b+Math.max(0,bal(r.lot,z)),0),0))")
         chk(abs(sum(sum(x[1]) for x in d['s']) - ks) <= 1, f'los kilos por especie suman lo que hay en tanques ({ks} g)')
         chk(pg.evaluate("JSON.stringify(WN.D({...dispCalc(),s:[['<b>x</b>',[1,2,3,4]],[5,[1]],'z']}).s)") == '[["bx/b",[1,2,3,4]]]', 'lo que llega de la base se limpia (WN.D)')
         pg.evaluate("signOut()"); pg.fill('#le', 'compras@cliente.cn'); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
         t = pg.inner_text('#app')
-        chk('Live red lobster and blue lobster in our tanks' in t and 'In our tanks by species' in t and 'Blue lobster' in t, 'el comprador ve las especies en inglés')
-        chk('Langosta' not in t and 'WLR' not in t and 'Tanque' not in t, 'sin nombres en español, lotes ni tanques')
+        chk('En tanques por especie' in t and 'Langosta Azul' in t and 'Langosta Roja' in t, 'el comprador ve las especies')
+        chk('Blue lobster' not in t and 'WLR' not in t and 'Tanque' not in t, 'en español, sin lotes ni tanques')
         chk(sin_desborde(pg), f'{vw} pantalla del comprador sin desborde'); pg.screenshot(path=f'{OUT}/esp_cliente_{vw[0]}.png', full_page=True)
         pg.evaluate("signOut()"); pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
 
@@ -138,8 +138,8 @@ with sync_playwright() as p:
         chk(pg.input_value('#fsp') == str(az), 'pero el lote que la tiene la conserva al editar'); pg.click('[data-a=nf]')
         pg.evaluate("go('admin')"); pg.click(f'[data-esa="off:{az}"]'); pg.wait_for_timeout(80)
         pg.evaluate("signOut()"); pg.fill('#le', 'consulta@propesa.mx'); pg.fill('#lp', 'ver123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
-        pg.evaluate("setPiso(false);go('admin')")
-        chk(pg.locator('[data-esa]').count() == 0, 'Consulta no cambia especies')
+        pg.evaluate("go('admin')")
+        chk(pg.locator('[data-esa]').count() == 0 and pg.locator('.cli').count() == 1, 'Consulta (solo inventario) no cambia especies')
         pg.close()
     # tema oscuro, texto «Muy grande»
     pg = b.new_page(viewport={'width': 820, 'height': 1000}, color_scheme='dark'); pg.on('pageerror', lambda e: errs.append(str(e)))

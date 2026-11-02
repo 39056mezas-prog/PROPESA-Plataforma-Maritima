@@ -2,7 +2,7 @@
 Uso: python3 -I pruebas/supabase_falso.py 8790
 Imita: /auth/v1/token, /auth/v1/logout, /rest/v1/profiles, /rest/v1/rpc/pull, /rest/v1/rpc/push, /rest/v1/rpc/has_admin,
 /rest/v1/rpc/cambios (v1.16.0), /functions/v1/usuarios y el espacio de archivos «fotos» (/storage/v1/object…, v1.8.0).
-Reglas: precios ('$/<lote>', con o sin prefijo de maquila) solo el Administrador los lee y escribe (v1.19.0); consulta no puede escribir (403 / 42501); cliente (v1.13.0) solo lee 'D/disp' y su propio perfil, sin fotos; fotos: ver con perfil, subir y borrar Administrador y Piso
+Reglas: precios ('$/<lote>', con o sin prefijo de maquila) solo el Administrador los lee y escribe (v1.19.0); consulta no puede escribir (403 / 42501); cliente y consulta (v1.30.0, «solo inventario») solo leen las hojas 'D/disp' / 'q<id>:D/disp' de sus maquilas (perfil.mq) y su propio perfil, sin fotos; fotos: ver con perfil, subir y borrar Administrador y Piso
 (igual que migrations/20261015_fotos.sql); máximo 2 MB; solo imágenes; no se sobrescribe (409).
 Control para las pruebas: GET /__estado (registros y escrituras), POST /__reset."""
 import json, sys, time, uuid, threading, re
@@ -10,7 +10,12 @@ from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
 LOCK = threading.Lock()
-PRECIO = re.compile(r'^(q[0-9]+:)?\$/')   # v1.19.0: registros de precio de compra (solo el Administrador)
+PRECIO = re.compile(r'^(q[0-9]+:)?\$/')
+INV = ('cliente', 'consulta')   # v1.30.0: cuentas de solo inventario (20261101_solo_inventario.sql)
+HOJA = re.compile(r'^(?:q([0-9]+):)?D/disp$')
+def ve_hoja(u, k):   # como la regla «ver»: solo las hojas de disponibilidad de sus maquilas
+    m = HOJA.match(k)
+    return bool(m) and int(m.group(1) or 1) in (u.get('mq') or [])   # v1.19.0: registros de precio de compra (solo el Administrador)
 def fresh():
     return {'users': {}, 'recs': {}, 'rev': 0, 'writes': 0, 'tokens': {}, 'refresh': {}, 'files': {}, 'file_gets': 0, 'log': [], 'hist': []}
 DB = fresh()
@@ -18,7 +23,7 @@ TOKEN_LIFE = 3600
 
 def add_user(name, email, pw, role, notify=True):
     uid = str(uuid.uuid4())
-    DB['users'][uid] = {'id': uid, 'name': name, 'email': email.lower(), 'pw': pw, 'role': role, 'notify': notify}
+    DB['users'][uid] = {'id': uid, 'name': name, 'email': email.lower(), 'pw': pw, 'role': role, 'notify': notify, 'mq': []}
     return uid
 
 def seed_users():
@@ -32,12 +37,21 @@ class H(BaseHTTPRequestHandler):
     def cors(self):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Headers', 'authorization, apikey, content-type, prefer, x-client-info')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH, OPTIONS')
     def out(self, code, body=None):
         b = b'' if body is None else json.dumps(body).encode()
         self.send_response(code); self.cors()
         self.send_header('Content-Type', 'application/json'); self.send_header('Content-Length', str(len(b)))
         self.end_headers(); self.wfile.write(b)
+    def do_PATCH(self):   # v1.30.0: el Administrador guarda las maquilas (mq) de un perfil; como la regla «perfil propio o admin»
+        p = urlparse(self.path); b = self.body()
+        with LOCK:
+            u = self.who()
+            if p.path != '/rest/v1/profiles': return self.out(404, {'message': 'no'})
+            if not u: return self.out(401, {'message': 'JWT expired'})
+            x = DB['users'].get(parse_qs(p.query).get('id', [''])[0].replace('eq.', '', 1))
+            if u['role'] == 'admin' and x and isinstance(b.get('mq'), list): x['mq'] = [int(v) for v in b['mq']]
+            return self.out(204)
     def do_OPTIONS(self):
         self.send_response(204); self.cors(); self.send_header('Content-Length', '0'); self.end_headers()
     def raw(self):
@@ -67,7 +81,7 @@ class H(BaseHTTPRequestHandler):
                                       'files': {k: len(v[0]) for k, v in DB['files'].items()}, 'file_gets': DB['file_gets'], 'log': DB['log']})
             if p.path.startswith('/storage/v1/object/authenticated/fotos/'):
                 if not self.who(): return self.out(400, {'statusCode': '403', 'error': 'Unauthorized', 'message': 'invalid jwt'})
-                if self.who()['role'] == 'cliente': return self.out(400, {'statusCode': '404', 'error': 'not_found', 'message': 'Object not found'})   # v1.13.0: cliente no ve fotos
+                if self.who()['role'] in INV: return self.out(400, {'statusCode': '404', 'error': 'not_found', 'message': 'Object not found'})   # v1.13.0: cliente no ve fotos
                 f = DB['files'].get(p.path[len('/storage/v1/object/authenticated/fotos/'):])
                 if not f: return self.out(400, {'statusCode': '404', 'error': 'not_found', 'message': 'Object not found'})
                 DB['file_gets'] += 1
@@ -75,9 +89,10 @@ class H(BaseHTTPRequestHandler):
                 self.end_headers(); self.wfile.write(f[0]); return
             if p.path == '/rest/v1/profiles':
                 if not self.who(): return self.out(401, {'message': 'JWT expired'})
+                if DB.get('sin_mq') and 'mq' in parse_qs(p.query).get('select', [''])[0].split(','): return self.out(400, {'code': '42703', 'message': 'column profiles.mq does not exist'})   # base sin 20261101_solo_inventario.sql
                 u = self.who()   # v1.13.0: cliente solo ve su propio perfil
-                us = sorted((x for x in DB['users'].values() if u['role'] != 'cliente' or x['id'] == u['id']), key=lambda u: u['name'])
-                return self.out(200, [{k: u[k] for k in ('id', 'name', 'email', 'role', 'notify')} for u in us])
+                us = sorted((x for x in DB['users'].values() if u['role'] not in INV or x['id'] == u['id']), key=lambda u: u['name'])
+                return self.out(200, [{k: u.get(k, []) for k in ('id', 'name', 'email', 'role', 'notify', 'mq')} for u in us])
         self.out(404, {'message': 'no'})
     def do_DELETE(self):
         p = urlparse(self.path); b = self.body()
@@ -109,6 +124,8 @@ class H(BaseHTTPRequestHandler):
                 DB['lento'] = 0 if DB.get('lento') else 2; return self.out(200, {'ok': True})
             if p.path == '/__reset':
                 DB.clear(); DB.update(fresh()); seed_users(); return self.out(200, {'ok': True})
+            if p.path == '/__sin_mq':  # base sin la columna profiles.mq (v1.30.0 sin aplicar)
+                DB['sin_mq'] = True; return self.out(200, {'ok': True})
             if p.path == '/__sin_usuarios':  # base recién creada: sin Administrador
                 DB['users'].clear(); return self.out(200, {'ok': True})
             if p.path == '/__sin_admins':    # alguien borró a los Administradores desde el panel; quedan otras cuentas
@@ -145,11 +162,11 @@ class H(BaseHTTPRequestHandler):
             if p.path == '/rest/v1/rpc/pull':
                 since, lim = int(b.get('since', 0)), int(b.get('lim', 500))
                 now = time.time()
-                rows = sorted((r for r in DB['recs'].values() if r['rev'] > since and (u['role'] != 'cliente' or r['k'] == 'D/disp') and (u['role'] == 'admin' or not PRECIO.match(r['k']))), key=lambda r: r['rev'])[:lim]   # v1.13.0: cliente solo lee 'D/disp'; v1.19.0: precios solo el Administrador
+                rows = sorted((r for r in DB['recs'].values() if r['rev'] > since and (u['role'] not in INV or ve_hoja(u, r['k'])) and (u['role'] == 'admin' or not PRECIO.match(r['k']))), key=lambda r: r['rev'])[:lim]   # v1.13.0: cliente solo lee 'D/disp'; v1.19.0: precios solo el Administrador
                 return self.out(200, [{'k': r['k'], 'v': r['v'], 'rev': r['rev'], 'age': now - r['t']} for r in rows])
             if p.path == '/rest/v1/rpc/cambios':   # igual que public.cambios: solo el Administrador recibe filas
                 if u['role'] != 'admin': return self.out(200, [])
-                xs = sorted([r for r in DB['recs'].values() if r['k'] != 'D/disp'] + DB['hist'], key=lambda r: -r['rev'])[:min(max(int(b.get('lim', 200)), 1), 500)]
+                xs = sorted([r for r in DB['recs'].values() if not HOJA.match(r['k'])] + DB['hist'], key=lambda r: -r['rev'])[:min(max(int(b.get('lim', 200)), 1), 500)]
                 prev = lambda x: next((h['v'] for h in sorted(DB['hist'], key=lambda h: -h['rev']) if h['k'] == x['k'] and h['rev'] < x['rev']), None)
                 return self.out(200, [{'k': x['k'], 'v': x['v'], 'antes': prev(x), 'cuando': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(x['t'])), 'quien': x.get('by')} for x in xs])
             if p.path == '/rest/v1/rpc/push':   # igual que public.push (migrations/20261014b_sin_pisar.sql)
@@ -164,7 +181,7 @@ class H(BaseHTTPRequestHandler):
                     cur = DB['recs'].get(r['k'])
                     if cur and cur['v'] == r['v']: continue
                     if cur and 'b' in r and cur['v'] != r['b']: lost.append({'k': r['k'], 'v': cur['v']}); continue
-                    if cur and r['k'] != 'D/disp': DB['hist'].append(cur)   # como app_records_stamp (20261023_historial_corto.sql)
+                    if cur and not HOJA.match(r['k']): DB['hist'].append(cur)   # como app_records_stamp (20261023_historial_corto.sql)
                     DB['rev'] += 1; DB['writes'] += 1
                     DB['recs'][r['k']] = {'k': r['k'], 'v': r['v'], 'rev': DB['rev'], 't': time.time(), 'by': u['id']}; DB['log'].append('registro ' + r['k'])
                 return self.out(200, lost)

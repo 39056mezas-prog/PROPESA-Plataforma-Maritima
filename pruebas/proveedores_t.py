@@ -175,7 +175,7 @@ with sync_playwright() as p:
     pg.evaluate("ST.R.push({id:'R-0999',lot:'WLRZZ010126',origin:'SCPP Ensenada SCL',tank:'T1',rdate:'',time:'',date:'',tempT:null,tempP:'',kgbox:null,desp:null,final:null,closed:false,pv:1,ne:true});ST.B['WLRZZ010126']=[];setPiso(false)")
     oid = nueva_orden(pg); pg.evaluate(f"go('empacar:{oid}.1')")
     chk(pg.locator('[data-nea]').count() == 0, 'consulta: no ve «+ Lote sin entrada»')
-    pg.evaluate("go('recepcion')"); chk('sin entrada' in pg.inner_text('#app') and pg.locator('[data-ne]').count() == 0, 'consulta: ve el aviso pero sin botón para completar')
+    pg.evaluate("go('recepcion')"); chk(pg.locator('[data-ne]').count() == 0 and pg.locator('.cli').count() == 1, 'consulta (solo inventario, v1.30.0): ni aviso ni botón')
     pg.evaluate("go('admin')"); chk(pg.locator('[data-pva]').count() == 0, 'consulta: no edita proveedores')
     pg.close()
     # ---------- 6b. Sin textos de «todavía no», versiones viejas o lotes escritos a mano (pedido del usuario, 17/oct) ----------
