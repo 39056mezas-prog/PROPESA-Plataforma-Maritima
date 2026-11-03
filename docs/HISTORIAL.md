@@ -849,3 +849,11 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Pruebas:** `v130_t.py`; `supabase_falso.py` (`INV`, `ve_hoja`, `PATCH` de perfiles).
 - **Seguridad al publicar:** si la app nueva llega antes que la actualización de la base, `loadProfiles` vuelve a pedir los perfiles sin `mq` (`NO_MQ`) y nadie se queda fuera; al guardar una cuenta de solo inventario avisa que faltan sus maquilas. Prueba en `v130_t.py` (`/__sin_mq`).
 - **Aplicada (1/nov, 19:10):** el usuario pidió «vuelve a intentarlo» y aprobó. Verificado entrando como cada cuenta (transacción deshecha): Consulta → `cliente` `{1}`, 1 registro (`D/disp`), 1 perfil, 0 fotos, `pull` 1 fila; piso y admin 279. Supabase avisa de `my_mqs()` como de `my_role()` (devuelve solo lo de quien llama).
+
+## Ronda · 2/nov/2026 · v1.30.1 · Corregir con el teclado, vista previa de hojas y paquete por orden
+
+- **Pedido:** «si edito hieleras ya llenas, la v + Enter solo selecciona Verde y no guarda»; «en Hojas para imprimir que muestre un preview de cada una»; «descargar el paquete completo de cada orden».
+- **Bug:** el Enter de captura ignoraba la hielera en corrección de la vista completa (`pke`) y caía al Enter viejo, que guardaba `PKD.ew` sin el color elegido. Ahora `kpPick` pone `PKD.ew.k` y Enter llama `kpCatPress` también en `ed`.
+- **Vista previa:** `PDFSVG` hace que cada primitiva de `PdfRep` (T, RECT, BOX, LN, RRECT, POLY, logo) dibuje también la página 1 en SVG; `pdfPrev(k,arg)`, `hjPrevFill()` (una por una, después de dibujar), caché `HJV` por datos, `HJX` = la agrandada.
+- **Paquete:** `zipMake()` (zip sin comprimir, CRC32, sin librerías) y `paqOrden(id)`; `paqCard()` con `histList('hpaq')`.
+- **Pruebas:** `v1301_t.py`.
