@@ -850,6 +850,14 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Seguridad al publicar:** si la app nueva llega antes que la actualización de la base, `loadProfiles` vuelve a pedir los perfiles sin `mq` (`NO_MQ`) y nadie se queda fuera; al guardar una cuenta de solo inventario avisa que faltan sus maquilas. Prueba en `v130_t.py` (`/__sin_mq`).
 - **Aplicada (1/nov, 19:10):** el usuario pidió «vuelve a intentarlo» y aprobó. Verificado entrando como cada cuenta (transacción deshecha): Consulta → `cliente` `{1}`, 1 registro (`D/disp`), 1 perfil, 0 fotos, `pull` 1 fila; piso y admin 279. Supabase avisa de `my_mqs()` como de `my_role()` (devuelve solo lo de quien llama).
 
+## Ronda · 2/nov/2026 · v1.31.0 · Tanques en 3D
+
+- **Pedido:** tablero de tanques en 3D como el piso real, con las canastas adentro (listón del color de la talla de su maquila), días en tanque, filtros arriba de los tanques, cámara que se acerca al tocar un tanque y que se pueda girar y mover. En Entrada y Panel general.
+- **Cómo se decidió:** plan y prototipo aparte con datos de ejemplo (https://claude.ai/artifact/TaH3nbXDFRR9XX1cVzKnug), con fotos de la planta. El usuario corrigió: color solo por talla (no por maquila), canastas con listón, filtros de T1–T4 al este, T6 sin filtro, una puerta en cada lado del área de recepción. Probado en su Android: se cortaba al girar y los filtros fallaban → piezas sin cruces, menos caras, recorte firme y profundidad que crece con el acercamiento.
+- **Código:** `T3P` (planta fija), `T3` (cámara y estado), `t3Data` (por tanque: maquila, lote, gramos por talla, kg por caja, días, `lotDue`, tallas y colores de su maquila), `t3Crates`, `t3Inner` (escena), `t3View` (barra, avisos, escena, controles, tarjeta de canasta), `t3Fit`/`t3Frame`/`t3Go` (encuadre y animación), `t3Apply` (transformación, paredes que estorban, letreros con `t3Proj`), `t3Mount` (después de cada render; reusa la escena guardada en `T3.node` si `T3.html` no cambió). Tocar el agua: `data-t3t` → `TQSEL` + `T3.zoom`. Canasta: `data-t3c`. Botones: `data-t3a`.
+- **Pendiente del plan:** Panel general para el Encargado de piso y el 3D en la pantalla de Solo inventario (con lo pedido restado del lote más viejo, `D/disp.t`). Capacidad de canastas por tanque.
+- **Pruebas:** `tanques3d_t.py` (56 verificaciones); `rendimiento_t.py` con límite para el 3D.
+
 ## Ronda · 2/nov/2026 · v1.30.1 · Corregir con el teclado, vista previa de hojas y paquete por orden
 
 - **Pedido:** «si edito hieleras ya llenas, la v + Enter solo selecciona Verde y no guarda»; «en Hojas para imprimir que muestre un preview de cada una»; «descargar el paquete completo de cada orden».

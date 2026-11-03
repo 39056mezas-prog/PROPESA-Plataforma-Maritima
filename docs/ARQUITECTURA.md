@@ -196,6 +196,7 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 | Lote | Movimientos con `MVO`/`mvL`/`L.nt`; `prCard`/`prSave` (`data-a=prs`) |
 | Embarque | `data-mc`, `data-ta` (% del cliente y temperatura de arribo; se redibuja con `setTimeout` para no chocar con el `blur`) |
 | PDF | `pdfHRec`, `pdfHEnv`, `pdfHExi`, `pdfHCon`, `pdfHPre`, `pdfHBal` (claves `hrec`… en `pdfMake`; argumento `desde|hasta|existencia física`). `PdfRep` agrega «Maquila <nombre>» al subtítulo y `pdfName` al archivo |
+| Tanques en 3D (v1.31.0) | `t3View(all)` arriba de `tanques()` (Entrada) y `tanquesGen()` (Panel general). `T3P` planta fija (posición de tanques y filtros), `T3` cámara (`az`, `ax`, `s`, `px`, `py`, `ox`, `oy`) y estado (`zoom`, `pick`, `on` = `localStorage['propesa-3d']`). `t3Data` → `t3Crates` → `t3Inner` (piezas con transformaciones 3D de CSS; solo los lados que ve la cámara, `t3Q`). Letreros en `.t3lab` (capa plana) con `t3Proj`. Cámara animada con `t3Go` (rAF), no con transición de CSS. `t3Mount` corre después de cada render (microtarea) y reusa `T3.node` si la escena no cambió. Eventos: `data-t3t` (agua), `data-t3c` (canasta), `data-t3a` (botones); arrastre con `pointerdown/move/up` en `document` |
 | Tanques | `tqDist`, `tqShare`, `tqOf`, `tqTxt`, `recTk`/`recTT`/`recKB` (entrada en dos tanques); `tqCard`/`tqMove` (`data-a=tqmv`), `data-tqx` deshacer (no confundir con `data-tqdel`, que borra lecturas de temperatura) |
 | Precio | `WN.$` y el registro `$/<lote>`; `decodeST` lo une a su lote |
 

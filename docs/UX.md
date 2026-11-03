@@ -94,6 +94,11 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - El admin **no** entra en Modo piso automáticamente.
 - Un usuario no técnico debe poder usarla: textos simples, un paso a la vez.
 
+### Tanques en 3D (v1.31.0)
+- Arriba del tablero de tanques en Entrada y Panel general. El tablero plano sigue abajo y es el que se usa con teclado o lector de pantalla.
+- Color de la canasta: **solo la talla** (listón), con los colores de la maquila de esa canasta. La maquila se dice con texto (letrero de cerca, tarjeta de la canasta), nunca con color.
+- Un toque elige; arrastrar gira (no abre nada). Botones de cámara de 48 px para guantes.
+
 ## 8. Lo que el usuario rechazó (no repetir sin preguntar)
 
 - **Calendario y reloj del teléfono** para fechas y horas (18/oct): tardan, se traban y ya no abren. Se escriben (dd/mm/aaaa, HH:MM) con «Hoy»/«Ahora».
