@@ -1,5 +1,19 @@
 # Cambios
 
+## 1.30.1 · 2 de noviembre de 2026
+
+Pedidos del usuario (2/nov).
+
+### Arreglado
+- **Corregir una hielera ya guardada con el teclado:** la letra del color + Enter ahora sí guarda el color nuevo (en la vista completa se quedaba como estaba). También con piezas nuevas. Vista completa y Modo piso.
+
+### Agregado
+- **Hojas para imprimir con vista previa:** cada hoja enseña su primera página tal como sale en el PDF (la dibuja el mismo código). Tocarla la agranda; tocarla otra vez la achica.
+- **Paquete de cada orden** (en Hojas para imprimir): «Descargar paquete» baja un .zip con la orden (con su hoja de empaque), el packing list, el informe de cada embarque y el plan de carga del camión mientras el embarque siga abierto.
+
+### Pruebas
+- Nueva: `v1301_t.py`. Actualizada: `inicio_t.py` (versión 1.30.1).
+
 ## 1.30.0 · 1 de noviembre de 2026
 
 Pedido del usuario (1/nov): «la cuenta de consulta o cliente no debería de mirar información sensitiva; solo es para que puedan ver qué hay y vender, no mis precios ni mis maquilas». Etapa 1 del plan de construcción.

@@ -1,7 +1,7 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.30.0** (1 de noviembre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.30.1** (2 de noviembre de 2026).
 
 ## Qué es
 
@@ -59,7 +59,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 
 ```bash
 python3 -m http.server 8765                 # servir en http://localhost:8765
-sh pruebas/correr_todo.sh                   # 62 grupos de pruebas, debe terminar en «TODO BIEN»
+sh pruebas/correr_todo.sh                   # 63 grupos de pruebas, debe terminar en «TODO BIEN»
 python3 -I pruebas/rendimiento_t.py         # rendimiento con un año de datos
 node pruebas/accesibilidad.mjs pruebas/datos/backup.json   # Lighthouse (npm i lighthouse puppeteer-core)
 ```
