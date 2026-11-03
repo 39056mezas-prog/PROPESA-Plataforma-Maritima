@@ -778,6 +778,46 @@ details.adv{margin-top:18px;border:1px solid var(--ln);border-radius:14px;paddin
 .shjh{margin:16px 0 2px;font-size:1rem}.shj{display:flex;align-items:center;justify-content:space-between;gap:8px 14px;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--ln)}
 /* v1.24.0 · Aviso en el embarque: lo que llega al destino se captura en Revisión */
 .arrt .cs,.shpt .cs{display:inline-block;vertical-align:-2px}.arrn{display:flex;align-items:center;justify-content:space-between;gap:8px 14px;flex-wrap:wrap}.arrt input{min-height:44px}.arrt .cs{margin-right:6px}
+/* v1.31.0 · Tanques en 3D (ver t3View). Colores salen de los tokens del tema (claro y oscuro). */
+.t3bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:0 0 8px}.t3bar .h3{margin:0}.t3bar .sp{flex:1}
+.t3v{--t3flr:color-mix(in srgb,var(--ink) 20%,var(--bg));--t3zn:color-mix(in srgb,var(--ink) 26%,var(--bg));--t3wl:color-mix(in srgb,var(--ink) 7%,var(--bg));--t3wl2:color-mix(in srgb,var(--ink) 13%,var(--bg));
+ position:relative;height:min(62vh,560px);min-height:360px;margin:0 0 12px;overflow:hidden;clip-path:inset(0 round 16px);isolation:isolate;border-radius:16px;border:1px solid var(--ln);
+ background:linear-gradient(var(--bg),color-mix(in srgb,var(--ink) 12%,var(--bg)));cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+@media (max-width:700px){.t3v{height:clamp(300px,95vw,540px);min-height:0}}
+.t3v.t3drag{cursor:grabbing}
+.t3st{position:absolute;inset:0;overflow:hidden;perspective:7000px;perspective-origin:50% 50%}
+.t3w{position:absolute;left:0;top:0;transform-origin:0 0;transform-style:preserve-3d}
+.t3w *{position:absolute}.t3w .t3t,.t3w .t3g{transform-style:preserve-3d;left:0;top:0}.t3w .t3g[hidden]{display:none}
+.t3f{left:0;top:0;transition:opacity .4s;pointer-events:none}.t3w .t3wat,.t3w .t3c{pointer-events:auto;cursor:pointer}
+.t3flr{background:var(--t3flr);background-image:linear-gradient(90deg,rgba(0,0,0,.06) 1px,transparent 1px),linear-gradient(rgba(0,0,0,.06) 1px,transparent 1px);background-size:100px 100px}
+.t3zone{background:var(--t3zn);border:3px dashed rgba(0,0,0,.2);color:rgba(0,0,0,.4);font:800 46px/1.1 system-ui,sans-serif;display:flex;align-items:center;justify-content:center;text-align:center}
+.t3wl{background:var(--t3wl);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 2px,transparent 2px 22px)}.t3wl.t3ew{background-color:var(--t3wl2)}
+.t3door{background:repeating-linear-gradient(0deg,#9aa1aa 0 6px,#b4bac2 6px 12px);border:4px solid #8a9099}.t3door.t3dv{background:repeating-linear-gradient(90deg,#9aa1aa 0 6px,#b4bac2 6px 12px)}
+.t3dl{background:#fff;color:#111;font:700 .72rem/1.2 system-ui,sans-serif;border:2px solid #333;padding:2px 6px;white-space:nowrap}
+.t3tw{background:#7D858F}.t3tw.t3e{background:#6A727C}.t3tw.t3in{background:#565D66}
+.t3rim{border:9px solid #8E959E;background:transparent}
+.t3wat{background:rgba(52,110,98,.62);background-image:radial-gradient(circle at 30% 40%,rgba(255,255,255,.18) 0 3px,transparent 4px),radial-gradient(circle at 70% 70%,rgba(255,255,255,.14) 0 2px,transparent 3px);background-size:60px 60px,45px 45px}
+.t3c{background:#C3C8CE;background-image:linear-gradient(90deg,transparent 46%,rgba(0,0,0,.18) 46% 54%,transparent 54%),repeating-linear-gradient(0deg,transparent 0 8px,rgba(0,0,0,.13) 8px 10px);border:1.5px solid #8d939a}
+.t3c.t3inc{border:2.5px dashed #2b3038}.t3c.t3old{border:2.5px solid #c23a26}.t3c.t3last{border:2.5px solid #d97706}.t3c.t3hl{outline:4px solid #16A6D1;outline-offset:-1px}
+.t3c.t3s,.t3c.t3e{background:#A7ADB4;border:0!important;outline:0!important}.t3c.t3e{background:#959BA2}
+.t3rib{left:14px;top:6px;width:12px;height:30px;border:1.5px solid rgba(0,0,0,.55);border-radius:2px}
+.t3dim .t3f{opacity:.28}
+.t3leg{background:#E8EAED}.t3leg.t3s{background:#DADDE1}.t3leg.t3e{background:#CDD1D6}.t3plat{background:#EEF0F2;border:2px solid #cfd3d8}.t3plat.t3s,.t3plat.t3e{background:#D5D9DE}
+.t3fil{background:#AEB4BA;background-image:linear-gradient(rgba(255,255,255,.18),rgba(0,0,0,.05))}.t3fil.t3s{background:#A3A9AF}.t3fil.t3e{background:#9CA2A8}
+.t3rail{background:transparent;border:5px solid #F2C200;border-bottom:0}
+.t3lab{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:3}.t3l{position:absolute;left:0;top:0;will-change:transform}.t3l[hidden]{display:none}
+.t3sign{background:#fff;color:#111;border:2px solid #222;font:900 .6rem/1 system-ui,sans-serif;text-align:center;padding:3px 5px}.t3sign b{display:block;font-size:1.05rem}
+.t3tag{background:var(--cd);color:var(--ink);border:1px solid var(--ln);border-radius:10px;padding:4px 9px;font:700 .8rem/1.3 system-ui,sans-serif;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.18)}
+.t3tag small{display:block;font-size:.7rem;font-weight:500;color:var(--mut)}.t3tag .t3al{color:var(--cor);font-weight:700}
+.t3tag.t3hid,.t3sign.t3hid{display:none}
+.t3mq{background:var(--brand-navy,#0B1D59);color:#fff;border-radius:8px;padding:3px 8px;font:700 .75rem/1.3 system-ui,sans-serif;white-space:nowrap}
+.t3lt{background:rgba(255,255,255,.94);color:#111;border-radius:6px;padding:2px 6px;font:600 .68rem/1.3 system-ui,sans-serif;white-space:nowrap;border:1px solid #999}.t3lt.t3lv{background:#fde8e5;border-color:#c23a26;color:#a8281a}
+.t3back{position:absolute;left:12px;top:12px;z-index:5;min-height:48px;padding:0 16px;border-radius:12px;border:0;background:var(--brand-navy,#0B1D59);color:#fff;font:inherit;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.t3ctl{position:absolute;right:12px;top:12px;z-index:5;display:flex;flex-direction:column;gap:6px}
+.t3ctl button{width:48px;height:48px;border-radius:12px;border:1px solid var(--ln);background:var(--cd);color:var(--ink);font:700 1.35rem/1 system-ui,sans-serif;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.t3pick{position:absolute;left:12px;bottom:12px;z-index:5;max-width:min(92%,380px);padding:12px 44px 12px 14px;border-radius:14px;background:var(--cd);color:var(--ink);border:2px solid #16A6D1;box-shadow:0 6px 18px rgba(0,0,0,.22);line-height:1.5}
+.t3pick .t3x{position:absolute;right:4px;top:4px;width:44px;height:44px;border:0;background:transparent;color:var(--ink);font-size:1.1rem;cursor:pointer}
+.t3pick .szd{display:inline-block;vertical-align:-2px}
 </style></head>
 <body><!-- v1.8.6 · Pantalla de carga: logo de PROPESA sobre el mismo azul que la pantalla de inicio de Android (manifest
  background_color), mientras se lee la copia del equipo y se dibuja la app. Se quita sola en boot() (bootDone). -->
@@ -790,7 +830,7 @@ const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','
 /* v1.10.0 · hieleras de 15 kg que caben en unos gramos (tablero de tanques): completas + kg que sobran */
 const H15=15000,h15=g=>{g=Math.max(0,Math.round(g));const n=Math.floor(g/H15),r=g-n*H15;return{n,r}},h15t=g=>{const{n,r}=h15(g);return `${n} ${n==1?'hielera':'hieleras'}${r>0?' + '+(r/1000).toFixed(1)+' kg':''}`};
 const f=(m,d=2)=>(m/1000).toFixed(d),cj=m=>(m/16000).toFixed(1),now=()=>new Date().toLocaleString('es-MX',{dateStyle:'short',timeStyle:'short'});
-const TK=['T1','T2','T3','T4','T5','T6'],APPV='1.30.1';/* versión de la app: menú del perfil y Administración */
+const TK=['T1','T2','T3','T4','T5','T6'],APPV='1.31.0';/* versión de la app: menú del perfil y Administración */
 const LGP=[['M37 232C300 440 650 510 1000 497C1150 490 1260 455 1342 424L1272 411C900 480 500 450 195 323C140 290 80 262 37 232ZM195 323C450 380 750 385 1100 357C750 405 450 400 195 323Z','#0a2373'],['M1272 411L1250 400C1215 385 1205 370 1212 335C1218 315 1245 308 1290 288C1360 268 1430 262 1470 265C1480 270 1478 295 1470 330C1462 400 1450 470 1420 495C1395 525 1355 545 1327 555C1365 520 1390 495 1405 435C1415 380 1420 340 1420 302C1360 310 1305 325 1268 347C1258 355 1262 380 1270 388C1290 400 1320 412 1342 424Z','#0a2373'],['M160 405C450 600 900 620 1235 523C1000 565 700 570 480 535C330 505 230 465 160 405Z','#0583c3'],['M758 634C950 640 1150 600 1282 561C1250 590 1200 600 1100 618C1000 640 900 650 758 634Z','#0583c3']],LGW='M240 700Q255 700 266 704Q277 707 283 714Q289 720 291 727Q294 733 294 740Q294 749 291 758Q289 767 283 777Q278 787 270 794Q262 802 249 807Q236 812 221 812H173L159 875H120L160 700ZM220 782Q230 782 237 779Q245 776 248 771Q252 765 253 760Q255 754 255 749Q255 740 249 735Q242 730 232 730H192L180 782ZM411 865Q411 857 416 840Q421 822 421 819Q421 806 399 806H355L339 875H300L340 700H438Q451 700 460 703Q469 707 474 713Q479 719 481 725Q483 730 483 736Q483 746 479 754Q476 763 471 768Q467 774 460 779Q453 784 449 786Q445 788 439 790Q460 797 460 810Q460 818 456 837Q452 856 452 860Q452 865 456 869L455 875H414Q411 869 411 865ZM444 747Q444 730 416 730H372L362 775H409Q419 775 426 772Q434 769 437 765Q441 760 443 755Q444 751 444 747ZM612 697Q648 697 667 715Q687 733 687 766Q687 781 683 796Q679 812 669 827Q660 842 647 854Q634 866 616 873Q597 881 575 881Q540 881 520 862Q500 844 500 812Q500 798 505 782Q509 767 518 752Q527 736 540 724Q553 712 572 704Q591 697 612 697ZM581 850Q595 850 606 845Q617 840 624 833Q631 825 636 816Q641 807 644 798Q646 788 647 781Q649 775 649 770Q649 750 638 739Q627 728 607 728Q594 728 582 732Q571 737 564 745Q557 752 552 761Q547 770 544 779Q541 789 540 796Q539 802 539 807Q539 827 550 838Q562 850 581 850ZM820 700Q835 700 847 704Q858 707 863 714Q869 720 872 727Q874 733 874 740Q874 749 872 758Q869 767 864 777Q858 787 850 794Q842 802 829 807Q817 812 802 812H753L739 875H700L740 700ZM800 782Q810 782 817 779Q825 776 828 771Q832 765 834 760Q835 754 835 749Q835 740 829 735Q823 730 812 730H772L760 782ZM936 800 926 845H1028L1021 875H880L920 700H1057L1050 730H952L943 769H1033L1027 800ZM1078 762Q1078 734 1101 715Q1124 697 1161 697Q1192 697 1209 708Q1227 719 1227 738Q1227 744 1225 753H1188Q1189 749 1189 748Q1189 728 1155 728Q1137 728 1127 734Q1117 741 1117 753Q1117 759 1123 763Q1130 767 1148 770L1176 775Q1196 779 1206 788Q1217 797 1217 811Q1217 820 1214 829Q1212 837 1206 847Q1200 856 1190 864Q1180 871 1164 876Q1148 881 1128 881Q1108 881 1094 876Q1080 872 1072 864Q1065 857 1062 849Q1059 842 1059 833Q1059 829 1060 823H1097Q1097 827 1097 828Q1097 838 1107 844Q1116 850 1134 850Q1154 850 1166 842Q1178 835 1178 823Q1178 815 1171 810Q1165 806 1147 803L1122 798Q1099 794 1088 785Q1078 776 1078 762ZM1356 840H1285L1264 875H1225L1330 700H1375L1400 875H1360ZM1352 810 1343 742 1303 810Z';
 const LG=(o)=>{return `<svg class="lg${o?' o':''}" viewBox="0 205 1500 690" role="img" aria-label="PROPESA">${LGP.map(([d,c])=>`<path d="${d}" fill="${c}"/>`).join('')}<path class="wm" d="${LGW}" fill="#0a2373" stroke="#0a2373" stroke-width="10" stroke-linejoin="round"/></svg>`};
 const IC={ord:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',warn:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4M12 17h.01"/></svg>',cam:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v12H3z"/><circle cx="12" cy="13.5" r="3.5"/></svg>',img:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>',note:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h5"/></svg>',inicio:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',recepcion:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12zM13.5 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',cajas:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg>',embarques:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h18l-2 5H5zM6 13V8h12v5M12 8V3M2 21c2 0 2-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1"/></svg>',cierre:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 14l2 2 4-4"/></svg>',temperatura:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.8V5a2 2 0 10-4 0v9.8a4 4 0 104 0z"/></svg>',admin:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 4.5a3.5 3.5 0 010 7M19.5 14c1.5.8 2.5 2.6 2.5 6"/></svg>'};
@@ -2092,7 +2132,7 @@ function tanques(){const hoy=dLoc(),dias=r=>{if(!r.rdate)return'';const d=Math.r
   <div class="tqdet">${tot?`<div>${I[sel].sp.map(([x,k])=>`<h4 class="tqsp">${E(x.n)}${I[sel].sp.length>1?` · ${f(k.reduce((a,b)=>a+b,0),1)} kg`:''}</h4>${szUl(k)}`).join('')}</div>
   <div class="tql">${ls.map(r=>`<button type="button" class="tqlot" data-go="lote:${E(r.lot)}"><b>${E(r.lot)}</b><span>${E(esOf(r).n)} · ${E(r.origin||'')}${r.rdate?' · '+dias(r):''}${tqOf(r.lot).length>1?` · ${f((DT.get(r.lot)||{})[sel]||0,1)} kg aquí`:''}</span></button>`).join('')}</div>`:''}
   <button type="button" class="tqtp" data-go="temperatura:${sel}" aria-label="Temperatura del tanque ${n}">${tp?`<span${tOut(tp.a)?' class="tqout"':''}><small>Flotante</small>${v(tp.a)}</span><span${tOut(tp.s)?' class="tqout"':''}><small>Superficie</small>${v(tp.s)}</span><span${tOut(tp.p,'p')?' class="tqout"':''}><small>Producto</small>${v(tp.p)}</span><em>${tp.t.slice(0,10)==hoy?'Hoy':fd(tp.t.slice(0,10))} ${E(tp.src=='ent'&&tp.t.endsWith('T00:00')?'':tp.t.slice(11,16))}${tp.src=='ent'?' · entrada '+E(tp.lot):''} · Registrar ›</em>`:'<em>Sin lectura de temperatura · Registrar ›</em>'}</button></div></section>`;
- return `<div class="tqd"><div class="tqmap" role="group" aria-label="Mapa de tanques"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(sum,1)} kg en ${all.length} ${all.length==1?'lote':'lotes'}</span>${spAll.length>1?`<span class="mut tqspt">${spAll.map(([x,k])=>`${E(x.n)} ${f(k.reduce((a,b)=>a+b,0),1)} kg`).join(' · ')}</span>`:''}${live}
+ return `${t3View(false)}<div class="tqd"><div class="tqmap" role="group" aria-label="Mapa de tanques"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(sum,1)} kg en ${all.length} ${all.length==1?'lote':'lotes'}</span>${spAll.length>1?`<span class="mut tqspt">${spAll.map(([x,k])=>`${E(x.n)} ${f(k.reduce((a,b)=>a+b,0),1)} kg`).join(' · ')}</span>`:''}${live}
   <ul class="tqkey" aria-label="Colores de talla">${SON.map(i=>`<li>${szDot(i)}${E(szT(i))}</li>`).join('')}</ul></div>${TK.map(tank).join('')}</div>${det}</div>`}
 function recepcion(){const HL=histList('rec',ST.R.slice().reverse(),lotActive),pp=penPend().length;return `<div class="wrap">${pp?`<div class="alb" role="status"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${pp==1?'Tienes 1 entrada sin guardar':`Tienes ${pp} entradas sin guardar`}</b><p style="margin:4px 0 0">Las empezaste en la hoja de entradas. <button class="alk" data-go="pent">Terminar de capturarlas ›</button></p></div></div>`:''}${guide(1,'Entrada de producto','Registra cada entrada como un lote con los datos del formato de recepción: fecha, hora, proveedor, tanque, temperaturas, kg por caja en tanque y kg por talla. Aquí no se cuentan ni se numeran cajas: las langostas se cuentan hasta que se empaca cada pedido.','Siguiente: órdenes','ordenes')}${(n=>n.length?neBanner(n):'')(ST.R.filter(r=>r.ne))}${lotWarnBan()}${tanques()}${ST.R.length?pdfBar('ent'):''}
  <div class="bar"><button class="btn" data-a="nf" ${can('ent')?'':'disabled'}>+ Nueva entrada</button>${can('ent')?'':'<span class="mut">Tu rol no puede registrar entradas.</span>'}</div>${form&&form.t=='lot'?lotForm():''}
@@ -3314,8 +3354,131 @@ function tanquesGen(){const hoy=dLoc(),TA=tempAll(),ult=t=>TA.find(x=>x.tank===t
   <div class="tqgm">${S_.ms.map(x=>`<div class="tqgx"><h4 class="tqsp">${mqTag(x.m.id)} · ${f(x.tot,1)} kg</h4><div class="tqdet"><div><ul class="tqsz">${x.kz.map((g,i)=>g>0?`<li><span class="szd" style="background:${x.col[i]}" aria-hidden="true"></span><span>${E(x.nm[i])} ${E(x.rg[i]&&x.rg[i]!==x.nm[i]?x.rg[i]:'')}</span><b>${f(g,1)}</b><em class="tqh15">${h15t(g)}</em></li>`:'').join('')}</ul></div>
    <div class="tql">${x.lots.slice().sort((a,b)=>b.g-a.g).slice(0,8).map(r=>`<button type="button" class="tqlot" data-go="lote:${E(r.lot)}@${x.m.id}"><b>${E(r.lot)}</b><span>${E(r.sp)} · ${E(r.o)}${r.d?' · '+dias(r.d):''} · ${f(r.g,1)} kg aquí</span></button>`).join('')}${x.lots.length>8?`<p class="mut" style="margin:4px 0 0">y ${x.lots.length-8} ${x.lots.length-8==1?'lote':'lotes'} más (los de menos kilos) · <button class="lnk" data-mqgo="${x.m.id}">Ver en ${E(x.m.n)} ›</button></p>`:''}</div></div></div>`).join('')}</div>
   <button type="button" class="tqtp" data-go="temperatura:${sel}" aria-label="Temperatura del tanque ${n}">${tp?`<span${tOut(tp.a)?' class="tqout"':''}><small>Flotante</small>${v(tp.a)}</span><span${tOut(tp.s)?' class="tqout"':''}><small>Superficie</small>${v(tp.s)}</span><span${tOut(tp.p,'p')?' class="tqout"':''}><small>Producto</small>${v(tp.p)}</span><em>${tp.t.slice(0,10)==hoy?'Hoy':fd(tp.t.slice(0,10))} ${E(tp.src=='ent'&&tp.t.endsWith('T00:00')?'':tp.t.slice(11,16))} · Registrar ›</em>`:'<em>Sin lectura de temperatura · Registrar ›</em>'}</button></section>`;
- return `<h2>Tanques · todas las maquilas</h2><div class="tqd tqgen"><div class="tqmap" role="group" aria-label="Mapa de tanques de todas las maquilas"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(tot,1)} kg de ${mqOn().filter(m=>TK.some(t=>I[t].ms.some(x=>x.m.id===m.id))).length} maquilas</span>
+ return `<h2>Tanques · todas las maquilas</h2>${t3View(true)}<div class="tqd tqgen"><div class="tqmap" role="group" aria-label="Mapa de tanques de todas las maquilas"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(tot,1)} kg de ${mqOn().filter(m=>TK.some(t=>I[t].ms.some(x=>x.m.id===m.id))).length} maquilas</span>
   <ul class="tqkey" aria-label="Colores de talla">${SON.map(i=>`<li>${szDot(i)}${E(szT(i))}</li>`).join('')}</ul></div>${TK.map(tank).join('')}</div>${det}</div>`}
+/* v1.31.0 · Tanques en 3D (pedido del usuario, 2/nov/2026; plan y fotos en el proyecto: claude/PLAN_TANQUES_3D.md). Sin librerías:
+   transformaciones 3D de CSS. Va arriba del tablero de tanques en Entrada (maquila abierta) y en Panel general (todas las maquilas).
+   - Planta fija (T3P): T1–T4 en una columna con su filtro en el extremo este, T6 y T5 junto a T3 y T4 (T5 con filtro al oeste, T6 sin
+     filtro), área de recepción con «Andén de recepción» (pared oeste) y «Selección y lavado» (pared norte).
+   - Canastas calculadas: kg de cada talla de cada lote en ese tanque ÷ «kg por caja en tanque» del lote (el del otro tanque si la entrada
+     lo trae). Incompleta = borde punteado. Listón = color de la talla de su maquila. Sin kg por caja: no se dibuja y sale aviso rojo.
+   - Tocar un tanque elige TQSEL (el mismo del tablero plano de abajo) y acerca la cámara; tocar una canasta enseña su lote.
+   - Cámara: un dedo gira e inclina, dos dedos mueven y acercan; rueda y clic derecho con mouse; botones ⟲ ⟳ + − ⌂.
+   - Cada caja dibuja solo arriba y los 2 lados que ve la cámara; al girar a otro cuadrante se vuelve a dibujar. Ninguna pieza cruza a
+     otra (Android y Safari fallan al ordenar piezas que se cruzan). La profundidad crece con el acercamiento (nada se corta).
+   - Los letreros no son 3D: van en una capa plana encima (.t3lab) y su lugar se calcula con la misma cámara (t3Proj). Así no se esconden
+     detrás de otras piezas por errores de orden del navegador y el texto se lee nítido. Por eso la cámara se anima con código, no con CSS. */
+const T3P={W:2420,D:1480,TL:800,TW:270,TH:110,ZW:86,CW:40,CD:58,CH:12,NX:19,NY:4,MAX:228,
+ TQ:{T1:[1260,70],T2:[1260,410],T3:[1260,750],T4:[1260,1090],T6:[300,750],T5:[300,1090]},FIL:{T1:'e',T2:'e',T3:'e',T4:'e',T5:'w'}};
+const T3={labs:[],an:0,az:35,ax:57,s:0,px:0,py:0,ox:0,oy:0,zoom:false,zt:'',pick:null,cs:{},D:null,all:false,pg:'',tf:'',w:0,h:0,on:true,q:0};
+try{T3.on=localStorage.getItem('propesa-3d')!=='0'}catch(e){}
+/* Lo que hay en cada tanque: [{m maquila, l lote, go, kz gramos por talla, kb kg por caja, d días, u lotDue, nm/rg/col tallas de su maquila}] */
+function t3Data(all){const out={},miss=[];TK.forEach(t=>out[t]=[]);
+ (all?mqOn():[mqBy(MQ)||{id:MQ,n:mqName(MQ)}]).forEach(m=>{const st=m.id===MQ?ST:STX[m.id];if(!st||!Array.isArray(st.R))return;withST(st,()=>{
+  const nm=TNM.slice(),rg=S.map((_,i)=>szT(i)),col=SZC.map(c=>c[1]);
+  fifo(ST.R.filter(r=>!r.closed&&!r.ne&&bal(r.lot)>0).map(r=>r.lot)).forEach(l=>{const r=R_(l),dz=tqDistZ(l),u=lotDue(l),d=lotDays(r),go='lote:'+l+(all?'@'+m.id:'');
+   TK.forEach(t=>{const kz=S.map(z=>Math.max(0,tqZ(l,t,z,dz)));if(!kz.some(g=>g>0))return;
+    const o=recTq(r).find(x=>x.a===t),kb=+String((t!==r.tank&&o&&o.kb)||r.kgbox||'').replace(',','.');
+    if(!(kb>0)){if(!miss.some(x=>x.go===go))miss.push({l,m,go});return}
+    out[t].push({m,l,go,kz,kb,d,u,nm,rg,col,pv:r.origin||''})})})})});
+ return{out,miss}}
+/* Canastas de un tanque: solo se arman las que se dibujan (MAX); n y g cuentan todas */
+function t3Crates(G){const cs=[];let n=0,gt=0;G.forEach(x=>x.kz.forEach((g,i)=>{if(!(g>0))return;const kb=x.kb*1000,q=g/kb,c=Math.ceil(q-1e-9);n+=c;gt+=g;for(let k=0;k<c&&cs.length<T3P.MAX;k++)cs.push({x,i,inc:k+1>q+1e-9,g:Math.min(kb,g-k*kb)})}));cs.n=n;cs.g=gt;return cs}
+const t3Q=()=>{const a=T3.az*Math.PI/180;return{s:Math.cos(a)>=0,e:Math.sin(a)>=0}};
+/* Piezas: caja (arriba + los 2 lados que ve la cámara), paredes, letrero que siempre mira a la cámara */
+function t3Box(x,y,z,w,d,h,c,ex,inner){const q=t3Q(),tf=`transform-origin:0 0;transform:translateZ(${z}px)`;
+ return `<div class="t3f ${c}" style="left:${x}px;top:${y}px;width:${w}px;height:${d}px;transform:translateZ(${z+h}px)"${ex||''}>${inner||''}</div><div class="t3f ${c} t3s" style="left:${x}px;top:${q.s?y+d:y}px;width:${w}px;height:${h}px;${tf} rotateX(90deg) scaleY(-1) translateY(-${h}px)"${ex||''}></div><div class="t3f ${c} t3e" style="left:${q.e?x+w:x}px;top:${y}px;width:${h}px;height:${d}px;${tf} rotateY(-90deg)"${ex||''}></div>`}
+const t3WX=(x,y,w,h,c)=>`<div class="t3f ${c}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg) scaleY(-1) translateY(-${h}px)"></div>`,
+ t3WY=(x,y,d,h,c)=>`<div class="t3f ${c}" style="left:${x}px;top:${y}px;width:${h}px;height:${d}px;transform-origin:0 0;transform:rotateY(-90deg)"></div>`,
+ t3BB=(x,y,z,h,o)=>{T3.labs.push({x,y,z,h,...(o||{})});return''};
+const t3Pos=(t,k)=>{const P=T3P,[x,y]=P.TQ[t],q=k%(P.NX*P.NY);return{cx:x+12+(q%P.NX)*P.CW,cy:y+12+Math.floor(q/P.NX)*(P.CD+6),lay:Math.floor(k/(P.NX*P.NY))}},
+ t3Plat=t=>{const P=T3P,[x,y]=P.TQ[t],f=P.FIL[t];return f?{px:f=='e'?x+P.TL+12:x-262,py:y+10,pw:250,pd:P.TW-20,pz:200}:null};
+function t3Inner(){T3.labs=[];const P=T3P,D=T3.D,all=T3.all,mi=new Map((all?mqOn():[]).map((m,i)=>[m.id,i]));let h=`<div class="t3f t3flr" style="left:0;top:0;width:${P.W}px;height:${P.D}px"></div><div class="t3f t3zone" style="left:40px;top:40px;width:1020px;height:560px;transform:translateZ(1px)">Área de recepción</div>`;
+ h+=`<div class="t3g" data-w="n">${t3WX(0,0,P.W,300,'t3wl')}<div class="t3f t3door" style="left:780px;top:5px;width:300px;height:230px;transform-origin:0 0;transform:rotateX(90deg) scaleY(-1) translateY(-230px)"></div>${t3BB(930,60,250,'<div class="t3dl">Selección y lavado</div>',{w:'n'})}</div>`;
+ h+=`<div class="t3g" data-w="s">${t3WX(0,P.D,P.W,140,'t3wl')}</div><div class="t3g" data-w="w">${t3WY(0,0,P.D,300,'t3wl t3ew')}<div class="t3f t3door t3dv" style="left:5px;top:170px;width:230px;height:300px;transform-origin:0 0;transform:rotateY(-90deg)"></div>${t3BB(130,320,250,'<div class="t3dl">Andén de recepción</div>',{w:'w'})}</div><div class="t3g" data-w="e">${t3WY(P.W,0,P.D,140,'t3wl t3ew')}</div>`;
+ const pk=T3.pick&&T3.cs[T3.pick.t]&&T3.cs[T3.pick.t][T3.pick.k],pkk=pk?pk.x.m.id+':'+pk.x.l:'';
+ TK.forEach(t=>{const [x,y]=P.TQ[t],n=t.slice(1),G=(D.out[t]||[]).slice().sort((a,b)=>(mi.get(a.m.id)||0)-(mi.get(b.m.id)||0)),cs=t3Crates(G),kg=cs.g,
+  old=G.length?Math.max(...G.map(g=>g.d||0)):0,ov=G.some(g=>g.u&&g.u.st=='v'),sel=T3.zoom&&t===TQSEL;T3.cs[t]=cs;
+  h+=`<div class="t3t${T3.zoom&&!sel?' t3dim':''}${sel?' t3sel':''}">${t3WX(x,y,P.TL,P.TH,'t3tw t3in')}${t3WY(x,y,P.TW,P.TH,'t3tw t3in')}<div class="t3f t3wat" data-t3t="${t}" style="left:${x}px;top:${y}px;width:${P.TL}px;height:${P.TW}px;transform:translateZ(${P.ZW}px)"></div>`;
+  /* Las capas de un mismo lugar van en una sola caja alta (menos piezas); arriba se ve la de hasta arriba */
+  const L1=P.NX*P.NY;cs.forEach((c,k)=>{if(k+L1<cs.length)return;const p=t3Pos(t,k),u=c.x.u,key=c.x.m.id+':'+c.x.l,cl=(u&&u.st=='v'?' t3old':u&&u.st=='u'?' t3last':'')+(c.inc?' t3inc':'')+(key===pkk?' t3hl':'');
+   const rib=`<i class="t3rib" style="background:${c.x.col[c.i]||'#8A94A6'}"></i>`;/* una sola capa: solo la tapa (flota plana, como en las fotos); con capas: caja con lados */
+   h+=p.lay?t3Box(p.cx,p.cy,P.ZW+1,P.CW-4,P.CD,P.CH*(p.lay+1),'t3c'+cl,` data-t3c="${t}:${k}"`,rib):`<div class="t3f t3c${cl}" style="left:${p.cx}px;top:${p.cy}px;width:${P.CW-4}px;height:${P.CD}px;transform:translateZ(${P.ZW+P.CH}px)" data-t3c="${t}:${k}">${rib}</div>`});
+  let lastM=null;cs.forEach((c,k)=>{const p=t3Pos(t,k),u=c.x.u;
+   if(sel&&c.x.m.id!==lastM){lastM=c.x.m.id;h+=t3BB(p.cx+20,p.cy,P.ZW+70,`<div class="t3mq">${E(c.x.m.n)} · ${t3Crates(G.filter(z=>z.m.id===c.x.m.id)).n}</div>`)}
+   if(sel&&(k===0||cs[k-1].x!==c.x))h+=t3BB(p.cx+20,p.cy+30,P.ZW+38,`<div class="t3lt${u&&u.st=='v'?' t3lv':''}">${E(c.x.l)} · ${c.x.d==null?'—':c.x.d==1?'1 día':c.x.d+' días'}${u&&u.st=='v'?' ⚠':''}</div>`)});
+  h+=t3WX(x,y+P.TW,P.TL,P.TH,'t3tw')+t3WY(x+P.TL,y,P.TW,P.TH,'t3tw t3e')+`<div class="t3f t3rim" style="left:${x-4}px;top:${y-4}px;width:${P.TL+8}px;height:${P.TW+8}px;transform:translateZ(${P.TH}px)"></div>`;
+  const F=t3Plat(t),sg=`<div class="t3sign${T3.zoom&&!sel?' t3hid':''}">TANQUE<b>${n}</b></div>`;
+  if(F){const{px,py,pw,pd,pz}=F;[[px,py],[px+pw-16,py],[px,py+pd-16],[px+pw-16,py+pd-16]].forEach(([a,b])=>h+=t3Box(a,b,0,16,16,pz,'t3leg'));
+   h+=t3Box(px,py,pz,pw,pd,12,'t3plat')+t3Box(px+30,py+20,pz+12,pw-60,pd-40,95,'t3fil')+`<div class="t3g" style="left:0;top:0;transform:translateZ(${pz+12}px)">${t3WX(px,py,pw,70,'t3rail')}${t3WX(px,py+pd,pw,70,'t3rail')}${t3WY(px,py,pd,70,'t3rail')}${t3WY(px+pw,py,pd,70,'t3rail')}</div>`+t3BB(px+pw/2,py+pd+30,pz-90,sg)}
+  else h+=t3BB(x+P.TL/2,y+P.TW+20,P.TH+10,sg);
+  const more=cs.n>cs.length?` (${cs.length} dibujadas)`:'';
+  h+=t3BB(x+P.TL/2,y+P.TW/2,150,`<div class="t3tag${T3.zoom?' t3hid':''}">T${n} · ${cs.n?cs.n+(cs.n==1?' canasta':' canastas')+more:'Vacío'}${cs.n?`<small>${f(kg,0)} kg · <span${ov?' class="t3al"':''}>más viejo: ${old<=0?'hoy':old==1?'1 día':old+' días'}${ov?' ⚠':''}</span></small>`:''}</div>`)+`</div>`});
+ return h}
+function t3View(all){const pg=all?'gen':'rec';if(T3.pg!==pg){T3.pg=pg;T3.zoom=false;T3.pick=null;T3.s=0;T3.zt=''}
+ if(!T3.on)return `<div class="t3bar"><button type="button" class="btn s" data-t3a="on">Ver tanques en 3D</button></div>`;
+ T3.D=t3Data(all);T3.all=all;if(T3.pick&&(!T3.zoom||T3.pick.t!==TQSEL))T3.pick=null;
+ const inner=t3Inner(),q=t3Q(),pk=T3.pick&&T3.cs[T3.pick.t]&&T3.cs[T3.pick.t][T3.pick.k];
+ if(!T3.q){T3.q=1;Promise.resolve().then(t3Mount)}
+ /* La escena se arma de nuevo solo si cambió algo (cada render de la página no vuelve a crear miles de piezas): si es igual, se deja
+    un lugar (#t3slot) y t3Mount vuelve a poner la misma escena. */
+ const bar=`<div class="t3bar"><h2 class="h3">Planta en 3D</h2><span class="mut">Arrastra para girar · toca un tanque</span><span class="sp"></span><button type="button" class="btn s" data-t3a="off">Ocultar 3D</button></div>
+ ${T3.D.miss.map(x=>`<div class="alb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${E(x.l)}${all?' · '+E(x.m.n):''} no tiene kg por caja en tanque</b><p style="margin:4px 0 0">Sin ese dato no se pueden dibujar sus canastas. <button type="button" class="alk" data-go="${E(x.go)}">Completar ›</button></p></div></div>`).join('')}`,
+  V3=`<div class="t3v${T3.zoom?' t3zm':''}" aria-label="Planta en 3D. Arrastra para girar; con dos dedos mueves y acercas. Para elegir un tanque también puedes usar el tablero de abajo."><div class="t3st"><div class="t3w" data-q="${+q.s}${+q.e}" style="width:${T3P.W}px;height:${T3P.D}px;transform:__TF__">${inner}</div></div><div class="t3lab" aria-hidden="true">${T3.labs.map((l,i)=>`<div class="t3l" data-i="${i}"${l.w?` data-w="${l.w}"`:''}>${l.h}</div>`).join('')}</div>
+ ${T3.zoom?`<button type="button" class="t3back" data-t3a="back">‹ Ver toda la planta</button>`:''}
+ <div class="t3ctl" role="group" aria-label="Cámara"><button type="button" data-t3a="l" aria-label="Girar a la izquierda" title="Girar">⟲</button><button type="button" data-t3a="r" aria-label="Girar a la derecha" title="Girar">⟳</button><button type="button" data-t3a="in" aria-label="Acercar" title="Acercar">+</button><button type="button" data-t3a="out" aria-label="Alejar" title="Alejar">−</button><button type="button" data-t3a="fit" aria-label="Volver a centrar" title="Centrar">⌂</button></div>
+ ${pk?`<div class="t3pick" role="status"><button type="button" class="t3x" data-t3a="unpick" aria-label="Cerrar">✕</button><b>${E(pk.x.l)}</b>${all?` · ${E(pk.x.m.n)}`:''}<br><span class="szd" style="background:${pk.x.col[pk.i]}" aria-hidden="true"></span> ${E(pk.x.nm[pk.i]||'')} ${E(pk.x.rg[pk.i]&&pk.x.rg[pk.i]!==pk.x.nm[pk.i]?pk.x.rg[pk.i]:'')} · ${f(pk.g,1)} kg${pk.inc?' (incompleta)':''}<br><span class="mut">${E(pk.x.pv)} · ${pk.x.d==null?'sin fecha':pk.x.d==1?'1 día en tanque':pk.x.d+' días en tanque'}${pk.x.u&&pk.x.u.dm?' · aguanta '+pk.x.u.dm:''}</span><br><button type="button" class="alk" data-go="${E(pk.x.go)}">Abrir lote ›</button></div>`:''}</div>`;
+ if(T3.node&&T3.html===V3)return bar+'<div id="t3slot"></div>';
+ T3.html=V3;T3.node=null;return bar+V3.replace('__TF__',T3.tf||'none')}
+/* Cámara: fitTo encuadra una caja del piso (proyecta sus esquinas); t3Apply pone la transformación (con o sin animación) */
+function t3Fit(x0,y0,x1,y1,z1,pad,r,az,ax){const cx=(x0+x1)/2,cy=(y0+y1)/2,a=az*Math.PI/180,b=ax*Math.PI/180;let m=[1e9,1e9,-1e9,-1e9];
+ for(const x of [x0,x1])for(const y of [y0,y1])for(const z of [0,z1]){const dx=x-cx,dy=y-cy,X=dx*Math.cos(a)-dy*Math.sin(a),Y=(dx*Math.sin(a)+dy*Math.cos(a))*Math.cos(b)-z*Math.sin(b);m=[Math.min(m[0],X),Math.min(m[1],Y),Math.max(m[2],X),Math.max(m[3],Y)]}
+ return{az,ax,px:cx,py:cy,s:Math.min(r.width/(m[2]-m[0]),r.height/(m[3]-m[1]))*pad,ox:-(m[0]+m[2])/2,oy:-(m[1]+m[3])/2}}
+function t3Frame(anim,az,ax){const v=document.querySelector('.t3v');if(!v)return;const r=v.getBoundingClientRect(),P=T3P,t=T3.zoom&&P.TQ[TQSEL]?TQSEL:'';T3.zt=T3.zoom?TQSEL:'';az=az==null?T3.az:az;ax=ax==null?T3.ax:ax;
+ let g;if(t){const [x,y]=P.TQ[t],F=t3Plat(t)||{px:x,pw:P.TL};g=t3Fit(Math.min(x,F.px)-10,y-10,Math.max(x+P.TL,F.px+F.pw)+10,y+P.TW+40,340,.92,r,az,ax)}else g=t3Fit(0,0,P.W,P.D,300,.97,r,az,ax);t3Go(g,anim)}
+/* Mueve la cámara a g: con animación (~0.7 s) o de golpe (movimiento reducido, primera vez, cambio de tamaño) */
+function t3Go(g,anim){const a0={...T3},K=['az','ax','s','px','py','ox','oy'],id=++T3.an;
+ let red=false;try{red=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+ if(!anim||red||!T3.s){K.forEach(k=>T3[k]=g[k]);return t3Apply()}
+ const t0=performance.now(),D=700,step=now=>{if(id!==T3.an)return;const u=Math.min(1,(now-t0)/D),e=1-Math.pow(1-u,3);K.forEach(k=>T3[k]=a0[k]+(g[k]-a0[k])*e);t3Apply();if(u<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+/* Punto del piso (x, y, altura z) → lugar en la pantalla, con la misma transformación y perspectiva que la escena */
+function t3Proj(x,y,z,w,h,P){const a=T3.az*Math.PI/180,b=T3.ax*Math.PI/180,dx=x-T3.px,dy=y-T3.py,x1=dx*Math.cos(a)-dy*Math.sin(a),y1=dx*Math.sin(a)+dy*Math.cos(a),
+ y2=y1*Math.cos(b)-z*Math.sin(b),z2=y1*Math.sin(b)+z*Math.cos(b),X=T3.s*(x1+T3.ox),Y=T3.s*(y2+T3.oy),Z=T3.s*z2,k=P/(P-Z);return{x:w/2+X*k,y:h/2+Y*k,ok:Z<P*.9}}
+function t3Apply(){const v=document.querySelector('.t3v'),w=v&&v.querySelector('.t3w');if(!w)return;const q=t3Q(),qk=`${+q.s}${+q.e}`,r=v.getBoundingClientRect();
+ if(w.dataset.q!==qk){w.dataset.q=qk;w.innerHTML=t3Inner()}
+ const PP=Math.round(9000*T3.s+3000);v.querySelector('.t3st').style.perspective=PP+'px';
+ T3.tf=`translate(${r.width/2}px,${r.height/2}px) scale(${T3.s}) translate(${T3.ox}px,${T3.oy}px) rotateX(${T3.ax}deg) rotateZ(${T3.az}deg) translate(${-T3.px}px,${-T3.py}px)`;
+ w.style.transform=T3.tf;
+ const vx=Math.sin(T3.az*Math.PI/180),vy=Math.cos(T3.az*Math.PI/180),off=k=>(k=='s'&&vy>.2)||(k=='n'&&vy<-.2)||(k=='e'&&vx>.2)||(k=='w'&&vx<-.2);w.querySelectorAll('.t3g[data-w]').forEach(g=>g.hidden=off(g.dataset.w));
+ v.querySelectorAll('.t3l').forEach(el=>{const l=T3.labs[+el.dataset.i];if(!l)return;const p=t3Proj(l.x,l.y,l.z,r.width,r.height,PP),hid=!p.ok||(el.dataset.w&&off(el.dataset.w));el.hidden=hid;if(!hid)el.style.transform=`translate(${p.x.toFixed(1)}px,${p.y.toFixed(1)}px) translate(-50%,-100%)`})}
+function t3Mount(){T3.q=0;const sl=document.getElementById('t3slot');if(sl&&T3.node)sl.replaceWith(T3.node);const v=document.querySelector('.t3v');if(!v)return;T3.node=v;const r=v.getBoundingClientRect();
+ if(!T3.s||Math.abs(r.width-T3.w)>1||Math.abs(r.height-T3.h)>1){T3.w=r.width;T3.h=r.height;T3.an++;t3Frame(false)}else if((T3.zoom?TQSEL:'')!==T3.zt)t3Frame(true);else t3Apply()}
+addEventListener('resize',()=>{if(document.querySelector('.t3v'))t3Mount()});
+/* Arrastrar: un dedo gira e inclina; dos dedos mueven y acercan. Mouse: rueda acerca; clic derecho o Shift mueve. Un toque sin
+   arrastrar sigue siendo un toque (abre el tanque o la canasta). */
+const T3PT=new Map();let T3mv=0,T3last=null;
+const t3Mid=()=>{const a=[...T3PT.values()];return{x:a.reduce((s,p)=>s+p.x,0)/a.length,y:a.reduce((s,p)=>s+p.y,0)/a.length,d:a.length>1?Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y):0}},
+ t3Zoom=k=>{T3.s=Math.max(.08,Math.min(4,T3.s*k))},
+ t3Pan=(dx,dy)=>{const X=dx/T3.s,Y=dy/T3.s/Math.cos(T3.ax*Math.PI/180),a=T3.az*Math.PI/180;T3.px=Math.max(0,Math.min(T3P.W,T3.px-(X*Math.cos(a)+Y*Math.sin(a))));T3.py=Math.max(0,Math.min(T3P.D,T3.py-(-X*Math.sin(a)+Y*Math.cos(a))))};
+document.addEventListener('pointerdown',e=>{const v=e.target.closest&&e.target.closest('.t3v');if(!v||e.target.closest('.t3ctl,.t3back,.t3pick'))return;T3PT.set(e.pointerId,{x:e.clientX,y:e.clientY,b:e.button,sh:e.shiftKey});if(T3PT.size==1)T3mv=0;T3last=t3Mid()});
+document.addEventListener('pointermove',e=>{const p=T3PT.get(e.pointerId);if(!p)return;p.x=e.clientX;p.y=e.clientY;const m=t3Mid(),dx=m.x-T3last.x,dy=m.y-T3last.y,v=document.querySelector('.t3v');
+ T3mv+=Math.abs(dx)+Math.abs(dy);if(T3mv<8||!v)return;if(!v.classList.contains('t3drag')){v.classList.add('t3drag');try{v.setPointerCapture(e.pointerId)}catch(z){}}
+ if(T3PT.size>1){t3Pan(dx,dy);if(T3last.d&&m.d)t3Zoom(m.d/T3last.d)}else if(p.b==2||p.sh)t3Pan(dx,dy);else{T3.az=(T3.az-dx*.35)%360;T3.ax=Math.max(25,Math.min(80,T3.ax-dy*.25))}
+ T3.an++;T3last=m;t3Apply()});
+const t3Up=e=>{if(!T3PT.delete(e.pointerId))return;T3last=T3PT.size?t3Mid():null;if(!T3PT.size)setTimeout(()=>{const v=document.querySelector('.t3v');if(v)v.classList.remove('t3drag')},0)};
+document.addEventListener('pointerup',t3Up);document.addEventListener('pointercancel',t3Up);
+document.addEventListener('click',e=>{if(T3mv>=8&&e.target.closest&&e.target.closest('.t3v')){e.stopPropagation();e.preventDefault();T3mv=0}},true);
+document.addEventListener('wheel',e=>{if(!e.target.closest||!e.target.closest('.t3v'))return;e.preventDefault();T3.an++;t3Zoom(Math.exp(-e.deltaY*.0015));t3Apply()},{passive:false});
+['contextmenu','gesturestart','gesturechange'].forEach(n=>document.addEventListener(n,e=>{if(e.target.closest&&e.target.closest('.t3v'))e.preventDefault()}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&T3.zoom&&document.querySelector('.t3v')&&!e.target.closest('input,select,textarea,[role=dialog],#setp,#pmenu')){T3.zoom=false;T3.pick=null;render()}});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-t3a]'),t=e.target.closest('[data-t3t]'),c=e.target.closest('[data-t3c]');
+ if(a){const k=a.dataset.t3a,g={az:T3.az,ax:T3.ax,s:T3.s,px:T3.px,py:T3.py,ox:T3.ox,oy:T3.oy};
+  if(k=='l'||k=='r'){g.az+=k=='l'?-45:45;return t3Go(g,true)}if(k=='in'||k=='out'){g.s=Math.max(.08,Math.min(4,g.s*(k=='in'?1.35:1/1.35)));return t3Go(g,true)}
+  if(k=='fit')return t3Frame(true,35,57);if(k=='back'){T3.zoom=false;T3.pick=null;return render()}if(k=='unpick'){T3.pick=null;return render()}
+  if(k=='on'||k=='off'){T3.on=k=='on';T3.s=0;try{localStorage.setItem('propesa-3d',T3.on?'1':'0')}catch(z){}return render()}
+  return}
+ if(c){const [tq,k]=c.dataset.t3c.split(':');if(!T3.zoom||TQSEL!==tq){TQSEL=tq;T3.zoom=true;T3.pick=null}else T3.pick={t:tq,k:+k};return render()}
+ if(t){TQSEL=t.dataset.t3t;T3.zoom=true;T3.pick=null;render()}});
 /* v1.19.0 · Administración → Tallas de la maquila abierta (solo el Administrador): nombre, rango, color (el del tape y la categoría
    de la hielera), nombre del color e inglés para compradores; agregar y ocultar. No se borran ni se reordenan (ver SZ0). */
 let SZF=null;

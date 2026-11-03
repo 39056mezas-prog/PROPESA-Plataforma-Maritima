@@ -1,5 +1,28 @@
 # Cambios
 
+## 1.31.0 · 2 de noviembre de 2026
+
+Pedido del usuario (2/nov): «un tablero de tanques en 3D como mi piso real, con las cajas adentro, y que al tocar un tanque la cámara se acerque». Plan, fotos y decisiones en el proyecto (`claude/PLAN_TANQUES_3D.md`); prototipo aprobado el 2/nov.
+
+### Agregado
+- **Planta en 3D** arriba del tablero de tanques, en **Entrada** (la maquila abierta) y en **Panel general** (todas las maquilas). El tablero plano y su detalle siguen abajo igual.
+- La planta como es: T1–T4 en una columna con su filtro elevado (plataforma blanca, barandal amarillo) en el extremo este; T6 y T5 junto a T3 y T4; T5 con filtro al oeste y T6 sin filtro; área de recepción con «Andén de recepción» y «Selección y lavado».
+- **Canastas** en cada tanque, calculadas: kg de cada talla de cada lote ÷ «kg por caja en tanque» del lote. Llevan el **listón del color de la talla de su maquila** (si una maquila tiene su talla y color, sale con ese color). Incompleta = borde punteado. Lote que pasó los días de su proveedor = borde rojo; último día = ámbar. Si en un lugar hay más de una capa, se ve una caja más alta.
+- Encima de cada tanque: canastas, kg y **días del lote más viejo**.
+- **Tocar un tanque:** la cámara se acerca, elige ese tanque en el tablero de abajo (mismo detalle de siempre) y enseña un letrero por maquila y uno por lote con sus días. «‹ Ver toda la planta» (o Esc) regresa.
+- **Tocar una canasta:** lote, maquila (en Panel general), talla, kg, proveedor y días en tanque, y «Abrir lote ›». Se marcan las demás canastas de ese lote.
+- **Mover la vista:** un dedo gira e inclina; dos dedos mueven y acercan; con mouse, rueda y clic derecho; botones de 48 px ⟲ ⟳ + − ⌂.
+- «Ocultar 3D» / «Ver tanques en 3D» (se recuerda en cada equipo).
+- Lote sin «kg por caja en tanque»: aviso rojo «… no tiene kg por caja en tanque · Completar ›» que lleva al lote.
+
+### Cómo está hecho
+- Sin librerías: transformaciones 3D de CSS (`t3View`, `t3Data`, `t3Inner`). Letreros en una capa plana encima, colocados con la misma cámara (`t3Proj`): no se esconden por errores de orden del navegador y se leen nítidos. La cámara se anima con código (respeta «movimiento reducido»).
+- Para Android y iPad: ninguna pieza cruza a otra, cada caja dibuja solo los lados que ve la cámara, la profundidad crece con el acercamiento y la escena no se vuelve a armar si no cambió nada.
+- Sin cambios en los datos ni en Supabase.
+
+### Pruebas
+- Nueva: `tanques3d_t.py`. `rendimiento_t.py` mide Entrada con y sin 3D (un año de datos, CPU 4×: +28 ms; límite +40 ms). Actualizada: `inicio_t.py` (versión 1.31.0).
+
 ## 1.30.1 · 2 de noviembre de 2026
 
 Pedidos del usuario (2/nov).
