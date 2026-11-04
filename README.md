@@ -9,7 +9,7 @@ Incluye recepción de lotes, captura de hieleras, hoja de empaque (Formato 06), 
 |---|---|
 | `index.html` | Toda la aplicación |
 | `manifest.webmanifest`, `favicon.svg`, `icon-192/512/1024.png`, `apple-touch-icon.png` | Ícono (langosta blanca sobre azul marino, la misma del botón Entrada) y opción "Agregar a pantalla de inicio" en tablet |
-| `og-image.png` | Imagen que sale al compartir el link (logo de PROPESA, 1200×630). Las etiquetas `og:`/`twitter:` de `index.html` llevan la dirección completa `https://propesa.org/` (el dominio propio, v1.13.2): si cambia el dominio, cámbiala ahí y en `pruebas/vista_previa_t.py` |
+| `og-image.png` | Imagen que sale al compartir el link (logo de PROPESA, 1200×630). Las etiquetas `og:`/`twitter:` de `index.html` llevan la dirección completa `https://app.propesa.org/` (desde la v1.31.4; `propesa.org` es el sitio público): si cambia el dominio, cámbiala ahí y en `pruebas/vista_previa_t.py` |
 | `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; caché; y la tarea diaria que mantiene despierta la base) |
 | `api/despierta.js` | La tarea diaria: una consulta pequeña a la base para que el plan gratis de Supabase no la pause (ver *Fin de temporada*) |
 | `supabase/` | Base compartida: `migrations/` (lo que está aplicado en el proyecto `propesa_bc`, incluido el espacio de archivos «fotos»), `functions/usuarios` (alta de usuarios) y `schema.sql` (primer esquema) |

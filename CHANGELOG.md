@@ -1,5 +1,62 @@
 # Cambios
 
+## 1.32.0 · 3 de noviembre de 2026
+
+Pedido del usuario (3/nov): «que mi pantalla de inicio de sesión se vea como esta» (captura de otra plataforma: marca con una vista previa de la app y el formulario). Después pidió: tanques con canastas pero no tan llenos, las canastas como las de verdad, los filtros y todo como en la plataforma, el lado blanco en azul, quitar «Plataforma marítima» del acceso y un botón para iniciar sesión en vez de desplazarse, con el correo y la contraseña saliendo de lado.
+
+### Cambiado
+- **Nuevo acceso.** Toda la pantalla: logo, «Cada lote de langosta, de la entrada al embarque.», el flujo Entrada → Órdenes → Empaque → Embarque, el botón blanco **«Iniciar sesión»** y una vista previa de Panel general que se sale por la orilla. Sin desplazarse en ningún tamaño.
+- **El formulario sale de lado** (cajón azul a la derecha; en celular ocupa toda la pantalla): «Iniciar sesión», «Bienvenido de nuevo…», Correo, Contraseña, Entrar (blanco), qué hacer si olvidaste la contraseña y la versión. Se guarda con ✕, Escape o tocando afuera. Llegar a un campo con el teclado o el administrador de contraseñas también lo abre. Si hay un aviso (sesión cerrada) ya sale abierto.
+- **La planta de la vista previa es el mismo dibujo de «Planta en 3D»** (`t3Inner`): tanques, filtros con barandal amarillo, paredes, cortinas, letreros y placas TANQUE 1–6, con 142 canastas de muestra fijas (T5 vacío) y la cámara quieta. Es un dibujo: no usa datos, no se puede tocar y el lector de pantalla lo ignora. No cambia el estado de la planta real.
+- **Ojo para ver la contraseña** (también en Configuración inicial, uno por campo).
+- Configuración inicial usa la misma pantalla, con el formulario ya abierto (botón «Crear Administrador»).
+- Sin «Plataforma marítima» en el acceso (ahora «Acceso por rol» / «Primer uso»).
+
+### Pruebas
+- Nueva `acceso_t.py` (botón y cajón de lado, sin desplazarse, dibujo real de la planta, canastas, ojo, Enter, tamaños 390/820/1180/1440, texto «Muy grande», tema oscuro, Configuración inicial). `inicio_t.py`: versión 1.32.0.
+
+## 1.31.4 · 3 de noviembre de 2026
+
+Pedido del usuario (3/nov): el sitio público vive en `propesa.org` y su botón «Iniciar sesión» manda a la plataforma en `app.propesa.org`.
+
+### Cambiado
+- **Vista previa al compartir el link:** ahora apunta a `https://app.propesa.org/` (antes `https://propesa.org/`, que pasa a ser el sitio público).
+
+### Pruebas
+- `vista_previa_t.py`: espera `app.propesa.org`. `inicio_t.py`: versión 1.31.4.
+
+## 1.31.3 · 3 de noviembre de 2026
+
+Pedido del usuario (3/nov): «dentro de los tanques, si selecciono un lote, que se guarden los demás para poder ver qué lote es el que seleccioné; y que toda la caja cambie de color para que resalte».
+
+### Cambiado
+- **Tanques en 3D · tocar una canasta:** se guardan (dejan de verse) las canastas de los demás lotes del tanque y las del lote elegido se pintan completas de azul (con su listón de talla encima). Solo quedan los letreros de ese lote y de su maquila.
+- La tarjeta de la canasta trae **«Ver todas las canastas»** para volver a ver todo (también ✕, tocar otro tanque o «Ver toda la planta»).
+- Si en un lugar hay varias capas de canastas, la caja se queda y se pinta cuando alguna de sus capas es del lote elegido.
+
+### Pruebas
+- `tanques3d_t.py`: se guardan los demás lotes (también con dos lotes en el mismo tanque), color de la canasta elegida, letreros, «Ver todas las canastas». `inicio_t.py`: versión 1.31.3.
+
+## 1.31.2 · 3 de noviembre de 2026
+
+Pedido del usuario (3/nov): «lo del andén de recepción y de selección y lavado no me gustó que sean anuncios flotantes; ponlo en la pared y que no se mueva».
+
+### Cambiado
+- **Tanques en 3D:** «ANDÉN DE RECEPCIÓN» y «SELECCIÓN Y LAVADO» ahora son letreros pegados a la pared, a la izquierda de su cortina (como en las fotos de la planta). Ya no flotan ni giran con la cámara; se esconden con su pared cuando la pared estorba la vista.
+
+### Pruebas
+- `tanques3d_t.py`: los dos letreros van en la pared, no en la capa de letreros. `inicio_t.py`: versión 1.31.2.
+
+## 1.31.1 · 3 de noviembre de 2026
+
+Pedido del usuario (3/nov): «en el panel general el tanque 3D sea lo primero que se muestre».
+
+### Cambiado
+- **Panel general:** la planta en 3D va hasta arriba, justo debajo del título, antes de los totales, la tabla por maquila y el tablero de tanques. El tablero plano y su detalle siguen donde estaban.
+
+### Pruebas
+- `tanques3d_t.py`: el 3D está arriba de los totales y las tablas del Panel general. `inicio_t.py`: versión 1.31.1.
+
 ## 1.31.0 · 2 de noviembre de 2026
 
 Pedido del usuario (2/nov): «un tablero de tanques en 3D como mi piso real, con las cajas adentro, y que al tocar un tanque la cámara se acerque». Plan, fotos y decisiones en el proyecto (`claude/PLAN_TANQUES_3D.md`); prototipo aprobado el 2/nov.
