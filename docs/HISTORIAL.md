@@ -850,6 +850,34 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Seguridad al publicar:** si la app nueva llega antes que la actualización de la base, `loadProfiles` vuelve a pedir los perfiles sin `mq` (`NO_MQ`) y nadie se queda fuera; al guardar una cuenta de solo inventario avisa que faltan sus maquilas. Prueba en `v130_t.py` (`/__sin_mq`).
 - **Aplicada (1/nov, 19:10):** el usuario pidió «vuelve a intentarlo» y aprobó. Verificado entrando como cada cuenta (transacción deshecha): Consulta → `cliente` `{1}`, 1 registro (`D/disp`), 1 perfil, 0 fotos, `pull` 1 fila; piso y admin 279. Supabase avisa de `my_mqs()` como de `my_role()` (devuelve solo lo de quien llama).
 
+## Ronda · 3/nov/2026 · v1.32.0 · Acceso nuevo: vista previa de la app y formulario de lado
+
+- **Pedido:** acceso como el de otra plataforma (captura): marca con vista previa de la app a un lado, formulario al otro. Correcciones en la misma ronda: tanques no tan llenos, canastas como las reales, filtros y todo como en la plataforma, el lado blanco en azul, sin «Plataforma marítima», botón «Iniciar sesión» en vez de desplazarse y el formulario saliendo de lado.
+- **Código:** `authShell(inner)` (lo usan `loginView` y `setupView`), `mockView()` (dibujo de Panel general, en em sobre el ancho del panel con `container-type`), `mkScene()` (llama `t3Inner` con datos de muestra `MKT` guardando y regresando `T3`), `mkMount()` (cámara fija con `t3Fit`, encuadra solo lo que se ve; letreros con la misma proyección que `t3Proj`), `pwBox` + acción `pwv` (ojo), `AUO` + `auSet(abierto, mover foco)` (cajón; acciones `auo`/`auc`, Escape, `focusin` dentro de `.aup` lo abre; `render0` lo cierra al entrar). CSS `.au*` y `.mk*`; `.mkp` redefine los tokens claros para que la planta se vea igual en tema oscuro.
+- **Pruebas:** `acceso_t.py`.
+
+## Ronda · 3/nov/2026 · v1.31.4 · La plataforma pasa a app.propesa.org
+
+- **Pedido:** «el sitio vive en propesa.org y al darle Iniciar sesión manda a app.propesa.org».
+- **Cambio:** `og:url`, `og:image`, `og:image:secure_url` y `twitter:image` → `https://app.propesa.org/`. `vista_previa_t` lo vigila. Nada más: la CSP usa `'self'`, el service worker y el manifiesto usan rutas relativas, `/api/despierta` va con el proyecto de Vercel y la app solo usa usuario y contraseña de Supabase (sin enlaces por correo), así que la «Site URL» de Supabase no afecta el inicio de sesión.
+- **Ojo al mover el dominio:** cada dirección guarda aparte la sesión y lo que no se haya subido; antes del cambio, cada tablet debe decir «Todo lo de este equipo ya está arriba». Pasos en `claude/SITIO_PUBLICAR.md` del proyecto.
+
+## Ronda · 3/nov/2026 · v1.31.3 · Lote elegido: se guardan los demás y la canasta cambia de color
+
+- **Pedido:** «si selecciono un lote, que se guarden los demás… y que toda la caja también se cambie de color».
+- **Cambio:** en `t3Inner`, con `T3.pick` (`pkk` = maquila:lote) las cajas cuyo lugar no tiene ninguna capa de ese lote no se dibujan, y sus letreros de maquila y lote tampoco. `.t3c.t3hl` pinta la tapa (y los lados, si hay capas) de azul #16A6D1 con contorno navy. Botón «Ver todas las canastas» (`data-t3a=unpick`) en la tarjeta.
+
+## Ronda · 3/nov/2026 · v1.31.2 · Letreros de las cortinas en la pared
+
+- **Pedido:** «que no sean anuncios flotantes; ponlo en la pared y que no se mueva».
+- **Cambio:** los dos `t3BB` de las cortinas pasan a ser caras fijas `.t3dl` dentro del grupo de su pared (`data-w=n` y `data-w=w`), 8 px delante de la pared, a la izquierda de la cortina; mirando hacia adentro de la planta (`rotateX(-90deg)`, y la del oeste con `rotateZ(-90deg)`).
+
+## Ronda · 3/nov/2026 · v1.31.1 · 3D primero en Panel general
+
+- **Pedido:** «en el panel general el tanque 3D sea lo primero que se muestre».
+- **Cambio:** `general()` llama `t3View(true)` justo después del título; `tanquesGen()` ya no lo lleva (solo el tablero plano y su detalle).
+- **Pruebas:** `tanques3d_t.py` (el 3D arriba de totales y tablas); `inicio_t.py` (versión).
+
 ## Ronda · 2/nov/2026 · v1.31.0 · Tanques en 3D
 
 - **Pedido:** tablero de tanques en 3D como el piso real, con las canastas adentro (listón del color de la talla de su maquila), días en tanque, filtros arriba de los tanques, cámara que se acerca al tocar un tanque y que se pueda girar y mover. En Entrada y Panel general.

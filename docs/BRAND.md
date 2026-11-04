@@ -21,6 +21,10 @@ Todos los valores viven como variables CSS en `:root` al inicio de `index.html`.
 - Si se cambia el dibujo, sube el número `?v=` en `index.html` (`<link rel=icon>`, `apple-touch-icon`, `manifest`) y en `manifest.webmanifest`, para que los equipos no se queden con el ícono guardado. Hoy es `?v=4`.
 - `icon-1024.png` (v1.8.6, `any` y `maskable`): Android dibuja el ícono de su pantalla de inicio a ~768 px y estiraba el de 512 (se veía pixeleado).
 
+### Pantalla de acceso · desde la v1.32.0
+- Toda la pantalla en azul: logo blanco (`LOGOD`), título, flujo, botón blanco «Iniciar sesión» (texto azul marino) y una vista previa de Panel general (sidebar azul marino, planta en 3D con el mismo dibujo de la app, tarjetas) que se sale por la orilla.
+- El formulario sale de lado en un cajón azul `#0E2A72` → `#0B1D59` (etiqueta en azul claro `#8fd0f5`, botón Entrar blanco), con fondo oscurecido detrás. Igual en tema claro y oscuro.
+
 ### Pantalla de carga · desde la v1.8.6
 - Logo PROPESA en blanco (el mismo `LG`, guardado fijo en el HTML como `#boot`) centrado sobre `#0B1D59`, con tres puntos azul claro que suben y bajan. Mismo azul que `background_color` del manifiesto, así que después de la pantalla de Android (langosta blanca) no hay cambio de color.
 - Se desvanece en 0.28 s cuando la app termina de arrancar; en la app instalada se ve al menos 0.5 s. Si se cambia el logo `LG`, hay que regenerar también el de `#boot`.
@@ -28,7 +32,7 @@ Todos los valores viven como variables CSS en `:root` al inicio de `index.html`.
 
 ### Vista previa al compartir el link · desde la v1.8.6
 - `og-image.png` (1200×630, ~175 KB): el logo PROPESA en blanco (el mismo `LG` de la app, versión `LOGOD`) y «Plataforma marítima», sobre azul marino `#0B1D59` con un degradado suave. Se genera con Chromium desde el logo de la app; menos de 300 KB por el límite de WhatsApp.
-- Etiquetas `og:*` y `twitter:*` en `index.html` con la dirección completa `https://propesa.org/og-image.png?v=1` (dominio propio desde la v1.13.2; antes `propesa.vercel.app`). Si cambia la imagen, sube `?v=`: WhatsApp, Facebook y Slack guardan la vista previa vieja varios días.
+- Etiquetas `og:*` y `twitter:*` en `index.html` con la dirección completa `https://app.propesa.org/og-image.png?v=1` (desde la v1.31.4; antes `propesa.org`, v1.13.2, y `propesa.vercel.app`). Si cambia la imagen, sube `?v=`: WhatsApp, Facebook y Slack guardan la vista previa vieja varios días.
 
 ### PDF a color por talla · desde la v1.22.0
 - Los PDF con tallas llevan arriba la leyenda de la maquila: una tarjeta por talla del color de esa talla (nombre, gramaje y nombre del color; las claras con borde gris).

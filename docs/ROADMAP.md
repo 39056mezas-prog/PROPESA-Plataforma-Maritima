@@ -73,7 +73,7 @@ Estado: **v1.20.0** (26/oct/2026), con base compartida en Supabase desde la v1.4
 ## 3. Hecho (ya no pendiente)
 - Pruebas automáticas en el repositorio (`pruebas/`, 38 grupos; `correr_todo.sh` termina en «TODO BIEN»).
 - Base compartida en Supabase con reglas por rol, historial de cambios y fotos.
-- Dominio propio **propesa.org**; la vista previa al compartir el link apunta ahí (v1.13.2).
+- Dominio propio **propesa.org** (v1.13.2). Desde la v1.31.4 la plataforma vive en **app.propesa.org** y `propesa.org` es el sitio público.
 - Captura de temperatura por tanque.
 - Contraseñas en Supabase Auth; sin usuarios en el código.
 - PDF de cada paso; respaldo y restauración validada.
