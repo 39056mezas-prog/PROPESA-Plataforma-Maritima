@@ -20,13 +20,13 @@ with sync_playwright() as p:
         pg.goto(BASE); pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso","0")}', seed); pg.reload()
         pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
         start = pg.evaluate('history.length'); lot = pg.evaluate('ST.R[0].lot')
-        chk(pg.evaluate(V) == ['general', '', False], f'{vw} el Administrador entra al Panel general (v1.19.0)')
+        chk(pg.evaluate(V) == ['formatos', '', False], f'{vw} el Administrador entra a Formatos (v1.33.0)')
         # navegar: Panel → Entrada → lote → Órdenes
         pg.evaluate("go('recepcion')"); pg.evaluate(f"go('lote:{lot}')"); pg.evaluate("go('ordenes')")
         chk(pg.evaluate('history.length') == start + 3, f'{vw} cada pantalla nueva queda en el historial')
         back(pg); chk(pg.evaluate(V) == ['lote', lot, False], f'{vw} atrás → regresa al lote')
         back(pg); chk(pg.evaluate(V) == ['recepcion', '', False], f'{vw} atrás → Entrada')
-        back(pg); chk(pg.evaluate(V) == ['general', '', False] and pg.locator('.sb').count() == 1, f'{vw} atrás → Panel general (sigue dentro de la app)')
+        back(pg); chk(pg.evaluate(V) == ['formatos', '', False] and pg.locator('.sb').count() == 1, f'{vw} atrás → Formatos (sigue dentro de la app)')
         pg.go_forward(wait_until='commit'); pg.wait_for_timeout(250); chk(pg.evaluate(V) == ['recepcion', '', False], f'{vw} adelante también funciona')
         # volver a dibujar la misma pantalla no agrega pasos
         n = pg.evaluate('history.length'); pg.evaluate('render();render();softRender()'); chk(pg.evaluate('history.length') == n, f'{vw} redibujar la misma pantalla no agrega pasos al historial')

@@ -35,12 +35,12 @@ with sync_playwright() as p:
     hexs = lambda: pg.evaluate("ST.P.map((p,i)=>[pCol(p),consColor(shipCC(i).cons)])")
     chk(all(a == c for a, c in hexs()), 'sin color elegido, cada consignación toma el color que enseña Administración')
     chk(pg.evaluate("pCol(ST.P[0])===pCol(ST.P[1])"), 'dos consignaciones del mismo consignatario tienen el mismo color (antes iban por turno)')
-    pg.evaluate("go('admin')"); pg.wait_for_timeout(150)
+    pg.evaluate("go('admin:cat')"); pg.wait_for_timeout(150)
     adm = pg.evaluate("document.querySelector('[data-cc=\"0\"]').value")
     pg.evaluate("go('embarques')"); pg.wait_for_timeout(150)
     sw = pg.evaluate("getComputedStyle(document.querySelector('.bp[data-go=\"emb:0\"]')).getPropertyValue('--c').trim()")
     chk(sw.lower() == adm.lower(), f'la tarjeta del embarque lleva el mismo color que Administración ({sw} = {adm})')
-    pg.evaluate("go('admin')"); pg.wait_for_timeout(100)
+    pg.evaluate("go('admin:cat')"); pg.wait_for_timeout(100)
     pg.evaluate("(()=>{const x=document.querySelector('[data-cc=\"0\"]');x.value='#e8473d';x.dispatchEvent(new Event('change',{bubbles:true}))})()"); pg.wait_for_timeout(150)
     chk(pg.evaluate("pCol(ST.P[0])") == '#e8473d' and pg.evaluate("pCol(ST.P[1])") == '#e8473d', 'al cambiar el color en Administración cambian sus consignaciones')
     pg.evaluate("ST.CC={...ST.CC,0:'#123456'};save();render()")  # como si llegara de otro equipo
@@ -84,7 +84,7 @@ with sync_playwright() as p:
     pg.evaluate("go('emb:0')"); pg.wait_for_timeout(120)
     chk(pg.locator('main [data-alive],main [data-mc],main [data-tar]').count() == 0 and 'Langostas vivas al llegar al destino' not in pg.inner_text('main'), 'el embarque ya no tiene la captura de la llegada')
     pg.evaluate("go('cierre')"); pg.wait_for_timeout(120)
-    chk(pg.locator('#envcli [data-alive]').count() >= 1 and 'Langostas vivas al llegar al destino' in pg.inner_text('#envcli') and 'enviadas − vivas' in pg.inner_text('#envcli'), 'Mortalidad final (Revisión) captura las vivas al llegar de cada envío')
+    chk(pg.locator('#envcli [data-alive]').count() >= 1 and 'Langostas vivas al llegar al destino' in pg.inner_text('#envcli') and '(enviadas − vivas)' in pg.text_content('[data-fold=mort-calc]'), 'Mortalidad final (Revisión) captura las vivas al llegar de cada envío')
     chk(pg.evaluate("document.querySelector('.sb [data-go=cierre]').previousElementSibling.textContent") == 'Revisión', 'Mortalidad final está en el grupo «Revisión» del menú')
 
     # --- 1. logotipo de cada maquila
@@ -106,7 +106,7 @@ with sync_playwright() as p:
     chk('Luis Arce' in pg.inner_text('.phd .mqlt') and pg.evaluate("document.querySelector('.phd').classList.contains('mqa')"), 'Modo piso: el logotipo en el encabezado')
     pg.evaluate("PISO=false;mqSet(1);go('general')"); pg.wait_for_timeout(150)
     chk(pg.locator('.mqt .mqtg .mqb').count() == 3, 'Panel general: emblema en la tabla por maquila')
-    pg.evaluate("go('admin')"); pg.wait_for_timeout(150)
+    pg.evaluate("go('admin:mq')"); pg.wait_for_timeout(150)
     chk(pg.locator('#mqs .mqtg .mqb').count() == 3, 'Administración → Maquilas: emblema de cada una')
     pg.evaluate("ST.MQL=mqAll().concat([{id:5,n:'Pesquera Norte'}]);save();render()")
     chk(pg.evaluate("mqIni('Pesquera Norte')") == 'PN' and pg.evaluate("mqBadge(5)!==mqBadge(2)"), 'una maquila nueva también tiene su emblema')

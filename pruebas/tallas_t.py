@@ -25,7 +25,7 @@ with sync_playwright() as p:
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
     pg.on('dialog', lambda d: d.accept())
     pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx')
-    pg.evaluate("mqSet(1);go('recepcion')"); pg.wait_for_timeout(100)
+    pg.evaluate("mqSet(1);FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(100)
     chk(pg.evaluate("TNM") == ['Chica', 'Mediana', 'Grande', 'Jumbo', 'Despatada'], 'de inicio: Chica, Mediana, Grande, Jumbo y Despatada')
     # Entrada con despatada
     pg.click('[data-a=nf]'); chk(pg.locator('#fk4').count() == 1 and 'Despatada' in pg.inner_text('label.sz4'), 'la Entrada pide kg de Despatada')
@@ -34,7 +34,7 @@ with sync_playwright() as p:
     chk(pg.inner_text('#ftot').startswith('190'), 'el total suma la despatada (190 kg)')
     pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
     chk(pg.evaluate("bal('WLRCO261026','desp')") == 40000, 'la despatada queda en el tanque (40 kg)')
-    pg.evaluate("go('recepcion')"); pg.wait_for_timeout(100)
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(100)
     chk('Despatada' in pg.inner_text('.tqkey') if pg.locator('.tqkey').count() else False, 'el tablero de tanques muestra la talla Despatada')
     # orden con despatada, empaque con su categoría, salida al cerrar
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '26/10/2026'); pg.click('[data-oa=new]'); pg.select_option('#ol_city', 'PVG')
@@ -63,19 +63,19 @@ with sync_playwright() as p:
     d = json.loads(pg.evaluate("JSON.stringify(WN.D(dispCalc()))"))
     chk(d['n'][4][0] == 'Despatada' and len(d['z']) == 5, 'la hoja de compradores manda los nombres de las tallas (en español desde la v1.30.0)')
     # Administración → Tallas de Abel
-    pg.evaluate("mqSet(2);go('admin')"); pg.wait_for_timeout(150)
+    pg.evaluate("mqSet(2);go('admin:cat')"); pg.wait_for_timeout(150)
     chk('Tallas de Abel' in pg.inner_text('#szs'), 'Administración: «Tallas de Abel»')
     pg.click('[data-sza="ed:491-610"]'); pg.fill('#sz_r', '26-32 piezas'); pg.evaluate("document.getElementById('sz_c').value='#8b5a2b'"); pg.fill('#sz_cn', 'Café'); pg.click('[data-sza=sv]'); pg.wait_for_timeout(100)
     chk(pg.evaluate("ST.SZ[0].r") == '26-32 piezas' and pg.evaluate("ST.SZ[0].c") == '#8B5A2B' and pg.evaluate("RC.B[0]") == 'Café', 'Abel: Chica con rango 26-32 piezas y color Café')
     chk(pg.evaluate("STX[1].SZ") is None, 'PROPESA no cambia')
     pg.click('[data-sza=new]'); pg.fill('#sz_n', 'chica'); pg.click('[data-sza=sv]'); pg.wait_for_timeout(80)
-    chk('Ya hay una talla' in pg.inner_text('#sz_m') and pg.input_value('#sz_n') == 'chica', 'no deja repetir el nombre y conserva lo escrito')
+    chk('Ya hay una talla' in pg.inner_text('#app .fer') and pg.input_value('#sz_n') == 'chica', 'no deja repetir el nombre y conserva lo escrito')
     pg.fill('#sz_n', 'Débil'); pg.fill('#sz_r', ''); pg.evaluate("document.getElementById('sz_c').value='#7c3aed'"); pg.fill('#sz_cn', 'Morado'); pg.fill('#sz_e', 'Weak'); pg.click('[data-sza=sv]'); pg.wait_for_timeout(100)
     chk(pg.evaluate("TNM.length") == 6 and pg.evaluate("TNM[5]") == 'Débil', 'agrega la talla Débil al final')
     pg.click('[data-sza="off:1221-up"]'); pg.wait_for_timeout(80)
     chk(pg.evaluate("SON.length") == 5 and 3 not in pg.evaluate("SON"), 'oculta Jumbo en Abel')
     k = pg.evaluate("ST.SZ[5].k")
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
     chk(pg.locator('#fk3').count() == 0 and pg.locator('#fk5').count() == 1 and '26-32 piezas' in pg.inner_text('label.sz0'), 'la Entrada de Abel: sin Jumbo, con Débil y el rango nuevo')
     chk(pg.evaluate("getComputedStyle(document.querySelector('label.sz5 input')).borderTopColor") == 'rgb(124, 58, 237)', 'la casilla de Débil lleva su color')
     pg.fill('#fl', 'WLRCO261026'); pg.select_option('#fo', '1'); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0'); pg.fill('#fk0', '20'); pg.fill('#fk5', '-1'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
@@ -85,7 +85,7 @@ with sync_playwright() as p:
     # hoja de Modo piso
     pg.evaluate("setPiso(true);go('pent')"); pg.wait_for_timeout(150)
     hs = pg.eval_on_selector_all('.pnt-t thead th', 'e=>e.map(x=>x.innerText)')
-    chk(any('26-32 PIEZAS' in h for h in hs) and any('DÉBIL' in h.upper() for h in hs) and not any('1221' in h for h in hs), 'la hoja de Modo piso usa las tallas de Abel')
+    chk(any('26-32 PIEZAS' in h.upper() for h in hs) and any('DÉBIL' in h.upper() for h in hs) and not any('1221' in h for h in hs), 'la hoja de Modo piso usa las tallas de Abel')
     for w in (820, 390):
         pg.set_viewport_size({'width': w, 'height': 1000}); pg.wait_for_timeout(150)
         chk(not overflow(pg), f'hoja de Modo piso sin scroll de lado en {w} px'); pg.screenshot(path=os.path.join(OUT, f'tallas_pent_{w}.png'))
@@ -106,7 +106,7 @@ with sync_playwright() as p:
         pg.set_viewport_size({'width': w, 'height': h}); pg.evaluate(f"localStorage.setItem('propesa-theme','{theme}');localStorage.setItem('propesa-fs','{fs}');applyPrefs&&applyPrefs()")
         for r in ['admin', 'recepcion', 'empaque']:
             pg.evaluate(f"go('{r}')"); pg.wait_for_timeout(120); chk(not overflow(pg), f'{r} sin scroll de lado en {w} px ({theme}, {fs} px)')
-        pg.evaluate("go('admin')"); pg.locator('#szs').scroll_into_view_if_needed(); pg.screenshot(path=os.path.join(OUT, f'tallas_admin_{w}.png'))
+        pg.evaluate("go('admin:cat')"); pg.locator('#szs').scroll_into_view_if_needed(); pg.screenshot(path=os.path.join(OUT, f'tallas_admin_{w}.png'))
     # comprador
     pg.evaluate("mqSet(1);me=null;render()"); login(pg, 'compras@cliente.cn')
     t = pg.inner_text('body'); chk('Despatada' in t and 'Chica' in t and 'Broken legs' not in t, 'el comprador ve las tallas en español (v1.30.0)')

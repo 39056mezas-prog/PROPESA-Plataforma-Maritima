@@ -61,9 +61,9 @@ with sync_playwright() as p:
         if rate==4:
             chk(cl['stage']<=LIM['stage'],f"guardar una hielera con la base compartida: {cl['stage']} ms (límite {LIM['stage']} ms con CPU 4×)")
             chk(cl['stage']+cl['apply']<=LIM['apply'],f"recibir el cambio de otro equipo: {cl['stage']+cl['apply']} ms (límite {LIM['apply']} ms con CPU 4×)")
-            # v1.31.0 · Tanques en 3D: volver a dibujar Entrada (cada sincronización o cambio) no debe volver a armar la escena
+            # v1.31.0 · Tanques en 3D: volver a dibujar Entrada (cada sincronización o cambio) (v1.38.0: con el tablero de tanques abierto; va plegado desde la v1.34.0 y la prueba ya no encontraba la planta) no debe volver a armar la escena
             t3=pg.evaluate("""async()=>{const w=()=>new Promise(r=>setTimeout(r,30)),m=async()=>{const t=[];for(let i=0;i<3;i++){const a=performance.now();render();t.push(performance.now()-a);await w()}return Math.min(...t)};
-             go('recepcion');await w();const con=await m();T3.on=false;const sin=await m();T3.on=true;render();await w();return{con:Math.round(con),sin:Math.round(sin),n:document.querySelectorAll('.t3c').length}}""")
+             FOLD['ent-tq']=true;go('recepcion');await w();const con=await m();T3.on=false;const sin=await m();T3.on=true;render();await w();return{con:Math.round(con),sin:Math.round(sin),n:document.querySelectorAll('.t3c').length}}""")
             print('CPUx4 Entrada con y sin 3D ms',t3)
             chk(t3['n']>0 and t3['con']-t3['sin']<=40,f"Entrada con 3D: {t3['con']} ms contra {t3['sin']} ms sin 3D (límite +40 ms con CPU 4×)")
     b.close()

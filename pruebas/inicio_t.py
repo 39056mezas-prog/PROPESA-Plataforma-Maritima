@@ -23,7 +23,7 @@ with sync_playwright() as p:
         pg.evaluate(f"go('{r}')");tx=pg.inner_text('#app')
         if DEMO.search(tx):seen.append((r,DEMO.search(tx).group(0)))
     pg.locator('#app [data-avatar]').click();tx=pg.inner_text('#pmenu');pg.keyboard.press('Escape')
-    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.32.0' in tx,'el menú de perfil muestra la versión 1.32.0')
+    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.38.2' in tx,'el menú de perfil muestra la versión 1.38.0')
     # temperatura real
     pg.evaluate("go('temperatura')");chk('Sin lecturas' in pg.inner_text('#app'),'temperatura empieza vacía (sin datos inventados)')
     pg.select_option('#tq_t','T2');pg.fill('#tq_a','150');pg.click('[data-a=tq]');chk('20 y 110' in pg.inner_text('#app'),'valida el rango de temperatura')
@@ -32,7 +32,7 @@ with sync_playwright() as p:
     chk('54.3 °F' in pg.inner_text('#app'),'la lectura aparece en la tabla')
     pg.click('[data-tqdel]');chk(pg.evaluate("ST.T.length")==0,'el Administrador puede eliminar una lectura')
     # informe de cierre: sin "simulado"
-    pg.evaluate("go('admin')");chk('Informes de cierre' in pg.inner_text('#app'),'Administración muestra Informes de cierre')
+    pg.evaluate("go('admin:dat')");chk('Informes de cierre' in pg.inner_text('#app'),'Administración muestra Informes de cierre')
     # v1.10.1: «Borrar todos los datos» regresa, escondido: solo en Administración, dentro de «Configuración avanzada» cerrada
     chk(pg.locator('details#adv:not([open])').count()==1 and not pg.locator('[data-a=rst]').is_visible(),'«Borrar todos los datos» está escondido en «Configuración avanzada» (cerrada)')
     pg.click('#adv summary');chk(pg.locator('[data-a=rst]').is_disabled(),'sin respaldo reciente no se puede borrar')

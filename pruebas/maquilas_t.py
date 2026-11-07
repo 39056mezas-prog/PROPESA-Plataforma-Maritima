@@ -54,7 +54,8 @@ try:
         pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
         pg.on('dialog', lambda d: d.accept())
         pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx')
-        chk(pg.evaluate("V.v") == 'general' and 'Panel general' in pg.inner_text('main'), 'el Administrador entra al Panel general')
+        chk(pg.evaluate("V.v") == 'formatos', 'el Administrador entra a Formatos (v1.33.0)')
+        pg.click('.sb [data-mq]'); pg.click('#mqmenu [data-mqgo="general"]'); pg.wait_for_timeout(150); chk(pg.evaluate("V.v") == 'general' and 'Panel general' in pg.inner_text('main') and pg.locator('.sb [data-go=general]').count() == 0, 'el Panel general se abre desde el selector de maquila (v1.34.0: ya no va en el menú)')
         chk(pg.locator('.sb [data-mq] .mqn').inner_text().startswith('Todas las maquilas'), 'en el Panel general el logo dice «Todas las maquilas»')
         txt = pg.inner_text('main')
         chk(all(n in txt for n in ['PROPESA', 'Abel', 'David', 'Luis Arce']), 'el Panel general enseña las 4 maquilas')
@@ -90,10 +91,10 @@ try:
         pg.reload(); pg.wait_for_timeout(400)
         chk(pg.evaluate("MQ") == 2 and pg.evaluate(LOTS) == '["WLRCO170926"]' and pg.evaluate("STX[1]&&STX[1].R.length") == 1, 'recargar conserva la maquila abierta y los datos de todas')
         # Administración → Maquilas
-        pg.evaluate("go('admin')"); pg.wait_for_timeout(100)
+        pg.evaluate("go('admin:mq')"); pg.wait_for_timeout(100)
         chk(pg.locator('#mqs').count() == 1, 'Administración tiene la tarjeta Maquilas')
         pg.click('[data-mqa=new]'); pg.fill('#mq_n', 'abel'); pg.click('[data-mqa=sv]'); pg.wait_for_timeout(80)
-        chk('Ya hay una maquila' in pg.inner_text('#mq_m') and pg.input_value('#mq_n') == 'abel', 'no deja repetir nombre y conserva lo escrito')
+        chk('Ya hay una maquila' in pg.inner_text('#app .fer') and pg.input_value('#mq_n') == 'abel', 'no deja repetir nombre y conserva lo escrito')
         pg.fill('#mq_n', 'Cooperativa Norte'); pg.click('[data-mqa=sv]'); pg.wait_for_timeout(80)
         chk(pg.evaluate("mqAll().length") == 5, 'agrega una maquila nueva')
         nid = pg.evaluate("mqAll().find(m=>m.n=='Cooperativa Norte').id")
@@ -108,6 +109,7 @@ try:
         # respaldo con todas las maquilas
         dump = pg.evaluate("JSON.stringify(mqDump())")
         pg.evaluate("ST.R=[];ST.L=[];ST.B={};STX={};save()")
+        pg.evaluate("go('admin:dat')"); pg.wait_for_timeout(80)  # v1.35.0: el respaldo está en «Informes y respaldo»
         with pg.expect_file_chooser() as fc: pg.locator('input[data-bk=up]').first.evaluate('e=>e.click()')
         fp = os.path.join(OUT, 'mq_respaldo.json'); open(fp, 'w').write(dump); fc.value.set_files(fp); pg.wait_for_timeout(300)
         chk(pg.evaluate("MQ") == 2 and pg.evaluate(LOTS) == '["WLRCO170926"]' and pg.evaluate("STX[1]&&STX[1].R[0].lot") == 'WLRCO170926', 'restaurar un respaldo regresa todas las maquilas')
@@ -134,7 +136,7 @@ try:
             bx = pg.locator('#mqmenu .pmbox').bounding_box()
             chk(bx and bx['x'] >= 0 and bx['x'] + bx['width'] <= w + 1, f'el menú de maquilas cabe en {w} px')
             pg.screenshot(path=os.path.join(OUT, f'mq_menu_{w}.png')); pg.keyboard.press('Escape')
-            pg.evaluate("go('admin')"); pg.wait_for_timeout(100); chk(not overflow(pg), f'Administración sin scroll de lado en {w} px')
+            pg.evaluate("go('admin:mq')"); pg.wait_for_timeout(100); chk(not overflow(pg), f'Administración sin scroll de lado en {w} px')
         pg.close()
 
         # ---------------- 2) base de mentira, dos equipos ----------------
@@ -145,7 +147,7 @@ try:
         ca, A = device('A'); cb, B = device('B')
         for q, em, pw in [(A, 'admin@propesa.mx', 'clave-admin1'), (B, 'admin2@propesa.mx', 'clave-admin2')]:
             q.fill('#le', em); q.fill('#lp', pw); q.click('[data-a=lg]'); until(q, "!!me&&!!document.querySelector('.sb')")
-        chk(A.evaluate("V.v") == 'general', 'base compartida: el Administrador entra al Panel general')
+        chk(A.evaluate("V.v") == 'formatos', 'base compartida: el Administrador entra a Formatos (v1.33.0)')
         pick(A, 'PROPESA'); new_lot(A, 'WLRCO200926', (100, 0, 0, 0))
         pick(A, 'Abel'); new_lot(A, 'WLRCO200926', (250, 0, 0, 0))
         chk(until(A, "outN()==0", 15), 'A sube sus cambios')

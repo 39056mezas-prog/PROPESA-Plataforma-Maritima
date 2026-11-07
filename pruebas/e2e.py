@@ -4,6 +4,7 @@ FIX="localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.se
 
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local');OUT=os.environ.get('OUT','/tmp/propesa-pruebas');os.makedirs(OUT,exist_ok=True)  # modo local: nunca toca la base real
 from playwright.sync_api import sync_playwright
+ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 errs=[];ok=[]
 def chk(c,m):
     (ok if c else errs).append(m); print(('PASS ' if c else 'FAIL ')+m)
@@ -64,7 +65,7 @@ with sync_playwright() as p:
     chk(len(bx)==2 and all(b['d']==0 for b in bx),'2 hieleras guardadas a la vez, d=0: %s'%bx)
     chk(pg.locator('.pkrow').count()==n-2,'filas restantes %d'%pg.locator('.pkrow').count())
     # notes
-    pg.fill('#ntx','nota prueba');pg.click('[data-ev^=save]');chk('nota prueba' in pg.inner_text('#app'),'nota guardada en empaque')
+    pg.evaluate(ABRIR);pg.fill('#ntx','nota prueba');pg.click('[data-ev^=save]');chk('nota prueba' in pg.inner_text('#app'),'nota guardada en empaque')
     # embarque page
     pg.click('.sb [data-go=embarques]');pg.locator('.bp').first.click()
     t=pg.inner_text('#app');chk('Órdenes en este embarque' in t and '12/10' in t and '13/10' in t,'panel de órdenes en embarque')

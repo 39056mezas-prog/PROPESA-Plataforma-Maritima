@@ -1,5 +1,5 @@
 """Prueba PROPESA (tabla_entrada_t): la tabla de Entrada se lee bien.
-Encabezados de talla en dos renglones (rango principal arriba, secundario abajo), sin números partidos,
+Encabezados de talla en dos renglones (v1.36.0: nombre arriba y rango abajo, igual que en el formulario; antes rango del papel / rango nuevo), sin números partidos,
 punto de color junto a su talla, encabezados sin cortes de más y desplazamiento horizontal dentro de la tarjeta.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/tabla_entrada_t.py"""
 import os
@@ -7,7 +7,7 @@ from playwright.sync_api import sync_playwright
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 SEED=open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos','seed.json'),encoding='utf-8').read()
 def chk(c,m):print(('PASS ' if c else 'FAIL ')+m)
-PRI=['0-650','651-850','851-1250','1251-UP'];SEC=['491-610','611-850','851-1220','1221-UP']
+PRI=['Chica','Mediana','Grande','Jumbo'];SEC=['491-610','611-850','851-1220','1221-UP']
 MEDIR="""()=>{const t=document.querySelector('table.ent'),w=t.closest('.tbl'),lh=e=>parseFloat(getComputedStyle(e).lineHeight);
  const lines=e=>{const r=document.createRange();r.selectNodeContents(e);const ys=new Set([...r.getClientRects()].map(x=>Math.round(x.top)));return ys.size};
  const sz=[...t.querySelectorAll('th.szh')].filter(th=>th.querySelector('.szh2')).map(th=>{const a=th.querySelector('.szh1'),b=th.querySelector('.szh2'),d=th.querySelector('.szd');
@@ -33,7 +33,7 @@ with sync_playwright() as p:
         if fs:pg.evaluate(f"localStorage.setItem('propesa-fs','{fs}')")
         pg.reload();pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]');pg.evaluate("go('recepcion')")
         m=pg.evaluate(MEDIR)
-        chk([s['a'] for s in m['sz']]==PRI and [s['b'] for s in m['sz']]==SEC,f'{tag}: rango principal arriba y secundario abajo')
+        chk([s['a'] for s in m['sz']]==PRI and [s['b'] for s in m['sz']]==SEC,f'{tag}: nombre de la talla arriba y su rango abajo')
         chk(all(s['la']==1 and s['lb']==1 and s['below'] for s in m['sz']),f'{tag}: cada rango en un solo renglón, sin números partidos')
         chk(all(s['dotIn'] and s['dotMid'] for s in m['sz']),f'{tag}: punto de color junto a su talla')
         chk(all(s['ctr']=='center' for s in m['sz']) and all(v['c']=='center' and v['l']==1 for v in m['vals']),f'{tag}: tallas centradas y valores en un renglón')

@@ -8,6 +8,7 @@ import os, sys
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 seed = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos', 'seed.json')).read()
 fails, errs = [], []
+PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.35.0: hoja de empaque, peso del embarque y temperatura del lote van plegados; aquí quedan abiertos
 def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
     if not c: fails.append(m)
@@ -21,9 +22,9 @@ with sync_playwright() as p:
         pg = b.new_page(viewport={'width': vw[0], 'height': vw[1]}); pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.on('dialog', lambda d: d.accept())
         pg.goto(BASE); pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso","0")}', seed); pg.reload()
-        pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
+        pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
         # --- nueva entrada en T6 con temperaturas
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
         pg.fill('#fl', 'wlrtemp1'); pg.select_option('#fo', '1'); pg.select_option('#ft', 'T6'); pg.fill('#fd', AYER); pg.fill('#fh', '07:40')
         pg.fill('#ftt', '57.3'); pg.fill('#ftp', '58-60'); pg.fill('#fkb', '18'); pg.fill('#fdes', '0'); pg.fill('#fk1', '200'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
         chk(pg.evaluate("!!R_('WLRTEMP1')") and pg.evaluate("ST.T.length") == 0, f'{vw} se guarda la entrada (sin copiar nada a las lecturas)')
@@ -33,7 +34,7 @@ with sync_playwright() as p:
         chk(pg.locator('tr.tqent [data-tqdel]').count() == 0, f'{vw} la de la entrada no se elimina desde Temperatura (se corrige en el lote)')
         pg.click('button.lnk:has-text("Entrada · WLRTEMP1")'); chk(pg.evaluate("V.v") == 'lote' and pg.evaluate("V.id") == 'WLRTEMP1', f'{vw} «Entrada · lote» abre el lote')
         # el lote muestra la temperatura de su tanque
-        tx = pg.inner_text('#app'); chk('Temperatura del tanque 6 desde la entrada' in tx and 'Entrada de este lote' in tx, f'{vw} el lote muestra la temperatura de su tanque')
+        tx = pg.inner_text('#app'); chk('Temperatura de T6' in tx and 'desde la entrada' in tx and 'Entrada de este lote' in tx, f'{vw} el lote muestra la temperatura de su tanque')
         # lectura manual desde el lote: el tanque ya viene elegido
         pg.click('[data-go="temperatura:T6"] >> text=Registrar lectura'); chk(pg.evaluate("V.v") == 'temperatura' and pg.input_value('#tq_t') == 'T6', f'{vw} «+ Registrar lectura» abre Temperatura con el tanque 6 elegido')
         chk(pg.evaluate("TFIL") == 'T6' and pg.locator('[data-tqf="T6"][aria-pressed=true]').count() == 1, f'{vw} y la lista filtrada en el tanque 6')
@@ -44,7 +45,7 @@ with sync_playwright() as p:
         pg.click('[data-tqf="T1"]'); chk('WLRTEMP1' not in pg.inner_text('#tq_tbl tbody'), f'{vw} filtro por tanque: en el tanque 1 no sale la del 6')
         pg.click('[data-tqf=""]'); chk('WLRTEMP1' in pg.inner_text('#tq_tbl tbody'), f'{vw} «Todos» las vuelve a mostrar')
         # tablero de tanques: la última del T6 (la lectura de las 12:10)
-        pg.evaluate("TQSEL='T6';go('recepcion')"); tq = pg.inner_text('.tqd')
+        pg.evaluate("TQSEL='T6';FOLD['ent-tq']=true;go('recepcion')"); tq = pg.inner_text('.tqd')
         chk('56.1' in tq and '12:10' in tq, f'{vw} el tablero del tanque 6 muestra la última temperatura (lectura 12:10): {tq[-120:]!r}')
         pg.evaluate("ST.T=[];save();render()"); tq = pg.inner_text('.tqd')
         chk('57.3' in tq and 'entrada WLRTEMP1' in tq, f'{vw} sin lecturas, el tablero muestra la de la entrada')
@@ -57,14 +58,14 @@ with sync_playwright() as p:
         pg.evaluate("go('temperatura')"); chk('WLRTEMP1' not in pg.inner_text('#app'), f'{vw} al eliminar el lote, su temperatura se quita')
         # --- Mortalidad final aparte
         side = pg.evaluate("[...document.querySelectorAll('.sb .fs em')].map(e=>e.textContent).join(',')")
-        chk(side == '1,2,3,4', f'{vw} el menú tiene 4 pasos numerados: {side}')
+        chk(side == '', f'{vw} el menú ya no lleva números (v1.33.0, la app no obliga un orden): {side!r}')
         chk(pg.locator('.sb h4:has-text("Revisión") + [data-go=cierre]').count() == 1 and 'calcula sola' not in pg.inner_text('.sb [data-go=cierre]').lower(), f'{vw} Mortalidad final está aparte, en «Revisión», y dice que se calcula sola')
-        pg.evaluate("go('cierre')"); chk('Revisión aparte' not in pg.inner_text('.gd') and 'No es un paso' not in pg.inner_text('.gd') and pg.locator('.gd [data-go]').count() == 0, f'{vw} su pantalla dice «Revisión aparte» y no empuja a otro paso')
+        pg.evaluate("go('cierre')"); chk('Revisión aparte' not in pg.inner_text('.pgh') and 'No es un paso' not in pg.inner_text('.pgh') and pg.locator('.pgh [data-go]').count() == 0, f'{vw} su pantalla dice «Revisión aparte» y no empuja a otro paso')
         chk(pg.locator('[data-fin]').count() >= 1, f'{vw} ahí se sigue pudiendo capturar el conteo final')
-        pg.evaluate("go('embarques')"); chk('mortalidad' not in pg.inner_text('.gd').lower(), f'{vw} Embarque ya no tiene «Siguiente: mortalidad final»')
+        pg.evaluate("go('embarques')"); chk('mortalidad' not in pg.inner_text('.pgh').lower(), f'{vw} Embarque ya no tiene «Siguiente: mortalidad final»')
         pg.evaluate("ST.OR.forEach(o=>o.lines.forEach(l=>{}));ST.P.forEach(p=>p.closed=true);save();go('inicio')")
-        chk(pg.evaluate("nxt()[1]") != 'cierre' and 'mortalidad' not in pg.inner_text('.gd').lower(), f'{vw} el Panel no manda a Mortalidad final: {pg.evaluate("nxt()[2]")}')
-        chk('Paso' in pg.evaluate("guide(4,'x','y','','')") and 'de 4' in pg.evaluate("guide(4,'x','y','','')"), f'{vw} las guías dicen «Paso N de 4»')
+        chk(pg.evaluate("nxt()[1]") != 'cierre' and 'mortalidad' not in pg.inner_text('.pgh').lower(), f'{vw} el Panel no manda a Mortalidad final: {pg.evaluate("nxt()[2]")}')
+        chk('Paso' not in pg.evaluate("guide(4,'x','y','','')") and '<h1>x</h1>' in pg.evaluate("guide(4,'x','y','','')"), f'{vw} el encabezado no dice «Paso N de 4»; solo título y una línea (v1.34.0)')
         pg.close()
     b.close()
 chk(not errs, 'sin errores de JavaScript: ' + '; '.join(errs[:3]))

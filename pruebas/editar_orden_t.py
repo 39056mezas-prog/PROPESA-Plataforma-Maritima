@@ -42,7 +42,7 @@ with sync_playwright() as p:
         chk(pg.input_value('#le_n') == '4', f'{vw} v1.12.0: al cambiar una talla el total se recalcula solo ({pg.input_value("#le_n")})')
         for i in range(4): pg.fill(f'#le_z{i}', '')  # v1.25.0: Despatada ya no está en la orden
         pg.fill('#le_n', '0'); pg.click(f'[data-oa="sl:{lid}"]')
-        chk('mínimo 1' in pg.inner_text('#toast') and pg.input_value('#le_n') == '0' and pg.evaluate(f"ST.OR.find(o=>o.id=={oid}).lines[0].boxes") == 5, f'{vw} 0 hieleras no se guarda y se conserva lo escrito')
+        chk('mínimo 1' in pg.inner_text('#app .fer') and pg.input_value('#le_n') == '0' and pg.evaluate(f"ST.OR.find(o=>o.id=={oid}).lines[0].boxes") == 5, f'{vw} 0 hieleras no se guarda y se conserva lo escrito')
         pg.click('[data-oa=no]')
         # 3. con hieleras empacadas no se piden menos
         o2 = pg.evaluate("(()=>{for(const o of ST.OR)for(const l of o.lines){const n=ordAssigned(o,l).length;if(n>0)return{o:o.id,l:l.id,n,b:l.boxes}}})()")
@@ -51,7 +51,7 @@ with sync_playwright() as p:
         if gi is not None: pg.evaluate(f"ST.P[{gi}].closed=false;save();render()")
         pg.click(f'[data-oa="el:{o2["l"]}"]'); chk(f"no puede pedir menos de {o2["n"]}" in pg.inner_text('#app'), f'{vw} la línea con hieleras empacadas lo explica')
         pg.fill('#le_n', str(o2['n'] - 1)); pg.click(f'[data-oa="sl:{o2["l"]}"]')
-        chk('no puede pedir menos' in pg.inner_text('#toast') and pg.evaluate(f"ST.OR.find(o=>o.id=={o2['o']}).lines.find(l=>l.id=={o2['l']}).boxes") == o2['b'], f'{vw} pedir menos de las empacadas no se guarda')
+        chk('no puede pedir menos' in pg.inner_text('#app .fer') and pg.evaluate(f"ST.OR.find(o=>o.id=={o2['o']}).lines.find(l=>l.id=={o2['l']}).boxes") == o2['b'], f'{vw} pedir menos de las empacadas no se guarda')
         pg.fill('#le_n', str(o2['n'])); pg.fill('#le_z0', str(o2['n'])); pg.click(f'[data-oa="sl:{o2["l"]}"]')
         chk(pg.evaluate(f"ST.OR.find(o=>o.id=={o2['o']}).lines.find(l=>l.id=={o2['l']}).boxes") == o2['n'] and pg.evaluate(f"ordAssigned(ST.OR.find(o=>o.id=={o2['o']}),ST.OR.find(o=>o.id=={o2['o']}).lines.find(l=>l.id=={o2['l']})).length") == o2['n'], f'{vw} igual a las empacadas sí, y las hieleras siguen ligadas a la línea')
         # 4. embarque cerrado: no se edita la línea

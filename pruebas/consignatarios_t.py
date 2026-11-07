@@ -28,20 +28,20 @@ with sync_playwright() as p:
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '26/10/2026'); pg.click('[data-oa=new]'); pg.select_option('#ol_city', 'XMN'); pg.wait_for_timeout(80)
     chk('Shenzhen Yishunhai' in pg.inner_text('#ol_cons'), 'la orden a XMN ofrece Yishunhai')
     # destinos
-    pg.evaluate("go('admin')"); pg.wait_for_timeout(100)
+    pg.evaluate("go('admin:cat')"); pg.wait_for_timeout(100)
     pg.click('[data-dsa=new]'); pg.fill('#ds_c', 'pvg'); pg.fill('#ds_n', 'Otra'); pg.click('[data-dsa=sv]'); pg.wait_for_timeout(80)
-    chk('ya existe' in pg.inner_text('#ds_m') and pg.input_value('#ds_n') == 'Otra', 'no deja repetir el código y conserva lo escrito')
+    chk('ya existe' in pg.inner_text('#app .fer') and pg.input_value('#ds_n') == 'Otra', 'no deja repetir el código y conserva lo escrito')
     pg.fill('#ds_c', 'tpe'); pg.fill('#ds_n', 'Taipéi'); pg.click('[data-dsa=sv]'); pg.wait_for_timeout(80)
     chk(pg.evaluate("PORTS.TPE") == 'Taipéi', 'agrega el destino TPE · Taipéi')
     pg.click('[data-dsa="off:CAN"]'); pg.wait_for_timeout(80)
     # consignatario nuevo
     pg.click('[data-cna=new]'); pg.fill('#cn_k', 'ocean space'); pg.fill('#cn_n', 'Ocean Space International Co Ltd'); pg.click('[data-cna=sv]'); pg.wait_for_timeout(80)
-    chk('al menos un destino' in pg.inner_text('#cn_m') and pg.input_value('#cn_n') == 'Ocean Space International Co Ltd', 'pide al menos un destino y conserva lo escrito')
+    chk('al menos un destino' in pg.inner_text('#app .fer') and pg.input_value('#cn_n') == 'Ocean Space International Co Ltd', 'pide al menos un destino y conserva lo escrito')
     pg.check('[data-cnp][value=TPE]'); pg.fill('#cn_c', 'Sr. Lin · +886 2 0000 0000'); pg.click('[data-cna=sv]'); pg.wait_for_timeout(80)
     n = pg.evaluate("CONS.length"); oc = pg.evaluate("CONS[CONS.length-1]")
     chk(n == 8 and oc['k'] == 'OCEAN SPACE' and oc['p'] == ['TPE'], 'agrega OCEAN SPACE con destino TPE')
     pg.click('[data-cna="ed:4"]'); pg.fill('#cn_k', 'YISHUNHAI'); pg.click('[data-cna=sv]'); pg.wait_for_timeout(80)
-    chk('Ya hay un consignatario' in pg.inner_text('#cn_m'), 'no deja repetir la clave')
+    chk('Ya hay un consignatario' in pg.inner_text('#app .fer'), 'no deja repetir la clave')
     pg.click('[data-cna=no]'); pg.click('[data-cna="off:2"]'); pg.wait_for_timeout(80)
     # orden con lo nuevo
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '26/10/2026'); pg.click('[data-oa=new]'); pg.wait_for_timeout(80)
@@ -62,7 +62,7 @@ with sync_playwright() as p:
     d = pg.evaluate("decodeST(new Map([...encodeST()].map(([k,v])=>[k,v[1]]))).CN.length")
     chk(d == 8, 'decodeST los trae')
     for w_, h_ in [(820, 1180), (390, 844)]:
-        pg.set_viewport_size({'width': w_, 'height': h_}); pg.evaluate("go('admin')"); pg.wait_for_timeout(120)
+        pg.set_viewport_size({'width': w_, 'height': h_}); pg.evaluate("go('admin:cat')"); pg.wait_for_timeout(120)
         pg.click('[data-cna="ed:0"]'); pg.wait_for_timeout(80)
         chk(not overflow(pg), f'Administración con el consignatario abierto sin scroll de lado en {w_} px')
         hs = pg.eval_on_selector_all('.cnp .chk', 'e=>e.map(x=>x.getBoundingClientRect().height)'); chk(min(hs) >= 44, f'casillas de destino de 44 px o más en {w_} px')

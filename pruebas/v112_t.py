@@ -13,12 +13,13 @@ import os, sys, re
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 seed = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos', 'seed.json')).read()
 fails, errs = [], []
+PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.35.0: hoja de empaque, peso del embarque y temperatura del lote van plegados; aquí quedan abiertos
 def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
     if not c: fails.append(m)
 def entrar(pg, em='admin@propesa.mx', pw='admin123', piso='0', kp='0'):
     pg.goto(BASE); pg.evaluate('([s,p,k])=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso",p);localStorage.setItem("propesa-kp",k)}', [seed, piso, kp]); pg.reload()
-    pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
+    pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
 def pdf_text(pg, k, arg):
     raw = pg.evaluate(f"(async()=>{{const d=await pdfMake('{k}','{arg}');return Array.from(d.u8).map(c=>String.fromCharCode(c)).join('')}})()")
     return ' '.join(re.findall(r'\(((?:[^()\\]|\\.)*)\)\s*Tj', raw))
@@ -136,7 +137,7 @@ with sync_playwright() as p:
         chk(not pg.evaluate(f"!!R_('{sl}')") and len(pg.evaluate("ST.B['WLRCOV112']")) == 2 and pg.evaluate(f"f6Lots(ST.OR.find(o=>o.id=={o4}))") == ['WLRCOV112'], f'{vw} al conectar, las hieleras pasan al lote y el provisional desaparece')
         # ---------- 8. Modo piso: sin «Eliminar orden» ----------
         o5 = pg.evaluate("(()=>{const o={id:uidN(),etd:'2026-10-22',lines:[],sh:{}};ST.OR.push(o);save();return o.id})()")
-        pg.evaluate(f"go('orden:{o5}')"); chk(pg.locator('[data-oa=dco]').count() == 1, f'{vw} en la vista completa sí está «Eliminar orden»')
+        pg.evaluate(f"go('orden:{o5}')"); chk(pg.locator('[data-oa=dco]').count() == 1, f'{vw} en la vista completa sí está «Eliminar orden» (una vez, en el encabezado, v1.35.0)')
         pg.evaluate(f"setPiso(true);go('orden:{o5}')"); chk(pg.locator('[data-oa=dco]').count() == 0, f'{vw} en Modo piso no')
         pg.evaluate("setPiso(false)")
         pg.close()

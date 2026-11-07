@@ -28,7 +28,7 @@ def setup(pg):
     # Abel: su Jumbo es morado (tallas propias); 68 kg de Jumbo en T3 = 2 canastas
     pg.evaluate("mqSet(2);ST.SZ=SZ0.map(q=>({...q}));ST.SZ[3].c='#7242F5';szSync();save()")
     pg.evaluate(LOT, ['WLRCO011126', 'T3', [0, 0, 0, 68], 34, 1, 1])
-    pg.evaluate("mqSet(1);go('recepcion')"); pg.wait_for_timeout(250)
+    pg.evaluate("mqSet(1);FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(250)
 rgb = lambda h: 'rgb(%d, %d, %d)' % tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
 with sync_playwright() as p:
     b = p.chromium.launch()
@@ -55,7 +55,7 @@ with sync_playwright() as p:
     chk('wlrle311026 no tiene kg por caja en tanque' in al.lower(), 'lote sin kg por caja: aviso rojo')
     pg.locator('.alb', has_text='no tiene kg por caja').locator('[data-go="lote:WLRLE311026"]').click(); pg.wait_for_timeout(150)
     chk(pg.evaluate("V.v=='lote'&&V.id=='WLRLE311026'"), 'el aviso lleva al lote para completarlo')
-    pg.evaluate("go('recepcion')"); pg.wait_for_timeout(200)
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(200)
     s0 = pg.evaluate("T3.s")
     pg.locator('[data-t3t=T3]').dispatch_event('click'); pg.wait_for_timeout(900)
     chk(pg.evaluate("T3.zoom&&TQSEL==='T3'") and pg.evaluate("T3.s") > s0 * 1.5, 'tocar el agua de T3 acerca la cámara')
@@ -75,12 +75,12 @@ with sync_playwright() as p:
     pg.locator('.t3c[data-t3c="T3:0"]').first.dispatch_event('click'); pg.wait_for_timeout(200)
     pg.click('.t3pick [data-go]'); pg.wait_for_timeout(150)
     chk(pg.evaluate("V.v=='lote'&&V.id=='WLRCO211026'"), '«Abrir lote» abre el lote')
-    pg.evaluate("go('recepcion')"); pg.wait_for_timeout(300)
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(300)
     chk(pg.evaluate("T3.zoom") and pg.locator('.t3back').count() == 1, 'al volver sigue de cerca, con «Ver toda la planta»')
     pg.click('.t3back'); pg.wait_for_timeout(900)
     chk(not pg.evaluate("T3.zoom") and abs(pg.evaluate("T3.s") - s0) < 1e-3, '«Ver toda la planta» regresa la cámara')
     # arrastrar: gira sin abrir nada
-    bx = pg.locator('.t3v').bounding_box(); cx, cy = bx['x'] + bx['width'] / 2, bx['y'] + bx['height'] / 2
+    pg.locator('.t3v').scroll_into_view_if_needed(); bx = pg.locator('.t3v').bounding_box(); cx, cy = bx['x'] + bx['width'] / 2, bx['y'] + bx['height'] / 2
     az0 = pg.evaluate("T3.az"); pg.mouse.move(cx, cy); pg.mouse.down()
     for i in range(1, 16): pg.mouse.move(cx + i * 10, cy + i * 2)
     pg.mouse.up(); pg.wait_for_timeout(150)
@@ -112,11 +112,11 @@ with sync_playwright() as p:
     chk(len(lt) == 1 and 'WLRCO011126' in lt[0] and len(mq) == 1 and 'Abel' in mq[0], f'v1.31.3: solo quedan los letreros de ese lote y su maquila ({lt}, {mq})')
     pg.click('.t3pick [data-go]'); pg.wait_for_timeout(200)
     chk(pg.evaluate("V.v=='lote'&&MQ===2"), '«Abrir lote» entra a la maquila del lote')
-    pg.evaluate("mqSet(1);go('recepcion')"); pg.wait_for_timeout(200)
+    pg.evaluate("mqSet(1);FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(200)
     # ---------- Ocultar 3D (se recuerda)
     pg.click('[data-t3a=off]'); pg.wait_for_timeout(150)
     chk(pg.locator('.t3v').count() == 0 and pg.evaluate("localStorage.getItem('propesa-3d')") == '0', '«Ocultar 3D» lo quita y se recuerda en el equipo')
-    pg.reload(); pg.wait_for_timeout(300); pg.evaluate("go('recepcion')"); pg.wait_for_timeout(150)
+    pg.reload(); pg.wait_for_timeout(300); pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(150)
     chk(pg.locator('.t3v').count() == 0 and pg.locator('[data-t3a=on]').count() == 1, 'después de recargar sigue oculto, con «Ver tanques en 3D»')
     pg.click('[data-t3a=on]'); pg.wait_for_timeout(200); chk(pg.locator('.t3v').count() == 1, '«Ver tanques en 3D» lo regresa')
     pg.close()

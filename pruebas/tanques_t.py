@@ -11,7 +11,7 @@ def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
     if not c: fails.append(m)
 PREP = ("ST.R[1].tank='T3';ST.T=[{id:1,t:dLoc()+'T09:15',tank:'T1',a:60.1,s:59.8,p:58.9,by:'Ana'},"
-        "{id:2,t:'2026-10-01T07:00',tank:'T1',a:50,s:50,p:50,by:'Ana'},{id:3,t:'2026-10-12T17:40',tank:'T3',a:61,s:null,p:59.5,by:'Luis'}];save();go('recepcion')")
+        "{id:2,t:'2026-10-01T07:00',tank:'T1',a:50,s:50,p:50,by:'Ana'},{id:3,t:'2026-10-12T17:40',tank:'T3',a:61,s:null,p:59.5,by:'Luis'}];save();FOLD['ent-tq']=true;go('recepcion')")
 det = lambda pg: pg.inner_text('.tqd .tqc')
 POS = "Object.fromEntries([...document.querySelectorAll('.tqm')].map(b=>{const r=b.getBoundingClientRect();return [b.dataset.tq,[r.left,r.top,r.right]]}))"
 with sync_playwright() as p:
@@ -39,9 +39,9 @@ with sync_playwright() as p:
         chk('WLRCO061026B' in d3 and 'Pescadores del Sur' in d3 and '—' in d3, f'{tag}: tocar T3 muestra su lote, proveedor y «—» si falta un dato')
         chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth") and pg.evaluate("[...document.querySelectorAll('.tqm,.tqc')].every(c=>c.scrollWidth<=c.clientWidth+1)"), f'{tag}: sin desbordes')
         pg.click('.tqd .tqlot'); chk(pg.evaluate("V.v=='lote'&&V.id=='WLRCO061026B'"), f'{tag}: tocar el lote abre su página')
-        pg.evaluate("go('recepcion')"); chk(pg.get_attribute('[data-tq=T3]', 'aria-pressed') == 'true', f'{tag}: al volver sigue seleccionado T3')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); chk(pg.get_attribute('[data-tq=T3]', 'aria-pressed') == 'true', f'{tag}: al volver sigue seleccionado T3')
         pg.click('.tqd .tqtp'); chk(pg.evaluate("V.v") == 'temperatura', f'{tag}: tocar la temperatura lleva a Temperatura')
-        pg.evaluate("R_('WLRCO061026B').closed=true;save();go('recepcion')")
+        pg.evaluate("R_('WLRCO061026B').closed=true;save();FOLD['ent-tq']=true;go('recepcion')")
         chk('Vacío' in pg.inner_text('[data-tq=T3]') and 'WLRCO061026B' not in det(pg), f'{tag}: un lote cerrado ya no aparece en su tanque')
         pg.evaluate("go('inicio')")
         pan=pg.evaluate("[...document.querySelectorAll('.g4 .kp')].map(k=>k.innerText).find(t=>t.includes('En tanques'))")

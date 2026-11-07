@@ -47,9 +47,9 @@ with sync_playwright() as p:
         chk(r == [True, False, True, 2], f'{vw} Modo piso: pregunta el lote con «usar primero» en el más viejo; 40 no se guarda, 30 sí {r}')
         pg.evaluate("setPiso(false);render()")
         # ---------- 2. días máximos por proveedor
-        pg.evaluate("go('admin')"); pg.wait_for_timeout(80)
+        pg.evaluate("go('admin:cat')"); pg.wait_for_timeout(80)
         pg.click('[data-pva="ed:1"]'); pg.fill('#pv_dm', '0'); pg.click('[data-pva=sv]'); pg.wait_for_timeout(60)
-        chk('1 a 60' in pg.inner_text('#pv_m') and not pg.evaluate("pvBy(1).dm"), f'{vw} 0 días no se acepta')
+        chk('1 a 60' in pg.inner_text('#app .fer') and not pg.evaluate("pvBy(1).dm"), f'{vw} 0 días no se acepta')
         pg.fill('#pv_dm', '3'); pg.click('[data-pva=sv]'); pg.wait_for_timeout(60)
         chk(pg.evaluate("pvBy(1).dm") == 3 and 'Hasta 3' in pg.inner_text('#provs'), f'{vw} el proveedor guarda «hasta 3 días»')
         chk(pg.evaluate("WN.V(pvBy(1)).dm===3&&cleanST(JSON.parse(JSON.stringify(ST)),true).PV.find(p=>p.id===1).dm===3&&WN.V({...pvBy(1),dm:'x'}).dm===undefined"), f'{vw} se comparte y se limpia (WN.V, cleanST)')
@@ -66,7 +66,7 @@ with sync_playwright() as p:
         pg.evaluate(f"(()=>{{const d=new Date();d.setDate(d.getDate()-3);R_('{B}').rdate=dLoc(d);save();render()}})()")
         chk('Último día' in pg.inner_text(f'[data-pk="lot:{B}"]') and pg.evaluate(f"lotOld('{B}')") == '', f'{vw} con 3 días: «Último día», sin aviso rojo')
         chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth+1"), f'{vw} sin scroll de lado')
-        pg.evaluate("go('admin')"); pg.click('[data-pva="ed:1"]'); pg.fill('#pv_dm', ''); pg.click('[data-pva=sv]'); pg.wait_for_timeout(60)
+        pg.evaluate("go('admin:cat')"); pg.click('[data-pva="ed:1"]'); pg.fill('#pv_dm', ''); pg.click('[data-pva=sv]'); pg.wait_for_timeout(60)
         chk(pg.evaluate("pvBy(1).dm") is None and 'Sin límite' in pg.inner_text('#provs'), f'{vw} vacío = sin límite')
         # ---------- 4. orden variada
         oid2 = pg.evaluate("(()=>{const id=uidN();ST.OR.push({id,etd:dLoc(),lines:[],sh:{},sp:1});save();go('orden:'+id);return id})()"); pg.wait_for_timeout(80)

@@ -45,7 +45,7 @@ with sync_playwright() as p:
     t = pg.inner_text('main')
     chk('1 entrada con fecha, hora o código por revisar' in t.lower(), 'Entrada avisa en rojo cuántas entradas revisar (v1.25.0: también el código)')
     bt = pg.locator('.alk', has_text='WLRCO220926')
-    chk(bt.count() == 1 and 'fecha y hora' in bt.inner_text(), 'el aviso dice qué revisar en cada lote')
+    chk(bt.count() == 1 and 'fecha distinta a la del código y hora de madrugada' in bt.inner_text(), 'el aviso dice qué revisar en cada lote')
     pg.screenshot(path=f'{OUT}/avisos_entrada_1440.png', full_page=True)
     bt.click(); pg.wait_for_timeout(100)
     chk(pg.evaluate("V.v+':'+V.id") == 'lote:WLRCO220926' and pg.locator('#lotav').count() == 1, 'el aviso lleva al lote, que lo muestra arriba')

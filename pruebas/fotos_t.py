@@ -5,6 +5,7 @@ Usa un Supabase de mentira propio (pruebas/supabase_falso.py en el puerto 8791) 
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/fotos_t.py"""
 import os, sys, json, time, struct, zlib, subprocess, urllib.request
 from playwright.sync_api import sync_playwright
+ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.environ.get('APP', 'http://localhost:8765/index.html')   # sin ?modo=local: usa la base compartida (la de mentira)
 MOCK = 'http://127.0.0.1:8791'
@@ -86,17 +87,23 @@ try:
         B.route('**/storage/v1/object/authenticated/**', lambda r: r.abort())
         B.reload(); chk(until(B, "!!me") and B.evaluate("setPiso(false);go('recepcion');1") and until(B, "[...document.querySelectorAll('img[data-fp]')].filter(i=>i.src.startsWith('data:image/jpeg')).length==2"), 'B recarga sin poder bajar fotos y las sigue viendo (copia del equipo)')
         B.unroute('**/storage/v1/object/authenticated/**')
-        B.locator('img[data-fp]').first.click(); chk(B.locator('.lbx img').count() == 1, 'tocar la foto la abre en grande'); B.locator('.lbx').click()
+        B.evaluate(ABRIR); B.locator('img[data-fp]').first.click(); chk(B.locator('.lbx img').count() == 1, 'tocar la foto la abre en grande'); B.locator('.lbx').click()
 
         # --- 3. sin internet: la foto espera en el equipo y se sube antes que la nota
-        corta = lambda r: r.abort('internetdisconnected')   # sin internet hacia la base (la página sí carga, como en la tablet)
+        # sin internet hacia la base (la página sí carga, como en la tablet). v1.38.2: la ruta se queda puesta y solo cambia el interruptor.
+        # Antes se quitaba con unroute(): lo más probable es que, si en ese momento había una petición esperando a la ruta, se quedara colgada,
+        # el equipo B ya no sincronizaba y la prueba fallaba solo de vez en cuando (más en la corrida completa).
+        SIN_RED = [True]
+        corta = lambda r: r.abort('internetdisconnected') if SIN_RED[0] else r.continue_()
         B.route(MOCK + '/**', corta); n2 = nota(B, 'hielera 12 golpeada')
         chk(until(B, "outN()==2"), 'sin internet: quedan 2 pendientes (la nota y su foto)')
         chk(n2['imgs'][0][3:] not in mock('/__estado')['files'] and B.evaluate("document.querySelector('img[data-fp]').src.startsWith('data:image/jpeg')"), 'la foto todavía no está arriba, pero en B se ve')
         chk(B.evaluate("idbGet('fotos-cola').then(o=>Object.keys(o||{}).length)") == 1, 'la foto pendiente se guarda en la memoria del equipo (cola)')
         B.reload(); chk(until(B, "!!me&&FQ.size==1&&outN()==2"), 'recargar sin internet no pierde la foto pendiente')
-        B.unroute(MOCK + '/**', corta); B.evaluate("window.dispatchEvent(new Event('online'))")
-        chk(until(B, "outN()==0", 20), 'regresa el internet: se sube todo')
+        SIN_RED[0] = False; B.evaluate("window.dispatchEvent(new Event('online'))")
+        ok = until(B, "outN()==0", 20)
+        if not ok: print('ESTADO', B.evaluate("JSON.stringify({ocupado:SYNC_BUSY,pendientes:Object.keys(OUT||{}),fotos:FQ.size,error:SYNC_ERR&&String(SYNC_ERR.message||SYNC_ERR),version_nueva:VER_NEW,sesion:!!SBS})"))  # para saber por qué, si vuelve a fallar
+        chk(ok, 'regresa el internet: se sube todo')
         lg = mock('/__estado')['log']; fa, re_ = 'archivo ' + n2['imgs'][0][3:], f"registro M/{n2['id']}"
         chk(fa in lg and re_ in lg and lg.index(fa) < lg.index(re_), 'en la base, la foto quedó guardada antes que la nota que la nombra')
         chk(n2['imgs'][0][3:] in mock('/__estado')['files'] and rec(n2['id'])['imgs'] == n2['imgs'], 'la foto y la nota quedaron arriba')
@@ -134,7 +141,7 @@ try:
         cl = b.new_context(); L = cl.new_page(); L.goto(APP + '?modo=local'); chk(not L.evaluate("CLOUD"), 'modo local: sin base compartida'); cl.close()
 
         # --- 10. v1.10.1: «Borrar todos los datos» escondido
-        A.evaluate("go('admin')"); chk(A.locator('[data-a=rst]').count() == 1 and not A.locator('[data-a=rst]').is_visible() and A.evaluate("Object.keys(ST.M).length") > 0, '«Borrar todos los datos» queda escondido (v1.10.1); las notas y fotos siguen')
+        A.evaluate("go('admin:dat')"); chk(A.locator('[data-a=rst]').count() == 1 and not A.locator('[data-a=rst]').is_visible() and A.evaluate("Object.keys(ST.M).length") > 0, '«Borrar todos los datos» queda escondido (v1.10.1); las notas y fotos siguen')
         b.close()
 finally:
     srv.terminate()

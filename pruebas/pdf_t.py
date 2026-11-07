@@ -37,7 +37,7 @@ with sync_playwright() as p:
     u1=pg.evaluate("(()=>{const p0=ST.P[0];ST.P.push({...p0,u:uidS(),h:1,z:[1,0,0,0],c:p0.c.map(x=>x.slice()),alive:null,closed:false});ST.B.WLRCO051026A[2].d=1;save();return ST.P[1].u})()")
     pg.evaluate("go('emb:1')"); pg.click('[data-a=cp]'); pg.wait_for_timeout(300)
     print(('PASS' if pg.evaluate("ST.O[0].pu")==u1 and pg.evaluate("ST.P[0].n===ST.P[1].n") else 'FAIL'),'el informe guarda el id fijo del embarque (los dos embarques se llaman igual)')
-    pg.evaluate("ST.O.push({u:uidS(),subject:'Informe viejo',t:now(),to:[],body:'x',pn:ST.P[0].n,att:'x.pdf'});save();go('admin')")
+    pg.evaluate("ST.O.push({u:uidS(),subject:'Informe viejo',t:now(),to:[],body:'x',pn:ST.P[0].n,att:'x.pdf'});save();go('admin:dat')")
     at=pg.evaluate("[...document.querySelectorAll('[data-pdf^=\"dl:emb\"]')].map(b=>b.dataset.pdf)")
     print(('PASS' if at==['dl:embu:'+u1,'dl:embn:'+pg.evaluate('ST.P[0].n')] else 'FAIL'),'Administración: el PDF del informe busca por id fijo; los informes viejos, por nombre',at)
     pg.evaluate("document.querySelectorAll('#app details').forEach(d=>d.open=true)")

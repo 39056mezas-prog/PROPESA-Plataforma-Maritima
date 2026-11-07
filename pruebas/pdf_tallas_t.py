@@ -53,7 +53,7 @@ with sync_playwright() as p:
     t2 = pg.evaluate("pdfTint('#E5484D',.45)"); chk(rg(t2) in s, 'Entrada: el total de Mediana va en un rojo un poco más fuerte')
     s = pdf(pg, 'emb', 0); chk(pg.evaluate("RC.R[1]") == '#E5484D' and rg('#E5484D') in s, 'Embarque: la categoría Rojo va de su color en el detalle por hielera')
     # --- Abel con tallas propias ---
-    pg.evaluate("mqSet(2);go('admin')"); pg.wait_for_timeout(150)
+    pg.evaluate("mqSet(2);go('admin:cat')"); pg.wait_for_timeout(150)
     pg.click('[data-sza="ed:491-610"]'); pg.fill('#sz_r', '26-32 piezas'); pg.evaluate("document.getElementById('sz_c').value='#8b5a2b'"); pg.fill('#sz_cn', 'Café'); pg.click('[data-sza=sv]'); pg.wait_for_timeout(100)
     pg.click('[data-sza="ed:611-850"]'); pg.fill('#sz_r', '600-900'); pg.click('[data-sza=sv]'); pg.wait_for_timeout(100)
     chk(pg.evaluate("ST.SZ[0].c") == '#8B5A2B' and pg.evaluate("ST.SZ[1].r") == '600-900', 'Abel: Chica café «26-32 piezas» y Mediana 600-900')

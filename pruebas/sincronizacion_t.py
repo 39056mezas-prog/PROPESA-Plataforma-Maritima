@@ -3,6 +3,7 @@ Levanta un Supabase de mentira (pruebas/supabase_falso.py) y abre varios navegad
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/sincronizacion_t.py"""
 import os, sys, json, time, subprocess, urllib.request
 from playwright.sync_api import sync_playwright
+PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.34.0: en esta prueba todos los plegables quedan abiertos
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.environ.get('APP', 'http://localhost:8765/index.html')   # sin ?modo=local: usa la base compartida
 MOCK = 'http://127.0.0.1:8790'
@@ -35,9 +36,9 @@ def device(b, name, **kw):
     pg.goto(APP); return ctx, pg
 def login(pg, em, pw):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
-    return until(pg, "!!document.querySelector('.sb,.pshell,[data-avatar],.cli')")
+    ok = until(pg, "!!document.querySelector('.sb,.pshell,[data-avatar],.cli')"); pg.evaluate(PLEG); return ok
 def new_lot(pg, code, kgs=(100, 200, 300, 400)):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
     for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
     pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
 def new_order(pg, etd, cli, n, city='PVG'):
@@ -79,7 +80,7 @@ try:
         new_lot(A, 'WLRCO141026A')
         chk(until(B, "ST.R.some(r=>r.lot=='WLRCO141026A')"), 'entrada de A aparece en B')
         chk(B.evaluate("bal('WLRCO141026A')") == 1000000, 'B ve la misma existencia (1000 kg)')
-        B.evaluate("go('recepcion')"); chk('WLRCO141026A' in B.inner_text('#app'), 'B la ve en la pantalla de Entrada')
+        B.evaluate("FOLD['ent-tq']=true;go('recepcion')"); chk('WLRCO141026A' in B.inner_text('#app'), 'B la ve en la pantalla de Entrada')
         chk('En vivo' in B.inner_text('.tqleg') and 'WLRCO141026A' in B.inner_text('.tqd'), 'tablero de tanques en B: «● En vivo» y el lote de A en su tanque')
         new_lot(A, 'WLRCO141026E'); B.evaluate("document.activeElement&&document.activeElement.blur()")
         chk(until(B, "V.v=='recepcion'&&document.querySelector('.tqd').textContent.includes('WLRCO141026E')"), 'el tablero de B muestra solo la entrada nueva de A, sin recargar (en vivo)')
@@ -142,11 +143,11 @@ try:
         chk(until(D, "ST.R.length==3&&Object.values(ST.B).flat().length==2"), 'piso ve los mismos datos')
 
         # --- usuarios desde la app (Administración)
-        A.evaluate("go('admin')"); A.click('[data-a=nu]'); A.fill('#un', 'Rosa Pérez'); A.fill('#ue', 'rosa@propesa.mx'); A.fill('#up', 'Rosa-2026'); A.select_option('#ur', 'piso'); A.click('[data-a=su]')
+        A.evaluate("go('admin:usr')"); A.click('[data-a=nu]'); A.fill('#un', 'Rosa Pérez'); A.fill('#ue', 'rosa@propesa.mx'); A.fill('#up', 'Rosa-2026'); A.select_option('#ur', 'piso'); A.click('[data-a=su]')
         chk(until(A, "ST.U.some(u=>u.email=='rosa@propesa.mx'&&u.role=='piso')"), 'el Administrador da de alta un usuario en la base compartida')
         chk(any(u['email'] == 'rosa@propesa.mx' for u in mock('/__estado')['users']), 'la cuenta existe en el servidor')
         ce, R2 = device(b, 'E'); chk(login(R2, 'rosa@propesa.mx', 'Rosa-2026'), 'el usuario nuevo entra desde otro equipo')
-        A.evaluate("go('admin')"); A.click('[data-a=nu]'); A.fill('#un', 'Corto'); A.fill('#ue', 'corto@propesa.mx'); A.fill('#up', 'Siete77'); A.click('[data-a=su]')
+        A.evaluate("go('admin:usr')"); A.click('[data-a=nu]'); A.fill('#un', 'Corto'); A.fill('#ue', 'corto@propesa.mx'); A.fill('#up', 'Siete77'); A.click('[data-a=su]')
         chk('al menos 8 caracteres' in A.inner_text('#app') and not any(u['email'] == 'corto@propesa.mx' for u in mock('/__estado')['users']), 'Administración: contraseña de 7 caracteres no se acepta')
         A.evaluate("go('inicio')")
 
@@ -165,7 +166,7 @@ try:
         cg, G = device(b, 'G'); old = json.dumps({'PK': 1, 'R': [{'id': 'R-9', 'lot': 'ZZVIEJO', 'origin': 'x', 'tank': 'T1', 'rdate': '2026-10-01', 'time': '', 'date': '', 'tempT': None, 'tempP': '', 'kgbox': None, 'desp': None, 'final': None, 'closed': False}], 'L': [], 'B': {'ZZVIEJO': []}, 'OR': [], 'P': [], 'O': [], 'T': [], 'M': {}, 'U': []})
         G.evaluate("s=>{localStorage.setItem('propesa-c1',s);localStorage.setItem('propesa-c1-since','5')}", old); G.reload()
         chk(until(G, "ST.R.some(r=>r.lot=='ZZVIEJO')&&SINCE===5"), 'la copia vieja de localStorage se usa al abrir')
-        chk(until(G, "localStorage.getItem('propesa-c1')===null") and G.evaluate("idbGet('propesa-c1').then(r=>JSON.parse(r.st).R[0].lot)") == 'ZZVIEJO', 'y se pasa a IndexedDB (se libera localStorage)')
+        chk(until(G, "localStorage.getItem('propesa-c1')===null") and until(G, "idbGet('propesa-c1').then(r=>!!r&&JSON.parse(r.st).R.some(x=>x.lot=='ZZVIEJO'))"), 'y se pasa a IndexedDB (se libera localStorage)')
         cg.close()
         # si el navegador no deja guardar la copia: aviso, y lo capturado sí se sube
         ch2, H = device(b, 'H'); H.evaluate("1"); ch2.add_init_script("IDBObjectStore.prototype.put=function(){throw new DOMException('lleno','QuotaExceededError')}")
@@ -178,7 +179,7 @@ try:
         cf, F = device(b, 'F'); chk(login(F, 'admin2@propesa.mx', 'clave-admin2'), 'equipo nuevo entra')
         chk(until(F, "ST.R.length==3&&ST.OR.length==3&&ST.P.length==3") and until(F, "1") and F.evaluate(CORE) == A.evaluate(CORE), 'equipo nuevo descarga exactamente lo mismo')
         # --- v1.10.1: «Borrar todos los datos» regresa, escondido y solo para el Administrador
-        A.evaluate("go('admin')"); chk(A.locator('details#adv:not([open]) [data-a=rst]').count() == 1 and not A.locator('[data-a=rst]').is_visible(), 'el botón está escondido dentro de «Configuración avanzada» (cerrada)')
+        A.evaluate("go('admin:dat')"); chk(A.locator('details#adv:not([open]) [data-a=rst]').count() == 1 and not A.locator('[data-a=rst]').is_visible(), 'el botón está escondido dentro de «Configuración avanzada» (cerrada)')
         A.click('#adv summary'); chk(A.locator('[data-a=rst]').is_disabled(), 'sin respaldo reciente el botón está apagado')
         with A.expect_download(): A.locator('#adv [data-bk=dl]').click()
         A.wait_for_timeout(200); chk(A.locator('[data-a=rst]').is_enabled() and A.locator('details#adv[open]').count() == 1, 'con el respaldo descargado se prende (y Configuración avanzada sigue abierta)')
@@ -189,7 +190,7 @@ try:
         chk(until(F, "ST.R.length==0&&ST.OR.length==0&&ST.P.length==0", 20), 'el borrado llega a los demás equipos')
         chk(all(r['v'] is None for k, r in mock('/__estado')['recs'].items() if k[:2] in ('R/', 'L/', 'B/', 'OR', 'P/', 'O/', 'T/', 'M/')), 'en la base cada registro queda marcado como borrado')
         # --- respaldo restaurado llega a todos
-        A.evaluate("go('admin')"); A.locator('input[data-bk=up]').first.set_input_files(os.path.join(ROOT, 'pruebas', 'datos', 'backup.json'))
+        A.evaluate("go('admin:dat')"); A.locator('input[data-bk=up]').first.set_input_files(os.path.join(ROOT, 'pruebas', 'datos', 'backup.json'))
         chk(until(A, "ST.R.length>=1") and until(F, f"ST.R.length=={A.evaluate('ST.R.length')}&&ST.OR.length=={A.evaluate('ST.OR.length')}", 20), 'restaurar un respaldo lo pone en todos los equipos')
         time.sleep(1.5); chk(until(F, "1") and F.evaluate(CORE) == A.evaluate(CORE), 'tras restaurar, A y el equipo nuevo son idénticos')
         # --- v1.8.7: el peso estándar de la hielera llega a los demás equipos

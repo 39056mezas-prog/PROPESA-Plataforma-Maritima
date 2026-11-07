@@ -29,7 +29,7 @@ with sync_playwright() as p:
         tot2 = pg.evaluate(f"(()=>{{let r;withST(STX[{dav}],()=>{{const d=WN.D(dispCalc());r=d.z.reduce((a,v)=>a+v,0)-d.u}});return r}})()")
         chk(tot1 > 0 and tot2 == 50000, f'{vw} hay inventario en PROPESA ({tot1} g) y en David ({tot2} g)')
         # alta de la cuenta
-        pg.evaluate("go('admin')"); pg.click('[data-a=nu]')
+        pg.evaluate("go('admin:usr')"); pg.click('[data-a=nu]')
         opts = pg.eval_on_selector_all('#ur option', 'o=>o.map(x=>x.textContent)')
         chk('Solo inventario' in opts and 'Consulta' not in opts and 'Cliente (comprador)' not in opts, f'{vw} el rol se llama «Solo inventario» y ya no hay Consulta ni Cliente: {opts}')
         chk(pg.locator('#umq').is_hidden(), f'{vw} las maquilas no salen para otros roles')
@@ -94,7 +94,7 @@ with sync_playwright() as p:
         recs = mock('/__estado')['recs']
         chk('D/disp' in recs and f'q{dav}:D/disp' in recs, f'nube: hay una hoja por maquila: {[k for k in recs if "D/disp" in k]}')
         # la cuenta de consulta que ya existía: el Administrador le pone solo David
-        A.evaluate("go('admin')"); cid = [u for u in mock('/__estado')['users'] if u['email'] == 'consulta@propesa.mx'][0]['id']
+        A.evaluate("go('admin:usr')"); cid = [u for u in mock('/__estado')['users'] if u['email'] == 'consulta@propesa.mx'][0]['id']
         A.click(f'[data-eu="{cid}"]'); chk(A.input_value('#ur') == 'cliente' and A.locator('#umq').is_visible(), 'nube: una cuenta de Consulta se abre como «Solo inventario»')
         A.check(f'#umq input[value="{dav}"]'); A.click('[data-a=su]')
         chk(until(A, f"(ST.U.find(u=>u.email=='consulta@propesa.mx')||{{}}).role=='cliente'") and [u for u in mock('/__estado')['users'] if u['id'] == cid][0]['mq'] == [dav], 'nube: queda como «Solo inventario» con David guardado en su perfil')

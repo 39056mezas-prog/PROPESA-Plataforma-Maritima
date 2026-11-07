@@ -4,6 +4,7 @@ mortalidad del lote no las cuenta como muertas; se pueden revertir; se comparten
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/salidas_t.py"""
 import os, json
 from playwright.sync_api import sync_playwright
+ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
 fails, errs = [], []
@@ -16,7 +17,7 @@ def login(pg, em):
     pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
 def overflow(pg): return pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth+1")
 def salida(pg, ty, sz, kg, nt=''):
-    pg.select_option('#ty', ty); pg.select_option('#sz', sz); pg.fill('#kg', str(kg)); pg.fill('#mvn', nt); pg.click('[data-a=mv]'); pg.wait_for_timeout(120)
+    pg.evaluate(ABRIR); pg.select_option('#ty', ty); pg.select_option('#sz', sz); pg.fill('#kg', str(kg)); pg.fill('#mvn', nt); pg.click('[data-a=mv]'); pg.wait_for_timeout(120)
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1440, 'height': 900})
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
@@ -26,7 +27,7 @@ with sync_playwright() as p:
     for i, v in enumerate([500, 200, 0, 0, 30]): pg.fill(f'#fk{i}', str(v))
     pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
     opts = pg.eval_on_selector_all('#ty option', 'e=>e.map(o=>o.textContent)')
-    chk(opts == ['Salida a embarque', 'Para congelar', 'Basura (descompuesta)', 'A recuperación', 'Débil', 'Entrada'], 'el lote ofrece los tipos de salida del Excel: %s' % opts)
+    chk(opts == ['Elige el tipo', 'Salida a embarque (solo para corregir)', 'Para congelar', 'Basura (descompuesta)', 'A recuperación', 'Débil', 'Entrada'], 'el lote ofrece los tipos de salida del Excel: %s' % opts)
     salida(pg, 'CONGELACION', '491-610', 18.5, 'Folio 0344')
     salida(pg, 'BASURA', '491-610', 3.05)
     salida(pg, 'RECUPERACION', '611-850', 20.6, 'sorteo')

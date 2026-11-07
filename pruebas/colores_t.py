@@ -28,7 +28,7 @@ with sync_playwright() as p:
           const c={id:uidN(),etd:'2026-10-10',lines:[{id:1,city:'SZX',cons:0,boxes:3}],sh:{}};ST.OR.push(c);syncShip(c,'SZX',0);const k=c.sh['SZX|0'];ST.P[k].closed=true;ST.P[k].col='#123456';
           save();return{a:o.sh['PVG|0'],b:o.sh['PVG|1'],c:k}})()""")
         col_b = pg.evaluate(f"ST.P[{ix['b']}].col")
-        pg.evaluate("go('admin')"); pg.wait_for_timeout(80)
+        pg.evaluate("go('admin:cat')"); pg.wait_for_timeout(80)
         chk(pg.locator('#conss').count() == 1, f'{vw} Administración tiene la tarjeta Consignatarios')
         chk(pg.locator('#conss [data-cc]').count() == pg.evaluate('CONS.length'), f'{vw} un selector de color por consignatario')
         chk(pg.inner_text('#conss').count('Sin elegir') == pg.evaluate('CONS.length'), f'{vw} sin colores elegidos dice «Sin elegir»')
@@ -58,7 +58,7 @@ with sync_playwright() as p:
         pg.close()
     # Piso no puede cambiarlo
     pg = b.new_page(); pg.on('pageerror', lambda e: errs.append(str(e))); entrar(pg)
-    pg.evaluate("me={...me,role:'piso'};go('admin')"); pg.wait_for_timeout(80)
+    pg.evaluate("me={...me,role:'piso'};go('admin:cat')"); pg.wait_for_timeout(80)
     if pg.locator('[data-cc]').count():
         pick(pg, 0, '#000000')
     chk(not pg.evaluate("ST.CC&&ST.CC[0]=='#000000'"), 'otro rol que no sea Administrador no cambia colores')

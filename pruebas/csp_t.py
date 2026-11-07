@@ -28,13 +28,13 @@ with sync_playwright() as p:
     pg.evaluate("go('temperatura')");f=pg.locator('input[type=file][accept^="image"]').first
     if f.count():f.set_input_files(files=[{'name':'f.png','mimeType':'image/png','buffer':PNG}]);pg.wait_for_timeout(400)
     chk(pg.locator('#app img[src^="data:image"]').count()>=1,'las fotos de evidencia se ven (img data:)')
-    pg.evaluate("go('admin')");pg.locator('input[data-bk=up]').first.set_input_files(os.path.join(ROOT,'pruebas','datos','backup.json'));pg.wait_for_timeout(500)
+    pg.evaluate("go('admin:dat')");pg.locator('input[data-bk=up]').first.set_input_files(os.path.join(ROOT,'pruebas','datos','backup.json'));pg.wait_for_timeout(500)
     if pg.locator('#le').count():pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.press('#lp','Enter')
     chk(pg.evaluate('ST.R.length')>=1 and pg.locator('.sb').count()==1,'restaurar un respaldo funciona con la CSP')
     pg.evaluate("go('recepcion')");btn=pg.locator('[data-pdf^="dl:"]').first
     with pg.expect_download() as d:btn.click()
     chk(d.value.suggested_filename.endswith('.pdf'),'la descarga de PDF funciona con la CSP')
-    pg.evaluate("go('admin')");bk=pg.locator('[data-bk=dl],[data-a=bk]').first
+    pg.evaluate("go('admin:dat')");bk=pg.locator('[data-bk=dl],[data-a=bk]').first
     if bk.count():
         with pg.expect_download() as d2:bk.click()
         chk(d2.value.suggested_filename.endswith('.json'),'la descarga del respaldo funciona con la CSP')

@@ -6,6 +6,7 @@
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/hojas_t.py"""
 import os, json
 from playwright.sync_api import sync_playwright
+ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
 fails, errs = [], []
@@ -26,8 +27,8 @@ with sync_playwright() as p:
     for i, v in enumerate([1575.65, 527.95, 59.55, 7.6, 6.1]): pg.fill(f'#fk{i}', str(v))
     pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
     chk(pg.locator('#prc').count() == 1, 'el Administrador ve «Precio de compra» en el lote')
-    pg.fill('#pr_u', '-3'); pg.click('[data-a=prs]'); pg.wait_for_timeout(80)
-    chk('Revisa el precio' in pg.inner_text('#pr_m') and pg.input_value('#pr_u') == '-3', 'un precio negativo no se guarda y se conserva lo escrito')
+    pg.evaluate(ABRIR); pg.fill('#pr_u', '-3'); pg.click('[data-a=prs]'); pg.wait_for_timeout(80)
+    chk('Revisa el precio' in pg.inner_text('#app .fer') and pg.input_value('#pr_u') == '-3', 'un precio negativo no se guarda y se conserva lo escrito')
     pg.fill('#pr_u', '42'); pg.fill('#pr_d', '25'); pg.select_option('#pr_f', 'F'); pg.fill('#pr_n', '76.25 kg recuperada'); pg.click('[data-a=prs]'); pg.wait_for_timeout(100)
     chk(pg.evaluate("R_('WLREM190926').pr") == {'u': 42, 'd': 25, 'f': 'F', 'nt': '76.25 kg recuperada'}, 'guarda precio, despatada, factura y nota')
     chk(abs(pg.evaluate("prUSD('WLREM190926')") - round(2170.75 * 42 + 6.1 * 25, 2)) < 0.01, 'total = 2,170.75 kg × 42 + 6.1 kg × 25 = 91,324.00 USD')

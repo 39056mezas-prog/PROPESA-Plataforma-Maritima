@@ -20,7 +20,7 @@ with sync_playwright() as p:
         chk(pg.evaluate("document.activeElement.dataset.pm")=='users','el foco pasa a la primera opción')
         items=pg.locator('#pmenu [role=menuitem]').all_inner_texts();chk(any('Administración' in x for x in items) and not any('Ajustes' in x for x in items) and any('Cerrar sesión' in x for x in items),'opciones: Administración y Cerrar sesión (Ajustes se queda en la barra)')
         txt=pg.inner_text('#pmenu');chk('Ana Torres' in txt and 'admin@propesa.mx' in txt and 'Administrador' in txt,'el menú muestra nombre, correo y rol')
-        pg.keyboard.press('ArrowDown');chk(pg.evaluate("document.activeElement.dataset.pm")=='logout','flecha abajo mueve entre opciones')
+        pg.keyboard.press('ArrowDown');chk(pg.evaluate("document.activeElement.dataset.pm")=='inst','flecha abajo mueve entre opciones (v1.33.0: «Instalar app» va antes de Cerrar sesión)');pg.keyboard.press('ArrowDown');chk(pg.evaluate("document.activeElement.dataset.pm")=='logout','y otra vez llega a Cerrar sesión')
         bb=pg.locator('#pmenu .pmbox').bounding_box();chk(bb['x']>=0 and bb['x']+bb['width']<=vw[0]+1,'el menú cabe en la pantalla')
         pg.keyboard.press('Escape');chk(not pg.locator('#pmenu .pmbox').count() and pg.evaluate("!!document.activeElement.closest('[data-avatar]')"),'Esc cierra y regresa el foco al círculo')
         av.click();pg.mouse.click(vw[0]//2,vw[1]-20);chk(not pg.locator('#pmenu .pmbox').count(),'tocar fuera cierra')

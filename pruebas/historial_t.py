@@ -53,7 +53,7 @@ try:
         chk(until(A, "!outN()"), 'sube el cambio y una lectura de temperatura')
         A.evaluate("ST.T=[];save()"); chk(until(A, "!outN()"), 'borra la lectura')
 
-        A.evaluate("go('admin')")
+        A.evaluate("go('admin:dat')")
         chk(A.locator('#hist').count() == 1 and 'Historial de cambios' in A.inner_text('#hist'), 'Administración tiene «Historial de cambios»')
         chk(A.locator('#hist table').count() == 0, 'no pide nada a la base hasta tocar el botón')
         A.click('[data-hc]'); chk(until(A, "!!document.querySelector('#hist table')"), '«Ver cambios recientes» carga la lista')

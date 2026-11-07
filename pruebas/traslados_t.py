@@ -8,6 +8,7 @@
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/traslados_t.py"""
 import os, json
 from playwright.sync_api import sync_playwright
+PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.34.0: en esta prueba todos los plegables quedan abiertos
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
 fails, errs = [], []
@@ -17,31 +18,31 @@ def chk(c, m):
 USERS = "[{id:1,name:'Ana Torres',email:'admin@propesa.mx',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',role:'piso',notify:true}]"
 FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:%s}))" % USERS  # usuarios SOLO para pruebas
 def login(pg, em):
-    pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
+    pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
 def overflow(pg): return pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth+1")
 DIST = "l=>Object.fromEntries(Object.entries(tqDist(l)).map(([t,g])=>[t,g/1000]))"
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1440, 'height': 900})
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
     pg.on('dialog', lambda d: d.accept())
-    pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1);go('recepcion')")
+    pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1);FOLD['ent-tq']=true;go('recepcion')")
     def entrada(code, t2='', k2='', tt2='', kb2=''):
         pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '2'); pg.select_option('#ft', 'T1'); pg.fill('#fkb', '34'); pg.fill('#ftt', '57.6'); pg.fill('#ftp', '48-62'); pg.fill('#fdes', '0')
         pg.fill('#fk0', '800'); pg.fill('#fk1', '200')
         if t2: pg.select_option('#ft2', t2)
         pg.fill('#fk2z0', k2); pg.fill('#ftt2', tt2); pg.fill('#fkb2', kb2); pg.click('[data-a=sv]'); pg.wait_for_timeout(120)  # v1.25.0: kg por talla
     entrada('WLREM190926', 'T1', '300')
-    chk('distinto' in pg.inner_text('.panel .er') and pg.input_value('#fl') == 'WLREM190926', 'el otro tanque no puede ser el mismo (y se conserva lo escrito)')
+    chk('distinto' in pg.inner_text('.panel') and pg.input_value('#fl') == 'WLREM190926', 'el otro tanque no puede ser el mismo (y se conserva lo escrito)')
     pg.select_option('#ft2', 'T2'); pg.fill('#fk2z0', '900'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
-    chk('más de lo que entró (800.00 kg)' in pg.inner_text('.panel .er'), 'los kg de una talla en el otro tanque no pueden pasar de lo que entró')
+    chk('más de lo que entró (800.00 kg)' in pg.inner_text('.panel'), 'los kg de una talla en el otro tanque no pueden pasar de lo que entró')
     pg.fill('#fk2z0', '800'); pg.fill('#fk2z1', '200'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
-    chk('No puede irse todo' in pg.inner_text('.panel .er'), 'no puede irse todo al otro tanque')
+    chk('No puede irse todo' in pg.inner_text('.panel'), 'no puede irse todo al otro tanque')
     pg.fill('#fk2z0', '240'); pg.fill('#fk2z1', '60'); pg.fill('#ftt2', '60.3'); pg.fill('#fkb2', '36'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
     chk(pg.evaluate(DIST, 'WLREM190926') == {'T1': 700, 'T2': 300}, 'entrada repartida: T1 700 kg y T2 300 kg')
-    pg.evaluate("go('recepcion')"); pg.wait_for_timeout(100)
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(100)
     row = pg.locator('table.ent tbody tr', has_text='WLREM190926').inner_text()
     chk('1/2' in row and '57.6/60.3' in row and '34/36' in row, f'la tabla de Entrada dice tanque 1/2, 57.6/60.3 °F y 34/36 kg por caja: {row!r}')
-    pg.click('[data-tq=T2]'); pg.wait_for_timeout(100)
+    pg.evaluate("FOLD['ent-tq']=true;render()"); pg.click('[data-tq=T2]'); pg.wait_for_timeout(100)
     t = pg.inner_text('.tqc'); chk('300.0 kg' in t and 'WLREM190926' in t and '300.0 kg aquí' in t, 'el tablero: T2 con 300 kg de ese lote')
     chk(pg.evaluate("[tqZ('WLREM190926','T2','491-610'),tqZ('WLREM190926','T2','611-850')]") == [240000, 60000], 'T2 tiene exactamente lo capturado por talla (240 + 60)')
     pg.evaluate("go('temperatura')"); pg.wait_for_timeout(100)
@@ -50,7 +51,7 @@ with sync_playwright() as p:
     pg.evaluate("go('lote:WLREM190926')"); pg.wait_for_timeout(100)
     chk(pg.locator('#tqc').count() == 1 and 'T1 (principal) · 700.0 kg' in pg.inner_text('#tqc'), 'el lote muestra sus tanques')
     pg.select_option('#tq_de', 'T1'); pg.select_option('#tq_a', 'T4'); pg.fill('#tq_kg', '900'); pg.click('[data-a=tqmv]'); pg.wait_for_timeout(80)
-    chk('hay 700.00 kg' in pg.inner_text('#tq_m') and pg.input_value('#tq_kg') == '900', 'no deja pasar más de lo que hay (y conserva lo escrito)')
+    chk('hay 700.00 kg' in pg.inner_text('#app .fer') and pg.input_value('#tq_kg') == '900', 'no deja pasar más de lo que hay (y conserva lo escrito)')
     pg.fill('#tq_kg', '200'); pg.fill('#tq_n', 'para envío del 25'); pg.click('[data-a=tqmv]'); pg.wait_for_timeout(100)
     chk(pg.evaluate(DIST, 'WLREM190926') == {'T1': 500, 'T2': 300, 'T4': 200}, 'pasa 200 kg de T1 a T4')
     pg.select_option('#tq_de', 'T2'); pg.select_option('#tq_a', 'T4'); pg.fill('#tq_kg', ''); pg.click('[data-a=tqmv]'); pg.wait_for_timeout(100)
@@ -72,7 +73,7 @@ with sync_playwright() as p:
     c = json.loads(pg.evaluate("JSON.stringify(cleanST(mqDump()).TQ)")); d = pg.evaluate("decodeST(new Map([...encodeST()].map(([k,v])=>[k,v[1]]))).TQ.length")
     chk(len(c) == 2 and d == 2, 'sobreviven a un respaldo y a decodeST')
     chk(pg.evaluate("WN.TQ({id:1,lot:'X',de:'T1',a:'T1',kg:5})") is None and pg.evaluate("WN.TQ({id:1,lot:'X',de:'T1',a:'T9',kg:5})") is None, 'traslados sin sentido se ignoran')
-    pg.evaluate("mqSet(2);ST.R=[];render()"); pg.evaluate("go('recepcion')")
+    pg.evaluate("mqSet(2);ST.R=[];render()"); pg.evaluate("FOLD['ent-tq']=true;go('recepcion')")
     entrada('WLRCO170926', 'T3', '100')
     chk([k for k in pg.evaluate("[...encodeAll().keys()]") if 'TQ/' in k and k.startswith('q2:')].__len__() == 1, "en Abel el traslado va como 'q2:TQ/…'")
     pg.evaluate("mqSet(1);render()")
@@ -87,7 +88,7 @@ with sync_playwright() as p:
     for w_, h_ in [(820, 1180), (390, 844)]:
         pg.set_viewport_size({'width': w_, 'height': h_}); pg.wait_for_timeout(120); chk(not overflow(pg), f'hoja de Modo piso sin scroll de lado en {w_} px')
         pg.evaluate("setPiso(false);go('lote:WLREM190926')"); pg.wait_for_timeout(120); chk(not overflow(pg), f'lote con traslados sin scroll de lado en {w_} px')
-        pg.evaluate("form={t:'lot'};go('recepcion');form={t:'lot'};render()"); pg.wait_for_timeout(120); chk(not overflow(pg), f'Entrada con otro tanque sin scroll de lado en {w_} px')
+        pg.evaluate("form={t:'lot'};FOLD['ent-tq']=true;go('recepcion');form={t:'lot'};render()"); pg.wait_for_timeout(120); chk(not overflow(pg), f'Entrada con otro tanque sin scroll de lado en {w_} px')
         pg.screenshot(path=os.path.join(OUT, f'traslados_{w_}.png'), full_page=True); pg.evaluate("setPiso(true);go('pent')")
     b.close()
 chk(not errs, 'sin errores de JavaScript: ' + '; '.join(errs[:5]))

@@ -9,6 +9,7 @@
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/v125_t.py"""
 import os, re
 from playwright.sync_api import sync_playwright
+PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.34.0: en esta prueba todos los plegables quedan abiertos
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 fails, errs = [], []
 def chk(c, m):
@@ -17,10 +18,10 @@ def chk(c, m):
 USERS = "[{id:1,name:'Ana Torres',email:'admin@propesa.mx',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',role:'piso',notify:true}]"
 FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:%s}))" % USERS  # usuarios SOLO para pruebas
 def login(pg, em):
-    pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
+    pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
 def overflow(pg): return pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth+1")
 def entrada(pg, lot, kz, tank='T1', t2=None, z2=None, fecha='20/10/2026', prov='1'):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.wait_for_timeout(100)
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.wait_for_timeout(100)
     pg.fill('#fd', fecha); pg.fill('#fh', '12:00'); pg.select_option('#fo', prov); pg.select_option('#ft', tank)
     pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fl', lot); pg.fill('#fkb', '36'); pg.fill('#fdes', '0')
     for i, v in enumerate(kz): pg.fill(f'#fk{i}', str(v))
@@ -48,12 +49,12 @@ with sync_playwright() as p:
 
     # ---------- 3. entrada repartida: kg exactos por talla en el otro tanque
     entrada(pg, 'WLRCO201026', [100, 50, 20, 10], 'T1', 'T2', {0: 30, 1: 61})
-    chk(pg.locator('.er', has_text='Mediana: en el otro tanque no puede haber más de lo que entró').count() > 0, 'no deja poner en el otro tanque más de lo que entró de una talla')
+    chk(pg.locator('.er, .fer', has_text='Mediana: en el otro tanque no puede haber más de lo que entró').count() > 0, 'no deja poner en el otro tanque más de lo que entró de una talla')
     pg.fill('#fk2z1', '0'); pg.fill('#fk2z2', '20'); pg.fill('#fk2z3', '10'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
     dz = pg.evaluate("(d=>({t1:[S.map(z=>d[z].T1||0)],t2:[S.map(z=>d[z].T2||0)]}))(tqDistZ('WLRCO201026'))")
     chk(dz['t2'][0][:4] == [30000, 0, 20000, 10000] and dz['t1'][0][:4] == [70000, 50000, 0, 0], f'T2 tiene exactamente Chica 30 · Grande 20 · Jumbo 10 y T1 lo demás ({dz})')
     chk(pg.evaluate("(ST.TQ||[]).find(x=>x.lot==='WLRCO201026').z['851-1220']") == 20, 'el traslado de la entrada guarda los kg por talla (z)')
-    pg.evaluate("go('recepcion');TQSEL='T2';render()"); t = pg.inner_text('.tqc')
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion');TQSEL='T2';render()"); t = pg.inner_text('.tqc')
     chk('60.0 kg' in t and '20.0' in t, 'el tablero de Entrada enseña en T2 lo capturado (60 kg, 20 de Grande)')
     pg.evaluate("go('lote:WLRCO201026')"); t = pg.inner_text('#tqc')
     chk('Chica 30.0' in t and 'Grande 20.0' in t and 'Mediana 50.0' in t, 'el lote enseña las tallas de cada tanque')

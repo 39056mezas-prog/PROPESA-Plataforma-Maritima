@@ -20,7 +20,7 @@ with sync_playwright() as p:
         # 1. orden vacía creada por error (como en la captura del usuario): se elimina
         n0 = pg.evaluate('ST.OR.length'); pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '2026-10-16'); pg.click('[data-oa=new]')
         oid = pg.evaluate('+V.id'); chk(pg.evaluate('ST.OR.length') == n0 + 1, f'{vw} se crea una orden vacía')
-        chk(pg.locator('[data-oa=dco]').count() == 1, f'{vw} la orden muestra «Eliminar orden»')
+        chk(pg.locator('.ordhd [data-oa=dco]').count() == 1 and pg.locator('[data-oa=dco]').count() == 1, f'{vw} la orden muestra «Eliminar orden» una vez, en el encabezado (v1.35.0; antes arriba y abajo)')
         pg.click('[data-oa=dco]'); chk('No se puede deshacer' in pg.inner_text('#app') and pg.evaluate('ST.OR.length') == n0 + 1, f'{vw} pide confirmar antes de eliminar')
         pg.click('[data-oa=no]'); chk(pg.locator('[data-oa=dlo]').count() == 0 and pg.evaluate('ST.OR.length') == n0 + 1, f'{vw} «No» la deja como estaba')
         pg.click('[data-oa=dco]'); pg.click('[data-oa=dlo]')
@@ -41,10 +41,12 @@ with sync_playwright() as p:
         o = pg.evaluate("(()=>{const o=ST.OR.find(o=>ordBoxes(o).length);return o&&{id:o.id,n:ordBoxes(o).length}})()")
         chk(o is not None, f'{vw} los datos de prueba tienen una orden con hieleras')
         pg.evaluate(f"go('orden:{o['id']}')")
-        chk(pg.locator('[data-oa=dco]').count() == 0 and 'no se puede eliminar' in pg.inner_text('#app'), f'{vw} con hieleras empacadas no hay botón y explica por qué')
-        pg.evaluate(f"OA.cf='ord';render()"); chk(pg.locator('[data-oa=dlo]').count() == 0, f'{vw} ni forzando la confirmación aparece el botón')
-        pg.evaluate("(()=>{const b=document.createElement('button');b.dataset.oa='dlo';document.getElementById('app').appendChild(b);b.click()})()")
-        chk(pg.evaluate(f"ST.OR.some(o=>o.id=={o['id']})") and pg.evaluate(f"ordBoxes(ST.OR.find(o=>o.id=={o['id']})).length") == o['n'], f'{vw} y la acción tampoco la borra (hieleras intactas)')
+        # v1.33.0 (usuario: «debería poder borrar si yo quiero»): con hieleras empacadas también, con confirmación que dice cuántas
+        chk(pg.locator('[data-oa=dco]').count() == 1, f'{vw} con hieleras empacadas sí hay botón')
+        pg.click('[data-oa=dco] >> nth=0'); chk(pg.locator('[data-oa=dlo]').count() == 1 and f"sus {o['n']} hieleras" in pg.inner_text('#ord_del'), f'{vw} la confirmación sale a la vista y avisa de las hieleras')
+        pg.click('[data-oa=no]'); chk(pg.evaluate(f"ST.OR.some(o=>o.id=={o['id']})"), f'{vw} «No» no borra nada')
+        pg.click('[data-oa=dco] >> nth=0'); pg.click('[data-oa=dlo]'); pg.wait_for_timeout(150)
+        chk(not pg.evaluate(f"ST.OR.some(o=>o.id=={o['id']})") and pg.evaluate(f"Object.values(ST.B).flat().filter(b=>String(b.o).startsWith('{o['id']}.')).length") == 0, f'{vw} «Sí, eliminar» borra la orden y sus hieleras')
         pg.close()
     # 4. Encargado de piso y Consulta no ven el botón
     for em, pw in [('piso@propesa.mx', 'piso123'), ('consulta@propesa.mx', 'ver123')]:

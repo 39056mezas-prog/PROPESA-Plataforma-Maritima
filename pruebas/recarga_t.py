@@ -2,6 +2,7 @@
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/recarga_t.py"""
 import json,os
 from playwright.sync_api import sync_playwright
+ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 seed=open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos','seed.json')).read()
 errs=[]
@@ -28,7 +29,7 @@ with sync_playwright() as p:
         pg.evaluate("go('orden:1')");(pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.fill('#ol_z1','5');pg.fill('#ol_z2','2');reload(pg)
         chk(pg.input_value('#ol_z1')=='5' and pg.input_value('#ol_n')=='7',f'{w} la línea de orden a medias se conserva')
         # 3) Nota sin guardar en un lote
-        pg.evaluate("go('lote:WLRCO051026A')");pg.fill('#ntx','revisar tanque 2');reload(pg)
+        pg.evaluate("go('lote:WLRCO051026A')");pg.evaluate(ABRIR);pg.fill('#ntx','revisar tanque 2');reload(pg)
         chk('lote' in pg.evaluate('V.v') and pg.input_value('#ntx')=='revisar tanque 2',f'{w} la nota sin guardar se conserva en la misma pantalla')
         # 4) Búsqueda
         pg.evaluate("go('buscar:HXH')");reload(pg);chk(pg.evaluate('V.v')=='buscar' and pg.evaluate('V.id')=='HXH',f'{w} la búsqueda se conserva')

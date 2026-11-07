@@ -80,7 +80,7 @@ try:
         close_ship(pg)
         chk(len(pg.evaluate(SAL)) == 1 and pg.evaluate("bal('WLRCO221026','491-610')") == 68000, 'cerrar otra vez saca una sola vez')
         # nunca deja un lote en negativo: lote con 10 kg y 2 hieleras (32 kg)
-        pg.evaluate("go('admin')")
+        pg.evaluate("go('admin:usr')")
         chk(pg.locator('#ur').count() == 0 and 'Solo inventario:' in pg.inner_text('#app'), 'Administración explica la cuenta de solo inventario')
         pg.click('[data-a=nu]'); chk('cliente' in pg.evaluate("[...document.querySelectorAll('#ur option')].map(o=>o.value)"), 'el Administrador puede dar de alta una cuenta Cliente'); pg.click('[data-a=cu]')
         pg.evaluate("ST.R.find(r=>r.lot=='WLRCO221026').closed=true;save()")
@@ -127,7 +127,7 @@ try:
             pg.goto(APP); pg.evaluate("const T=toast;window.toast=t=>{window._toast(t);T(t)}"); return ctx, pg, toasts
         ca, A, ta = device('A'); cb, B, tb = device('B')
         login(A, 'admin@propesa.mx', 'clave-admin1'); chk(until(A, "!!me&&!!document.querySelector('.sb')"), 'A: entra el Administrador')
-        A.evaluate("go('admin')"); A.click('[data-a=nu]'); A.fill('#un', 'Compras Shanghai'); A.fill('#ue', 'compras@cliente.cn'); A.fill('#up', 'Compras-2026'); A.select_option('#ur', 'cliente'); A.check('#umq input[value="1"]'); A.click('[data-a=su]')
+        A.evaluate("go('admin:usr')"); A.click('[data-a=nu]'); A.fill('#un', 'Compras Shanghai'); A.fill('#ue', 'compras@cliente.cn'); A.fill('#up', 'Compras-2026'); A.select_option('#ur', 'cliente'); A.check('#umq input[value="1"]'); A.click('[data-a=su]')
         chk(until(A, "ST.U.some(u=>u.role=='cliente')"), 'A: alta de la cuenta Cliente con la función usuarios')
         login(B, 'admin2@propesa.mx', 'clave-admin2'); chk(until(B, "!!me&&!!document.querySelector('.sb')"), 'B: entra el segundo Administrador')
         new_lot(A, 'WLRCO221026', (100, 200, 300, 400))

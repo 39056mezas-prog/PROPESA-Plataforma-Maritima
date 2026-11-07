@@ -6,6 +6,7 @@ se lo deja escribir al Administrador (supabase/migrations/20261026_precios.sql; 
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/precios_t.py"""
 import os, sys, json, time, subprocess, urllib.request
 from playwright.sync_api import sync_playwright
+ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.environ.get('APP', 'http://localhost:8765/index.html')
 MOCK = 'http://127.0.0.1:8795'
@@ -39,7 +40,7 @@ try:
         ca, A = device('A', 'admin@propesa.mx', 'clave-admin1'); cp, P = device('P', 'piso@propesa.mx', 'clave-piso1'); cc, C = device('C', 'consulta@propesa.mx', 'clave-ver1')
         cb, B = device('B', 'admin2@propesa.mx', 'clave-admin2')
         A.evaluate("mqSet(1);go('recepcion')"); A.click('[data-a=nf]'); A.fill('#fl', 'WLRCO261026'); A.select_option('#fo', '1'); A.fill('#fkb', '36'); A.fill('#ftt', '58'); A.fill('#ftp', '59'); A.fill('#fdes', '0'); A.fill('#fk0', '500'); A.fill('#fk4', '10'); A.click('[data-a=sv]'); A.wait_for_timeout(200)
-        A.fill('#pr_u', '43'); A.fill('#pr_d', '25'); A.select_option('#pr_f', 'F'); A.click('[data-a=prs]')
+        A.evaluate(ABRIR); A.fill('#pr_u', '43'); A.fill('#pr_d', '25'); A.select_option('#pr_f', 'F'); A.click('[data-a=prs]')
         chk(until(A, "outN()==0"), 'A sube el lote y su precio')
         recs = mock('/__estado')['recs']
         chk('$/WLRCO261026' in recs and recs['$/WLRCO261026']['v'] == {'lot': 'WLRCO261026', 'u': 43, 'd': 25, 'f': 'F'}, 'el precio va en su propio registro $/WLRCO261026')

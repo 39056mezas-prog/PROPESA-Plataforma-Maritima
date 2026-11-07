@@ -1,4 +1,4 @@
-"""v1.32.0 · Pantalla de acceso: marca con vista previa de la app y botón «Iniciar sesión»; el formulario sale de lado. Uso: python3 -I pruebas/acceso_t.py"""
+"""v1.32.0–v1.32.1 · Pantalla de acceso: marca con vista previa de la app y botón «Iniciar sesión»; el formulario sale de lado. Uso: python3 -I pruebas/acceso_t.py"""
 import os, sys, re, json
 from playwright.sync_api import sync_playwright
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local'); fails = []; errs = []  # modo local: nunca toca la base real
@@ -22,7 +22,10 @@ with sync_playwright() as p:
     chk(pg.locator('.au.op').count() == 0 and pg.locator('.auo').is_visible() and 'Iniciar sesión' in pg.inner_text('.auo'), 'abre con la marca, la vista previa y el botón «Iniciar sesión» (el formulario guardado)')
     chk(pg.evaluate("document.querySelector('.aup').getBoundingClientRect().left") >= 1439, 'el correo y la contraseña esperan fuera de la pantalla, a la derecha')
     chk(pg.evaluate("document.documentElement.scrollHeight<=innerHeight+1"), 'sin desplazarse: todo cabe en la pantalla')
-    pg.click('.auo'); pg.wait_for_timeout(500)
+    pg.click('.auo')
+    tr = pg.evaluate("document.querySelector('.aup').getAnimations().filter(a=>a.transitionProperty=='transform').map(a=>a.effect.getTiming().duration)")
+    chk(tr and tr[0] >= 450, f'se ve deslizarse: el cajón tarda medio segundo en llegar ({tr} ms; antes 320 ms y casi todo en el primer cuadro)')
+    pg.evaluate("Promise.allSettled(document.getAnimations().map(a=>a.finished))")
     chk(pg.locator('.au.op').count() == 1 and pg.evaluate("Math.round(document.querySelector('.aup').getBoundingClientRect().right)") == 1440 and pg.get_attribute('.auo', 'aria-expanded') == 'true', 'el botón saca el formulario de lado')
     chk(pg.evaluate("document.activeElement.id") == 'le', 'al abrir queda listo para escribir el correo')
     pg.keyboard.press('Escape'); pg.wait_for_timeout(450)
@@ -33,17 +36,16 @@ with sync_playwright() as p:
     chk(pg.locator('.aum .t3wat').count() == 6 and pg.locator('.aum .t3fil').count() == 15 and pg.locator('.aum .t3rail').count() == 20, 'la vista previa usa el dibujo real de la planta: 6 tanques, 5 filtros con barandal')
     chk(pg.locator('.aum .t3dl').count() == 2 and pg.locator('.aum .t3sign').count() == 6, 'con los letreros de la planta y las placas TANQUE 1–6')
     tags = pg.eval_on_selector_all('.aum .t3tag', 'e=>e.map(x=>x.innerText.split("\\n")[0])')
-    chk(len(tags) == 6 and 'T5 · Vacío' in tags and 'T1 · 48 canastas' in tags, f'tanques con canastas pero no llenos, uno vacío {tags}')
+    chk(len(tags) == 5 and not any('Vacío' in t for t in tags) and 'T1 · 48 canastas' in tags, f'tanques con canastas pero no llenos; el vacío (T5) sin etiqueta, solo su letrero (v1.38.2) {tags}')
     chk(pg.locator('.aum .t3c').count() == 142 and pg.locator('.aum .t3inc').count() >= 1, 'las canastas son las mismas de la planta en 3D (incompletas con borde punteado)')
     chk(pg.locator('.t3v').count() == 0, 'no se arma la planta real en el acceso (solo el dibujo)')
     inside = pg.evaluate("(()=>{const a=document.querySelector('.aub').getBoundingClientRect();return [...document.querySelectorAll('.aum .t3tag')].every(e=>{const r=e.getBoundingClientRect();return r.right<=a.right+1&&r.left>=a.left})})()")
     chk(inside, 'todos los letreros de los tanques caben en el panel (nada cortado)')
-    bg = pg.evaluate("getComputedStyle(document.querySelector('.aup')).backgroundImage")
-    chk('rgb(14, 42, 114)' in bg, 'el lado del formulario es azul (ya no blanco)')
-    chk(pg.evaluate("getComputedStyle(document.querySelector('[data-a=lg]')).backgroundColor") == 'rgb(255, 255, 255)', 'botón Entrar blanco sobre el azul')
+    chk(pg.evaluate("getComputedStyle(document.querySelector('.aup')).backgroundColor") == 'rgb(255, 255, 255)', 'v1.32.1 · menos azul marino: el cajón del formulario es blanco')
+    chk(pg.evaluate("getComputedStyle(document.querySelector('[data-a=lg]')).backgroundColor") == 'rgb(4, 114, 171)', 'botón Entrar azul océano (texto blanco)')
     chk(pg.locator('.aum a,.aum button,.aum input,.aum [tabindex]').count() == 0, 'la vista previa no tiene nada que se pueda enfocar')
     chk(pg.locator('h1').inner_text() == 'Iniciar sesión' and 'acceso por rol' in pg.inner_text('.aui').lower() and 'marítima' not in pg.inner_text('.au').lower(), 'título «Iniciar sesión» y el texto de siempre')
-    chk('Versión 1.32.0' in pg.inner_text('.auft'), 'el pie muestra la versión')
+    chk('Versión 1.38.2' in pg.inner_text('.auft'), 'el pie muestra la versión')
     chk(not DEMO.search(pg.inner_text('body')), 'sin rastros de demo en el acceso')
     # ver / ocultar contraseña
     pg.fill('#lp', 'Secreta123'); eye = pg.locator('[data-a=pwv][data-for=lp]')
@@ -66,6 +68,24 @@ with sync_playwright() as p:
         chk(vis, f'{w}×{h}: vista previa y botón «Iniciar sesión» a la vista')
         bt = pg.locator('[data-a=lg]').bounding_box(); chk(bt['height'] >= 48, f'{w}×{h}: botón Entrar de 48 px o más')
         pg.close()
+    # v1.32.1 · desde propesa.org (#entrar) el cajón sale solo, deslizándose, y la dirección queda limpia
+    for w, h, th in [(1440, 900, None), (390, 844, 'dark')]:
+        pg = b.new_page(viewport={'width': w, 'height': h}); pg.on('pageerror', lambda e: errs.append(str(e)))
+        pg.goto(BASE); pg.evaluate('localStorage.clear()'); pg.evaluate('d=>localStorage.setItem("propesa-v4",d)', json.dumps(U))
+        if th: pg.evaluate(f'localStorage.setItem("propesa-theme","{th}")')
+        pg.goto(BASE + '#entrar'); pg.reload(); pg.wait_for_selector('#le')
+        pg.wait_for_timeout(1000)
+        chk(pg.locator('.au.op').count() == 1 and pg.evaluate("Math.round(document.querySelector('.aup').getBoundingClientRect().right)") == w, f'{w}: luego el cajón sale solo, sin tocar nada')
+        chk(pg.evaluate("document.activeElement.id") == 'le', f'{w}: listo para escribir el correo')
+        chk('#entrar' not in pg.url, f'{w}: la dirección queda sin #entrar (recargar no lo repite)')
+        chk(pg.evaluate("getComputedStyle(document.querySelector('#le')).backgroundColor") == 'rgb(255, 255, 255)' and pg.evaluate("getComputedStyle(document.querySelector('.aui h1')).color") == 'rgb(11, 29, 89)', f'{w} {th or ""}: el cajón blanco se ve igual en tema oscuro')
+        pg.fill('#le', 'jefe@x.mx'); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); chk(pg.locator('.sb').count() == 1, f'{w}: entra con un solo clic en Entrar')
+        pg.close()
+    # sin animación de lado si el equipo pide menos movimiento: aparece con un fundido corto y sigue funcionando
+    pg = b.new_page(viewport={'width': 1440, 'height': 900}, reduced_motion='reduce'); pg.goto(BASE); pg.evaluate('d=>localStorage.setItem("propesa-v4",d)', json.dumps(U)); pg.reload(); pg.wait_for_selector('#le')
+    chk(pg.evaluate("getComputedStyle(document.querySelector('.aup')).pointerEvents") == 'none', 'menos movimiento: el cajón cerrado no estorba los clics')
+    pg.focus('#le'); pg.wait_for_timeout(300); chk(pg.locator('.au.op').count() == 1 and pg.evaluate("getComputedStyle(document.querySelector('.aup')).opacity") == '1' and pg.evaluate("getComputedStyle(document.querySelector('.aup')).transform") == 'none', 'menos movimiento: sin deslizarse, aparece y se puede llegar con el teclado')
+    pg.close()
     # Configuración inicial usa la misma pantalla
     pg = abrir(b, 1440, 900, datos=False)
     chk(pg.locator('.au.op .aum').count() == 1 and pg.locator('h1').inner_text() == 'Configuración inicial', 'Configuración inicial usa la misma pantalla, con el formulario ya abierto')

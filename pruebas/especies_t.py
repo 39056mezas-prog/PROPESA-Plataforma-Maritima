@@ -24,7 +24,7 @@ def pdf_text(pg, k, arg):
     return ' '.join(re.findall(r'\(((?:[^()\\]|\\.)*)\)\s*Tj', raw)).replace('\\(', '(').replace('\\)', ')')
 def sin_desborde(pg): return not pg.evaluate("document.documentElement.scrollWidth>innerWidth+1")
 def entrada(pg, lot, tank, sp_txt, kgs=(100, 20, 0, 0)):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fd', '23/10/2026'); pg.select_option('#fo', '1'); pg.select_option('#ft', tank)
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fd', '23/10/2026'); pg.select_option('#fo', '1'); pg.select_option('#ft', tank)
     if sp_txt: pg.select_option('#fsp', label=sp_txt)
     pg.fill('#fl', lot)
     for k, v in {'#fh': '08:15', '#ftt': '58', '#ftp': '52-60', '#fkb': '34', '#fdes': '0'}.items(): pg.fill(k, v)
@@ -38,12 +38,12 @@ with sync_playwright() as p:
         pg = b.new_page(viewport={'width': vw[0], 'height': vw[1]}); pg.on('pageerror', lambda e: errs.append(str(e)))
         entrar(pg)
         # ---------- 1. Administración → Especies ----------
-        pg.evaluate("go('admin')"); card = pg.locator('#esps')
+        pg.evaluate("go('admin:cat')"); card = pg.locator('#esps')
         chk(card.count() == 1 and 'Langosta Roja' in card.inner_text() and 'Red lobster' in card.inner_text(), f'{vw} Administración → Especies con Langosta Roja de inicio')
         chk(pg.evaluate("ST.ES===undefined"), 'sin cambios no se crea la lista (se usa la de inicio)')
         pg.click('[data-esa="off:1"]'); chk(pg.evaluate("ST.ES===undefined||!ST.ES[0].off"), 'no se puede ocultar la única especie')
-        pg.click('[data-esa=new]'); pg.click('[data-esa=sv]'); chk('Escribe el nombre' in pg.inner_text('#es_m'), 'nombre obligatorio')
-        pg.fill('#es_n', 'langosta roja'); pg.click('[data-esa=sv]'); chk('Ya hay una especie' in pg.inner_text('#es_m'), 'no se repite el nombre')
+        pg.click('[data-esa=new]'); pg.click('[data-esa=sv]'); chk('Escribe el nombre' in pg.inner_text('#app .fer'), 'nombre obligatorio (v1.36.0: junto al campo)')
+        pg.fill('#es_n', 'langosta roja'); pg.click('[data-esa=sv]'); chk('Ya hay una especie' in pg.inner_text('#app .fer'), 'no se repite el nombre')
         pg.fill('#es_n', 'Langosta Azul'); pg.fill('#es_e', 'Blue lobster'); pg.click('[data-esa=sv]'); pg.wait_for_timeout(100)
         es = pg.evaluate("ST.ES")
         chk(len(es) == 2 and es[0]['id'] == 1 and es[1]['n'] == 'Langosta Azul' and es[1]['en'] == 'Blue lobster', f'especie agregada {es}')
@@ -56,7 +56,7 @@ with sync_playwright() as p:
         pg.screenshot(path=f'{OUT}/esp_admin_{vw[0]}.png', full_page=True)
 
         # ---------- 2. Entrada en la vista completa ----------
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
         ops = pg.evaluate("[...document.querySelectorAll('#fsp option')].map(o=>o.textContent)")
         chk(ops == ['Langosta Roja', 'Langosta Azul'] and pg.input_value('#fsp') == '1', f'la entrada pide la especie (Langosta Roja de inicio) {ops}')
         pg.click('[data-a=nf]')
@@ -68,11 +68,11 @@ with sync_playwright() as p:
         pg.evaluate("go('lote:WLRAZ231026')"); chk('Langosta Azul' in pg.inner_text('.cd.head'), 'el lote dice su especie')
         pg.click('[data-a=el]'); chk(pg.input_value('#fsp') == str(az), 'Editar trae la especie'); pg.select_option('#fsp', '1'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
         chk(R(pg, 'WLRAZ231026') == 1, 'se puede corregir la especie'); pg.click('[data-a=el]'); pg.select_option('#fsp', str(az)); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
-        pg.evaluate("go('recepcion')"); t = pg.inner_text('table.ent')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); t = pg.inner_text('table.ent')
         chk('Langosta Azul' in t and 'Langosta Roja' in t, 'la tabla de Entrada muestra la especie de cada lote')
 
         # ---------- 3. Tanques por especie ----------
-        pg.evaluate("TQSEL='T1';render()"); det = pg.inner_text('.tqc')
+        pg.evaluate("FOLD['ent-tq']=true;TQSEL='T1';render()"); det = pg.inner_text('.tqc')
         hh = pg.evaluate("[...document.querySelectorAll('.tqc .tqsp')].map(e=>e.textContent)")
         k_az = pg.evaluate("bal('WLRAZ231026')"); k_ro = pg.evaluate("ST.R.filter(r=>r.tank=='T1'&&esOf(r).id==1&&!r.closed).reduce((a,r)=>a+Math.max(0,bal(r.lot)),0)")
         chk(len(hh) == 2 and hh[0].startswith('Langosta Roja') and hh[1].startswith('Langosta Azul') and '50.0 kg' in hh[1], f'el tanque separa kilos por especie {hh}')
@@ -80,7 +80,7 @@ with sync_playwright() as p:
         chk('Langosta Azul' in pg.inner_text('.tqspt') and 'Langosta Roja' in pg.inner_text('.tqspt'), 'arriba: kilos de cada especie en todos los tanques')
         pg.evaluate("TQSEL='T2';render()"); hh = pg.evaluate("[...document.querySelectorAll('.tqc .tqsp')].map(e=>e.textContent)")
         chk(hh == ['Langosta Roja'], f'con una sola especie, solo su nombre {hh}')
-        chk(sin_desborde(pg), f'{vw} Entrada sin desborde'); pg.evaluate("TQSEL='T1';render()"); pg.screenshot(path=f'{OUT}/esp_tanques_{vw[0]}.png', full_page=True)
+        chk(sin_desborde(pg), f'{vw} Entrada sin desborde'); pg.evaluate("FOLD['ent-tq']=true;TQSEL='T1';render()"); pg.screenshot(path=f'{OUT}/esp_tanques_{vw[0]}.png', full_page=True)
 
         # ---------- 4. Hoja de entradas (Modo piso) ----------
         pg.evaluate("PEN=null;setPiso(true);go('pent')")
@@ -95,7 +95,7 @@ with sync_playwright() as p:
         pg.click('[data-pa=save]'); pg.wait_for_timeout(120)
         chk(R(pg, 'WLRPISO231026') == az, 'Modo piso guarda la especie')
         chk(pg.evaluate("document.querySelector('[data-pr=\"1:sp\"]').disabled"), 'guardada, la especie ya no se cambia en la hoja')
-        pg.evaluate("setPiso(false);go('recepcion')")
+        pg.evaluate("setPiso(false);FOLD['ent-tq']=true;go('recepcion')")
 
         # ---------- 5. PDF de Entrada y Hoja de empaque ----------
         tx = pdf_text(pg, 'ent', '')
@@ -131,20 +131,20 @@ with sync_playwright() as p:
         chk(pg.evaluate("WN.E({id:5,n:'  Camarón   azul ',en:null,off:1})") == {'id': 5, 'n': 'Camarón azul', 'en': '', 'off': True}, 'WN.E limpia lo que llega de la base')
 
         # ---------- 8. Ocultar y otros roles ----------
-        pg.evaluate("go('admin')"); pg.click(f'[data-esa="off:{az}"]'); pg.wait_for_timeout(80)
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
+        pg.evaluate("go('admin:cat')"); pg.click(f'[data-esa="off:{az}"]'); pg.wait_for_timeout(80)
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
         chk(pg.evaluate("[...document.querySelectorAll('#fsp option')].map(o=>o.textContent)") == ['Langosta Roja'], 'una especie oculta ya no se ofrece')
         pg.click('[data-a=nf]'); pg.evaluate("go('lote:WLRAZ231026')"); pg.click('[data-a=el]')
         chk(pg.input_value('#fsp') == str(az), 'pero el lote que la tiene la conserva al editar'); pg.click('[data-a=nf]')
-        pg.evaluate("go('admin')"); pg.click(f'[data-esa="off:{az}"]'); pg.wait_for_timeout(80)
+        pg.evaluate("go('admin:cat')"); pg.click(f'[data-esa="off:{az}"]'); pg.wait_for_timeout(80)
         pg.evaluate("signOut()"); pg.fill('#le', 'consulta@propesa.mx'); pg.fill('#lp', 'ver123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
-        pg.evaluate("go('admin')")
+        pg.evaluate("go('admin:cat')")
         chk(pg.locator('[data-esa]').count() == 0 and pg.locator('.cli').count() == 1, 'Consulta (solo inventario) no cambia especies')
         pg.close()
     # tema oscuro, texto «Muy grande»
     pg = b.new_page(viewport={'width': 820, 'height': 1000}, color_scheme='dark'); pg.on('pageerror', lambda e: errs.append(str(e)))
     entrar(pg); pg.evaluate("localStorage.setItem('propesa-fs','20')"); pg.reload(); pg.wait_for_timeout(200)
-    pg.evaluate("ST.ES=[...ES0,{id:2,n:'Langosta Azul',en:'Blue lobster'}];ST.R[1].sp=2;save();go('recepcion')")
+    pg.evaluate("ST.ES=[...ES0,{id:2,n:'Langosta Azul',en:'Blue lobster'}];ST.R[1].sp=2;save();FOLD['ent-tq']=true;go('recepcion')")
     chk(sin_desborde(pg), '820 px, oscuro y texto 20 px: Entrada sin desborde'); pg.screenshot(path=f'{OUT}/esp_oscuro_820.png', full_page=True)
     pg.evaluate("PEN=null;setPiso(true);go('pent')"); chk(sin_desborde(pg), '820 px, oscuro y texto 20 px: hoja de Modo piso sin desborde'); pg.screenshot(path=f'{OUT}/esp_piso_oscuro_820.png', full_page=True)
     b.close()

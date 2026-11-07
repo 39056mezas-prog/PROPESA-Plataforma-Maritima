@@ -38,15 +38,15 @@ with sync_playwright() as p:
     # 4 XSS via restore
     evil=json.loads(seed);evil['R'][0]['tank']='<img src=x onerror="window.__pwn=1">';evil['P'].append({'n':'<img src=x onerror="window.__pwn=1">','col':'red;background:url(x)','z':[0,0,0,0],'c':[],'h':0})
     evil['M']={'emp:1.1':[{'id':1,'t':'x','by':'<b>x</b>','text':'hola','ref':'','imgs':['javascript:alert(1)','data:image/png;base64,AAAA']}]}
-    open(T+'evil.json','w').write(json.dumps(evil));pg.evaluate("go('admin')");pg.set_input_files('[data-bk=up]',T+'evil.json');pg.wait_for_timeout(300)
+    open(T+'evil.json','w').write(json.dumps(evil));pg.evaluate("go('admin:dat')");pg.set_input_files('[data-bk=up]',T+'evil.json');pg.wait_for_timeout(300)
     for r in ['inicio','recepcion','lote:WLRCO051026A','embarques','emb:1','empacar:1.1','cierre']:
         pg.evaluate(f"go('{r}')");pg.wait_for_timeout(80)
     chk(not pg.evaluate('window.__pwn===1'),'#4 malicious backup cannot run code')
     chk(pg.evaluate("ST.R[0].tank")=='T1' and pg.evaluate("(ST.M['emp:1.1']||[{imgs:[]}])[0].imgs.length")==1,'#4 invalid fields sanitized')
     bad=json.loads(seed);bad['U']=[u for u in bad['U'] if u['role']!='admin'];open(T+'bad2.json','w').write(json.dumps(bad));nR=pg.evaluate('ST.R.length')
-    pg.evaluate("go('admin')");pg.set_input_files('[data-bk=up]',T+'bad2.json');pg.wait_for_timeout(200);chk('Administrador' in pg.inner_text('#toast'),'#4 backup without admin rejected')
+    pg.evaluate("go('admin:dat')");pg.set_input_files('[data-bk=up]',T+'bad2.json');pg.wait_for_timeout(200);chk('Administrador' in pg.inner_text('#toast'),'#4 backup without admin rejected')
     # old backup with plain passwords still restores; passwords are dropped
-    pg.evaluate("go('admin')");pg.set_input_files('[data-bk=up]',T+'backup.json');pg.wait_for_timeout(300);chk(pg.evaluate("ST.U.length>0&&ST.U.every(u=>!('pw' in u)&&!('pwh' in u))"),'#4 old backup restores without passwords')
+    pg.evaluate("go('admin:dat')");pg.set_input_files('[data-bk=up]',T+'backup.json');pg.wait_for_timeout(300);chk(pg.evaluate("ST.U.length>0&&ST.U.every(u=>!('pw' in u)&&!('pwh' in u))"),'#4 old backup restores without passwords')
     # 1 storage full
     pg.evaluate("(()=>{let n=0;for(const sz of [1<<20,1<<16,1<<12,256,16]){const s='x'.repeat(sz);while(true){try{localStorage.setItem('pad'+(n++),s)}catch(e){break}}}})()")
     pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fl','PRUEBA');pg.select_option('#fo','1');pg.fill('#fk0','10');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]');pg.wait_for_timeout(100)

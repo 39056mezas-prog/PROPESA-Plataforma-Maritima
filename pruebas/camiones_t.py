@@ -34,13 +34,13 @@ with sync_playwright() as p:
     for vw in [(1180, 820), (820, 1180), (390, 844)]:
         pg = b.new_page(viewport={'width': vw[0], 'height': vw[1]}); pg.on('pageerror', lambda e: errs.append(str(e)))
         entrar(pg, 'admin@propesa.mx', 'admin123'); pg.evaluate(ADD); pg.wait_for_timeout(100)
-        chk(pg.locator('.tcard').count() == 1 and 'Camión 1' in pg.inner_text('.tcard h3') and pg.evaluate("ST.P.every(p=>!p.tk)"), f'{vw} datos de antes: un solo camión (Camión 1)')
+        chk(pg.locator('.tcard').count() == 1 and 'Camión 1' in pg.inner_text('.tcard h2') and pg.evaluate("ST.P.every(p=>!p.tk)"), f'{vw} datos de antes: un solo camión (Camión 1)')
         # pasar el embarque de 12 a un camión nuevo
         u = pg.evaluate("ST.P.find(p=>p.n.includes('PRUEBA1')).u")
         pg.select_option(f'select[data-tk="{u}"]', '+'); pg.wait_for_timeout(100)
         # v1.26.0: con dos camiones, cada uno en su pestaña (se ve uno a la vez) y el nuevo se abre solo
-        chk(pg.locator('.ttab').count() == 2 and pg.locator('.tcard').count() == 1 and 'Camión 2' in pg.inner_text('#tk_2 h3') and 'PRUEBA1' in pg.inner_text('#tk_2') and pg.evaluate("truckPlan(trucks()[0]).TP.every(p=>!p.n.includes('PRUEBA1'))"), f'{vw} «Camión nuevo» crea el Camión 2 con ese embarque')
-        chk('12 hieleras' in pg.inner_text('#tk_2 h3') and pg.locator('#tk_2 svg text', has_text='12').count() >= 1, f'{vw} el Camión 2 lleva sus 12 hieleras')
+        chk(pg.locator('.ttab').count() == 2 and pg.locator('.tcard').count() == 1 and 'Camión 2' in pg.inner_text('#tk_2 h2') and 'PRUEBA1' in pg.inner_text('#tk_2') and pg.evaluate("truckPlan(trucks()[0]).TP.every(p=>!p.n.includes('PRUEBA1'))"), f'{vw} «Camión nuevo» crea el Camión 2 con ese embarque')
+        chk('12 hieleras' in pg.inner_text('#tk_2 h2') and pg.locator('#tk_2 svg text', has_text='12').count() >= 1, f'{vw} el Camión 2 lleva sus 12 hieleras')
         pg.select_option(f'select[data-tk="{u}"]', pg.evaluate("trucks()[0]")); chk(pg.locator('.tcard').count() == 1, f'{vw} regresarlo al Camión 1 quita el camión vacío')
         pg.select_option(f'select[data-tk="{u}"]', '+'); pg.click('#ttab_1')
         # mover hieleras en el Camión 1: tocar dos celdas

@@ -8,12 +8,13 @@ import os, sys, re
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 seed = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos', 'seed.json')).read()
 fails, errs = [], []
+PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.35.0: hoja de empaque, peso del embarque y temperatura del lote van plegados; aquí quedan abiertos
 def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
     if not c: fails.append(m)
 def entrar(pg, em='admin@propesa.mx', pw='admin123'):
     pg.goto(BASE); pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso","0");localStorage.setItem("propesa-kp","0")}', seed); pg.reload()
-    pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
+    pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
 def pdf_text(pg, k, arg):
     raw = pg.evaluate(f"(async()=>{{const d=await pdfMake('{k}','{arg}');return Array.from(d.u8).map(c=>String.fromCharCode(c)).join('')}})()")
     return ' '.join(re.findall(r'\(((?:[^()\\]|\\.)*)\)\s*Tj', raw))
@@ -29,7 +30,7 @@ with sync_playwright() as p:
         pg = b.new_page(viewport={'width': vw[0], 'height': vw[1]}); pg.on('pageerror', lambda e: errs.append(str(e)))
         entrar(pg)
         # 1. tablero de tanques: hieleras de 15 kg por talla
-        pg.evaluate("go('recepcion')"); t = pg.inner_text('.tqsz')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); t = pg.inner_text('.tqsz')
         chk('40 hieleras' in t and '16 hieleras + 1.0 kg' in t and '122 hieleras + 21.5 kg sueltos' in t, f'{vw} tanques: hieleras de 15 kg por talla y total')
         # 2. orden con dos consignatarios; pesos como la hoja de PROPESA (cartón 0.9)
         pg.evaluate("ST.W={h:1.4,g:1.5,t:9.9,p:16,c:0.9};pesosSync();save()")

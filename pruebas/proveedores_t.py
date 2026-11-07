@@ -21,7 +21,7 @@ def pdf_text(pg, k, arg):
     return ' '.join(re.findall(r'\(((?:[^()\\]|\\.)*)\)\s*Tj', raw)).replace('\\(', '(').replace('\\)', ')')
 def toast(pg): return pg.inner_text('#toast') if pg.locator('#toast').is_visible() else ''
 def entrada(pg, pv, fecha, extra=None):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fd', fecha); pg.select_option('#fo', str(pv))
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fd', fecha); pg.select_option('#fo', str(pv))
     for k, v in {'#fh': '08:15', '#ftt': '58', '#ftp': '52-60', '#fkb': '34', '#fdes': '0', '#fk0': '100', '#fk1': '20'}.items(): pg.fill(k, v)
     if extra: extra()
     pg.click('[data-a=sv]'); pg.wait_for_timeout(120)
@@ -35,7 +35,7 @@ with sync_playwright() as p:
         pg = b.new_page(viewport={'width': vw[0], 'height': vw[1]}); pg.on('pageerror', lambda e: errs.append(str(e)))
         entrar(pg)
         # ---------- 1. Entrada: proveedor de una lista y lote propuesto ----------
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
         chk(pg.evaluate("document.getElementById('fo').tagName") == 'SELECT', f'{vw} el proveedor se elige de una lista')
         ops = pg.evaluate("[...document.querySelectorAll('#fo option')].map(o=>o.textContent)")
         chk(ops == ['Elige proveedor', 'SCPP Ensenada SCL', 'SCPP Emancipación SC de RL', 'SCPP Leyes de Reforma', '+ Agregar proveedor…'], f'{vw} la lista trae los 3 proveedores de hoy: {ops}')
@@ -53,7 +53,7 @@ with sync_playwright() as p:
         entrada(pg, 1, '2026-09-22')
         r = pg.evaluate("R_('WLRCO220926')")
         chk(r and r['pv'] == 1 and r['origin'] == 'SCPP Ensenada SCL', f'{vw} el lote guarda el proveedor (id y nombre): {r and (r.get("pv"), r["origin"])}')
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fd', '2026-09-22'); pg.select_option('#fo', '1')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fd', '2026-09-22'); pg.select_option('#fo', '1')
         chk(pg.input_value('#fl') == 'WLRCO220926B', f'{vw} si ya existe, propone el siguiente: {pg.input_value("#fl")}')
         pg.click('[data-a=nf]')
         # editar un lote de antes con nombre escrito a mano
@@ -80,9 +80,9 @@ with sync_playwright() as p:
         r = pg.evaluate(f"R_('{esp}')")
         chk(r and r.get('pv') == 3 and r['origin'] == 'SCPP Leyes de Reforma', f'{vw} la hoja guarda proveedor de la lista: {r and (r.get("pv"), r["origin"])}')
         chk(pg.input_value('[data-pr="1:origin"]') == '3', f'{vw} la fila guardada sigue mostrando su proveedor')
-        pg.evaluate("go('recepcion')")
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')")
         # ---------- 3. Administración → Proveedores ----------
-        pg.evaluate("go('admin')"); t = pg.inner_text('#provs')
+        pg.evaluate("go('admin:cat')"); t = pg.inner_text('#provs')
         chk('SCPP Ensenada SCL' in t and 'CO' in t and 'RFC' in t and 'Permiso de pesca' in t, f'{vw} Administración tiene la lista de proveedores')
         chk('escrito' not in t.lower() and 'de antes' not in t and 'Solo el Administrador' not in t, f'{vw} sin textos sobre lotes de antes ni avisos de más')
         pg.click('[data-pva=new]'); pg.fill('#pv_n', 'SCPP Bahía Tortugas'); pg.fill('#pv_k', 'CO'); pg.click('[data-pva=sv]'); pg.wait_for_timeout(80)
@@ -93,23 +93,23 @@ with sync_playwright() as p:
         pv = pg.evaluate("ST.PV.find(p=>p.k=='BT')")
         chk(pv and pv['n'] == 'SCPP Bahía Tortugas' and pv['rfc'] == 'SBT850101AB1' and pv['per'] == 'PPF/DGOPA-123/26' and len(pg.evaluate("ST.PV")) == 4, f'{vw} proveedor nuevo con clave, RFC y permiso: {pv}')
         bt = pv['id']
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
         chk('SCPP Bahía Tortugas' in pg.inner_text('#fo'), f'{vw} el proveedor nuevo sale en la Entrada'); pg.fill('#fd', '2026-10-17'); pg.select_option('#fo', str(bt))
         chk(pg.input_value('#fl') == 'WLRBT171026', f'{vw} con su clave propone WLRBT171026'); pg.click('[data-a=nf]')
         # editar nombre: los lotes con ese proveedor se actualizan
-        pg.evaluate("go('admin')"); pg.click('[data-pva="ed:1"]'); pg.fill('#pv_n', 'SCPP Ensenada SCL de RL'); pg.click('[data-pva=sv]'); pg.wait_for_timeout(80)
+        pg.evaluate("go('admin:cat')"); pg.click('[data-pva="ed:1"]'); pg.fill('#pv_n', 'SCPP Ensenada SCL de RL'); pg.click('[data-pva=sv]'); pg.wait_for_timeout(80)
         chk(pg.evaluate("R_('WLRCO220926').origin") == 'SCPP Ensenada SCL de RL' and pg.evaluate("R_('WLRCO051026A').origin") == 'SCPP Ensenada SCL de RL', f'{vw} al cambiar el nombre, sus lotes (también los de antes con el mismo nombre) se actualizan')
         # un lote de antes se pasa a un proveedor de la lista editándolo
         pg.evaluate("go('lote:WLRCO061026B')"); pg.click('[data-a=el]'); pg.select_option('#fo', str(bt)); pg.click('[data-a=sv]'); pg.wait_for_timeout(80)
         chk(pg.evaluate("R_('WLRCO061026B').pv") == bt and pg.evaluate("R_('WLRCO061026B').origin") == 'SCPP Bahía Tortugas', f'{vw} al editar un lote de antes se le puede poner un proveedor de la lista')
-        pg.evaluate("go('admin')")
+        pg.evaluate("go('admin:cat')")
         # ocultar
         pg.click(f'[data-pva="off:{bt}"]'); pg.wait_for_timeout(60)
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
         chk('Bahía Tortugas' not in pg.inner_text('#fo'), f'{vw} un proveedor oculto ya no sale para lotes nuevos'); pg.click('[data-a=nf]')
         pg.evaluate("go('lote:WLRCO061026B')"); pg.click('[data-a=el]')
         chk(pg.input_value('#fo') == str(bt), f'{vw} pero sus lotes lo siguen mostrando al editarlos'); pg.click('[data-a=nf]') if pg.locator('#fo').count() and pg.locator('[data-a=nf]').count() else None
-        pg.evaluate("go('admin')")
+        pg.evaluate("go('admin:cat')")
         for i in [1, 2]: pg.click(f'[data-pva="off:{i}"]'); pg.wait_for_timeout(40)
         pg.click('[data-pva="off:3"]'); pg.wait_for_timeout(60)
         chk('al menos un proveedor' in toast(pg) and len(pg.evaluate("pvOn()")) == 1, f'{vw} no se puede ocultar el último proveedor')
@@ -135,7 +135,7 @@ with sync_playwright() as p:
         pg.evaluate(f"go('empacar:{oid}.2')"); pg.click('[data-nea=open]'); pg.fill('#ne_l', 'WLRCO051026A'); pg.click('[data-nea=sv]'); pg.wait_for_timeout(80)
         chk(pg.evaluate("PKD.lot") == 'WLRCO051026A' and not pg.evaluate("R_('WLRCO051026A').ne"), f'{vw} si el lote ya existe, solo se elige')
         # avisos y exclusiones
-        pg.evaluate("go('recepcion')"); t = pg.inner_text('#app')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); t = pg.inner_text('#app')
         chk('Lote WLRCO300926 · sin entrada' in t and 'tablero' not in pg.inner_text('.neb') and pg.locator('[data-ne="WLRCO300926"]').count() >= 1, f'{vw} Entrada avisa en amarillo con «Completar entrada ›»')
         chk('WLRCO300926' not in pg.inner_text('.tqd'), f'{vw} no aparece en el tablero de tanques')
         pg.evaluate("go('cierre')"); chk('WLRCO300926' not in pg.inner_text('#app'), f'{vw} no aparece en Mortalidad final')
@@ -155,7 +155,7 @@ with sync_playwright() as p:
         r = pg.evaluate("R_('WLRCO300926')")
         chk(not r.get('ne') and r['rdate'] == '2026-09-30' and abs(pg.evaluate("rcv('WLRCO300926')") / 1000 - 1010.35) < 0.001 and len(pg.evaluate("ST.B['WLRCO300926']")) == 2, f'{vw} al completar: ya tiene entrada (1010.35 kg) y conserva sus 2 hieleras')
         chk(pg.evaluate("ST.R.filter(r=>r.lot=='WLRCO300926').length") == 1, f'{vw} no se duplica el lote')
-        pg.evaluate("go('recepcion')"); chk('sin entrada' not in pg.inner_text('#app'), f'{vw} el aviso amarillo desaparece')
+        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); chk('sin entrada' not in pg.inner_text('#app'), f'{vw} el aviso amarillo desaparece')
         pg.close()
     # ---------- 5. Modo piso: Encargado de piso ----------
     for vw in [(1180, 820), (390, 844)]:
@@ -175,8 +175,8 @@ with sync_playwright() as p:
     pg.evaluate("ST.R.push({id:'R-0999',lot:'WLRZZ010126',origin:'SCPP Ensenada SCL',tank:'T1',rdate:'',time:'',date:'',tempT:null,tempP:'',kgbox:null,desp:null,final:null,closed:false,pv:1,ne:true});ST.B['WLRZZ010126']=[];setPiso(false)")
     oid = nueva_orden(pg); pg.evaluate(f"go('empacar:{oid}.1')")
     chk(pg.locator('[data-nea]').count() == 0, 'consulta: no ve «+ Lote sin entrada»')
-    pg.evaluate("go('recepcion')"); chk(pg.locator('[data-ne]').count() == 0 and pg.locator('.cli').count() == 1, 'consulta (solo inventario, v1.30.0): ni aviso ni botón')
-    pg.evaluate("go('admin')"); chk(pg.locator('[data-pva]').count() == 0, 'consulta: no edita proveedores')
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); chk(pg.locator('[data-ne]').count() == 0 and pg.locator('.cli').count() == 1, 'consulta (solo inventario, v1.30.0): ni aviso ni botón')
+    pg.evaluate("go('admin:cat')"); chk(pg.locator('[data-pva]').count() == 0, 'consulta: no edita proveedores')
     pg.close()
     # ---------- 6b. Sin textos de «todavía no», versiones viejas o lotes escritos a mano (pedido del usuario, 17/oct) ----------
     pg = b.new_page(); pg.on('pageerror', lambda e: errs.append(str(e))); pg.goto(BASE)
