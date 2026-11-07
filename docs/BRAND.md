@@ -23,7 +23,8 @@ Todos los valores viven como variables CSS en `:root` al inicio de `index.html`.
 
 ### Pantalla de acceso · desde la v1.32.0
 - Toda la pantalla en azul: logo blanco (`LOGOD`), título, flujo, botón blanco «Iniciar sesión» (texto azul marino) y una vista previa de Panel general (sidebar azul marino, planta en 3D con el mismo dibujo de la app, tarjetas) que se sale por la orilla.
-- El formulario sale de lado en un cajón azul `#0E2A72` → `#0B1D59` (etiqueta en azul claro `#8fd0f5`, botón Entrar blanco), con fondo oscurecido detrás. Igual en tema claro y oscuro.
+- El formulario sale de lado en un cajón **blanco** (v1.32.1, pedido del usuario: «demasiado azul marino»): título `#0B1D59`, etiqueta «Acceso por rol» y botón Entrar en azul océano `#0472AB` (texto blanco), textos `#46557A`, fondo oscurecido gris neutro `#0a0f1a73`. Igual en tema claro y oscuro. (En la v1.32.0 era azul marino `#0E2A72` → `#0B1D59`.)
+- Movimiento: abre en 0.55 s `cubic-bezier(.32,.72,0,1)`, cierra en 0.3 s; con «reducir movimiento», fundido de 0.2 s.
 
 ### Pantalla de carga · desde la v1.8.6
 - Logo PROPESA en blanco (el mismo `LG`, guardado fijo en el HTML como `#boot`) centrado sobre `#0B1D59`, con tres puntos azul claro que suben y bajan. Mismo azul que `background_color` del manifiesto, así que después de la pantalla de Android (langosta blanca) no hay cambio de color.

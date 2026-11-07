@@ -91,8 +91,8 @@ Antes de agregar un `data-*` nuevo, busca que no exista ya con otro significado.
 | Usuarios | `setupView`, `setupSave`, `loginView`, `saveU`, `admin`, `can` (sin contraseñas en la app desde la v1.4.1) |
 | Respaldo | `cleanST` (limpia y valida un respaldo antes de usarlo) |
 | PDF | `PdfRep` (escritor propio), `pdfEntrada`, `pdfOrdenes`, `pdfEmpaque`, `pdfEmbarque`, `pdfEmbarques`, `pdfMort`, `pdfMake`, `pdfSave`, `pdfMail`, `pdfBar` |
-| Teclado de Empaque | `kpPad(mode)`, `kpSync` (después de cada dibujo de Empaque), `kpEl`/`kpOf` (caja activa ↔ campo), `kpList`, `kpFirst` (primera vacía), `kpType`, `kpCatPress`, `kpNav`, `kpLeave` (guarda al cambiar de caja si ya estaba lista), `kpGo`, `kpReveal` (deja la caja a la vista sin quedar detrás del teclado), `catLbl`, `peCv`. Estado `KPT = {k: ruta, t: 'slot:N' / 'row:R' / 'ed', fresh, sig}` (también se guarda en `propesa-ui`) |
-| Modo piso | `pisoShell`, `pisoHome`, `pisoEmp`, `peSlots`, `peTry`, `peRender`, `peLine`, `pisoEnt`, `penRow`, `penTr`, `penVal`, `penSave`, `penLive`, `penJump`, `switchMode`, `setPiso` |
+| Teclado de Empaque | `kpPad(mode)`, `kpSync` (después de cada dibujo de Empaque), `kpEl`/`kpOf` (caja activa ↔ campo), `kpList`, `kpFirst` (primera vacía), `kpType`, `kpCatPress`, `kpNav`, `kpLeave` (guarda al cambiar de caja si ya estaba lista), `kpGo`, `kpReveal` (deja la caja a la vista sin quedar detrás del teclado), `catLbl`, `peCv`. Estado `KPT = {k: ruta, t: 'slot:N' / 'row:R' / 'ed', fresh, sig}` (también se guarda en `propesa-ui`). v1.38.1: `KPT.sv` = hielera guardada que la persona eligió para corregir; `kpSync` saca el teclado de una hielera guardada que no eligió (llegó de otro equipo); `busyField` no cuenta los campos de solo lectura (los del teclado en tablet), así lo de otros equipos se dibuja al llegar |
+| Modo piso | `pisoShell`, `pisoHome`, `pisoEmp`, `peSlots`, `peMove` (v1.38.1: lo escrito en un lugar que ocupó otro equipo pasa al primer lugar libre, con aviso), `peTry`, `peRender`, `peLine`, `pisoEnt`, `penRow`, `penTr`, `penVal`, `penSave`, `penLive`, `penJump`, `switchMode`, `setPiso` |
 | Ajustes | `applyPrefs`, `savePrefs`, `settingsHTML`, `paintSettings`, `openSettings`, `closeSettings`, `syncSetBtns`, `fsSnap` |
 | Menú del perfil | `avatarBtn`, `pmenuHTML`, `placePmenu`, `openPmenu`, `closePmenu`, `syncAv` |
 | Listas | `histList(key, items, activoFn)` → `{items, bar}` |
@@ -114,7 +114,7 @@ Probado con un año de datos (500 lotes, 37,400 cajas, 250 órdenes y embarques)
 
 ## 8. PDF
 
-Escritor propio `PdfRep` (sin librerías): Helvetica con codificación WinAnsi y métricas reales, logo en JPEG, tablas con encabezado repetido, paginación. Cada paso tiene su barra (`pdfBar`) con **Descargar PDF** y **Enviar por correo**: Web Share con archivo en tablet/celular; si no existe, descarga + `mailto:` a los usuarios con «Recibe informes».
+Escritor propio `PdfRep` (sin librerías): Helvetica con codificación WinAnsi y métricas reales, logo en JPEG, tablas con encabezado repetido, paginación. Cada paso tiene su barra (`pdfBar`, desde la v1.34.0 dos botones discretos `.btn.q` en el encabezado, sin tarjeta) con **Descargar PDF** y **Enviar por correo**: Web Share con archivo en tablet/celular; si no existe, descarga + `mailto:` a los usuarios con «Recibe informes».
 
 ## 9. Claves en `localStorage`
 
@@ -164,10 +164,11 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 | `WN`, `encodeST`, `decodeST` | `ST` ⇄ registros. Cajas con caché por lote (`ENC_C`) para que guardar sea rápido |
 | `SHW` | Lo último que se sabe de cada registro (texto + objeto) |
 | `syncStage()` | Compara `encodeST()` con `SHW` y anota lo cambiado en `OUT` (`propesa-out`) y, la primera vez, cómo estaba en `OUTB`. Con Consulta no anota nada: vuelve a bajar todo para regresar a lo de la base. Lo llama `save()` |
-| `flush()` | Sube `OUT` en tandas a `rpc/push` (≤ 500 registros / 1.5 MB). Lo que choca (otro equipo lo cambió antes) se aplica desde la base con `applyRows()` y avisa. Si la base no tiene `push` (404), ya no sube por otro camino (v1.6.0): queda pendiente con el aviso «No se pudo subir». Si el mismo registro se cambió otra vez mientras subía, su «antes» pasa a ser lo recién subido (v1.5.1). Consulta nunca sube ni vacía la cola |
+| `flush()` | Sube `OUT` en tandas a `rpc/push` (≤ 500 registros / 1.5 MB). Lo que choca (otro equipo lo cambió antes) se aplica desde la base con `applyRows()` y avisa. Si la base no tiene `push` (404), ya no sube por otro camino (v1.6.0): queda pendiente con el aviso «No se pudo subir». Si el mismo registro se cambió otra vez mientras subía, su «antes» pasa a ser lo recién subido (v1.5.1). **v1.38.0:** si la base solo trae campos que este equipo no tenía (otro equipo o una versión más nueva los agregó) y lo demás está como lo vio, no es choque: se vuelve a subir conservando esos campos. Con una cuenta que no es Administrador no manda precios (`PRK`): esperan a un Administrador. Un 403 ya no vacía la cola. No sube nada si hay versión nueva (`VER_NEW`). Consulta nunca sube ni vacía la cola |
 | `syncNow()` | Sube (`flush`) y baja (`pull`). Si la base rechaza lo que se sube, igual baja lo de los demás y después muestra el error (v1.4.1). `wp()` quita el carácter nulo, que la base no acepta |
 | `pull()` / `applyRows()` | Baja `rpc/pull` desde `SINCE` (lo que se guardó con la copia en IndexedDB) (de 1000 en 1000). Solo avanza el número hasta lo que tiene más de 8 s (por si otro equipo estaba guardando). Lo pendiente en `OUT` gana. Rearma `ST`, conserva el embarque abierto (`emb:<i>` por su `u`) y corrige la ruta si algo se borró (`fixRoute`) |
 | `syncNow`, `syncLoop`, `syncSoon` | Cada 4 s (30 s en segundo plano), al volver el internet y al regresar a la app; `save()` sube a los 250 ms. Perfiles cada 60 s |
+| `verCheck()` (v1.38.0) | Cada 5 min pide la cabecera de `index.html` (`ETag` o `Last-Modified`); si cambió desde que se abrió la app, `VER_NEW`: barra roja «Hay una versión nueva» con «Recargar ahora» (`data-reload`) y `flush()` ya no sube (el código viejo no conoce los campos nuevos) |
 | `softRender()` | Redibuja por cambios de otros sin borrar lo escrito (conserva los campos cambiados por el usuario); si hay un campo con el cursor, espera a que salga |
 | `cacheSoon` / `cacheST` / `loadCache` | Copia en el equipo agrupada cada 1.5 s (y al salir de la app); guarda `ST` y `since` juntos en un solo registro de IndexedDB (v1.6.0). `loadCache()` la lee al arrancar (antes de entrar y de sincronizar) y pasa la copia vieja de `localStorage` si la hay. Si no se puede guardar: `CACHE_ERR` y aviso |
 | `syncBanners()` | «Descargando los datos compartidos…», «Sin conexión…» (rojo si hay pendientes) |
@@ -238,3 +239,37 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 - **Orden:** `fifo(lotes)` = primero los que pasaron o están en su último día, luego por fecha y hora de entrada; los «sin entrada» al final. `ordLots(o)` lo usa (propios y de otras maquilas por separado), así que la vista completa, Modo piso y `zAuto` ven el mismo orden. `lot1(op)` = único lote propio o el primero con kilos (queda elegido en la vista completa; en Modo piso se sigue preguntando si hay varios, `pisoEmp`). `lotTag(x, primero)` pinta «Más viejo · usar primero», «Último día en tanque» o «⚠ N días · aguanta D».
 - **Orden variada:** `zAuto(o, n, kp)` reparte n hieleras de kp kg recorriendo `ordLots(o)` (propios, con entrada) y las tallas de la orden (sin despatada); antes descuenta lo que otras órdenes pidieron por talla y no han empacado (`lnPz`). Devuelve `{z, falta}`. Botón `data-oa="za:ol|le"` en `lnForm`: lee el formulario (`lnRead`), llena `D.z` y vuelve a dibujar; no guarda hasta «Agregar» / «Guardar».
 - **35 por hielera:** `PZMAX`/`PZMSG`; se revisa en `pkAuto`, `pkUpd`, «Guardar hieleras», `peTry`, y la corrección en piso (`.psc` y `kpCatPress`); el teclado deja escribir y avisa al guardar.
+
+## iPad viejo: capa de compatibilidad (v1.37.0)
+Meta: que corra desde un **iPad mini 2/3 con iOS 12 (Safari 12)**. Lo nuevo se puede seguir usando; lo que Safari viejo no entiende lo resuelve `CPX` (script en `<head>`, justo después del `<style>` principal), que solo trabaja si falta algo.
+- **JavaScript: no uses `??`, `?.`, `??=`/`||=`/`&&=`, `.at()`, `replaceAll`, `structuredClone`, `Object.hasOwn`, `findLast`, `toSorted`, `Promise.allSettled` ni `dateStyle`.** Un solo `??` deja la app en blanco en iOS 12 y 13 (Safari no puede leer el programa). Usa `(a!=null?a:b)`. `ipad_viejo_t.py` los busca.
+- **Descargas:** siempre `saveBlob(blob, nombre)` (en iOS 12 abre otra pestaña; si se bloquea, botón `#dlnow` «Abrir …»).
+- **`color-mix()` lleva antes un color fijo:** `background:var(--cm-ac-8-t);background:color-mix(in srgb,var(--ac) 8%,transparent)`. Nombre: `--cm-<var1>-<porcentaje>-<var2>` (`t` = transparent); el valor se define junto a sus variables en cada tema (`:root`, `[data-theme="dark"]`, el `@media` oscuro, `.pkx`, `.mkp`). Si una variable propia vale `color-mix()`, su respaldo va en `@supports not (color:color-mix(in srgb,red,red)){…}`. Los de talla (`--cm-zc-13-cd`, `--cm-zc-22-cd`) los pone `zSty()`.
+- **`inset`** no (Safari 14.1): `top/right/bottom/left`. **`position:sticky`** con `position:-webkit-sticky` antes.
+- `CPX.css(texto, clave)` reescribe CSS para el navegador que lo necesita (en uno nuevo devuelve el mismo texto): `@container` → `[data-cq~="cN"]` en el sujeto (con `CPX.CQ` = nombre, condición y sujetos), `:has(X)` → `[data-h~="hN"]` (`CPX.HAS`), `:is()` desplegado, `:focus-visible` fuera del grupo, `clamp(a,b,c)` → `max(a,min(b,c))`, `Ncqw` → `calc(N * var(--cqw))`. Si generas CSS desde JS con algo de eso, pásalo por `CPX.css` (como `szSync`).
+- `CPX.pass()` (en cada cambio del DOM, `resize`, `toggle`): mide contenedores (`--cqw` en línea), marca `data-cq`/`data-h`, y sin `gap` en flex (`html.nogap`) pone márgenes en línea (`__go` guarda los originales y se restauran en la siguiente vuelta) y `data-gpb`/`data-gpa` para `::before`/`::after` (hoja `#cpxg`). Busca candidatos por clase (`CPX.GK`), no con un selector enorme.
+- `html.lite` (sin `color-mix`, iOS ≤ 16.1): sin `backdrop-filter` en `.phd` y `.setpanel`; `T3.on` empieza en `false` si no hay `propesa-3d`.
+- Toques → Pointer Events solo si no existen (iOS 12): `touchstart/move/end/cancel` despachan `pointerdown/move/up/cancel` con `pointerId`, `clientX/Y`, `pointerType:'touch'`; si el oyente hace `preventDefault`, también el toque. Dentro de `.t3v` evita que la página se desplace (iOS 12 no conoce `touch-action:none`).
+- `window.CPX_SIM` (solo pruebas): la capa actúa como en Safari 12. Ver `pruebas/ipad_viejo_t.py`.
+- Lo que tarda: con CPU 4× ≈ 20–45 ms por pantalla en la simulación (la mayor parte: márgenes de `gap` y medir renglones).
+
+## Errores junto al campo y nombres de talla (v1.36.0)
+- `fail(texto, id)` → `renderKeep(id)` → `ferPut(campo, texto)`: pone `<p class="fer" id="fer_<id>" role="alert">` después del `<label>` del campo (en una tabla, dentro de la celda), `aria-invalid` y `aria-describedby`, y vacía los `p.er`/`p.ok` que repetían el mismo texto. `FERR={id,t}` lo vuelve a poner en cada `render()` (`ferApply`) mientras `msg` siga siendo ese error. Escribir en el campo (`ferClear`) o tocar cualquier botón / Enter lo limpia antes de la acción.
+- `ferShow(id, texto)`: lo mismo sin redibujar (línea de la orden `lnBad`, fechas, nota vacía).
+- Lote: `MSGAT` dice qué formulario puso `msg` (`tq`, `pr` o vacío = movimientos) para que cada uno muestre solo lo suyo. `MVTY`: último tipo de movimiento elegido (se borra al cambiar de pantalla).
+- Tallas en pantalla: `szRg(i)` (rango; numérico en mayúsculas), `szNR(i)` = «Chica · 491-610», `szLb(i, 'Kg ')` = punto + nombre + rango chico, `rcT(k)` = nombre de la talla de una categoría. `SL` (rangos del papel) solo en el PDF de Entrada.
+- `tqTxt` devuelve «T1» / «T1 y T2».
+
+## Detalles y pestañas de Administración (v1.35.0)
+- Orden: encabezado `.ordhd` (`.ordhm` título + chips `.ordst`; `.ordact` PDF + «Eliminar orden»; `#ord_del` confirmación dentro del encabezado). `f6Fold(o)` envuelve la hoja en `fold('f6:'+id)`; completa (y sin «Ver o corregir») sigue siendo la tarjeta corta de `f6Card`. `f6Card(o,fin,inF)`: `inF` quita el marco y el título (los da el plegable).
+- Embarque: `fold('emb-peso:'+u)` con `#emb_peso` adentro (abierto si `EWP` o pesos distintos a la orden) y `fold('emb-obs:'+u)` con `#emb_obsc`. `shipIssues` puede traer `jt` (id para `data-jumpto`).
+- Lote: `#lot_fin` (cierre) arriba; `fold('lot-tmp:'+lote)`.
+- `data-jump` y `data-jumpto` abren el `details.fold` que contiene el destino antes de bajar (y lo anotan en `FOLD`).
+- Administración: `ADT` (`usr`, `mq`, `cat`, `dat`) y `ADTS`; `admin(t)` acepta la pestaña de la ruta (`go('admin:cat')`) una vez y limpia `V.id`. `adTabs()` = `role=tablist` con flechas, Inicio y Fin.
+
+## Encabezado y plegables (v1.34.0)
+- `guide(n,título,línea,botón,destino,acciones)` pinta `.pgh`: `<h1>` + una línea + `.pgha` (acciones a la derecha: la principal azul y `pdfBar` discreto). Ya no hay `.gd` (recuadro azul).
+- `fold(id,resumen,cuerpo,abiertoDeInicio,lazy)` pinta `<details class="fold" data-fold=id>`. `FOLD[id]` recuerda si quedó abierto (un oyente de `toggle` en captura), así `render()` lo respeta. `lazy`: el cuerpo (función) se arma solo abierto; al abrirlo se llama `render()` (planta 3D de Entrada, id `ent-tq`). Dentro de `.cd`/`.lnb` el plegable es un renglón plano (sin tarjeta dentro de tarjeta).
+- Ids: `f6:<orden>`, `emb-peso:<u>`, `emb-obs:<u>`, `lot-tmp:<lote>` (v1.35.0), `ent-tq`, `ev:<clave de notas>`, `lot-tq:<lote>`, `lot-pr:<lote>`, `lot-mv:<lote>`, `pb:<orden>` y `pb:<orden>.<línea>`, `mort-calc`.
+- Pruebas que necesitan lo de adentro: `FOLD['ent-tq']=true` antes de `go('recepcion')`, `ABRIR` (abre los plegables de la pantalla) o `PLEG` (todos abiertos en esa página).
+

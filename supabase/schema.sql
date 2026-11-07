@@ -111,7 +111,8 @@ create policy "piso vivas" on public.shipments for update to authenticated using
 -- Cambios en vivo para las pantallas de consulta (computadora o celular)
 alter publication supabase_realtime add table public.lots, public.movements, public.orders, public.order_lines, public.shipments, public.shipment_orders, public.boxes, public.notes;
 
--- PDF de cada paso
+-- PDF de cada paso. Nunca se usó: las reglas se quitaron en migrations/20261106_quitar_reportes.sql y el espacio se borró desde el panel
+-- (6/nov/2026). En una base nueva se puede saltar este bloque.
 insert into storage.buckets (id, name, public) values ('reportes', 'reportes', false) on conflict do nothing;
 create policy "leer reportes" on storage.objects for select to authenticated using (bucket_id = 'reportes');
 create policy "subir reportes" on storage.objects for insert to authenticated with check (bucket_id = 'reportes' and public.my_role() in ('admin','piso'));

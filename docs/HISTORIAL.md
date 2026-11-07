@@ -893,3 +893,70 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Vista previa:** `PDFSVG` hace que cada primitiva de `PdfRep` (T, RECT, BOX, LN, RRECT, POLY, logo) dibuje también la página 1 en SVG; `pdfPrev(k,arg)`, `hjPrevFill()` (una por una, después de dibujar), caché `HJV` por datos, `HJX` = la agrandada.
 - **Paquete:** `zipMake()` (zip sin comprimir, CRC32, sin librerías) y `paqOrden(id)`; `paqCard()` con `histList('hpaq')`.
 - **Pruebas:** `v1301_t.py`.
+
+## Ronda · 5/nov/2026 · v1.32.1 · Acceso: un clic menos, deslizamiento visible, menos azul marino
+
+- **Pedido:** desde propesa.org había que picar «Iniciar sesión» (sitio) → «Iniciar sesión» (app) → Entrar; el cajón no parecía animarse; «demasiado azul marino, me deja empalagado». Se le mostraron tres opciones (cajón blanco, cajón azul océano, todo claro) y eligió **A · cajón blanco**.
+- **Hecho:** `#entrar` (`AUH` en `authShell`, se limpia con `history.replaceState`); transición del cajón 0.55 s con curva pareja, marca recorrida 20 px en ≥900 px, contenido con retraso; fundido con «reducir movimiento» (sin `visibility:hidden`, para que el administrador de contraseñas siga pudiendo enfocar los campos); cajón blanco con `color-scheme:light`.
+- **Por qué no se veía la animación:** la curva `cubic-bezier(.2,.8,.2,1)` en 0.32 s recorría ~90 % del cajón en el primer cuadro.
+- **Pruebas:** `acceso_t.py` ampliada. Sitio: enlaces a `/#entrar`.
+
+
+## 5/nov/2026 · v1.33.0 · La app como herramienta de formatos + iPad
+
+**Pedido:** lista con capturas del iPad (teléfono del sitio, tallas como teléfono, instalar en iOS, hieleras completadas que no se dejaban corregir, teclado trabado, teclado que tapa las hieleras en iPad, editar/borrar órdenes y entradas, orden bloqueada, pantalla que no lleva a donde se tocó, peso bruto en el packing list) y después: «que la app sea una herramienta para llenar los formatos que ya existen, no un programa que me obliga a empezar por la entrada; se usa en diferentes niveles».
+**Preguntas y respuestas:** inicio con tarjetas de formatos (sí) · menú sin números y avisos suaves (sí) · formatos por rol (sí) · todo en una versión (sí).
+**Hecho:** ver `CHANGELOG.md` 1.33.0. Datos y Supabase sin cambios.
+**Causas encontradas:** en iPad horizontal con menú el ancho del teclado (≈800 px) no llegaba al corte de 56rem y el teclado iba abajo, pegado, tapando las hieleras; el teclado cerrado con ✕ se recordaba y al corregir una hielera el iPad no abría su teclado; Safari de iPad no da «click» en un toque un poco largo y sin un `touchstart` no pinta `:active`.
+**Pendiente / no hecho:** registrar muertas/congelación sigue dentro del lote (no es tarjeta de Formatos); falta probar en un iPad real.
+
+## 5/nov/2026 · v1.34.0 · Pantallas limpias («demasiados campos, no se sabe por dónde empezar»)
+
+**Pedido:** «usa /impeccable distill para despejar las secciones; hay demasiados campos y el usuario no sabe por dónde empezar. Necesitamos que la app sea más intuitiva porque está difícil encontrar las cosas».
+**Revisión:** en casi todas las secciones lo que se viene a hacer quedaba debajo de un recuadro azul con explicación larga y de una tarjeta «Archivo de este paso» con otro botón azul. En Entrada, «+ Nueva entrada» estaba casi dos pantallas abajo (después de la planta 3D, el tablero y el detalle del tanque). En el lote había cuatro formularios abiertos a la vez. La orden repetía tres tablas de peso bruto. El menú tenía tres entradas que parecían inicio (Formatos, Panel, Panel general).
+**Preguntas y respuestas:** encabezado corto, formularios plegados, menú más corto, menos tablas repetidas (todo sí) · Entrada: botón arriba y 3D plegado (sí) · juntar los inicios (sí).
+**Hecho:** ver `CHANGELOG.md` 1.34.0. Datos, Supabase y Modo piso sin cambios.
+
+## 5/nov/2026 · v1.35.0 · Detalles ordenados (/impeccable layout)
+
+**Pedido:** «run /impeccable layout; quiero despejar las secciones, hay demasiados campos y el usuario no sabe por dónde empezar. Necesitamos que la app sea más intuitiva porque está difícil encontrar las cosas».
+**Revisión (iPad 1180 px):** las listas ya estaban limpias desde la 1.34.0. Lo saturado eran los detalles: la orden medía ~3 pantallas (hoja de empaque de 12 campos abierta, PDF a media pantalla, «Eliminar orden» dos veces); el embarque empezaba con el formulario de indicaciones antes de lo que se corrige; Administración eran 9 secciones seguidas (~4 pantallas); en el lote el conteo final quedaba debajo de la temperatura.
+**Pregunta y respuesta:** ¿qué pantallas reorganizar? → Orden, Embarque, Administración y Lote (todas).
+**Hecho:** ver `CHANGELOG.md` 1.35.0. Datos, Supabase y Modo piso sin cambios.
+**Ideas no hechas:** la tarjeta «Lo que falta por empacar» se queda aunque todo esté empacado (la pidió el usuario en la v1.24.0); la tabla de Entrada sigue deslizándose de lado en celular.
+
+## 5/nov/2026 · v1.36.0 · Textos de los formularios (/impeccable clarify)
+
+**Pedido:** «run /impeccable:impeccable clarify in all the forms on my platform to see what we can improve».
+**Revisión:** se abrió cada formulario con los datos de prueba y se mandó vacío. Los mensajes en sí ya eran buenos; lo que fallaba era dónde salían (en Entrada, debajo del botón y fuera de la pantalla del iPad; en la Orden, en un aviso de 4 s; en el Lote, repetidos bajo «Guardar precio»), una talla con hasta cuatro nombres (0-650 / 491-610, Chica, 491-610, Rojo), opciones peligrosas ya elegidas (Salida a embarque, Administrador, p. m.) y ejemplos que parecían datos. Informe: `claude/CLARIFY_FORMULARIOS_v1.35.0.md` en el proyecto.
+**Pregunta y respuesta:** ¿qué grupos aplicar? → los cuatro (avisos de error, un nombre por talla y tanque, opciones elegidas, detalles de texto).
+**Hecho:** ver `CHANGELOG.md` 1.36.0. Datos, Supabase y reglas sin cambios.
+**Ideas no hechas:** el tablero de tanques sigue nombrando las tallas solo por rango en su leyenda; los mensajes de los catálogos de Administración siguen debajo del botón cuando el error no es de un campo.
+
+## 5/nov/2026 · v1.37.0 · iPad mini viejo (/impeccable adapt)
+
+**Pedido:** «adapt: se va a usar sobre todo en un iPad mini viejo; optimiza la plataforma para que corra ahí».
+**Pregunta y respuesta:** ¿qué iPad mini es? → no sabe; «hazlo para el más viejo posible» → desde iOS 12 (iPad mini 2/3).
+**Revisión:** con herramientas que comparan el código contra lo que conoce Safari 12: un `??` (19 en total) bastaba para que Safari no pudiera leer el programa (app en blanco en iOS 12–13); 47 colores con `color-mix()` (iOS 16.2+), 8 bloques `@container` del Modo piso (iOS 16+), 169 reglas con `gap` en flex (iOS 14.1+), `:has`, `:is`, `:focus-visible`, `clamp()`, `inset`, sin Pointer Events (iOS 13+) para el teclado de piso y el 3D, descargas con «download» (iOS 13+), `Blob.text` y `dateStyle`.
+**Hecho:** ver `CHANGELOG.md` 1.37.0. Se arregló el código (sin `??`, colores fijos antes de cada `color-mix`, `saveBlob`) y se agregó la capa `CPX`, que solo actúa en un navegador viejo. Comparado pixel a pixel contra la versión moderna en una simulación de Safari 12 (768×1024 y 1024×768, tema claro y oscuro, Modo piso y teclado): iguales. En equipo viejo, sin desenfoque y la planta 3D empieza apagada.
+**Pendiente:** probar en el iPad mini de verdad (la simulación corre en Chromium, no en Safari 12). Si es iOS 9 (iPad mini 1), no corre.
+
+## 6/nov/2026 · v1.38.2 · Pendientes de la 1.38.1
+
+**Pedido:** «arregla esto: el espacio reportes sigue existiendo, dos etiquetas de la planta 3D se tapan, fotos_t falla en la corrida completa; y también quita las etiquetas de los tanques vacíos».
+**Hecho:** ver `CHANGELOG.md` 1.38.2. El espacio «reportes» ya estaba borrado desde el panel cuando se revisó (no se tocó la base en esta ronda). Las pruebas que fallaban solo dentro de la corrida completa eran de la prueba, no de la app: `fotos_t` (lo más probable: ruta quitada con `unroute()` mientras había una petición esperando; no se pudo repetir a propósito) y `sincronizacion_t` (dependía del orden de los lotes).
+
+## 6/nov/2026 · v1.38.1 · Auditoría Ponytail (base real, `usuarios`, pantallas) y sus arreglos
+
+**Pedido:** «revisar la base real de Supabase y la función de usuarios, y a fondo Empaque, el teclado de Modo piso, la planta 3D, los PDF y el diseño, con /ponytail-review»; después «arregla 1-8».
+**Revisión:** base real sana (reglas = migraciones del repositorio, `usuarios` publicada = archivo, sin errores en 24 h). Informe en el proyecto: `claude/AUDITORIA_PONYTAIL_v1.38.0.md`.
+**Hecho:** ver `CHANGELOG.md` 1.38.1. En Supabase se aplicó `20261106_quitar_reportes.sql` (reglas de «reportes» fuera).
+**Pendiente:** borrar a mano el espacio «reportes» (vacío) en el panel. En la vista general de la planta 3D, la etiqueta «T5 · Vacío» todavía queda en parte debajo de la de T6 con la cámara inicial.
+
+## 6/nov/2026 · v1.38.0 · Auditoría Ponytail (sitio + plataforma) y sus arreglos
+
+**Pedido:** «/ponytail-audit para el sitio y la plataforma juntos», y después «fix 1 through 7».
+**Revisión:** 70 grupos de pruebas TODO BIEN; cada hallazgo reproducido con el Supabase de mentira y dos navegadores (informe en el proyecto: `claude/AUDITORIA_PONYTAIL_v1.37.0.md`). Plataforma: #1 tablet sin recargar borraba campos nuevos; #2 la misma hoja en dos equipos sumaba los kilos; #3 al entrar Piso se borraba lo pendiente del Administrador; #5 `rendimiento_t.py` fallaba sin que nadie lo viera. Sitio: #4 globo vacío al perder el 3D, #6 código sin uso, #7 dibujo continuo con «Reducir movimiento».
+**Hecho:** ver `CHANGELOG.md` 1.38.0. Sitio: se recupera la foto fija si el teléfono quita el 3D, textura de 2048×1024 (284 KB, antes 734 KB), solo dibuja cuando algo cambia con «Reducir movimiento», 8 líneas sin uso borradas. Datos, Supabase y reglas sin cambios.
+**Pendiente:** los lotes de antes de la v1.38.0 capturados dos veces no se pueden detectar (tenían el mismo id de contador).
+

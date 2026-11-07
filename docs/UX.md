@@ -30,7 +30,7 @@ El usuario lo resume así: que sea **tan fácil como la caja de McDonald's** (ve
 - **El avance va arriba y quieto (v1.13.1, pedido del usuario: no le gustaba que flotara debajo del teclado):** «✔ N completadas · N pendientes · N % completado» y una barra delgada (cian) que avanza con las cajas guardadas, justo debajo de «Hieleras de …». Abajo, junto al teclado, solo queda «Guardar hieleras». El botón Guardar **no** cambia de tamaño (se probó en la v1.2.0 y se cambió en la v1.2.1 por pedido del usuario). Los avisos (toast) salen arriba de la pantalla.
 - **Empaque, estilo sobrio (v1.2.1, pedido del usuario):** referencia iOS para la tabla de cajas: separadores finos, Rojo/Verde/Blanco como control segmentado compacto (mismo tamaño, seleccionado = fondo claro con borde de acento, sin azul saturado), lotes como selector horizontal (se desliza de lado en celular), números alineados a la derecha. Cada fila es como una celda de lista de iOS (v1.2.2): a la izquierda «Caja N» con su estado, a la derecha el valor con su unidad («12 piezas ›»; el campo dice «piezas» dentro), para que el número de caja y el conteo no se confundan. La barra de abajo es una cápsula flotante (bordes redondos y sombra suave) y los avisos salen arriba en esta pantalla. En esta pantalla el número de pendientes va en gris, no en rojo: el rojo queda para errores y la categoría Rojo. Solo aplica a la tarjeta de cajas (`.pkx`); el Modo piso conserva sus botones grandes.
 - **Teclado fijo en Empaque (v1.3.0, pedido del cliente):** en la vista completa y en Modo piso hay un teclado numérico siempre visible (botones de 48 px o más) con las categorías debajo de los números (o a un lado en pantallas angostas). El teclado de la tablet ya no aparece (`inputmode="none"`), así no tapa las cajas; un teclado físico sigue funcionando. En la vista completa la categoría marca la fila y pasa a la siguiente; se guardan todas con «Guardar cajas», que va pegado al teclado. Al abrir un cliente la pantalla baja sola lo justo para ver el teclado completo.
-- **Se guarda solo cuando se puede.** En Modo piso cada caja se guarda al tener piezas y categoría (`peTry`), sin botón «Guardar».
+- **Se guarda solo cuando se puede.** En Modo piso cada caja se guarda al tener piezas y categoría (`peTry`), sin botón «Guardar». Si otro equipo ocupa el lugar donde estás escribiendo, lo escrito pasa al siguiente lugar libre y se avisa; nunca se cambia una hielera que no tocaste (v1.38.1).
 - **Varias cosas a la vez.** Los empleados anotan varias cajas a la vez: se muestran todas las cajas pendientes del cliente, no una por una. «Poner a todas las vacías» aplica una categoría de un toque.
 - **Los formularios no borran lo escrito** cuando hay un error: se marca el campo en rojo, se enfoca y se explica.
 - **Confirmar solo lo destructivo:** quitar caja, eliminar lote, restaurar respaldo, borrar datos (este último exige escribir BORRAR).
@@ -38,6 +38,39 @@ El usuario lo resume así: que sea **tan fácil como la caja de McDonald's** (ve
 - **Cambiar de modo** con un interruptor tipo iOS y una transición suave (sin animación si el equipo pide movimiento reducido).
 - **Listas cortas:** solo lo abierto o reciente (lotes 30 días, órdenes y embarques 14, temperatura 7) con «Ver historial».
 - **Mensajes:** un toast breve al guardar; nunca «Guardado» si el guardado falló (aviso rojo fijo con «Descargar respaldo» y «Reintentar»).
+
+## 3b. Herramienta de formatos (v1.33.0)
+
+- La vista completa abre en **Formatos** («¿Qué formato vas a llenar?»): tarjetas que abren cada formato directo, solo las que el rol puede llenar. Sin orden fijo; el menú no lleva números y las guías dicen «Formato».
+- Lo que falta (lote sin entrada) es recordatorio gris, no alarma.
+- **Empaque en iPad:** teclado a un lado de las hieleras (desde 34rem de ancho del área); las hieleras siempre se ven. Las teclas cuentan al levantar el dedo.
+- **Eliminar orden** arriba junto al título y también con hieleras (confirmación con cuántas). **Entrada:** Ver · Editar · Eliminar en cada fila.
+
+## 3c. Pantallas limpias (v1.34.0, pedido del usuario: «demasiados campos, no se sabe por dónde empezar»)
+
+- **Cada sección empieza en lo que se hace:** título, una línea y la acción principal arriba a la derecha (`guide()`). Nada de recuadros azules con explicaciones largas ni etiquetas «Formato/Guía».
+- **Una sola acción azul por pantalla.** PDF y correo son botones discretos (`.btn.q`).
+- **Lo secundario se pliega** (`fold()`): fotos y notas, tanques y planta 3D en Entrada, tanques, precio y movimientos del lote, desglose del peso bruto, «¿Cómo se calcula?». El resumen del plegable dice lo importante sin abrirlo (kg, total, número de notas). Lo abierto se queda abierto mientras se usa; una nota con algo escrito sin guardar se abre sola.
+- **Nada vacío que ocupe pantalla:** sin gráficas «Sin datos»; una línea basta.
+- Al agregar algo nuevo a una sección: si no es lo que la mayoría viene a hacer ahí, va plegado.
+
+## 3d. Detalles ordenados (v1.35.0, pedido del usuario con /impeccable layout)
+
+- **Arriba lo que se hace o se corrige; abajo lo de consulta.** Orden: consignatarios → peso total → Hoja de empaque → packing list. Embarque: avisos → hieleras y tallas → órdenes → peso → indicaciones → notas. Lote: avisos → conteo final y cierre → trazabilidad y existencia → plegables.
+- **Las acciones de la pantalla van juntas en el encabezado** (PDF, correo, eliminar), una sola vez. La confirmación de eliminar sale ahí mismo.
+- **Un formulario largo que no siempre se llena se pliega con su estado en el renglón** («⚠ Faltan 8 datos», «137.2 kg de peso bruto», «Ninguna», «2 lecturas · última 58.5 °F»). Se abre solo cuando es lo que toca (la hoja de empaque con todas las hieleras listas; el peso si no cuadra con la orden).
+- **Un aviso rojo abre el plegable** donde está lo que hay que corregir (`data-jump` / `data-jumpto` abren el `details` antes de bajar).
+- **Administración en pestañas:** Usuarios · Maquilas · Catálogos · Informes y respaldo. Una pantalla con más de 4 secciones independientes va en pestañas, no seguidas.
+
+## 3e. Textos de los formularios (v1.36.0, /impeccable clarify, el usuario aprobó todo)
+
+- **El error va junto a su campo:** renglón propio debajo del campo, con ícono, que se queda hasta corregir (escribir en el campo lo quita) y se anuncia (`role="alert"`, `aria-describedby`). Nunca en un aviso flotante que se va, ni repetido en otro formulario de la misma pantalla. Los avisos flotantes quedan para lo que no es de un campo (guardado, conexión, «No se puede: el embarque está cerrado»).
+- **Una palabra por cosa:** la talla es «Chica · 491-610» (nombre + rango + punto de color) en todas las pantallas; los rangos del papel (0-650…) solo en el PDF del formato. El tanque es «T1». En Empaque la categoría sigue siendo el color (teclado R, V, B, A).
+- **Nada peligroso viene elegido:** tipo de movimiento («Salida a embarque» dice «solo para corregir»), rol del usuario nuevo, a. m./p. m. sin hora.
+- **Ejemplos con «Ej.»** para que no parezcan datos escritos. Un «0» que sí es el valor por omisión (tallas, tarimas, cajas) se queda.
+- **Lo que pide un campo se ve antes de fallar:** «(0 si no hubo)», «(mínimo 8)», «(opcional)».
+- **Confirmar dice qué se borra** y el botón dice la acción («Eliminar nota», «Eliminar de la orden»), nunca «Sí / No».
+- **Errores técnicos:** qué falló y qué hacer; el detalle técnico, si va, al final entre paréntesis.
 
 ## 4. Modo piso
 
@@ -55,12 +88,13 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 
 ## 5. Vista completa
 
-- Menú lateral navy fijo en tablet y computadora; en celular se oculta y se abre con ☰. Pasos numerados con íconos.
+- Menú lateral navy fijo en tablet y computadora; en celular se oculta y se abre con ☰. Íconos sin números (v1.33.0). Desde la v1.34.0: Formatos, Panel; Operación (Modo piso, Entrada, Órdenes, Empaque, Embarque, Temperatura); Revisión (Mortalidad final, Hojas). Panel general está en el selector de maquila y Administración en el círculo del perfil.
 - En celular (menú escondido), la barra de arriba dice dónde estás: junto a ☰ va el ícono y el nombre de la sección («Empaque», «Panel», «Temperatura»…), igual que en el menú. Solo el nombre: el usuario pidió quitar «Paso 3 de 5» (13/oct).
+- Administración (v1.35.0): pestañas Usuarios · Maquilas · Catálogos · Informes y respaldo.
 - Barra superior: buscador, botón **Ajustes** (siempre visible, por accesibilidad) y círculo con la inicial del usuario.
 - Menú del círculo: nombre, correo, rol, **Administración** (solo admin), **Cerrar sesión** y la versión. **Ajustes no se mueve al menú**: se queda en la barra.
 - **Ajustes:** panel que **deja ver la pantalla de atrás** (translúcido, sin oscurecer; en celular, hoja desde abajo de máx. 66 % de alto). Tema claro/oscuro/del equipo y tamaño de texto con **deslizador de 3 tamaños** (Normal, Grande, Muy grande). Esc, ✕ o tocar fuera lo cierran; el foco regresa al botón. Abrirlo no borra lo que se estaba capturando.
-- Panel: «Tu siguiente paso», totales, tablero de lotes por etapa, avance de órdenes, actividad reciente.
+- Panel: título «Panel» con lo que sigue en una línea y su botón, totales, tablero de lotes por etapa, avance de órdenes, actividad reciente.
 - En celular, las filas de Empaque se vuelven tarjetas.
 
 ## 6. Accesibilidad (mínimos)

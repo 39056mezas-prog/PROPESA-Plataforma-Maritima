@@ -8,11 +8,11 @@ Todo vive en el objeto global `ST`. **Desde la v1.8.7, `ST.W = {h, g, p, c}`** e
 ST = {
   // bandera y contador (v1.6.0: se quitaron PK, ORc, BN y N, que ya no se usaban)
   E0: 1,                      // datos de demo ya vaciados
-  RN: 120,                    // contador de lotes (id 'R-0121'), solo crece
+  RN: 120,                    // contador de lotes de antes (id 'R-0121'); desde la v1.38.0 ya no se usa
 
   U: [{ id, name, email, role /* 'admin'|'piso'|'consulta' */, notify /* recibe informes */ }],  // sin contraseñas (v1.4.1): las guarda Supabase
 
-  R: [{ id /* 'R-0121' */, lot /* 'WLRCO061026B' */, origin /* proveedor */, tank /* 'T1'..'T6' */,
+  R: [{ id /* 'R-0mw5a9pn2wxv5wl' (v1.38.0; antes 'R-0121') */, lot /* 'WLRCO061026B' */, origin /* proveedor */, tank /* 'T1'..'T6' */,
         rdate /* 'YYYY-MM-DD' */, time /* 'HH:MM' */, date /* 'dd/mm/aaaa' */,
         tempT /* °F tanque */, tempP /* °F producto, texto o rango '59-62' */,
         kgbox /* kg por caja en tanque */, desp /* kg desperdicio */,
@@ -51,7 +51,7 @@ ST = {
 - **IDs (v1.4.0):** para que dos equipos no choquen, los ids nuevos no son contadores:
   - `uidN()` = número único basado en la hora (≈ 16 cifras): movimientos (`L.id`), cajas (`b.seq`), órdenes (`OR.id`), notas (`M[].id`), lecturas (`T.id`).
   - `uidS()` = texto que se ordena por fecha: embarques (`P.u`) e informes (`O.u`). Los que venían de antes reciben `legU(i)` (`000000000` + índice) y quedan primero.
-  - Lotes: la clave compartida es el **código del lote**; `R.id` ('R-0121') sigue con `ST.RN` solo para mostrarse.
+  - Lotes: la clave compartida es el **código del lote**. `R.id` es `'R-'+uidS()` desde la v1.38.0 (antes `'R-0121'` con `ST.RN`, que dos equipos repetían). Las entradas del lote guardan ese id en `rc`: si un lote tiene entradas sin revertir con más de un `rc`, se capturó en dos equipos y `lotWarn` avisa (`lotCaps`, aviso `d:` en `R.av`).
   - Líneas de una orden: `max+1` dentro de su orden (viajan dentro del registro de la orden).
   - Embarques: dentro de la app siguen por **índice** en `ST.P` (`b.d`, `o.sh`, `emb:<i>`); en la base viajan con `P.u` y al armar `ST` se ordenan por `u`, así el índice es el mismo en todos los equipos.
 - **Campos internos de la sincronización** (no editarlos a mano): `b._d` y `o._sh` guardan referencias a un embarque que todavía no llega; `ST._orph` guarda registros que todavía no se pueden colocar (por ejemplo, una caja de un lote que aún no llega). `encodeST` los vuelve a subir tal cual para no borrarlos.

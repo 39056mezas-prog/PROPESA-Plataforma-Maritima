@@ -110,3 +110,22 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 - **Prueba con Excel (29/oct):** los envíos sin tallas en el Excel no se capturan (usuario).
 - **Hieleras de otra maquila:** la orden y el embarque son de la maquila que los crea; los kg salen del tanque de la maquila dueña del lote al cerrar.
 - **Tanques en 3D (2/nov, usuario):** el color de las canastas es **solo por talla** (listón), con las tallas y colores de la maquila de cada canasta; no hay color por maquila. Las canastas se calculan con «kg por caja en tanque» (obligatorio). Planta: filtros de T1–T4 al este, T5 con filtro, T6 sin filtro, una puerta en cada lado del área de recepción. Va en Entrada y Panel general; todos lo ven (Encargado de piso y Solo inventario: siguiente paso). Solo inventario verá solo lo disponible, con lo pedido quitado del lote más viejo, sin días, lotes, proveedores ni maquilas, y el 3D será lo primero de su pantalla.
+
+
+## 5/nov/2026 (v1.37.0)
+- **iPad mini viejo (usuario):** la app se usará sobre todo en un iPad mini viejo; no sabía el modelo y pidió «el más viejo posible» → se soporta desde **iOS 12 (iPad mini 2 y 3)**. iOS 9 (iPad mini 1) queda fuera: Safari 9 no tiene lo básico del programa. En navegadores nuevos nada cambia. En equipo viejo (`lite`): sin vidrio esmerilado y la planta 3D empieza apagada (se puede prender).
+
+## 5/nov/2026 (v1.36.0)
+- **Textos de formularios (usuario, /impeccable clarify, aprobó los 4 grupos):** error junto al campo y sin repetirse; una talla = «Chica · 491-610» y un tanque = «T1» en pantalla (los PDF siguen el papel); sin tipo de movimiento, rol ni a. m./p. m. elegidos de inicio; ejemplos con «Ej.»; confirmaciones que dicen qué se borra. En Empaque la categoría sigue siendo el color.
+
+## 5/nov/2026 (v1.35.0)
+- **Detalles ordenados (usuario, eligió Orden, Embarque, Administración y Lote):** lo que se hace primero; PDF/correo/eliminar en el encabezado; Hoja de empaque, indicaciones de carga, peso del embarque y temperatura del lote plegados con su estado a la vista; Administración en 4 pestañas. Sin cambios de datos ni de reglas.
+
+## 5/nov/2026 (v1.34.0)
+- **Pantallas limpias (usuario, aprobó todo):** encabezado corto con la acción principal arriba; PDF/correo discretos; lo secundario plegado; menú sin Panel general ni Administración (siguen en el selector de maquila y en el perfil); Entrada con «+ Nueva entrada» arriba y la planta 3D plegada (en Panel general sigue abierta).
+
+## 5/nov/2026 (v1.33.0)
+- **La app es una herramienta de formatos (usuario):** ya no obliga a empezar por la Entrada. La vista completa abre en «Formatos», por rol; el menú no lleva números ni «Siguiente paso». El flujo Entrada → Órdenes → Empaque → Embarque sigue siendo cómo se conectan los datos, no un orden de captura.
+- **Eliminar una orden con hieleras empacadas se permite** (usuario: «debería poder borrar si yo quiero»), con confirmación que dice cuántas; si el embarque está cerrado, primero se reabre. Cambia la regla de la v1.8.3. Eliminar un lote con hieleras sigue bloqueado.
+- **Corregir una hielera de un embarque cerrado:** «Reabrir para corregir» en Empaque (solo Administrador, con confirmación).
+- **Sitio sin teléfono** (usuario): solo correo.
