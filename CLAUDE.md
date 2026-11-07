@@ -1,7 +1,7 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.32.0** (3 de noviembre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.38.2** (6 de noviembre de 2026).
 
 ## Qué es
 
@@ -9,6 +9,16 @@ Plataforma web para **PROPESA** (Proveedor del Pescador S.A. de C.V., Ensenada, 
 Sigue cada lote por este flujo, que **no se cambia sin permiso del usuario**:
 
 **Entrada → Órdenes → Empaque → Embarque**
+
+**Herramienta, no asistente (v1.33.0, decidido por el usuario):** el flujo dice cómo se conectan los datos, no en qué orden se captura. La vista completa abre en «Formatos» (cada formato abre directo, según el rol); el menú no lleva números ni «Siguiente paso». No vuelvas a forzar empezar por la Entrada.
+
+**Pantallas limpias (v1.34.0, decidido por el usuario):** cada sección abre con `guide()` = título, una línea y la acción principal arriba; PDF y correo son botones discretos (`.btn.q`). Lo secundario va en `fold()` (plegable que recuerda si quedó abierto). No vuelvas a poner recuadros azules de explicación ni tarjetas «Archivo de este paso».
+
+**Detalles ordenados (v1.35.0, decidido por el usuario):** en Orden, Embarque y Lote primero va lo que se hace o se corrige; PDF/correo/eliminar en el encabezado; formularios largos que no siempre tocan (Hoja de empaque, indicaciones, pesos, temperatura del lote) plegados con su estado en el renglón, y los avisos rojos abren el plegable. Administración va en pestañas (`ADT`, `go('admin:cat')`).
+
+**Textos de formularios (v1.36.0, aprobado por el usuario):** el error de un campo va **junto al campo** con `fail(texto, idDelCampo)` (o `ferShow(id, texto)` sin redibujar); nunca en un aviso flotante que se va ni repetido en otro formulario. Una talla se llama «Chica · 491-610» en pantalla (`szNR(i)`, `szLb(i)`); los rangos del papel solo en el PDF. El tanque se llama «T1». Nada peligroso viene elegido (tipo de movimiento, rol, a. m./p. m.). Ejemplos con «Ej.».
+
+**iPad viejo (v1.37.0, pedido del usuario):** se usa sobre todo en un iPad mini viejo; tiene que correr desde **iOS 12 (Safari 12)**. En el JavaScript **no uses `??` ni `?.`** (deja la app en blanco en iOS 12–13; usa `(a!=null?a:b)`) ni `.at()`, `replaceAll`, `structuredClone`, `dateStyle`; las descargas van con `saveBlob()`. En el CSS, **cada `color-mix()` lleva antes un color fijo `var(--cm-…)`**, nada de `inset:` y `position:sticky` con `-webkit-sticky`. `@container`, `:has`, `:is`, `:focus-visible`, `clamp()` y `gap` sí se pueden usar: la capa `CPX` los resuelve en el iPad viejo (ver `docs/ARQUITECTURA.md` → «iPad viejo»). `pruebas/ipad_viejo_t.py` lo revisa.
 
 **Maquilas (v1.19.0):** cada maquila (PROPESA, Abel, David, Luis Arce) guarda aparte sus datos; `ST` es la maquila abierta y `STX` las demás (ver `docs/DATOS.md`). Todo lo nuevo que sea de la operación va dentro de la maquila; lo de la empresa o lo físico (usuarios, proveedores, consignatarios, tanques) se comparte en `SHF`.
 
@@ -59,7 +69,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 
 ```bash
 python3 -m http.server 8765                 # servir en http://localhost:8765
-sh pruebas/correr_todo.sh                   # 65 grupos de pruebas, debe terminar en «TODO BIEN»
+sh pruebas/correr_todo.sh                   # 73 grupos de pruebas (con v1381_t y rendimiento_t), debe terminar en «TODO BIEN»
 python3 -I pruebas/rendimiento_t.py         # rendimiento con un año de datos
 node pruebas/accesibilidad.mjs pruebas/datos/backup.json   # Lighthouse (npm i lighthouse puppeteer-core)
 ```
@@ -75,7 +85,8 @@ Las pruebas usan Python 3 + Playwright con Chromium. Si `correr_todo.sh` ya leva
 ## Antes de dar algo por terminado
 
 - [ ] `sh pruebas/correr_todo.sh` → TODO BIEN (agrega pruebas para lo nuevo).
-- [ ] Revisado en 390, 820 y 1440 px, y con texto «Muy grande» (20 px): sin desbordes.
+- [ ] Revisado en 390, 768 (iPad mini), 820 y 1440 px, y con texto «Muy grande» (20 px): sin desbordes.
+- [ ] `ipad_viejo_t.py` en TODO BIEN (se ve y funciona igual en el iPad viejo).
 - [ ] Tema claro y oscuro.
 - [ ] Sin errores en consola; sin violaciones de la CSP.
 - [ ] Documentación y `CHANGELOG.md` al día; versión subida si aplica (constante `APPV` en `index.html`: la usan el menú del perfil y Administración).

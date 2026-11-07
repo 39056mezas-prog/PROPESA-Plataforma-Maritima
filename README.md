@@ -121,6 +121,7 @@ La langosta roja se pesca del 16 de septiembre al 15 de febrero. En la veda casi
 - **Para comprobar que corre:** Vercel → el proyecto → *Settings* → *Cron Jobs* (debe aparecer `/api/despierta`, una vez al día) y *View Logs*: cada día una llamada con respuesta 200. Una respuesta 502 quiere decir que la base no contestó.
 - **Opcional:** en Vercel → *Settings* → *Environment Variables*, agrega `CRON_SECRET` con una clave larga cualquiera. Así solo Vercel puede usar esa dirección. Sin ella también funciona (la consulta no lee ni cambia datos).
 - **Si algún día la base sí se pausa** (por ejemplo, si se quitó la tarea): Supabase manda un correo. Entra al panel (proyecto `propesa_bc`) y dale **Resume project**; no dejes pasar más de 90 días.
+- **Equipos:** funciona desde un **iPad mini 2 / iOS 12** (v1.37.0). En un iPad viejo la planta 3D empieza apagada y sin efectos de vidrio; lo demás se ve igual. Un iPad mini 1 (iOS 9) no sirve.
 - **Tablets con Safari:** si una tablet pasa más de 7 días sin abrir la app, Safari puede borrar su copia. Los datos no se pierden (viven en la base), salvo lo que esa tablet no haya subido. Antes del 15 de febrero, revisa que Administración diga «Todo lo de este equipo ya está arriba».
 - **Si cambian a su propia base de datos**, actualicen la dirección y la llave de `api/despierta.js` (las mismas de `index.html`), o quiten la tarea si su base no se pausa.
 
@@ -129,7 +130,7 @@ La langosta roja se pesca del 16 de septiembre al 15 de febrero. En la veda casi
 Requieren Python 3 con Playwright y Chromium.
 
 ```bash
-sh pruebas/correr_todo.sh      # 38 grupos; termina con «TODO BIEN»
+sh pruebas/correr_todo.sh      # 73 grupos; termina con «TODO BIEN»
 ```
 
 Extras: `python3 -I pruebas/rendimiento_t.py` (un año de datos, tiempos de pantalla) y `node pruebas/accesibilidad.mjs pruebas/datos/backup.json` (Lighthouse en 15 pantallas, en modo local; requiere `npm i lighthouse puppeteer-core`).

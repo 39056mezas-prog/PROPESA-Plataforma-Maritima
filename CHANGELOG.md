@@ -1,5 +1,194 @@
 # Cambios
 
+## 1.38.2 · 6 de noviembre de 2026
+
+Pedido del usuario: terminar lo que quedó pendiente de la 1.38.1 y «quita las etiquetas de los tanques vacíos».
+
+- **Planta 3D:** un tanque vacío ya no lleva etiqueta «Tn · Vacío»; lo nombra su letrero «TANQUE n». Ya no se enciman (antes «T5 · Vacío» quedaba debajo de «T6 · Vacío»). También en el dibujo de la pantalla de acceso.
+- **Supabase:** el espacio de archivos «reportes» ya no existe (se borró desde el panel; verificado: en Storage solo queda «fotos»). `schema.sql` y la migración `20261106_quitar_reportes.sql` lo anotan.
+- **Pruebas que fallaban de vez en cuando en la corrida completa:**
+  - `fotos_t.py`: para cortar el internet del equipo B se ponía una ruta y luego se quitaba con `unroute()`. Lo más probable: si en ese momento había una petición esperando, se quedaba colgada, B dejaba de sincronizar y fallaban 4 verificaciones (pasó 2 de 5 veces en la corrida completa, nunca sola; no se pudo repetir a propósito). Ahora la ruta se queda y solo cambia un interruptor. Si vuelve a fallar, imprime el estado de la sincronización.
+  - `sincronizacion_t.py`: «la copia vieja pasa a IndexedDB» revisaba el primer lote de la copia, que cambia de orden si ya llegaron los de la base. Ahora busca el lote entre todos y espera a que se guarde.
+  - `v138_t.py`: el aviso «No se pudo subir…» se espera hasta 10 s en lugar de mirar una sola vez a los 3 s.
+- Actualizadas: `v1381_t.py` (solo los tanques con canastas llevan etiqueta; siguen los 6 letreros), `acceso_t.py`, `inicio_t.py` (versión 1.38.2).
+
+## 1.38.1 · 6 de noviembre de 2026
+
+Arreglos de la auditoría Ponytail del 6/nov/2026 sobre la base real, la función `usuarios` y las pantallas (`claude/AUDITORIA_PONYTAIL_v1.38.0.md`), pedidos por el usuario («arregla 1-8»). Flujo y datos sin cambios.
+
+### #1 Empaque: una hielera que llega de otro equipo ya no borra ni cambia lo que estás capturando
+- **Antes (Modo piso):** si otro equipo guardaba una hielera del mismo cliente mientras escribías, podía caer en tu lugar. Al tocar la categoría, la app «corregía» la hielera del otro equipo y la tuya no se guardaba (probado: 22 piezas escritas + 30 Verde de la oficina → quedaba una sola hielera, 30 Rojo). En la computadora, con el foco en el campo, tocar la categoría no hacía nada y no avisaba.
+- **Ahora:** lo escrito pasa al primer lugar libre, el teclado lo sigue y sale «Otro equipo guardó la hielera 1: lo que escribiste (22 piezas) pasó a la hielera 2» (`peMove`). Si ya no hay lugar: «No se guardó lo que escribiste (19 piezas): otro equipo ya completó las 3 hieleras». Una hielera guardada solo se corrige si la persona la tocó (`KPT.sv`); si aparece una ajena en el lugar activo, el teclado pasa a la siguiente vacía. En la tablet, lo que llega de otros equipos ya se ve aunque el campo del teclado tenga el foco (es de solo lectura).
+- **Vista completa:** las filas escritas que ya no caben se ven en rojo («No se guardó la captura de 22 piezas: otro equipo ya completó…», con «Quitar»); antes se escondían. Si la línea se llena mientras escribes, tocar la categoría avisa.
+
+### #2 a #7
+- **#2** El packing list ya no dice «Notas · undefined»: el título usa el consignatario (`lnName`).
+- **#3** Alta de una cuenta de solo inventario: si falla el paso de las maquilas, «Guardar» otra vez cambia la cuenta (antes decía «Ese correo ya existe» y la cuenta quedaba sin maquilas).
+- **#4** Categorías del teclado en letra de 18.75 px negrita (texto grande: contraste AA con los colores de las tallas; antes 16.5 px con 3.6–3.9 a 1).
+- **#5** Planta 3D: el encuadre deja libre la columna de botones de la cámara y las etiquetas a esa altura se recorren a la izquierda (antes los botones tapaban la de T1).
+- **#6** Sin «pointer events» (Safari 12 del iPad viejo) el texto dice «Usa los botones ⟲ ⟳ para girar».
+- **#7** Modo piso en celular (≤ 430 px): «Inicio» va solo con su ícono y el encabezado cabe en una línea (108 px; antes 162 px en 360–390 px).
+
+### #8 Supabase
+- Migración `20261106_quitar_reportes.sql`, **aplicada el 6/nov/2026 con permiso del usuario**: se quitaron las reglas «leer reportes» y «subir reportes». El espacio «reportes» estaba vacío y nada lo usaba. Supabase no deja borrar el espacio con SQL: queda vacío y sin reglas (nadie de la app puede usarlo); se borra a mano en el panel (Storage → reportes → Delete bucket).
+
+### Pruebas
+- Nueva `v1381_t.py` (#1 a #7). Actualizadas: `inicio_t.py` y `acceso_t.py` (versión 1.38.1).
+
+## 1.38.0 · 6 de noviembre de 2026
+
+Arreglos de la auditoría Ponytail del 6/nov/2026 (`claude/AUDITORIA_PONYTAIL_v1.37.0.md`), pedidos por el usuario («fix 1 through 7»). Sin cambios en Supabase, en las reglas de seguridad ni en el flujo.
+
+### #1 Una tablet que no se recargó ya no borra datos nuevos
+- **Antes:** la app no se actualiza sola. Una tablet abierta desde antes de publicar seguía con el código viejo, que no conoce los campos nuevos: al editar un registro, `flush()` lo volvía a subir sin esos campos y se borraban sin aviso (probado: la observación de un embarque desaparecía al capturar las vivas). Además, dos versiones calculaban distinta la hoja de disponibilidad y se la pisaban (~10 escrituras por minuto).
+- **Ahora:** si la base solo trae campos que este equipo no tenía y lo demás está como lo vio, no es un choque: se vuelve a subir conservando esos campos (también cuando otro equipo agregó un campo al mismo tiempo).
+- **Versión nueva:** cada 5 minutos la app pregunta por `index.html` (solo la cabecera, `verCheck`). Si cambió: barra roja «Hay una versión nueva de la plataforma» con «Recargar ahora», y el código viejo ya no sube nada (lo pendiente se queda en el equipo y se sube al recargar).
+
+### #2 La misma entrada capturada en dos equipos
+- **Antes:** «Ese lote ya existe» solo revisaba lo que tenía el equipo. La misma hoja capturada en la tablet sin internet y en la oficina dejaba **un lote con el doble de kilos**, sin aviso. El id interno del lote era un contador (`R-0121`) y las dos capturas se veían idénticas.
+- **Ahora:** el id del lote es único (`R-` + `uidS()`, regla 7). Si un lote tiene entradas de más de una captura, aviso rojo en el lote («Esta entrada se capturó 2 veces… 300.0 kg + 300.0 kg. Revierte en los movimientos del lote las entradas de la captura que sobra») y en Entrada («capturada dos veces · Revisar ›»). Desaparece al revertir la captura que sobra; «Está bien así» lo calla. Los lotes de antes con el mismo contador no se pueden distinguir.
+
+### #3 Cambiar de cuenta en un equipo ya no borra lo pendiente
+- **Antes:** si el Administrador dejaba pendiente un precio y entraba Piso en ese equipo, la base rechazaba toda la tanda y la app borraba **todo** lo pendiente (probado: una entrada de 250 kg nunca llegó a la base y solo se veía en esa computadora).
+- **Ahora:** con una cuenta que no es Administrador, los precios pendientes no se mandan: esperan a que entre un Administrador. Si la base no da permiso (403), lo pendiente se queda en el equipo y sale el aviso rojo «No se pudo subir…» con «Reintentar ahora» (antes: «No tienes permiso…» y se borraba).
+
+### #5 y #6
+- `rendimiento_t.py` abre el tablero de tanques (va plegado desde la v1.34.0 y la prueba ya no encontraba la planta 3D: fallaba sin que nadie lo viera). Ahora está en `correr_todo.sh`, igual que la nueva `v138_t.py`.
+- Se borró `stdC` (sin uso).
+
+### Pruebas
+- Nueva `v138_t.py` (Supabase de mentira, varios navegadores): tablet con código viejo, versión nueva publicada y recargar, misma hoja en dos equipos, cambio de cuenta con precio pendiente, 403 sin borrar. Actualizadas: `inicio_t.py` y `acceso_t.py` (versión 1.38.0), `rendimiento_t.py`.
+
+## 1.37.0 · 5 de noviembre de 2026
+
+Pedido del usuario (con /impeccable adapt): «se va a usar sobre todo en un iPad mini viejo; optimiza la plataforma para que corra ahí». No sabía el modelo y pidió que funcione desde el más viejo posible: **iPad mini 2 y 3 (iOS 12, Safari 12)**; también cubre el mini 4 (iOS 15) y los iPad viejos de 9.7 pulgadas. En un navegador nuevo la app se ve y funciona igual que antes. Datos, Supabase y reglas sin cambios.
+
+### Lo que fallaba en un iPad viejo
+- **La app quedaba en blanco en iOS 12 y 13:** el código usaba `??` (19 veces), que Safari antes de la 13.4 no entiende; por eso no corría nada del programa. Se cambió por la forma larga (`(a!=null?a:b)`).
+- **Sin colores de fondo y bordes de resaltado** en iOS 16.1 o anterior: 47 colores usaban `color-mix()` (Safari 16.2+). Ahora cada uno lleva antes un color fijo calculado (variables `--cm-…`, en tema claro y oscuro, también para el Modo piso y la planta 3D).
+- **Modo piso desacomodado** (hoja de entradas, tabla de empaque, teclado) en iOS 15 o anterior: esas pantallas dependen de `@container`, que Safari conoce desde la 16.
+- **Todo pegado** en iOS 14.0 o anterior: 169 reglas separan con `gap` en flex (Safari 14.1+).
+- **Teclado de piso y planta 3D no respondían al dedo** en iOS 12: no hay Pointer Events (Safari 13+).
+- **Descargar PDF o respaldo reemplazaba la app** en iOS 12 (no conoce «download»): ahora el archivo se abre en otra pestaña; si Safari la bloquea, sale el botón «Abrir …».
+- **Restaurar respaldo** fallaba en iOS 13 o anterior (`Blob.text`); fecha y hora de notas e historial salían en otro formato en iOS 14 o anterior (`dateStyle`).
+
+### Capa de compatibilidad (`CPX`, script justo después del CSS)
+- Solo trabaja si el navegador no conoce algo; en uno nuevo mide una vez y se apaga (no toca el HTML ni el CSS).
+- Reescribe el CSS al cargar, en el mismo orden (la cascada no cambia): `@container` → reglas con `[data-cq~=cN]`; `:has()` → `[data-h~=hN]`; `:is()` se despliega; `:focus-visible` se quita del grupo; `clamp()` → `max(min())`; `cqw` → `var(--cqw)`. También la hoja de colores de talla (`#szcss`).
+- En cada cambio de pantalla (un `MutationObserver`): marca qué contenedores cumplen su `@container`, qué elementos cumplen su `:has()` y, sin `gap` en flex, pone el espacio como margen de cada hijo (sumado al que ya trae; textos sueltos y `::before`/`::after` incluidos; los márgenes `auto` no se tocan; en filas que se parten en renglones el espacio se acomoda para que se partan igual que con `gap`).
+- Toques → `pointerdown/move/up` (solo si no hay Pointer Events). `Object.fromEntries`, `Blob.text` y `saveBlob()` (todas las descargas pasan por ahí).
+- `inset` → `top/right/bottom/left`; `position:-webkit-sticky`; prefijos de `appearance`, `user-select` y `clip-path`.
+
+### Equipo viejo (`html.lite`, iOS 16.1 o anterior)
+- Encabezado de Modo piso y panel de Ajustes sin vidrio esmerilado (fondo sólido): el desenfoque es caro en un procesador viejo.
+- La planta 3D empieza apagada (el tablero de tanques sigue igual); «Ver tanques en 3D» la prende y se recuerda.
+
+### Pruebas
+- Nueva `ipad_viejo_t.py`: código sin lo que Safari 12 no entiende; cada `color-mix()` con su respaldo; simulación de Safari 12 en Chromium (sin `gap` en flex, sin `color-mix`, sin `@container`/`:has`/`:is`/`:focus-visible`/`clamp`, sin Pointer Events) comparada pixel a pixel con la versión moderna en 768×1024 y 1024×768 (18 pantallas, arriba y abajo, Modo piso y teclado); teclado de piso con toques; PDF en otra pestaña en iOS 12; equipo viejo sin desenfoque y 3D apagada; lo que tarda la capa (CPU 4×).
+
+## 1.36.0 · 5 de noviembre de 2026
+
+Pedido del usuario: «run /impeccable clarify in all the forms on my platform to see what we can improve». Se revisaron todos los formularios (vista completa y Modo piso), se mandó cada uno vacío para ver su aviso y se le presentaron 12 mejoras en 4 grupos (`claude/CLARIFY_FORMULARIOS_v1.35.0.md` en el proyecto). **Aprobó los cuatro.** Datos, Supabase y reglas de negocio sin cambios.
+
+### Avisos de error
+- **El error va junto a su campo** (renglón propio debajo, con ícono), se queda hasta que se corrige (escribir en el campo lo quita) y se anuncia con lector de pantalla (`role="alert"`, ligado con `aria-describedby`). Antes: en Entrada salía debajo de «Guardar entrada», fuera de la pantalla del iPad; en la Orden salía en el aviso flotante y se iba a los 4 s.
+- **Un error ya no se repite en otros formularios:** en el Lote, el error (o el ✔) de Movimientos salía también debajo de «Guardar precio» y de «Pasar a otro tanque».
+- Pasan a junto al campo: línea de la orden (hieleras, consignatario), fecha de la orden nueva y «Cambiar fecha», fechas de Hojas para imprimir, conteo final mayor al esperado (Mortalidad final), nota vacía.
+- Al cambiar de pantalla se quita el aviso rojo de la anterior.
+- **Errores técnicos en palabras:** «No se pudo crear el PDF. Inténtalo otra vez; si sigue, recarga la página.» (antes con el detalle técnico), igual el paquete de PDF y el historial; «No se pudo entrar. Revisa el internet…» (el detalle va al final entre paréntesis); «No se pudo (error 500).» → «No se pudo guardar en la base compartida. Inténtalo otra vez; si sigue, avísale al Administrador (código 500).».
+
+### Un nombre por talla y por tanque
+- La talla se llama **«Chica · 491-610»** (nombre + rango, con su punto de color) en Entrada (formulario, otro tanque y encabezados de la tabla), Modo piso → Registrar entrada, Lote (Movimientos, Cambio de talla, Existencia por talla), Embarque y Hoja de empaque. Antes: «0-650 / 491-610 kg», «491-610», «Kg talla 1221-UP» y, en Embarque, colores («Rojo 54») bajo «Por talla». Los rangos del papel (0-650…) quedan solo en el PDF del formato de recepción. El teclado de Empaque sigue con colores (R, V, B, A).
+- El tanque se llama **«T1»** en las pantallas (Modo piso, Temperatura, tabla de Entrada, lote, listas). Los PDF siguen como el papel.
+
+### Opciones que ya no vienen elegidas
+- **Movimientos del lote:** el tipo viene en «Elige el tipo» (antes «Salida a embarque», que la app registra sola al cerrar el embarque y a mano contaba doble); esa opción ahora dice «(solo para corregir)». El tipo elegido se queda para registrar varios seguidos en el mismo lote.
+- **Usuario nuevo:** el rol viene en «Elige el rol» (antes «Administrador»).
+- **Hoja de empaque:** sin hora, a. m./p. m. viene en «—» (antes tomaba el de la hora actual: 6:30 de la mañana capturado en la tarde se guardaba 6:30 p. m.). Con una hora y sin a. m./p. m. no se guarda y lo pide.
+
+### Textos
+- Ejemplos con «Ej.» (ya no parecen datos escritos): «Ej. 59-62», «Ej. WLRCO051026A», «Ej. Folio 0344», «Ej. Resorteo», «Ej. 6-8 °C» y los de Catálogos. Los «0» de tallas, tarimas y cajas se quedan: es el valor que se usa si se deja vacío.
+- Etiquetas sin abreviar: «Temperatura del tanque (°F)», «Temperatura del producto (°F)», «Temperatura del otro tanque (°F)», «Kg de desperdicio (0 si no hubo)».
+- Usuarios: «Contraseña (mínimo 8)» y «Nueva contraseña (opcional)» a la vista; «Recibe el informe de cierre de embarque» (antes «Recibe informes»).
+- Confirmaciones que dicen qué se borra: «¿Eliminar a HXH de la orden?» → «Eliminar de la orden» / «Cancelar»; «¿Eliminar esta nota?» → «Eliminar nota» / «Cancelar»; Modo piso: «¿Quitar la hielera?» → «Sí, quitar».
+- «Editar consignatario **o** hieleras» (decía «u»).
+- Aviso de Entrada: «WLRCO061026B · fecha distinta a la del código» (antes solo «· fecha»).
+- Mortalidad final: sin «Las gráficas salen al capturar…».
+
+### Pruebas
+- Nueva `v136_t.py` (Entrada en 1180, 820, 390 y 1440; Lote, Orden, tallas, tanques, opciones sin elegir, textos; Modo piso en 390, 820 y 1180).
+- Ajustadas a los textos nuevos: `tabla_entrada_t` (encabezados con nombre y rango), `especies_t`, `maquilas_t`, `tallas_t`, `consignatarios_t`, `hojas_t`, `traslados_t`, `v125_t`, `v127_t`, `editar_orden_t`, `temperatura_t` (el error se busca junto al campo), `salidas_t` (lista de tipos), `avisos_entrada_t` (texto del aviso).
+
+## 1.35.0 · 5 de noviembre de 2026
+
+Pedido del usuario (con /impeccable layout): «hay demasiados campos y el usuario no sabe por dónde empezar; que la app sea más intuitiva, está difícil encontrar las cosas». Las listas ya habían quedado limpias en la 1.34.0; lo que seguía saturado eran las pantallas de detalle. Se le preguntó cuáles reorganizar y eligió las cuatro: Orden, Embarque, Administración y Lote. Solo cambia el orden y lo que se pliega: datos, reglas, Supabase y Modo piso sin cambios.
+
+### Cambiado
+- **Orden:** PDF, correo y «Eliminar orden» van en el encabezado, una sola vez (antes «Eliminar orden» salía arriba y otra vez en una tarjeta al final, y el PDF quedaba a media pantalla). La confirmación de eliminar sale ahí mismo. Primero los consignatarios y «+ Agregar otro consignatario» después de ellos. La **Hoja de empaque (Formato 06)** va plegada con «⚠ Faltan N datos» en el renglón: se abre sola cuando ya están todas las hieleras (es lo que toca) y está cerrada mientras se empaca. El aviso rojo «Hoja de empaque: faltan N datos · Completar ›» la abre y lleva al dato. Pasó de unas 3 pantallas a 2 en iPad.
+- **Embarque:** PDF y correo junto a «Cerrar empaque y enviar informe». Primero lo que se corrige (hieleras de este envío y distribución por talla), luego las órdenes del embarque con sus botones lado a lado. «Peso del embarque» se pliega (el total se ve cerrado; se abre solo si hay pesos distintos a la orden o al editar) e «Indicaciones para la carga» también (dice la indicación o «Ninguna»; si hay, el letrero grande sigue arriba). El aviso de la hoja ya no enlista los 8 datos: «Hoja de empaque del 12/10/2026: faltan 8 datos», y «Resolver ›» abre la orden con la hoja abierta.
+- **Administración en pestañas:** Usuarios (y qué puede hacer cada rol) · Maquilas · Catálogos (tallas, proveedores, especies, consignatarios, destinos) · Informes y respaldo (informes de cierre, historial de cambios, respaldo, configuración avanzada). Antes eran 9 secciones seguidas (~4 pantallas). La pestaña se queda al redibujar; con teclado, flechas. En Catálogos los «+ Nuevo…» ya no son azules (una sola acción azul por pantalla). El círculo del perfil abre Usuarios.
+- **Lote:** «Cierre del lote y mortalidad» (el conteo final, lo único que se captura ahí) sube justo debajo del encabezado y los avisos. La temperatura del tanque se pliega y dice cuántas lecturas hay y la última.
+
+### Pruebas
+- Nueva `v135_t.py` (1440, 1180, 820 y 390 px, y tema oscuro con texto «Muy grande» en 390 y 820).
+- Las pruebas que entran a Administración abren la pestaña que usan (`go('admin:cat')`, `admin:dat`, `admin:mq`, `admin:usr`).
+- `eliminar_orden_t` y `v112_t`: «Eliminar orden» ya sale una vez. `hoja_t`, `ordenes_t`, `pesos_t`, `temperatura_t` y `v112_t` abren los plegables (`PLEG`).
+- Resultado: 68 grupos, 3,807 verificaciones, TODO BIEN.
+
+## 1.34.0 · 5 de noviembre de 2026
+
+Pedido del usuario: «hay demasiados campos y el usuario no sabe por dónde empezar; que la app sea más intuitiva, está difícil encontrar las cosas». Se le preguntó qué quitar y aprobó todo (encabezado corto, formularios plegados, menú más corto, menos tablas repetidas, Entrada con el botón arriba y el 3D plegado, juntar los inicios). Datos y Supabase sin cambios; Modo piso sin cambios.
+
+### Cambiado
+- **Encabezado corto en cada sección** (Panel, Entrada, Órdenes, Empaque, Embarque, Mortalidad final, Hojas, Temperatura, Administración): título, una línea y la acción principal a la derecha. Se quitó el recuadro azul con la explicación larga y la etiqueta «Formato/Guía». La pantalla empieza en lo que se va a hacer.
+- **PDF y correo:** ya no son una tarjeta «Archivo de este paso» con botón azul; son dos botones discretos en el encabezado (en Hojas para imprimir, también). El azul queda solo para la acción principal.
+- **Entrada:** «+ Nueva entrada» arriba (antes estaba casi dos pantallas abajo) y la tabla de entradas enseguida. La planta 3D y el tablero de tanques van en «Tanques y planta 3D» (dice los kg y lotes); se arman solo al abrirlo y se quedan abiertos al volver. En Panel general siguen abiertos.
+- **Lo secundario se pliega** y se abre con un toque (se queda abierto mientras se usa; con teclado, Enter): fotos y notas (la cuenta de notas se ve cerrado), y en el lote: tanques de este lote (el tanque y los kg se ven cerrado), precio de compra (el total se ve cerrado) y movimientos de inventario. El conteo final y el cierre del lote siguen a la vista.
+- **Menú más corto:** sin Panel general (está en el selector de maquila, «Todas las maquilas») ni Administración (está en el círculo del perfil); sin subtítulos de relleno («Resumen», «Elige qué llenar», «Como el Excel»); los conteos y avisos se quedan. Temperatura pasa a Operación.
+- **Orden:** el desglose del peso bruto (por cliente y de toda la orden) se pliega; el total se ve en el renglón.
+- **Mortalidad final:** sin las cuatro gráficas vacías ni la tarjeta vacía de salidas; la fórmula va en «¿Cómo se calcula?».
+- **Temperatura:** «Nueva lectura» primero; los rangos debajo de la tabla.
+- «Ver historial» ya no repite «Se muestran solo los abiertos y recientes».
+- Títulos en orden (h1 → h2) en Mortalidad, Temperatura, Administración, Embarque y el lote.
+
+### Pruebas
+- Nueva `v134_t.py` (en 1440, 1180, 820 y 390 px: encabezados, botón arriba, plegables cerrados y que se abren con toque y teclado, lo escrito no se pierde, menú, Panel general y Administración siguen a mano).
+- Resultado: 67 grupos, 3,666 verificaciones, TODO BIEN.
+- Las pruebas que tocan algo dentro de un plegable lo abren primero (`ABRIR`/`PLEG`); `maquilas_t` abre el Panel general desde el selector de maquila.
+
+## 1.33.0 · 5 de noviembre de 2026
+
+Pedidos del usuario (5/nov, con capturas del iPad): quitar el teléfono del sitio; las tallas (851-1220 g) salían como teléfono para marcar; «Instalar app» no hacía nada en iOS; ya no se podía corregir una hielera completada ni con el teclado; el teclado se trababa en iOS; en iPad el teclado tapaba las hieleras; costaba encontrar cómo editar y borrar órdenes y entradas; no dejaba borrar una orden con hieleras; la pantalla no llevaba a donde se tocó; muchos campos sin saber por dónde empezar; faltaba el peso bruto en el packing list. Y el cambio de fondo: **la app es una herramienta para llenar los formatos, no un programa que obliga a empezar por la Entrada** (eligió: inicio con formatos, menú sin números con avisos suaves, formatos por rol, todo en esta versión).
+
+### Cambiado
+- **Formatos (nuevo inicio de la vista completa).** «¿Qué formato vas a llenar?»: Recepción de langosta, Orden de empaque, Empaque de hieleras, Embarque y packing list, Temperatura de tanques, Conteo final y mortalidad, Hojas para imprimir y Panel. Cada uno abre directo, sin orden fijo; solo salen los que el rol puede llenar (el Encargado de piso no ve Orden de empaque). El logo y el menú («Formatos», arriba) regresan aquí. Modo piso sigue igual (ya era así).
+- **Menú sin números** (antes 1 Entrada · 2 Órdenes · 3 Empaque · 4 Embarque) y Panel dice «Resumen» en lugar de «Siguiente paso». Las guías dicen «Formato» en lugar de «Paso N de 4» y ya no traen «Siguiente: …».
+- **Lote sin entrada:** el aviso es un recordatorio gris, no amarillo de alarma (empacar sin entrada es válido).
+- **Empaque en iPad:** el teclado va a un lado de las hieleras desde 34rem de ancho (iPad horizontal y vertical), más angosto (44 % del ancho, entre 14 y 26rem); las hieleras en tarjetas de 8rem. Antes, en iPad horizontal con menú, el teclado iba abajo y tapaba casi toda la pantalla.
+- En el teclado de Empaque, «‹ Anterior» y «Siguiente ›» (el lector de pantalla sigue diciendo «Hielera anterior/Siguiente hielera»), para que todo quepa en un iPad con texto «Muy grande». El menú lateral se desplaza en vez de encimar renglones con texto grande.
+- **Teclado en iOS:** cada tecla cuenta al levantar el dedo (un toque largo con guante ya no se pierde), sin lupa ni menú de copiar, la tecla se ve apretada, y sin zoom por doble toque en toda la app. El «click» de después se ignora para no contar dos veces.
+- **Corregir hieleras completadas:** en tablet y celular tocar una hielera completada abre el teclado aunque se haya cerrado con ✕ (el teclado del iPad no salía solo). La hielera tocada queda a la vista, no detrás del teclado; al abrir un cliente también.
+- **Embarque cerrado:** en Empaque sale «Reabrir para corregir» (Administrador, con confirmación; reabrir regresa al tanque lo que salió al cerrar). Antes solo decía que ya no se podía.
+- **Eliminar orden:** botón arriba junto al título y también **con hieleras empacadas**: la confirmación dice cuántas se borran (también las grises); si su embarque está cerrado, primero pide reabrirlo.
+- **Entrada:** cada fila trae **Ver · Editar · Eliminar** (antes solo «Abrir»); Editar abre el lote con su formulario y Eliminar con «Confirmar eliminar» a la vista.
+- **Packing list con peso bruto:** en el PDF (resumen y una columna por consignatario, con total si hay varios) y en la tarjeta de la orden.
+- **Instalar en iPhone/iPad:** la ventana dice los 3 pasos con el ícono de Compartir y dónde está (iPad arriba a la derecha; iPhone abajo o en «···»). Nuevo «Instalar app» en el menú del perfil para volver a verla (Android: abre la instalación).
+- **Tallas que no son teléfono:** `format-detection` apagado en la app y en el sitio.
+- Sitio (`propesa-sitio`): sin teléfono; «Escríbanos» (correo) es el botón principal.
+
+### Pruebas
+- Nueva `v133_t.py` (formatos por rol en 1440/390/1180, sin números, instalar en iPad, teclado a un lado en 1080×810 y 810×1080, un toque = un número, corregir con el teclado cerrado, reabrir embarque, peso bruto en el PDF, Editar/Eliminar de Entrada). `eliminar_orden_t.py`: la orden con hieleras ya se puede borrar. `menu_t.py`: «Instalar app» en el menú. `inicio_t.py`: versión 1.33.0.
+
+## 1.32.1 · 5 de noviembre de 2026
+
+Pedido del usuario (5/nov): «para entrar tengo que picar 3 veces Iniciar sesión desde propesa.org», «no hay animación cuando el acceso sale de lado» y «demasiado azul marino en el inicio de sesión, me deja empalagado» (eligió la opción A: formulario blanco).
+
+- **Un clic menos desde propesa.org.** El «Iniciar sesión» del sitio abre `app.propesa.org/#entrar` y el cajón con el correo y la contraseña sale solo, deslizándose, listo para escribir. La dirección queda sin `#entrar` (recargar no lo repite). Abrir app.propesa.org directo sigue igual.
+- **El cajón se ve deslizarse.** Antes tardaba 0.32 s con una curva que hacía casi todo el recorrido en el primer cuadro (parecía un salto). Ahora 0.55 s con una curva más pareja; la marca se recorre un poco a la izquierda (solo en pantallas anchas) y el formulario entra un instante después. Cerrar es más rápido (0.3 s). Si el equipo pide «reducir movimiento», aparece con un fundido corto en vez de no animarse.
+- **Menos azul marino.** El cajón del formulario es blanco (en tema claro y oscuro): título azul marino, «Acceso por rol» y el botón **Entrar** en azul océano `#0472AB` con texto blanco, textos en gris azulado. El fondo oscurecido ya no es azul marino sino un gris oscuro neutro. La marca y la vista previa no cambian.
+- Pruebas: `acceso_t.py` (+12: duración del deslizamiento, cajón blanco, Entrar azul océano, `#entrar` en computadora y celular con tema oscuro, entrar con un solo clic en Entrar, reducir movimiento). `inicio_t.py`: versión 1.32.1.
+- Sitio (`propesa-sitio`): los dos «Iniciar sesión» (cabecera y pie) apuntan a `https://app.propesa.org/#entrar`.
+
 ## 1.32.0 · 3 de noviembre de 2026
 
 Pedido del usuario (3/nov): «que mi pantalla de inicio de sesión se vea como esta» (captura de otra plataforma: marca con una vista previa de la app y el formulario). Después pidió: tanques con canastas pero no tan llenos, las canastas como las de verdad, los filtros y todo como en la plataforma, el lado blanco en azul, quitar «Plataforma marítima» del acceso y un botón para iniciar sesión en vez de desplazarse, con el correo y la contraseña saliendo de lado.
