@@ -20,7 +20,7 @@ with sync_playwright() as p:
         pg=b.new_page(viewport={'width':1180,'height':820},color_scheme='dark');pg.on('pageerror',lambda e:errs.append(str(e)))
         pg.goto(BASE);pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s)}',S);pg.reload()
         pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
-        pg.evaluate(f"syncShip(ST.OR[2],'HKG',0);save();setPiso({str(piso).lower()});go('inicio')")
+        pg.evaluate(f"syncShip(ST.OR[2],'HKG',0);save();setPiso({str(piso).lower()});FOLD['ct-ord']=true;go('inicio')")
         E='pemp:' if piso else 'empacar:'
         def at():return pg.evaluate("V.v+(V.id?':'+V.id:'')")
         # panel order table
@@ -28,8 +28,9 @@ with sync_playwright() as p:
         pg.evaluate("go('inicio')");pg.click("button.chipb:has-text('Falta el destino')");chk(at()=='orden:4','panel Falta el destino -> '+at())
         pg.click("button.chipb:has-text('Falta el destino')");pg.wait_for_timeout(500);chk(pg.evaluate("document.activeElement.id")=='ol_z0','on order page jumps to the first size field')
         # KPI cards
-        pg.evaluate("go('inicio')");pg.click('.kpl >> nth=0');chk(at().startswith(E) or at().startswith('orden:'),'KPI hieleras -> '+at())
-        pg.evaluate("go('inicio')");pg.click('.kpl >> nth=1');chk(at().startswith('emb:'),'KPI empaques -> '+at())
+        # v1.39.0: en el Centro de operaciones los 4 números llevan a su sección (los avisos van en la campana)
+        pg.evaluate("go('inicio')");pg.click('.ctk[data-go=empaque]');chk(at()=='empaque','número de hieleras -> '+at())
+        pg.evaluate("go('inicio')");pg.click('.ctk[data-go=embarques]');chk(at()=='embarques','número de embarques -> '+at())
         # empaque per-line chip
         pg.evaluate("go('empaque')");pg.click("td button.chipb:has-text('Faltan 25')");chk(at()==E+'3.1','empaque line chip -> '+at())
         pg.evaluate("go('orden:3')");pg.click(".lnb button.chipb");chk(at()==E+'3.1','orden line chip -> '+at())

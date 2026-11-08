@@ -108,7 +108,7 @@ with sync_playwright() as p:
     ctx,pg=start(b,'piso@propesa.mx','piso123','piso',vw=(360,800));pg.evaluate("go('pemp')");pg.wait_for_timeout(200)
     h=pg.evaluate("Math.round(document.querySelector('.phd').getBoundingClientRect().height)")
     chk(h<=112,f'360: el encabezado de Modo piso cabe en una línea ({h} px)')
-    chk(pg.get_attribute('.phd .ph1','aria-label')=='Inicio','360: «Inicio» conserva su nombre para el lector de pantalla')
+    chk(pg.get_attribute('.phd [data-back]','aria-label')=='Atrás','360: «‹ Atrás» tiene nombre para el lector de pantalla (v1.39.0: reemplaza a «Inicio»; el logo lleva al inicio)')
     ctx.close()
     # ---------- 5 · planta 3D: los botones no tapan etiquetas
     for vw in [(768,1024),(390,844),(1440,900)]:

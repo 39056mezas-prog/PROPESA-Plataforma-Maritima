@@ -1,6 +1,12 @@
 """v1.32.0–v1.32.1 · Pantalla de acceso: marca con vista previa de la app y botón «Iniciar sesión»; el formulario sale de lado. Uso: python3 -I pruebas/acceso_t.py"""
 import os, sys, re, json
 from playwright.sync_api import sync_playwright
+import os,re
+# v1.39.0: la versión sale del CHANGELOG (la de arriba) y debe ser la misma que APPV en index.html
+_R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VER=re.search(r'^## (\d+\.\d+\.\d+)',open(os.path.join(_R,'CHANGELOG.md'),encoding='utf8').read(),re.M).group(1)
+assert "APPV='"+VER+"'" in open(os.path.join(_R,'index.html'),encoding='utf8').read(),'APPV en index.html no es la versión del CHANGELOG '+VER
+
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local'); fails = []; errs = []  # modo local: nunca toca la base real
 def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
@@ -33,11 +39,16 @@ with sync_playwright() as p:
     pg.click('.auo'); pg.wait_for_timeout(450); pg.click('.auc'); pg.wait_for_timeout(450); chk(pg.locator('.au.op').count() == 0, '✕ lo guarda')
     pg.click('.auo'); pg.wait_for_timeout(450); pg.mouse.click(200, 450); pg.wait_for_timeout(450); chk(pg.locator('.au.op').count() == 0, 'tocar afuera lo guarda')
     pg.focus('#le'); pg.wait_for_timeout(450); chk(pg.locator('.au.op').count() == 1, 'llegar al correo con el teclado (o el administrador de contraseñas) también lo abre')
-    chk(pg.locator('.aum .t3wat').count() == 6 and pg.locator('.aum .t3fil').count() == 15 and pg.locator('.aum .t3rail').count() == 20, 'la vista previa usa el dibujo real de la planta: 6 tanques, 5 filtros con barandal')
-    chk(pg.locator('.aum .t3dl').count() == 2 and pg.locator('.aum .t3sign').count() == 6, 'con los letreros de la planta y las placas TANQUE 1–6')
+    # v1.38.3: la planta de la vista previa es una imagen ya dibujada (acceso-planta.png); en CSS 3D eran ~300 capas y en
+    # celulares con poca memoria la pantalla se quedaba gris hasta moverla. Las etiquetas y las placas siguen siendo texto.
+    pg.wait_for_function("(()=>{const i=document.querySelector('.aum .mkimg');return i&&i.complete&&i.naturalWidth>0})()", timeout=5000)
+    chk(pg.locator('.aum .mkimg').count() == 1 and pg.locator('.aum .t3w, .aum .t3f').count() == 0, 'la vista previa usa la imagen de la planta (nada de CSS 3D en el acceso)')
+    chk(pg.evaluate("[...document.querySelectorAll('.aum *')].filter(e=>getComputedStyle(e).transformStyle=='preserve-3d').length") == 0, 'sin capas 3D en el acceso')
+    chk(pg.locator('.aum .t3sign').count() == 6, 'con las placas TANQUE 1–6')
+    box = pg.evaluate("(()=>{const i=document.querySelector('.aum .mkimg').getBoundingClientRect(),p=document.querySelector('.aum .mkp').getBoundingClientRect(),s=[...document.querySelectorAll('.aum .t3sign')].map(e=>e.getBoundingClientRect());return {img:i.width>200&&i.left>=p.left-1&&i.top>=p.top-1&&i.bottom<=p.bottom+1,signs:s.every(r=>r.left>=i.left-2&&r.right<=i.right+2&&r.top>=i.top-2&&r.bottom<=i.bottom+2)}})()")
+    chk(box['img'] and box['signs'], f'la imagen queda dentro de la tarjeta y las placas caen sobre ella {box}')
     tags = pg.eval_on_selector_all('.aum .t3tag', 'e=>e.map(x=>x.innerText.split("\\n")[0])')
     chk(len(tags) == 5 and not any('Vacío' in t for t in tags) and 'T1 · 48 canastas' in tags, f'tanques con canastas pero no llenos; el vacío (T5) sin etiqueta, solo su letrero (v1.38.2) {tags}')
-    chk(pg.locator('.aum .t3c').count() == 142 and pg.locator('.aum .t3inc').count() >= 1, 'las canastas son las mismas de la planta en 3D (incompletas con borde punteado)')
     chk(pg.locator('.t3v').count() == 0, 'no se arma la planta real en el acceso (solo el dibujo)')
     inside = pg.evaluate("(()=>{const a=document.querySelector('.aub').getBoundingClientRect();return [...document.querySelectorAll('.aum .t3tag')].every(e=>{const r=e.getBoundingClientRect();return r.right<=a.right+1&&r.left>=a.left})})()")
     chk(inside, 'todos los letreros de los tanques caben en el panel (nada cortado)')
@@ -45,7 +56,7 @@ with sync_playwright() as p:
     chk(pg.evaluate("getComputedStyle(document.querySelector('[data-a=lg]')).backgroundColor") == 'rgb(4, 114, 171)', 'botón Entrar azul océano (texto blanco)')
     chk(pg.locator('.aum a,.aum button,.aum input,.aum [tabindex]').count() == 0, 'la vista previa no tiene nada que se pueda enfocar')
     chk(pg.locator('h1').inner_text() == 'Iniciar sesión' and 'acceso por rol' in pg.inner_text('.aui').lower() and 'marítima' not in pg.inner_text('.au').lower(), 'título «Iniciar sesión» y el texto de siempre')
-    chk('Versión 1.38.2' in pg.inner_text('.auft'), 'el pie muestra la versión')
+    chk('Versión ' + VER in pg.inner_text('.auft'), 'el pie muestra la versión ' + VER)
     chk(not DEMO.search(pg.inner_text('body')), 'sin rastros de demo en el acceso')
     # ver / ocultar contraseña
     pg.fill('#lp', 'Secreta123'); eye = pg.locator('[data-a=pwv][data-for=lp]')

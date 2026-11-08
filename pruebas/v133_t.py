@@ -1,6 +1,6 @@
 """v1.33.0 (pedidos del usuario, 5/nov/2026).
 1. Las tallas (851-1220 g) no se vuelven teléfono en iOS: format-detection.
-2. La vista completa abre en «Formatos» (herramienta, sin orden fijo), solo con lo que el rol puede llenar; menú sin números ni «Siguiente paso».
+2. La vista completa abre en «Formatos» (desde la v1.39.0, el Centro de operaciones; las secciones están en el menú) (herramienta, sin orden fijo), solo con lo que el rol puede llenar; menú sin números ni «Siguiente paso».
 3. iPad: «Instalar app» en el menú del perfil dice los pasos (Compartir → Agregar a inicio).
 4. iPad: en Empaque el teclado va a un lado de las hieleras (horizontal y vertical); cada toque cuenta una vez; corregir una hielera
    completada abre el teclado aunque se haya cerrado; embarque cerrado → se reabre con confirmación.
@@ -27,12 +27,11 @@ with sync_playwright() as p:
         if em.startswith('piso'): pg.evaluate("setPiso(false);go(home0())"); pg.wait_for_timeout(150)
         tag = f'{vw[0]} {em[:4]}'
         chk('telephone=no' in (pg.get_attribute('meta[name=format-detection]', 'content') or ''), f'{tag}: sin detección de teléfonos (851-1220 g no es un número para marcar)')
-        chk(pg.evaluate('V.v') == 'formatos', f'{tag}: abre en Formatos ({pg.evaluate("V.v")})')
-        t = pg.locator('.fmg .pt b').all_inner_texts()
-        chk('Recepción de langosta' in t and 'Empaque de hieleras' in t and 'Hojas para imprimir' in t, f'{tag}: formatos {t}')
-        chk(('Orden de empaque' in t) == em.startswith('admin'), f'{tag}: «Orden de empaque» solo para quien puede hacer órdenes')
+        chk(pg.evaluate('V.v') == 'inicio', f'{tag}: abre en el Centro de operaciones (v1.39.0) ({pg.evaluate("V.v")})')
+        t = pg.locator('.sb .fs b').all_inner_texts()
+        chk('Entrada' in t and 'Empaque' in t and 'Hojas para imprimir' in t and pg.locator('main .ctl, main .fmg').count() == 0, f'{tag}: cada sección está en el menú, sin cuadrícula repetida en el Centro {t}')
         chk(pg.locator('.sb .fs i em').count() == 0 and 'Siguiente paso' not in pg.inner_text('#app'), f'{tag}: menú sin números ni «Siguiente paso»')
-        pg.click('.fmg [data-go=empaque]'); pg.wait_for_timeout(150); chk(pg.evaluate('V.v') == 'empaque', f'{tag}: un formato abre directo')
+        pg.evaluate("document.querySelector('.sb [data-go=empaque]').click()"); pg.wait_for_timeout(150); chk(pg.evaluate('V.v') == 'empaque', f'{tag}: un formato abre directo')
         chk('Paso 3 de 4' not in pg.inner_text('#app'), f'{tag}: Empaque ya no dice «Paso 3 de 4»')
         chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth+1"), f'{tag}: sin scroll de lado')
         pg.close()
@@ -84,7 +83,7 @@ with sync_playwright() as p:
     pg.click('[data-led^="el:"] >> nth=0'); pg.wait_for_timeout(150)
     chk(pg.evaluate("V.v+':'+V.id") == 'lote:' + lot and pg.evaluate("form&&form.edit") == lot and pg.locator('#fo').count() == 1, 'Editar abre el lote con su formulario')
     pg.evaluate("go('recepcion')"); pg.click('[data-led^="dl:"] >> nth=0'); pg.wait_for_timeout(150)
-    chk(pg.locator('[data-a=dl2]').count() == 1, 'Eliminar abre el lote con «Confirmar eliminar» a la vista')
+    chk(pg.locator('[data-a=dl2]').count() == 1, 'Eliminar abre el lote con «Sí, eliminar lote» a la vista')
     pg.close()
     b.close()
 chk(not errs, f'sin errores de JavaScript {errs[:3]}')

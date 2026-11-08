@@ -25,7 +25,7 @@ with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1440, 'height': 900})
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
     pg.on('dialog', lambda d: d.accept())
-    pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1);FOLD['ent-tq']=true;go('recepcion')")
+    pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1);FOLD['ent-tq']=true;FOLD['ent-t2']=true;go('recepcion')")
     def entrada(code, t2='', k2='', tt2='', kb2=''):
         pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '2'); pg.select_option('#ft', 'T1'); pg.fill('#fkb', '34'); pg.fill('#ftt', '57.6'); pg.fill('#ftp', '48-62'); pg.fill('#fdes', '0')
         pg.fill('#fk0', '800'); pg.fill('#fk1', '200')
@@ -81,6 +81,7 @@ with sync_playwright() as p:
     pg.evaluate("setPiso(true);go('pent')"); pg.wait_for_timeout(150)
     pg.select_option('[data-pr="1:origin"]', index=1); pg.select_option('[data-pr="1:tank"]', 'T5'); pg.fill('[data-pr="1:lot"]', 'WLRLE051026')
     pg.fill('[data-pr="1:k0"]', '1000'); pg.fill('[data-pr="1:tempT"]', '63.9'); pg.fill('[data-pr="1:tempP"]', '57-62'); pg.fill('[data-pr="1:kgbox"]', '34'); pg.fill('[data-pr="1:desp"]', '0')
+    pg.evaluate("document.querySelector('[data-pt2=\"1\"]').open=true")  # v1.39.0: «otro tanque» va plegado
     pg.select_option('[data-pr="1:t2"]', 'T6'); pg.fill('[data-pr="1:k2z0"]', '2000'); pg.click('#pn_save'); pg.wait_for_timeout(150)
     chk('más de lo que entró' in pg.inner_text('#pd_1') and pg.evaluate("!R_('WLRLE051026')"), 'Modo piso: kg del otro tanque mayores a lo que entró no se guardan')
     pg.fill('[data-pr="1:k2z0"]', '400'); pg.fill('[data-pr="1:tt2"]', '57'); pg.click('#pn_save'); pg.wait_for_timeout(150)

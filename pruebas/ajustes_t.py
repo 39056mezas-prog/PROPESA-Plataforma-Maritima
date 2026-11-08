@@ -53,7 +53,7 @@ with sync_playwright() as p:
         # tema: toda la app
         def look():
             return pg.evaluate("""()=>{const g=s=>{const e=document.querySelector(s);return e?getComputedStyle(e):null};const cd=g('.cd');return{bg:getComputedStyle(document.body).backgroundColor,cd:cd.backgroundColor,ink:cd.color,hd:g('.hd').backgroundColor,hdc:g('#sq').color,hdi:g('#sq').backgroundColor,mut:g('.mut')?g('.mut').color:null,th:g('th')?g('th').color:null,td:g('td')?g('td').color:null}}""")
-        pg.evaluate("go('inicio')");L=look()
+        pg.evaluate("go('temperatura')");L=look()  # v1.39.0: el Centro ya no trae tablas a la vista; Temperatura tiene títulos, tablas y tarjetas
         open_set(pg);pg.click('[data-set-theme=dark]');D=look();pg.keyboard.press('Escape')
         chk(lum(L['bg'])>0.5 and lum(D['bg'])<0.05,f'tema cambia el fondo (claro {L["bg"]} / oscuro {D["bg"]})')
         chk(lum(L['cd'])>0.8 and lum(D['cd'])<0.05 and lum(L['hd'])>0.8 and lum(D['hd'])<0.05,'tema cambia tarjetas y encabezado')
@@ -65,12 +65,12 @@ with sync_playwright() as p:
         # tamaño del texto con teclado
         open_set(pg);pg.wait_for_timeout(150);pg.focus('#set_fs')
         for _ in range(4):pg.keyboard.press('ArrowLeft')
-        chk(pg.input_value('#set_fs')=='0' and pg.inner_text('#set_fsv')=='Normal' and pg.get_attribute('#set_fs','aria-valuetext')=='Normal, 15 píxeles','deslizador en Normal con flechas, valor visible y anunciado')
+        chk(pg.input_value('#set_fs')=='0' and pg.inner_text('#set_fsv')=='Muy chico' and pg.get_attribute('#set_fs','aria-valuetext')=='Muy chico, 11 píxeles','deslizador en «Muy chico» con flechas, valor visible y anunciado (v1.39.0)')
         sizes=[];labs=[]
-        for k in range(3):
+        for k in range(5):
             sizes.append(pg.evaluate("getComputedStyle(document.body).fontSize"));labs.append(pg.inner_text('#set_fsv'))
-            if k<2:pg.keyboard.press('ArrowRight')
-        chk(sizes==['15px','17px','20px'] and labs==['Normal','Grande','Muy grande'],'solo 3 tamaños, deslizando: '+','.join(sizes)+' '+','.join(labs))
+            if k<4:pg.keyboard.press('ArrowRight')
+        chk(sizes==['11px','13px','15px','17px','20px'] and labs==['Muy chico','Chico','Normal','Grande','Muy grande'],'5 tamaños (v1.39.0, del 75 % al 133 %), deslizando: '+','.join(sizes)+' '+','.join(labs))
         chk(pg.locator('.setends span.on').inner_text()=='Muy grande','la etiqueta del tamaño elegido se resalta')
         # se ve lo que hay debajo
         sc=pg.evaluate("getComputedStyle(document.querySelector('.setscrim')).backgroundColor")
@@ -101,7 +101,7 @@ with sync_playwright() as p:
     # ---- se conserva al recargar, sin parpadeo ----
     pg=b.new_page(color_scheme='dark');pg.on('pageerror',lambda e:errs.append(str(e)))
     pg.goto(BASE);pg.evaluate(FIX);pg.reload();login(pg)
-    open_set(pg);pg.click('[data-set-theme=light]');pg.fill('#set_fs','1');pg.dispatch_event('#set_fs','change')
+    open_set(pg);pg.click('[data-set-theme=light]');pg.fill('#set_fs','3');pg.dispatch_event('#set_fs','change')
     pg.reload()
     chk(pg.evaluate("document.documentElement.getAttribute('data-theme')")=='light' and pg.evaluate("getComputedStyle(document.body).fontSize")=='17px','tema y tamaño se conservan al recargar')
     first=pg.evaluate("""()=>new Promise(ok=>{const m=new MutationObserver(()=>{});ok(performance.getEntriesByType('paint').length)})""")
@@ -110,7 +110,7 @@ with sync_playwright() as p:
     # migración de "A A A"
     pg.evaluate("localStorage.removeItem('propesa-fs');localStorage.setItem('propesa-z','1.3')");pg.reload()
     chk(pg.evaluate("getComputedStyle(document.body).fontSize")=='20px','el tamaño "muy grande" anterior se respeta (20 px)')
-    for old,exp in [('13','15px'),('18','17px'),('19','20px')]:
+    for old,exp in [('12','13px'),('14','15px'),('18','17px'),('19','20px')]:
         pg.evaluate(f"localStorage.setItem('propesa-fs','{old}')");pg.reload();chk(pg.evaluate("getComputedStyle(document.body).fontSize")==exp,f'un tamaño guardado de {old} px se ajusta a {exp}')
     pg.close()
     # ---- sin localStorage ----

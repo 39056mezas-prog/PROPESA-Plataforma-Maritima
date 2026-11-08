@@ -89,7 +89,7 @@ with sync_playwright() as p:
 
     # --- 1. logotipo de cada maquila
     pg.evaluate("go('inicio')"); pg.wait_for_timeout(100)
-    chk(pg.locator('.sb .mqlt').count() == 0 and pg.locator('.sb [data-mq] svg').count() == 1, 'PROPESA: el logo de PROPESA')
+    chk(pg.locator('.sb .mqlt').count() == 0 and pg.locator('.sb .lgb svg').count() == 1, 'PROPESA: el logo de PROPESA')
     marks = {}
     for mid, nm in [(2, 'Abel'), (3, 'David'), (4, 'Luis Arce')]:
         pg.evaluate(f"mqSet({mid});go('inicio')"); pg.wait_for_timeout(150)
@@ -106,8 +106,6 @@ with sync_playwright() as p:
     chk('Luis Arce' in pg.inner_text('.phd .mqlt') and pg.evaluate("document.querySelector('.phd').classList.contains('mqa')"), 'Modo piso: el logotipo en el encabezado')
     pg.evaluate("PISO=false;mqSet(1);go('general')"); pg.wait_for_timeout(150)
     chk(pg.locator('.mqt .mqtg .mqb').count() == 3, 'Panel general: emblema en la tabla por maquila')
-    pg.evaluate("go('admin:mq')"); pg.wait_for_timeout(150)
-    chk(pg.locator('#mqs .mqtg .mqb').count() == 3, 'Administración → Maquilas: emblema de cada una')
     pg.evaluate("ST.MQL=mqAll().concat([{id:5,n:'Pesquera Norte'}]);save();render()")
     chk(pg.evaluate("mqIni('Pesquera Norte')") == 'PN' and pg.evaluate("mqBadge(5)!==mqBadge(2)"), 'una maquila nueva también tiene su emblema')
 

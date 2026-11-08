@@ -3,7 +3,7 @@
 1. Orden: PDF, correo y «Eliminar orden» en el encabezado (una sola vez); consignatarios antes de la hoja; la Hoja de empaque
    plegada con «Faltan N datos» (abierta sola cuando ya están todas las hieleras); el aviso rojo la abre.
 2. Embarque: PDF en el encabezado; primero hieleras y tallas, luego órdenes; peso e indicaciones plegados (total a la vista).
-3. Administración en pestañas: Usuarios · Maquilas · Catálogos · Informes y respaldo (con teclado: flechas).
+3. Administración en pestañas: Usuarios · Catálogos · Informes y respaldo (con teclado: flechas). v1.40.0: sin Maquilas.
 4. Lote: el conteo final sube; la temperatura del tanque se pliega.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/v135_t.py"""
 from playwright.sync_api import sync_playwright
@@ -60,15 +60,15 @@ with sync_playwright() as p:
         chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth+1"), f'{W} embarque: sin scroll de lado')
         # ---------- 3. Administración ----------
         ir(pg, 'admin:usr')
-        chk(pg.locator('[role=tablist] [role=tab]').count() == 4 and pg.locator('[role=tab][aria-selected=true]').inner_text() == 'Usuarios', f'{W} admin: 4 pestañas, Usuarios abierta')
+        chk(pg.locator('[role=tablist] [role=tab]').count() == 3 and pg.locator('[role=tab][aria-selected=true]').inner_text() == 'Usuarios', f'{W} admin: 3 pestañas, Usuarios abierta')
         chk(pg.locator('[data-a=nu]').count() == 1 and pg.locator('#szs').count() == 0 and pg.locator('[data-bk=up]').count() == 0, f'{W} admin: en Usuarios no salen catálogos ni respaldo')
         pg.click('[data-adt=cat]'); pg.wait_for_timeout(100)
         chk(all(pg.locator(s).count() == 1 for s in ['#szs', '#provs', '#esps', '#conss']) and pg.locator('[data-a=nu]').count() == 0, f'{W} admin: Catálogos tiene tallas, proveedores, especies y consignatarios')
-        chk(pg.locator('#adp .btn:not(.s):not(.q):not(.d)').count() == 0, f'{W} admin: en Catálogos los «+ Nuevo…» no compiten en azul')
+        chk(pg.locator('#adp .btn:not(.s):not(.q):not(.d):not(.dq)').count() == 0, f'{W} admin: en Catálogos los «+ Nuevo…» no compiten en azul')
         pg.evaluate('render()'); chk(pg.locator('[role=tab][aria-selected=true]').inner_text() == 'Catálogos', f'{W} admin: la pestaña se queda al redibujar')
         pg.focus('[role=tab][aria-selected=true]'); pg.keyboard.press('ArrowRight'); pg.wait_for_timeout(100)
         chk(pg.evaluate("document.activeElement.dataset.adt") == 'dat' and pg.locator('[data-bk=up]').count() >= 1 and 'Informes de cierre' in pg.inner_text('#adp'), f'{W} admin: con flechas pasa a Informes y respaldo')
-        pg.click('[data-adt=mq]'); pg.wait_for_timeout(100); chk(pg.locator('#mqs').count() == 1, f'{W} admin: Maquilas')
+        chk(pg.locator('[data-adt=mq]').count() == 0, f'{W} admin: sin pestaña Maquilas (v1.40.0)')
         pg.click('[data-avatar]'); pg.click('[data-pm=users]'); pg.wait_for_timeout(150)
         chk(pg.locator('[role=tab][aria-selected=true]').inner_text() == 'Usuarios', f'{W} admin: el círculo del perfil abre Usuarios')
         chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth+1"), f'{W} admin: sin scroll de lado')

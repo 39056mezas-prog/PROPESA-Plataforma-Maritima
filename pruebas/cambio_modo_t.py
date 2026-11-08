@@ -37,9 +37,9 @@ with sync_playwright() as p:
         vals = pg.evaluate("[...['1:origin','1:tank','1:lot','1:k0','1:tempT','2:origin','2:lot']].map(k=>document.querySelector(`[data-pr=\"${k}\"]`).value)")
         chk(vals == ['1', 'T2', 'WLRMODO1', '25', '57.5', '2', 'WLRMODO2'], f'{vw} con las mismas filas y datos: {vals}')
         chk(pg.is_visible('[data-pr="1:tempT"]'), f'{vw} «Más» de la fila 1 sigue abierto como lo dejaste')
-        chk(pg.locator('.back[data-go=recepcion]').count() == 1, f'{vw} en la vista completa la hoja tiene «‹ Volver a Entrada»')
+        chk(pg.locator('.hd [data-back]').count() == 1, f'{vw} en la vista completa la hoja tiene «‹ Atrás» arriba (v1.39.0)')
         # salir a Entrada: aviso con enlace de regreso
-        pg.click('.back[data-go=recepcion]'); tx = pg.inner_text('#app')
+        pg.evaluate("go('recepcion')"); tx = pg.inner_text('#app')
         chk('tienes 2 entradas sin guardar' in tx.lower(), f'{vw} Entrada avisa las 2 entradas sin guardar')
         pg.click('[data-go=pent] >> text=Terminar'); chk(pg.evaluate(V)[0] == 'pent' and pg.input_value('[data-pr="2:lot"]') == 'WLRMODO2', f'{vw} «Terminar de capturarlas» regresa a la hoja con lo escrito')
         # volver a prender Modo piso: misma hoja

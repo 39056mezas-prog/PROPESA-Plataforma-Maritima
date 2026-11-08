@@ -70,7 +70,7 @@ with sync_playwright() as p:
     chk(lab == ['Kg Chica 491-610', 'Kg Mediana 611-850', 'Kg Grande 851-1220', 'Kg Jumbo 1221-UP', 'Kg Despatada'], f'Entrada: las tallas dicen nombre y rango: {lab}')
     t = pg.inner_text('main')
     chk('0-650' not in t and '851-1250' not in t, 'Entrada: los rangos del papel ya no salen en la pantalla (siguen en el PDF)')
-    chk(pg.evaluate("document.querySelector('#fk2z0').labels[0].innerText.replace(/\\s+/g,' ').trim()") == 'Chica 491-610', 'Entrada: el otro tanque usa el mismo nombre')
+    chk(pg.evaluate("document.querySelector('[data-fold=ent-t2]').open=true,document.querySelector('#fk2z0').labels[0].innerText.replace(/\\s+/g,' ').trim()") == 'Chica 491-610', 'Entrada: el otro tanque usa el mismo nombre')
     chk(pg.evaluate("ST.R.length>0") and 'T1' in pg.inner_text('table.ent tbody'), 'Entrada: la tabla dice T1')
     ir(pg, 'lote:WLRCO051026A'); abrir(pg)
     o = pg.evaluate("[...document.querySelectorAll('#sz option')].map(x=>x.text)")
@@ -130,6 +130,7 @@ with sync_playwright() as p:
         entrar(pg, 'piso@propesa.mx', '1'); ir(pg, 'pent')
         chk(pg.evaluate("[...document.querySelectorAll('select')].some(s=>[...s.options].map(o=>o.text).join(',')=='—,T1,T2,T3,T4,T5,T6')"), f'{W} Modo piso: tanques T1…T6')
         if 'desperdicio' not in pg.inner_text('main'): pg.click('[data-pa^="more:"]'); pg.wait_for_timeout(150)  # «Más datos» puede venir abierto
+        pg.evaluate("document.querySelectorAll('.pt2').forEach(d=>d.open=true)")  # v1.39.0: «otro tanque» va plegado
         t = pg.inner_text('main')
         chk('Kg Chica' in t and 'Kg de desperdicio (0 si no hubo)' in t, f'{W} Modo piso: «Kg Chica» y «0 si no hubo»')
         chk(desborde(pg) <= 0, f'{W} Modo piso: sin desborde ({desborde(pg)})')

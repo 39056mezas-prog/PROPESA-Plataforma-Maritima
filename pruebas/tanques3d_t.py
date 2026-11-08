@@ -95,7 +95,7 @@ with sync_playwright() as p:
     # ---------- Panel general (todas las maquilas)
     pg.evaluate("go('general')"); pg.wait_for_timeout(300)
     chk(pg.locator('.t3v').count() == 1 and pg.locator('.tqgen [data-tq=T4]').count() == 1, 'Panel general: 3D y tablero de tanques')
-    chk(pg.evaluate("(()=>{const v=document.querySelector('.t3v').getBoundingClientRect().top;return [...document.querySelectorAll('#main .g4, #main table, .tqgen')].every(e=>e.getBoundingClientRect().top>v)})()"), 'v1.31.1: en Panel general el 3D es lo primero (arriba de los totales y las tablas)')
+    chk(pg.evaluate("(()=>{const v=document.querySelector('.t3v').getBoundingClientRect().top;return document.querySelector('#main .g4').getBoundingClientRect().top<v&&[...document.querySelectorAll('#main table, .tqgen')].every(e=>e.getBoundingClientRect().top>v)})()"), 'v1.39.0: en Panel general van primero los 4 totales, luego el 3D y después las tablas')
     n3 = pg.locator('.t3c[data-t3c^="T3:"]:not(.t3s):not(.t3e)').count()
     chk(n3 == 15, f'T3 junta PROPESA (13) y Abel (2): {n3}')
     cols = pg.evaluate("[...document.querySelectorAll('.t3c[data-t3c^=\"T3:\"] .t3rib')].map(e=>getComputedStyle(e).backgroundColor)")

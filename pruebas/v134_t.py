@@ -46,7 +46,7 @@ with sync_playwright() as p:
         # ---------- 4. menú ----------
         if W < 700: pg.click('.mb'); pg.wait_for_timeout(150)
         chk(pg.locator('.sb [data-go=general]').count() == 0 and pg.locator('.sb [data-go=admin]').count() == 0, f'{W} menú: sin Panel general ni Administración')
-        chk(pg.locator('.sb .fs').count() == 9, f'{W} menú: 9 secciones ({pg.locator(".sb .fs").count()})')
+        chk(pg.locator('.sb .fs').count() == 8, f'{W} menú: 8 secciones (v1.39.0: Formatos y Panel = Centro de operaciones) ({pg.locator(".sb .fs").count()})')
         chk('Elige qué llenar' not in pg.inner_text('.sb') and 'Resumen' not in pg.inner_text('.sb') and '7/7 hieleras' in pg.inner_text('.sb'), f'{W} menú: sin subtítulos de relleno, con los conteos')
         pg.click('.sb [data-mq]'); pg.click('#mqmenu [data-mqgo="general"]'); pg.wait_for_timeout(250)
         chk(pg.evaluate('V.v') == 'general', f'{W} el Panel general se abre desde el selector de maquila')

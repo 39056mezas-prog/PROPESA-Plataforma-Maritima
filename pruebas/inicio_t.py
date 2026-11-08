@@ -1,6 +1,12 @@
 """Primer uso, sin rastros de demo, temperatura y borrado de datos. Uso: python3 -I pruebas/inicio_t.py"""
 import os,sys,re
 from playwright.sync_api import sync_playwright
+import os,re
+# v1.39.0: la versión sale del CHANGELOG (la de arriba) y debe ser la misma que APPV en index.html
+_R=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VER=re.search(r'^## (\d+\.\d+\.\d+)',open(os.path.join(_R,'CHANGELOG.md'),encoding='utf8').read(),re.M).group(1)
+assert "APPV='"+VER+"'" in open(os.path.join(_R,'index.html'),encoding='utf8').read(),'APPV en index.html no es la versión del CHANGELOG '+VER
+
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local');fails=[];errs=[]  # modo local: nunca toca la base real
 def chk(c,m):
     print(('PASS ' if c else 'FAIL ')+m)
@@ -23,7 +29,7 @@ with sync_playwright() as p:
         pg.evaluate(f"go('{r}')");tx=pg.inner_text('#app')
         if DEMO.search(tx):seen.append((r,DEMO.search(tx).group(0)))
     pg.locator('#app [data-avatar]').click();tx=pg.inner_text('#pmenu');pg.keyboard.press('Escape')
-    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión 1.38.2' in tx,'el menú de perfil muestra la versión 1.38.0')
+    chk(not seen,f'ninguna pantalla muestra rastros de demo {seen}');chk('Versión '+VER in tx,'el menú de perfil muestra la versión '+VER)
     # temperatura real
     pg.evaluate("go('temperatura')");chk('Sin lecturas' in pg.inner_text('#app'),'temperatura empieza vacía (sin datos inventados)')
     pg.select_option('#tq_t','T2');pg.fill('#tq_a','150');pg.click('[data-a=tq]');chk('20 y 110' in pg.inner_text('#app'),'valida el rango de temperatura')
