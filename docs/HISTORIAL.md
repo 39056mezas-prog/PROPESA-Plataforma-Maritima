@@ -984,3 +984,11 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Resultado:** ver CHANGELOG 1.40.0. Sin cambios de esquema ni de reglas de Supabase; cómo dar de alta una maquila a mano en `SUPABASE.md` §10.
 - **Pruebas:** nueva `catalogos_t.py` (97 verificaciones); actualizadas `maquilas_t`, `v124_t`, `v135_t`.
 
+## Ronda v1.41.0 · 7/nov/2026 · «3D ligero en celular y app instalable»
+
+- **Pedido:** «este tanque 3D está roto en escritorio; prueba todo en celular y iPad Safari; quiero poder descargar la app… es la 3ª vez que pido que la plataforma sirva en el celular. El tanque 3D es muy grande para dibujarse: cuando está abierto rompe todo lo demás. Hazlo más simple, no necesito tanto detalle en cada caja.» Capturas: escritorio con la planta gigante y corrida; celular con la página en blanco arriba y la planta pegada abajo.
+- **Causa:** la planta eran cientos de capas de CSS 3D (`preserve-3d`). En celulares la tarjeta gráfica se quedaba sin memoria (Chrome deja en blanco o gris el resto de la página) y la perspectiva del navegador no coincidía con la de los letreros (CSS no escala la profundidad), por eso salía corrida o gigante.
+- **Resultado:** ver CHANGELOG 1.41.0. La planta es un solo lienzo; «Instalar app» a la vista en el menú y en el acceso.
+- **Pruebas:** nueva `v141_t.py`; `tanques3d_t`, `v1381_t` y `rendimiento_t` cuentan las canastas en el modelo y tocan con el dedo en su lugar. También se probó en **WebKit** (el motor de Safari, WebKitGTK) a 390, 768 y 1280 px: dibuja, toca tanque y canasta, sin errores.
+- **Sitio (propesa.org), misma ronda:** se quitaron el avión grande, la lancha con la langosta, el garabato de langosta y los barquitos/langosta pintados en el globo; solo queda el avioncito de la ruta Ensenada → China continental. Los nombres ya no «brincan»: están quietos desde el inicio y toda la capa entra con un desvanecido suave.
+
