@@ -34,7 +34,7 @@ El usuario lo resume así: que sea **tan fácil como la caja de McDonald's** (ve
 - **Varias cosas a la vez.** Los empleados anotan varias cajas a la vez: se muestran todas las cajas pendientes del cliente, no una por una. «Poner a todas las vacías» aplica una categoría de un toque.
 - **Los formularios no borran lo escrito** cuando hay un error: se marca el campo en rojo, se enfoca y se explica.
 - **Confirmar solo lo destructivo:** quitar caja, eliminar lote, restaurar respaldo, borrar datos (este último exige escribir BORRAR).
-- **El logo siempre regresa al inicio**, en cualquier modo.
+- **El logo siempre regresa al inicio**, en cualquier modo: en la vista completa al **Centro de operaciones**, en Modo piso a «¿Qué vas a hacer?» (v1.39.0). La maquila se cambia con su propio botón «PROPESA ▾» debajo del logo.
 - **Cambiar de modo** con un interruptor tipo iOS y una transición suave (sin animación si el equipo pide movimiento reducido).
 - **Listas cortas:** solo lo abierto o reciente (lotes 30 días, órdenes y embarques 14, temperatura 7) con «Ver historial».
 - **Mensajes:** un toast breve al guardar; nunca «Guardado» si el guardado falló (aviso rojo fijo con «Descargar respaldo» y «Reintentar»).
@@ -60,7 +60,7 @@ El usuario lo resume así: que sea **tan fácil como la caja de McDonald's** (ve
 - **Las acciones de la pantalla van juntas en el encabezado** (PDF, correo, eliminar), una sola vez. La confirmación de eliminar sale ahí mismo.
 - **Un formulario largo que no siempre se llena se pliega con su estado en el renglón** («⚠ Faltan 8 datos», «137.2 kg de peso bruto», «Ninguna», «2 lecturas · última 58.5 °F»). Se abre solo cuando es lo que toca (la hoja de empaque con todas las hieleras listas; el peso si no cuadra con la orden).
 - **Un aviso rojo abre el plegable** donde está lo que hay que corregir (`data-jump` / `data-jumpto` abren el `details` antes de bajar).
-- **Administración en pestañas:** Usuarios · Maquilas · Catálogos · Informes y respaldo. Una pantalla con más de 4 secciones independientes va en pestañas, no seguidas.
+- **Administración en pestañas:** Usuarios · Catálogos · Informes y respaldo (v1.40.0: sin Maquilas; las maquilas están fuera del programa). En Catálogos, «Eliminar» (rojo con bote, al final de la fila, del tamaño de «Editar») con la confirmación arriba de la tabla; solo se borra lo que nunca se usó, lo demás se oculta. Una pantalla con más de 4 secciones independientes va en pestañas, no seguidas.
 
 ## 3e. Textos de los formularios (v1.36.0, /impeccable clarify, el usuario aprobó todo)
 
@@ -71,6 +71,18 @@ El usuario lo resume así: que sea **tan fácil como la caja de McDonald's** (ve
 - **Lo que pide un campo se ve antes de fallar:** «(0 si no hubo)», «(mínimo 8)», «(opcional)».
 - **Confirmar dice qué se borra** y el botón dice la acción («Eliminar nota», «Eliminar de la orden»), nunca «Sí / No».
 - **Errores técnicos:** qué falló y qué hacer; el detalle técnico, si va, al final entre paréntesis.
+
+## 3f. Ley de Hick y Ley de Fitts (v1.39.0, «actualización Ley de Hick», pedida por el usuario)
+
+Problemas que resuelve: pantallas llenas, no poder regresar, quedar bloqueado sin poder editar, pantallas sin fin, menús anidados, el botón importante escondido.
+
+- **Una acción principal** por pantalla; lo demás discreto o plegado. Grupos de ~7 como máximo.
+- **«‹ Atrás»** en la barra de arriba en todas las pantallas (menos el inicio); en la app instalada en iPhone/iPad también se desliza desde la orilla izquierda. Regresa con lo escrito y el mismo lugar de la pantalla; primero cierra lo que esté abierto encima (vista previa grande de una hoja, Ajustes, menús). Sin «‹ Volver a…» dentro de la página.
+- **Nada se queda bloqueado:** un lote sin entrada o «sin lote» no tiene «Editar» que no deja cambiar el código; arriba de su página sale la tarjeta para arreglarlo: «+ Crear su entrada» (las hieleras pasan solas al guardar) o «Conectar» con una entrada que ya existe. En la tabla de Entrada esa fila dice «Arreglar ›».
+- **Tablas anchas:** las acciones van en la primera columna y se quedan fijas al deslizar.
+- **Lo que no siempre se usa, plegado:** «+ Repartir en otro tanque» en Entrada y en la hoja de Modo piso (se abre solo si tiene datos o un error).
+- **Ley de Fitts** (video que compartió el usuario): acción principal grande y, en tablet y celular, **abajo donde están los pulgares** (`.btn.thumb`); **toda la fila se toca** en las listas; **eliminar lejos de guardar** y discreto pero a la vista (texto rojo con bote, al final de las acciones; como Gmail o iOS), con confirmación que dice qué se borra; lo más usado, más grande.
+- **Corregir colores de varias hieleras** (solo Administrador): pantalla aparte desde la orden; marcar varias o «Las de Rojo», elegir el color, «Ahora → Así queda», confirmar y «Deshacer». El empaque normal no cambia.
 
 ## 4. Modo piso
 
@@ -88,13 +100,13 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 
 ## 5. Vista completa
 
-- Menú lateral navy fijo en tablet y computadora; en celular se oculta y se abre con ☰. Íconos sin números (v1.33.0). Desde la v1.34.0: Formatos, Panel; Operación (Modo piso, Entrada, Órdenes, Empaque, Embarque, Temperatura); Revisión (Mortalidad final, Hojas). Panel general está en el selector de maquila y Administración en el círculo del perfil.
+- Menú lateral navy fijo en tablet y computadora (más angosto en iPad: 184 px, v1.39.0); en celular se oculta y se abre con ☰. Íconos sin números (v1.33.0). Desde la v1.39.0: **Centro de operaciones**; Operación (Entrada, Órdenes, Empaque, Embarque, Temperatura); Revisión (Mortalidad final, Hojas); Modo (interruptor de Modo piso, al final). Panel general está en el botón de maquila y Administración en el círculo del perfil.
 - En celular (menú escondido), la barra de arriba dice dónde estás: junto a ☰ va el ícono y el nombre de la sección («Empaque», «Panel», «Temperatura»…), igual que en el menú. Solo el nombre: el usuario pidió quitar «Paso 3 de 5» (13/oct).
-- Administración (v1.35.0): pestañas Usuarios · Maquilas · Catálogos · Informes y respaldo.
+- Administración (v1.35.0): pestañas Usuarios · Catálogos · Informes y respaldo (Maquilas se quitó en la v1.40.0).
 - Barra superior: buscador, botón **Ajustes** (siempre visible, por accesibilidad) y círculo con la inicial del usuario.
 - Menú del círculo: nombre, correo, rol, **Administración** (solo admin), **Cerrar sesión** y la versión. **Ajustes no se mueve al menú**: se queda en la barra.
-- **Ajustes:** panel que **deja ver la pantalla de atrás** (translúcido, sin oscurecer; en celular, hoja desde abajo de máx. 66 % de alto). Tema claro/oscuro/del equipo y tamaño de texto con **deslizador de 3 tamaños** (Normal, Grande, Muy grande). Esc, ✕ o tocar fuera lo cierran; el foco regresa al botón. Abrirlo no borra lo que se estaba capturando.
-- Panel: título «Panel» con lo que sigue en una línea y su botón, totales, tablero de lotes por etapa, avance de órdenes, actividad reciente.
+- **Ajustes:** panel que **deja ver la pantalla de atrás** (translúcido, sin oscurecer; en celular, hoja desde abajo de máx. 66 % de alto). Tema claro/oscuro/del equipo y tamaño de texto con **deslizador de 5 tamaños** (Muy chico 11 px · Chico 13 · Normal 15 · Grande 17 · Muy grande 20; v1.39.0, sin «Vista previa»; las casillas nunca bajan de 16 px). Esc, ✕ o tocar fuera lo cierran; el foco regresa al botón. Abrirlo no borra lo que se estaba capturando.
+- **Centro de operaciones** (v1.39.0, une Panel y Formatos; **centro de mando, no otro menú**): título y maquila → 4 números que se tocan (En tanques, Recibido en 7 días, Hieleras empacadas, Embarques abiertos) → planta 3D con el tablero de tanques → plegados (órdenes, tablero de lotes, actividad). **Sin lista de avisos** (están en la campana; el usuario no quiere que lo «inunde») y **sin cuadrícula de accesos a los módulos** (están en el menú; se probó una franja de colores y el usuario la quitó: no repetir).
 - En celular, las filas de Empaque se vuelven tarjetas.
 
 ## 6. Accesibilidad (mínimos)
@@ -129,7 +141,7 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - Un usuario no técnico debe poder usarla: textos simples, un paso a la vez.
 
 ### Tanques en 3D (v1.31.0)
-- Arriba del tablero de tanques en Entrada y Panel general. El tablero plano sigue abajo y es el que se usa con teclado o lector de pantalla.
+- En Entrada (plegado), en el Centro de operaciones (debajo de los 4 números) y en Panel general (**debajo de los 4 totales**, v1.39.0). Se prende y se apaga con **su propio ícono (cubo «3D»)**, siempre en el mismo lugar, y el equipo lo recuerda. El tablero plano sigue abajo y es el que se usa con teclado o lector de pantalla.
 - Color de la canasta: **solo la talla** (listón), con los colores de la maquila de esa canasta. La maquila se dice con texto (letrero de cerca, tarjeta de la canasta), nunca con color.
 - Un toque elige; arrastrar gira (no abre nada). Botones de cámara de 48 px para guantes.
 
@@ -146,7 +158,7 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - Entrada en Modo piso con **una ventana por entrada** (asistente de pasos); quiere capturar varias a la vez (13/oct).
 - Que las cajas guardadas **desaparezcan** de la pantalla.
 - Que Ajustes **oscurezca o tape** la pantalla.
-- Más de 3 tamaños de texto (se probó un rango 12–20 px; regresó a 3, pero con deslizador).
+- ~~Más de 3 tamaños de texto~~ **Cambió el 7/nov/2026 (v1.39.0) a pedido del usuario:** 5 tamaños, también más chicos (hasta 75 %).
 - Mover el botón de Ajustes al menú del perfil.
 - ~~Teclado numérico propio en Modo piso (se quitó el 12/oct).~~ **Regresó el 13/oct a pedido del cliente**, distinto: fijo en pantalla (no aparece y desaparece), en todas las vistas de Empaque. Ver §4 y `HISTORIAL.md` (v1.3.0).
 - Cambiar muchas cosas sin validarlas: el equipo sintió que se trabajaba «sin rumbo».

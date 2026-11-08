@@ -141,3 +141,10 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - **Mortalidad:** `espK(l)` = existencia sin despatada (esperado del conteo final); `calc(l)` agrega `desp` (despatada recibida), `mer` y `pm`.
 - **Temperatura:** `TZS.a` (agua) y `TZS.p` (producto), 5 zonas cada una; `tZv(v,k)` zona más alta, `tLv` su nivel, `tOut(v,k)` = Alerta o Crítico, `tAdv` = Advertencia; `TZI` = referencia de la industria (solo se muestra).
 - Sin cambios en Supabase.
+
+## v1.40.0 · Eliminar en Catálogos (sin cambios de estructura)
+- `cdDel` quita el elemento de `ST.PV`, `ST.ES`, `ST.DS`, `ST.SZ` o `ST.CN` (su registro `V/`, `E/`, `X/`, `Z/tallas` o `K/<n>` se borra o cambia en la base como cualquier otro). Solo si `cdUse` no encuentra nada que lo use en ninguna maquila.
+- **Talla en la posición i:** se quita `z[i]` de `OR[].lines[].z` y `P[].z` de esa maquila (ya valían 0). No se borra una talla de en medio si otra maquila tiene hieleras `LOTE@esta` (esas hieleras toman la talla por posición).
+- **Consignatario en la posición i:** en todas las maquilas, `lines[].cons > i` baja 1; las llaves `ciudad|n` de `OR[].sh` y `OR[]._sh` también; `ST.CC` se recorre. Los registros `K/<n>` quedan recorridos (el último se borra).
+- **Destino:** se quita de `p` de los consignatarios que lo tenían (no se borra si es el único destino de alguno).
+- **Maquilas:** `ST.MQL` ya no se cambia desde la app (sin pestaña Maquilas); se da de alta a mano (`SUPABASE.md` §10).

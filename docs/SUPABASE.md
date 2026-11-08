@@ -137,3 +137,24 @@ Decisión del usuario: nadie puede borrarlo todo desde la app; si algún día ha
 3. **Fotos:** Supabase → **Storage** → `fotos` → selecciona la carpeta `notas` → *Delete*.
 4. En las tablets: abrir la app con internet; en unos segundos se vacían solas.
 
+## 10. Agregar o quitar una maquila a mano (desde la v1.40.0)
+
+Decisión del usuario (7/nov/2026): las maquilas están fuera del programa; la app ya no las agrega, oculta ni renombra. Si algún día hace falta, se hace aquí. Lista de siempre: 1 PROPESA, 2 Abel, 3 David, 4 Luis Arce.
+
+1. Supabase → proyecto `propesa_bc` → **SQL Editor** → New query. Primero mira cuáles hay:
+   ```sql
+   select k, v from public.app_records where k like 'Q/%' and v is not null order by k;
+   ```
+2. **Si no sale ninguna**, la app está usando la lista de siempre: hay que escribir las 4 antes de agregar otra (si solo escribes la nueva, sería la única).
+   ```sql
+   insert into public.app_records (k, v) values
+     ('Q/1','{"id":1,"n":"PROPESA"}'),('Q/2','{"id":2,"n":"Abel"}'),('Q/3','{"id":3,"n":"David"}'),('Q/4','{"id":4,"n":"Luis Arce"}')
+   on conflict (k) do nothing;
+   ```
+3. **Agregar** (número que no exista, nombre de hasta 40 letras):
+   ```sql
+   insert into public.app_records (k, v) values ('Q/5','{"id":5,"n":"Nueva maquila"}')
+   on conflict (k) do update set v = excluded.v, rev = nextval('public.app_rev'), updated_at = clock_timestamp();
+   ```
+   **Ocultarla** (sus datos se quedan): el mismo `update` con `{"id":5,"n":"Nueva maquila","off":true}`. **Cambiarle el nombre:** igual, con el nombre nuevo. PROPESA (1) no se oculta.
+4. En las tablets: abrir la app con internet; en unos segundos sale en «PROPESA ▾» y en Usuarios (maquilas de cada cuenta de solo inventario).

@@ -941,6 +941,12 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 **Hecho:** ver `CHANGELOG.md` 1.37.0. Se arregló el código (sin `??`, colores fijos antes de cada `color-mix`, `saveBlob`) y se agregó la capa `CPX`, que solo actúa en un navegador viejo. Comparado pixel a pixel contra la versión moderna en una simulación de Safari 12 (768×1024 y 1024×768, tema claro y oscuro, Modo piso y teclado): iguales. En equipo viejo, sin desenfoque y la planta 3D empieza apagada.
 **Pendiente:** probar en el iPad mini de verdad (la simulación corre en Chromium, no en Safari 12). Si es iOS 9 (iPad mini 1), no corre.
 
+## 7/nov/2026 · v1.38.3 · Acceso gris en el celular
+
+**Pedido:** «La app.propesa.org está rota en móvil» (captura de un Android: debajo del título todo gris, solo la planta 3D, hasta mover la pantalla).
+
+**Hecho:** ver `CHANGELOG.md` 1.38.3. La vista previa del acceso usaba ~300 capas de CSS 3D; en un celular con poca memoria de video Chrome dejaba sin pintar el resto. Ahora la planta del acceso es una imagen (`acceso-planta.png`) y las etiquetas siguen en texto.
+
 ## 6/nov/2026 · v1.38.2 · Pendientes de la 1.38.1
 
 **Pedido:** «arregla esto: el espacio reportes sigue existiendo, dos etiquetas de la planta 3D se tapan, fotos_t falla en la corrida completa; y también quita las etiquetas de los tanques vacíos».
@@ -959,4 +965,22 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 **Revisión:** 70 grupos de pruebas TODO BIEN; cada hallazgo reproducido con el Supabase de mentira y dos navegadores (informe en el proyecto: `claude/AUDITORIA_PONYTAIL_v1.37.0.md`). Plataforma: #1 tablet sin recargar borraba campos nuevos; #2 la misma hoja en dos equipos sumaba los kilos; #3 al entrar Piso se borraba lo pendiente del Administrador; #5 `rendimiento_t.py` fallaba sin que nadie lo viera. Sitio: #4 globo vacío al perder el 3D, #6 código sin uso, #7 dibujo continuo con «Reducir movimiento».
 **Hecho:** ver `CHANGELOG.md` 1.38.0. Sitio: se recupera la foto fija si el teléfono quita el 3D, textura de 2048×1024 (284 KB, antes 734 KB), solo dibuja cuando algo cambia con «Reducir movimiento», 8 líneas sin uso borradas. Datos, Supabase y reglas sin cambios.
 **Pendiente:** los lotes de antes de la v1.38.0 capturados dos veces no se pueden detectar (tenían el mismo id de contador).
+
+---
+
+## Ronda 7/nov/2026 · v1.39.0 «Actualización Ley de Hick»
+
+- **Pedido:** lista de 13 puntos (texto más chico, Formatos con color, logo → inicio, Panel general con los números arriba, «‹ Atrás» tipo iOS, lote sin entrada que se bloqueaba, otro tanque plegado, corregir el color de 30 hieleras a la vez, datos oficiales en los PDF, Formatos debajo de Panel, el botón del 3D que se perdía, «Centro de operaciones», revisión Hick de toda la app). Con /ponytail full; plan escrito en el proyecto (`claude/PLAN_LEY_DE_HICK_v1.39.0.md`) y aprobado antes de probar.
+- **A media ronda:** sin avisos en el Centro («por eso tenemos el ícono arriba»); formatos en una franja delgada debajo de los 4 cuadros y luego el 3D (después pidió quitarla del todo: «centro de mando, no otro menú»); menú navy más angosto en iPad; aplicar las 5 reglas de la Ley de Fitts (video de Instagram).
+- **Resultado:** ver CHANGELOG 1.39.0. Sin cambios de datos ni de Supabase.
+- **Pruebas:** /ponytail ultra sobre `pruebas/`: no había pruebas huérfanas ni de funciones que ya no existen (las 73 se corrían); lo que costaba era el tiempo y el mantenimiento: corrida en paralelo, lista automática, corridas por nombre, versión leída del CHANGELOG. Los archivos `vNNN_t` se quedan: prueban funciones vigentes y juntarlos no ahorra tiempo.
+
+---
+
+## Ronda 7/nov/2026 · v1.40.0 «Eliminar en Catálogos, sin Maquilas»
+
+- **Pedido:** «en admin settings debería de poder eliminar proveedores y también las especies y las demás cosas también se pueden borrar… no vamos a poder agregar maquilas, eso va a estar fuera del programa; no agregar ni quitar maquilas» (captura de Proveedores con NEWPROV y provenew2 de prueba).
+- **Plan y respuestas:** lo usado no se borra («todo lo demás sigue igual»); tallas y consignatarios «borrar solo si nunca se usó»; Maquilas: «quítame toda esa pestaña».
+- **Resultado:** ver CHANGELOG 1.40.0. Sin cambios de esquema ni de reglas de Supabase; cómo dar de alta una maquila a mano en `SUPABASE.md` §10.
+- **Pruebas:** nueva `catalogos_t.py` (97 verificaciones); actualizadas `maquilas_t`, `v124_t`, `v135_t`.
 

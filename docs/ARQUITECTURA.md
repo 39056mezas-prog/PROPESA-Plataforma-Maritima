@@ -193,7 +193,7 @@ Todo el código está en el bloque «Base compartida (Supabase)» de `index.html
 | `stSync()` = `cnSync()` + `szSync()` | Consignatarios/destinos (`CONS`, `PORTS`) y tallas (`S`, `RC`, `TKEY`, `TNM`, `SZC`, `SON`… y el CSS `#szcss`) de lo que está abierto. Se llama en `render()`, al cambiar de maquila, al recibir cambios y al restaurar |
 | `mqLogo(cls)` · `#mqmenu` | Botón del logo (menú y Modo piso) y su menú «Cambiar de maquila» (`data-mq`, `data-mqgo`). En otra maquila muestra su nombre (`.mqnm`) en lugar del logo |
 | Rutas nuevas | `general` (Panel general, solo Administrador, a donde entra: `home0()`), `hojas` (Hojas para imprimir) |
-| Administración | `mqCard` (`data-mqa`), `szCard` (`data-sza`), `consCard` (`data-cna`, `data-cnp`), `destCard` (`data-dsa`) |
+| Administración | `szCard` (`data-sza`), `consCard` (`data-cna`, `data-cnp`), `destCard` (`data-dsa`); v1.40.0: `cdBtn` · `cdPanel` · `cdUse` · `cdDel` (`data-cdel`, Eliminar en Catálogos); sin `mqCard` |
 | Lote | Movimientos con `MVO`/`mvL`/`L.nt`; `prCard`/`prSave` (`data-a=prs`) |
 | Embarque | `data-mc`, `data-ta` (% del cliente y temperatura de arribo; se redibuja con `setTimeout` para no chocar con el `blur`) |
 | PDF | `pdfHRec`, `pdfHEnv`, `pdfHExi`, `pdfHCon`, `pdfHPre`, `pdfHBal` (claves `hrec`… en `pdfMake`; argumento `desde|hasta|existencia física`). `PdfRep` agrega «Maquila <nombre>» al subtítulo y `pdfName` al archivo |
@@ -273,3 +273,15 @@ Meta: que corra desde un **iPad mini 2/3 con iOS 12 (Safari 12)**. Lo nuevo se p
 - Ids: `f6:<orden>`, `emb-peso:<u>`, `emb-obs:<u>`, `lot-tmp:<lote>` (v1.35.0), `ent-tq`, `ev:<clave de notas>`, `lot-tq:<lote>`, `lot-pr:<lote>`, `lot-mv:<lote>`, `pb:<orden>` y `pb:<orden>.<línea>`, `mort-calc`.
 - Pruebas que necesitan lo de adentro: `FOLD['ent-tq']=true` antes de `go('recepcion')`, `ABRIR` (abre los plegables de la pantalla) o `PLEG` (todos abiertos en esa página).
 
+
+## v1.39.0 · Ley de Hick y Ley de Fitts (piezas nuevas)
+
+- **Atrás:** `bkBtn()` (botón «‹ Atrás» de la barra, vista completa y Modo piso), `goBack()` (cierra lo abierto encima con `navOverlay()`, si hay pantalla anterior `history.back()`, si no sube con `UP`), `NAVI` (número de pantalla en el historial, va en `history.state.i`), `SNAP` (foto de cada pantalla: `form`, `uf`, lo escrito y el scroll; se toma en `go()` y en `popstate`, y se pone con `snapPut`). Deslizar desde la orilla izquierda solo en la app instalada (`display-mode: standalone`); no cuenta si empieza en la planta 3D o en un campo.
+- **Logo:** `mqLogo()` devuelve dos botones: `.lgh` (va a `inicio` o `piso`) y `button.mqn[data-mq]` (abre el menú de maquilas; se ve de 30 px y se toca en 44 con `::after`).
+- **Centro de operaciones:** la ruta sigue siendo `inicio` (`formatos` llega ahí: `PG.formatos=inicio` y `render0` cambia `V`). Sin cuadrícula de accesos ni avisos.
+- **3D:** `t3View()` pinta siempre `.t3tg` (`data-t3a="on|off"`, `aria-pressed`, `IC.cube`) en el mismo lugar.
+- **Lote sin entrada:** `neJoinCard(r)` (tarjeta `#nejoin` arriba de la página del lote), acción `nfj` → `form={t:'lot',join:lote}`; al guardar la entrada, `neJoin(form.join, nuevo)`.
+- **Colores de varias hieleras:** ruta `colores:<orden>`, `colores(id)`, estado `CC` (selección) y `CCU` (deshacer); solo cambia `b.k`; `ccLock(b)` = embarque cerrado.
+- **PDF:** `EMPRESA` (nombre, RFC, dirección, teléfono, correo) en el encabezado (debajo del logo) y en el pie de cada página.
+- **Fitts:** `.btn.thumb` (acción principal fija abajo con `pointer:coarse` hasta 1100 px), `.btn.dq` (eliminar discreto, `margin-left:auto` al final de la fila de acciones), `tr[data-row="pantalla:id"]` (toda la fila se toca; los botones de la fila no).
+- **Ajustes:** `FS_STEPS` con 5 tamaños (11–20 px); `fsSnap` acomoda valores viejos.
