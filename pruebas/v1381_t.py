@@ -118,7 +118,7 @@ with sync_playwright() as p:
         chk(ov==[],f'{vw[0]}: ninguna etiqueta de tanque queda detrás de los botones de la cámara {ov}')
         tg=pg.evaluate("[...document.querySelectorAll('.t3v .t3tag')].map(e=>e.textContent)")
         chk(tg and not any('Vacío' in t for t in tg) and len(tg)==pg.evaluate("TK.filter(t=>(T3.cs[t]||[]).n>0).length"),f'{vw[0]}: v1.38.2 · solo los tanques con canastas llevan etiqueta {tg}')
-        chk(pg.locator('.t3v .t3sign').count()==6,f'{vw[0]}: los 6 tanques siguen con su letrero «TANQUE n»')
+        chk(pg.evaluate("T3.labs.filter(l=>l.sg).length")==6,f'{vw[0]}: los 6 tanques siguen con su letrero «TANQUE n»')
         ctx.close()
     # ---------- 6 · sin pointer events
     ctx,pg=start(b,'admin@propesa.mx','admin123','inicio',touch=False,init="delete window.PointerEvent")

@@ -39,8 +39,8 @@ with sync_playwright() as p:
     ctx = b.new_context(viewport={'width': 1080, 'height': 810}, has_touch=True, is_mobile=True, user_agent=IPAD)
     ctx.add_init_script("Object.defineProperty(navigator,'platform',{get:()=>'MacIntel'});Object.defineProperty(navigator,'maxTouchPoints',{get:()=>5})")  # iPadOS se presenta como Mac con pantalla táctil
     pg = ctx.new_page(); pg.on('pageerror', lambda e: errs.append(str(e))); entrar(pg)
-    pg.click('[data-avatar]'); chk(pg.locator('[data-pm=inst]').count() == 1, 'iPad: el menú del perfil trae «Instalar app»')
-    pg.click('[data-pm=inst]'); pg.wait_for_timeout(100); tx = pg.inner_text('#inst') if pg.locator('#inst').count() else ''
+    pg.click('[data-avatar]'); chk(pg.locator('#pmenu [data-pm=inst]').count() == 1, 'iPad: el menú del perfil trae «Instalar app»')
+    pg.click('#pmenu [data-pm=inst]'); pg.wait_for_timeout(100); tx = pg.inner_text('#inst') if pg.locator('#inst').count() else ''
     chk('Compartir' in tx and 'Agregar a inicio' in tx and 'arriba a la derecha' in tx, 'iPad: tocarlo dice los pasos y dónde está Compartir')
     pg.click('[data-inst=no]'); chk(pg.locator('#inst').count() == 0, 'iPad: «Entendido» la cierra')
     # ---------- 4: Empaque en iPad ----------
