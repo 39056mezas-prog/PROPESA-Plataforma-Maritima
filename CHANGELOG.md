@@ -1,5 +1,45 @@
 # Cambios
 
+## 1.40.0 · 7 de noviembre de 2026 · «Eliminar en Catálogos, sin Maquilas»
+
+Pedido del usuario: «en admin settings debería de poder eliminar proveedores y también… las especies y las demás cosas también se pueden borrar. No vamos a poder agregar maquilas: eso va a estar fuera del programa; no agregar ni quitar maquilas». Plan aprobado: borrar solo lo que nunca se usó (lo demás sigue igual); tallas y consignatarios también, solo si nunca se usaron; quitar toda la pestaña Maquilas.
+
+- **Catálogos → «Eliminar»** en Tallas, Proveedores, Especies, Consignatarios y Destinos (solo el Administrador): texto rojo con bote, al final de la fila, del mismo tamaño que «Editar». La confirmación sale arriba de la tabla (donde se abre «Editar») y dice qué se borra: «¿Eliminar el proveedor NEWPROV? No se puede deshacer.» → «Sí, eliminar proveedor» / «No».
+- **Solo se borra lo que nunca se usó, en ninguna maquila.** Si ya se usó, dice en qué («tiene 1 lote», «está en 2 órdenes», «es el único destino de XIAMEN COASTAL»…) y ofrece «Ocultar»; sus lotes y órdenes no cambian. Siempre queda al menos uno visible de cada cosa.
+- **Tallas y consignatarios** se guardan por posición: al borrar uno, lo guardado detrás se recorre a su nuevo lugar (hieleras por talla de órdenes y embarques; consignatario, embarque y color de las órdenes de todas las maquilas). Una talla de en medio no se borra si otra maquila tiene hieleras de lotes de esta.
+- **Destinos:** al borrar uno se quita también de los consignatarios que lo tenían (si es el único destino de alguno, primero hay que cambiarle el destino).
+- **Sin pestaña Maquilas:** Administración queda en Usuarios · Catálogos · Informes y respaldo. Ya no se agregan, ocultan ni renombran maquilas en la app (se hace a mano en la base, ver `docs/SUPABASE.md`). Se sigue cambiando de maquila con «PROPESA ▾» y en Usuarios se siguen eligiendo las maquilas de cada cuenta de solo inventario.
+- Lo borrado deja de compartirse (su registro se borra en la base como cualquier otro). Sin cambios en el esquema ni en las reglas de Supabase.
+- **Pruebas:** nueva `catalogos_t.py`; actualizadas `maquilas_t`, `v124_t` y `v135_t` (sin pestaña Maquilas).
+
+## 1.39.0 · 7 de noviembre de 2026 · «Actualización Ley de Hick»
+
+Pedido del usuario (lista de 13 puntos, plan aprobado el 7/nov): menos opciones a la vista, poder regresar siempre, no quedar bloqueado, pantallas con fin y el botón importante a la mano. A media ronda agregó: sin avisos en el Centro, menú más angosto en iPad, las 5 reglas de la Ley de Fitts y que el Centro sea «centro de mando, no otro menú» (sin la cuadrícula de formatos).
+
+- **Centro de operaciones** (une Panel y Formatos; centro de mando, no otro menú): 4 números que se tocan → planta 3D con el tablero de tanques → plegados (órdenes, tablero de lotes, actividad). Sin lista de avisos (están en la campana) y sin cuadrícula de accesos a los módulos (están en el menú). `formatos` llega aquí.
+- **Logo = Centro de operaciones** (Modo piso: «¿Qué vas a hacer?»); la maquila se cambia con su propio botón «PROPESA ▾». En Modo piso se quitó el botón «Inicio» repetido.
+- **«‹ Atrás»** en la barra de arriba (y deslizar desde la orilla en la app instalada en iPhone/iPad): regresa a la pantalla anterior con lo escrito y el mismo lugar; primero cierra lo abierto encima (vista previa grande de Hojas, Ajustes, menús). Se quitaron los «‹ Volver a…» de dentro de las páginas.
+- **Ajustes:** 5 tamaños de texto (11, 13, 15, 17 y 20 px); sin «Vista previa». Las casillas no bajan de 16 px y los botones del teclado no bajan de 44 px.
+- **Panel general:** primero los 4 totales y abajo el 3D. **3D con su propio ícono (cubo)**, siempre en el mismo lugar.
+- **Entrada:** acciones (Ver, Editar o «Arreglar ›», Eliminar) en la primera columna, fijas al deslizar; toda la fila abre el lote. «+ Repartir en otro tanque» plegado (formulario y hoja de Modo piso).
+- **Lote sin entrada / sin lote:** ya no se queda bloqueado; arriba sale la tarjeta para arreglarlo: «+ Crear su entrada» (al guardar, sus hieleras pasan solas) o «Conectar» con una entrada que ya existe.
+- **Corregir color de varias hieleras** (solo Administrador): pantalla aparte desde la orden, «Las de Rojo», color nuevo, «Ahora → Así queda», confirmar, «Deshacer». Las de un embarque cerrado no se tocan (lleva al embarque).
+- **PDF:** todos llevan los datos oficiales (Proveedor del Pescador S.A. de C.V. · RFC PPE130617V37 · Calle Parcela 88 Sin Número, Col. Maneadero, Ensenada, B.C., C.P. 22790 · Tel. 646 596 0833 · propesaseafood@gmail.com) arriba, y nombre, RFC y teléfono en el pie de cada página.
+- **Ley de Fitts:** la acción principal de Entrada, Lote, Orden y Embarque baja a donde están los pulgares en tablet y celular (`.btn.thumb`); en las listas toda la fila se toca; «Eliminar» discreto pero a la vista (texto rojo con bote, al final de las acciones) y confirmación que dice qué se borra.
+- **Revisión de pantallas:** Orden con «Empacar lo que falta ›» arriba; Embarque con las consignaciones antes del camión; menú con el interruptor de Modo piso al final y más angosto en iPad; barra de Modo piso en un renglón en iPad mini.
+- **Pruebas (/ponytail ultra):** `correr_todo.sh` toma la lista sola de los `*_t.py` (antes había que agregarlos a mano), corre en paralelo (una por núcleo) y acepta nombres para correr solo esas; `rendimiento_t` sigue al final y sola. La versión de `inicio_t`/`acceso_t` sale del CHANGELOG (ya no hay que cambiar pruebas en cada versión). Nueva `hick_t.py` (68 verificaciones). Corrida completa: **74 grupos, 4,098 verificaciones, TODO BIEN**. Actualizadas a lo nuevo: ajustes, atras, avisos, cambio_modo, interruptor, maquilas, tanques3d, titulo, traslados, v124, v133, v134, v136, v1381.
+- Sin cambios en datos, base ni reglas de Supabase.
+
+## 1.38.3 · 7 de noviembre de 2026
+
+Pedido del usuario: «La app.propesa.org está rota en móvil» (captura: en el celular, la pantalla de acceso se quedaba gris debajo del título y solo se veía la planta, hasta mover la pantalla).
+
+- **Causa:** la planta de la vista previa del acceso se dibujaba en vivo con CSS 3D: ~300 capas para la tarjeta gráfica (cada canasta, pata y barandal), unos 360 MB en un celular de pantalla densa. Cuando el teléfono no tiene tanta memoria libre, Chrome no alcanza a pintar el resto de la pantalla y la deja del color de fondo (gris) hasta que algo se mueve. Repetido en pruebas limitando la memoria de la tarjeta gráfica a 32–64 MB: igual que la captura.
+- **Arreglo:** en el acceso la planta es una sola imagen ya dibujada (`acceso-planta.png`, 97 KB, sacada del mismo dibujo con `pruebas/generar_planta_acceso.py`). Se ve igual, en el mismo lugar y tamaño; las etiquetas «T1 · 48 canastas» y las placas «TANQUE n» siguen siendo texto encima. De 316 capas a 17; con 32 MB ya se pinta todo.
+- La planta en 3D del Panel no cambia (en el celular no se muestra; en tablet y computadora sigue en vivo).
+- Si algún día cambia el dibujo de la planta, hay que volver a correr `pruebas/generar_planta_acceso.py` y copiar la línea `MKI` que imprime en `index.html`.
+- Actualizadas: `acceso_t.py` (imagen en lugar de CSS 3D, sin capas 3D, placas encima de la imagen), `inicio_t.py` (versión).
+
 ## 1.38.2 · 6 de noviembre de 2026
 
 Pedido del usuario: terminar lo que quedó pendiente de la 1.38.1 y «quita las etiquetas de los tanques vacíos».

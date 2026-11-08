@@ -1,7 +1,7 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.38.2** (6 de noviembre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.40.0** (7 de noviembre de 2026).
 
 ## Qué es
 
@@ -10,7 +10,32 @@ Sigue cada lote por este flujo, que **no se cambia sin permiso del usuario**:
 
 **Entrada → Órdenes → Empaque → Embarque**
 
-**Herramienta, no asistente (v1.33.0, decidido por el usuario):** el flujo dice cómo se conectan los datos, no en qué orden se captura. La vista completa abre en «Formatos» (cada formato abre directo, según el rol); el menú no lleva números ni «Siguiente paso». No vuelvas a forzar empezar por la Entrada.
+## Regla principal de trabajo: plan → aprobación → pruebas (v1.39.0, pedido del usuario)
+
+1. **Primero el plan:** antes de cambiar algo mediano o grande, di qué vas a cambiar, pantalla por pantalla, y **espera su «aprobado»**.
+2. **Las pruebas cuestan tiempo:** no corras pruebas antes de que apruebe. Mientras construyes, corre **solo las de lo que tocaste**: `sh pruebas/correr_todo.sh ajustes_t menu_t …`. La corrida completa va **una vez al final**.
+3. Si el usuario pide algo a media ronda, se suma al plan sin volver a empezar.
+
+## Ley de Hick y Ley de Fitts (v1.39.0, «actualización Ley de Hick», pedida por el usuario) · aplica a TODA pantalla nueva o cambiada
+
+Lo que el usuario quiere evitar: pantallas llenas, no poder regresar, quedar bloqueado sin poder editar, pantallas sin fin, menús dentro de menús, el botón importante escondido.
+
+**Hick (menos opciones a la vista = decide más rápido):**
+- **Una acción principal por pantalla** (azul, `.btn`), arriba en el encabezado (`guide()`); lo demás discreto (`.btn.q`) o plegado (`fold()`).
+- **Agrupa y acorta:** máximo ~7 opciones juntas; si hay más, en grupos o pestañas. Nada de menús anidados: todo a un toque desde su pantalla.
+- **Siempre se puede regresar:** «‹ Atrás» en la barra (`bkBtn()`/`goBack()`); regresa con lo escrito y el lugar de la pantalla (`SNAP`). No pongas «‹ Volver a…» dentro de la página.
+- **Nunca bloquear:** si algo no se puede editar, la pantalla dice por qué y lleva al paso que lo arregla (ej. lote sin entrada → tarjeta `#nejoin` con «Crear su entrada» / «Conectar»).
+- **Sin avisos de más:** los pendientes van en la campana; el Centro de operaciones no los repite (el usuario lo pidió).
+- **Pantallas con fin:** lo de consulta va plegado al final; listas cortas con «Ver historial».
+
+**Fitts (botones grandes y a la mano; video que compartió el usuario):**
+1. La acción principal es grande (≥ 48 px; en Modo piso ~60) para tocarla sin mirar.
+2. En tablet y celular la acción principal de la pantalla va abajo, donde están los pulgares: clase `.btn.thumb` (fija abajo; en celular a todo lo ancho).
+3. En una lista **toda la fila se toca** (`<tr data-row="pantalla:id">`); los botones de la fila siguen funcionando.
+4. **Eliminar lejos de guardar:** `.btn.dq` (texto rojo con bote de basura, sin fondo, al final de la fila de acciones); confirmar dice qué se borra («¿Eliminar el lote X?» → «Sí, eliminar lote» / «No»).
+5. Lo que más se toca es lo más grande y lo más cerca.
+
+**Herramienta, no asistente (v1.33.0, decidido por el usuario):** el flujo dice cómo se conectan los datos, no en qué orden se captura. **Desde la v1.39.0 la vista completa abre en el «Centro de operaciones»** (Panel + Formatos juntos, **centro de mando, no otro menú**: 4 números que se tocan → planta 3D → plegados; **sin cuadrícula de accesos a los módulos** (para eso está el menú) **ni lista de avisos** (para eso está la campana); el logo siempre lleva ahí; la maquila se cambia con su propio botón «PROPESA ▾»); el menú no lleva números ni «Siguiente paso». No vuelvas a forzar empezar por la Entrada.
 
 **Pantallas limpias (v1.34.0, decidido por el usuario):** cada sección abre con `guide()` = título, una línea y la acción principal arriba; PDF y correo son botones discretos (`.btn.q`). Lo secundario va en `fold()` (plegable que recuerda si quedó abierto). No vuelvas a poner recuadros azules de explicación ni tarjetas «Archivo de este paso».
 
@@ -20,7 +45,9 @@ Sigue cada lote por este flujo, que **no se cambia sin permiso del usuario**:
 
 **iPad viejo (v1.37.0, pedido del usuario):** se usa sobre todo en un iPad mini viejo; tiene que correr desde **iOS 12 (Safari 12)**. En el JavaScript **no uses `??` ni `?.`** (deja la app en blanco en iOS 12–13; usa `(a!=null?a:b)`) ni `.at()`, `replaceAll`, `structuredClone`, `dateStyle`; las descargas van con `saveBlob()`. En el CSS, **cada `color-mix()` lleva antes un color fijo `var(--cm-…)`**, nada de `inset:` y `position:sticky` con `-webkit-sticky`. `@container`, `:has`, `:is`, `:focus-visible`, `clamp()` y `gap` sí se pueden usar: la capa `CPX` los resuelve en el iPad viejo (ver `docs/ARQUITECTURA.md` → «iPad viejo»). `pruebas/ipad_viejo_t.py` lo revisa.
 
-**Maquilas (v1.19.0):** cada maquila (PROPESA, Abel, David, Luis Arce) guarda aparte sus datos; `ST` es la maquila abierta y `STX` las demás (ver `docs/DATOS.md`). Todo lo nuevo que sea de la operación va dentro de la maquila; lo de la empresa o lo físico (usuarios, proveedores, consignatarios, tanques) se comparte en `SHF`.
+**Maquilas (v1.19.0):** cada maquila (PROPESA, Abel, David, Luis Arce) guarda aparte sus datos; `ST` es la maquila abierta y `STX` las demás (ver `docs/DATOS.md`). Todo lo nuevo que sea de la operación va dentro de la maquila; lo de la empresa o lo físico (usuarios, proveedores, consignatarios, tanques) se comparte en `SHF`. **Desde la v1.40.0 las maquilas están fuera del programa** (usuario: «no agregar ni quitar maquilas»): no hay pestaña Maquilas ni botones para agregarlas, ocultarlas o renombrarlas; se dan de alta a mano en la base (`docs/SUPABASE.md` §10). No los vuelvas a poner.
+
+**Eliminar en Catálogos (v1.40.0, aprobado por el usuario):** tallas, proveedores, especies, consignatarios y destinos se pueden eliminar **solo si nunca se usaron en ninguna maquila** (`cdUse`); si ya se usaron, la confirmación dice en qué y ofrece «Ocultar». Tallas y consignatarios van por posición: al borrar uno, `cdDel` recorre lo guardado detrás (z de líneas y embarques; `cons`, `sh`, `_sh` y `ST.CC` en todas las maquilas). Si agregas otro dato guardado por posición de talla o consignatario, agrégalo también a `cdUse` y `cdDel`.
 
 **Mortalidad final va aparte** (decidido por el usuario el 16/oct/2026): no es un paso del flujo; se calcula sola con el conteo final de cada lote y las vivas al llegar de cada envío, y se revisa cuando se necesite (menú → «Revisión»).
 
@@ -69,7 +96,9 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 
 ```bash
 python3 -m http.server 8765                 # servir en http://localhost:8765
-sh pruebas/correr_todo.sh                   # 73 grupos de pruebas (con v1381_t y rendimiento_t), debe terminar en «TODO BIEN»
+sh pruebas/correr_todo.sh                   # TODAS las pruebas (*_t.py + e2e), en paralelo; debe terminar en «TODO BIEN». Solo al final de la ronda
+sh pruebas/correr_todo.sh hick_t menu_t     # solo las de lo que tocaste (lo normal mientras construyes)
+J=1 sh pruebas/correr_todo.sh               # una por una (si el equipo es lento)
 python3 -I pruebas/rendimiento_t.py         # rendimiento con un año de datos
 node pruebas/accesibilidad.mjs pruebas/datos/backup.json   # Lighthouse (npm i lighthouse puppeteer-core)
 ```
@@ -84,7 +113,7 @@ Las pruebas usan Python 3 + Playwright con Chromium. Si `correr_todo.sh` ya leva
 
 ## Antes de dar algo por terminado
 
-- [ ] `sh pruebas/correr_todo.sh` → TODO BIEN (agrega pruebas para lo nuevo).
+- [ ] Plan aprobado por el usuario antes de probar; pruebas de lo tocado durante la ronda y `sh pruebas/correr_todo.sh` → TODO BIEN una vez al final (agrega pruebas para lo nuevo; un archivo `*_t.py` nuevo entra solo a la corrida).
 - [ ] Revisado en 390, 768 (iPad mini), 820 y 1440 px, y con texto «Muy grande» (20 px): sin desbordes.
 - [ ] `ipad_viejo_t.py` en TODO BIEN (se ve y funciona igual en el iPad viejo).
 - [ ] Tema claro y oscuro.
