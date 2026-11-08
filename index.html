@@ -841,6 +841,7 @@ details.adv{margin-top:18px;border:1px solid var(--ln);border-radius:14px;paddin
 .pkfin.pop{animation:pkpop .7s cubic-bezier(.2,1.4,.4,1)}.pkfin.pop .pkok{font-size:1.2rem}@keyframes pkpop{0%{transform:scale(.9);opacity:.2}60%{transform:scale(1.03);opacity:1}100%{transform:none}}@media(prefers-reduced-motion:reduce){.pkfin.pop{animation:none}}
 .npv{border:2px solid var(--brand-blue);margin:0 0 12px}
 .nebar{display:flex;flex-wrap:wrap;gap:8px}
+.auin{margin:14px 0 0}.auin .btn{display:inline-flex;align-items:center;gap:8px}
 .inst{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:9000;max-width:560px;margin:0 auto;display:flex;gap:12px 14px;align-items:center;flex-wrap:wrap;background:var(--cd);color:var(--ink);border:1px solid var(--ln);border-radius:16px;padding:14px 16px;box-shadow:0 12px 32px rgba(0,0,0,.28);animation:instup .35s ease-out}.inst img{border-radius:12px;flex:none}.instt{flex:1 1 13rem;display:flex;flex-direction:column;gap:2px;line-height:1.35}.instt b{font-size:1.0667rem}.instb{display:flex;gap:8px;margin-left:auto}.instol{margin:4px 0 0;padding-left:1.3em;display:grid;gap:4px}.instsh{vertical-align:-5px;color:var(--ac,#0472AB)}@keyframes instup{from{transform:translateY(20px);opacity:0}}@media(prefers-reduced-motion:reduce){.inst{animation:none}}
 
 /* v1.24.0 · Logotipo de cada maquila (emblema + «MAQUILA» + nombre) */
@@ -874,27 +875,11 @@ details.adv{margin-top:18px;border:1px solid var(--ln);border-radius:14px;paddin
 @media (max-width:700px){.t3v{height:clamp(300px,95vw,540px);min-height:0}}
 .t3v.t3drag{cursor:grabbing}
 .t3st{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden;perspective:7000px;perspective-origin:50% 50%}
-.t3w{position:absolute;left:0;top:0;transform-origin:0 0;transform-style:preserve-3d}
-.t3w *{position:absolute}.t3w .t3t,.t3w .t3g{transform-style:preserve-3d;left:0;top:0}.t3w .t3g[hidden]{display:none}
-.t3f{left:0;top:0;transition:opacity .4s;pointer-events:none}.t3w .t3wat,.t3w .t3c{pointer-events:auto;cursor:pointer}
-.t3flr{background:var(--t3flr);background-image:linear-gradient(90deg,rgba(0,0,0,.06) 1px,transparent 1px),linear-gradient(rgba(0,0,0,.06) 1px,transparent 1px);background-size:100px 100px}
-.t3zone{background:var(--t3zn);border:3px dashed rgba(0,0,0,.2);color:rgba(0,0,0,.4);font:800 46px/1.1 system-ui,sans-serif;display:flex;align-items:center;justify-content:center;text-align:center}
-.t3wl{background:var(--t3wl);background-image:repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 2px,transparent 2px 22px)}.t3wl.t3ew{background-color:var(--t3wl2)}
-.t3door{background:repeating-linear-gradient(0deg,#9aa1aa 0 6px,#b4bac2 6px 12px);border:4px solid #8a9099}.t3door.t3dv{background:repeating-linear-gradient(90deg,#9aa1aa 0 6px,#b4bac2 6px 12px)}
-.t3dl{background:#fff;color:#111;font:800 24px/1.15 system-ui,sans-serif;border:3px solid #333;display:flex;align-items:center;justify-content:center;text-align:center;box-sizing:border-box}
-.t3tw{background:#7D858F}.t3tw.t3e{background:#6A727C}.t3tw.t3in{background:#565D66}
-.t3rim{border:9px solid #8E959E;background:transparent}
-.t3wat{background:rgba(52,110,98,.62);background-image:radial-gradient(circle at 30% 40%,rgba(255,255,255,.18) 0 3px,transparent 4px),radial-gradient(circle at 70% 70%,rgba(255,255,255,.14) 0 2px,transparent 3px);background-size:60px 60px,45px 45px}
-.t3c{background:#C3C8CE;background-image:linear-gradient(90deg,transparent 46%,rgba(0,0,0,.18) 46% 54%,transparent 54%),repeating-linear-gradient(0deg,transparent 0 8px,rgba(0,0,0,.13) 8px 10px);border:1.5px solid #8d939a}
-.t3c.t3inc{border:2.5px dashed #2b3038}.t3c.t3old{border:2.5px solid #c23a26}.t3c.t3last{border:2.5px solid #d97706}.t3c.t3hl{background-color:#16A6D1;border-color:#0B5E7A;outline:3px solid #0B1D59;outline-offset:-1px}.t3c.t3hl.t3s{background:#1189AE!important}.t3c.t3hl.t3e{background:#0E7595!important}
-.t3c.t3s,.t3c.t3e{background:#A7ADB4;border:0!important;outline:0!important}.t3c.t3e{background:#959BA2}
-.t3rib{left:14px;top:6px;width:12px;height:30px;border:1.5px solid rgba(0,0,0,.55);border-radius:2px}
-.t3dim .t3f{opacity:.28}
-.t3leg{background:#E8EAED}.t3leg.t3s{background:#DADDE1}.t3leg.t3e{background:#CDD1D6}.t3plat{background:#EEF0F2;border:2px solid #cfd3d8}.t3plat.t3s,.t3plat.t3e{background:#D5D9DE}
-.t3fil{background:#AEB4BA;background-image:linear-gradient(rgba(255,255,255,.18),rgba(0,0,0,.05))}.t3fil.t3s{background:#A3A9AF}.t3fil.t3e{background:#9CA2A8}
-.t3rail{background:transparent;border:5px solid #F2C200;border-bottom:0}
+/* v1.41.0 · la planta es un solo lienzo (canvas): una capa, poca memoria (antes cientos de capas CSS 3D dejaban en blanco la página en celulares) */
+.t3cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@media (max-width:700px){.t3v .t3tag{font-size:.7rem;padding:3px 7px;border-radius:8px}.t3v .t3tag small{font-size:.62rem}.t3v .t3ctl{top:auto;bottom:8px;right:8px;flex-direction:row;gap:6px}.t3v .t3ctl button{width:44px;height:44px;font-size:1.2rem}.t3v .t3pick{bottom:auto;top:12px;left:8px;right:8px;max-width:none}.t3zm .t3pick{top:66px}}
 .mkimg{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0;pointer-events:none;-webkit-user-select:none;user-select:none}
-.t3lab{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden;pointer-events:none;z-index:3}.t3l{position:absolute;left:0;top:0;will-change:transform}.t3l[hidden]{display:none}
+.t3lab{position:absolute;top:0;right:0;bottom:0;left:0;overflow:hidden;pointer-events:none;z-index:3}.t3l{position:absolute;left:0;top:0}.t3l[hidden]{display:none}
 .t3sign{background:#fff;color:#111;border:2px solid #222;font:900 .6rem/1 system-ui,sans-serif;text-align:center;padding:3px 5px}.t3sign b{display:block;font-size:1.05rem}
 .t3tag{background:var(--cd);color:var(--ink);border:1px solid var(--ln);border-radius:10px;padding:4px 9px;font:700 .8rem/1.3 system-ui,sans-serif;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.18)}
 .t3tag small{display:block;font-size:.7rem;font-weight:500;color:var(--mut)}.t3tag .t3al{color:var(--cor);font-weight:700}
@@ -1124,7 +1109,7 @@ const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','
 const H15=15000,h15=g=>{g=Math.max(0,Math.round(g));const n=Math.floor(g/H15),r=g-n*H15;return{n,r}},h15t=g=>{const{n,r}=h15(g);return `${n} ${n==1?'hielera':'hieleras'}${r>0?' + '+(r/1000).toFixed(1)+' kg':''}`};
 const f=(m,d=2)=>(m/1000).toFixed(d),cj=m=>(m/16000).toFixed(1),now=()=>new Date().toLocaleString('es-MX',DTS);
 const DTS={day:'2-digit',month:'2-digit',year:'2-digit',hour:'numeric',minute:'2-digit'};/* = dateStyle/timeStyle short; Safari de iOS 12-14 no conoce dateStyle */
-const TK=['T1','T2','T3','T4','T5','T6'],APPV='1.40.0';/* versión de la app: menú del perfil y Administración */
+const TK=['T1','T2','T3','T4','T5','T6'],APPV='1.41.0';/* versión de la app: menú del perfil y Administración */
 const LGP=[['M37 232C300 440 650 510 1000 497C1150 490 1260 455 1342 424L1272 411C900 480 500 450 195 323C140 290 80 262 37 232ZM195 323C450 380 750 385 1100 357C750 405 450 400 195 323Z','#0a2373'],['M1272 411L1250 400C1215 385 1205 370 1212 335C1218 315 1245 308 1290 288C1360 268 1430 262 1470 265C1480 270 1478 295 1470 330C1462 400 1450 470 1420 495C1395 525 1355 545 1327 555C1365 520 1390 495 1405 435C1415 380 1420 340 1420 302C1360 310 1305 325 1268 347C1258 355 1262 380 1270 388C1290 400 1320 412 1342 424Z','#0a2373'],['M160 405C450 600 900 620 1235 523C1000 565 700 570 480 535C330 505 230 465 160 405Z','#0583c3'],['M758 634C950 640 1150 600 1282 561C1250 590 1200 600 1100 618C1000 640 900 650 758 634Z','#0583c3']],LGW='M240 700Q255 700 266 704Q277 707 283 714Q289 720 291 727Q294 733 294 740Q294 749 291 758Q289 767 283 777Q278 787 270 794Q262 802 249 807Q236 812 221 812H173L159 875H120L160 700ZM220 782Q230 782 237 779Q245 776 248 771Q252 765 253 760Q255 754 255 749Q255 740 249 735Q242 730 232 730H192L180 782ZM411 865Q411 857 416 840Q421 822 421 819Q421 806 399 806H355L339 875H300L340 700H438Q451 700 460 703Q469 707 474 713Q479 719 481 725Q483 730 483 736Q483 746 479 754Q476 763 471 768Q467 774 460 779Q453 784 449 786Q445 788 439 790Q460 797 460 810Q460 818 456 837Q452 856 452 860Q452 865 456 869L455 875H414Q411 869 411 865ZM444 747Q444 730 416 730H372L362 775H409Q419 775 426 772Q434 769 437 765Q441 760 443 755Q444 751 444 747ZM612 697Q648 697 667 715Q687 733 687 766Q687 781 683 796Q679 812 669 827Q660 842 647 854Q634 866 616 873Q597 881 575 881Q540 881 520 862Q500 844 500 812Q500 798 505 782Q509 767 518 752Q527 736 540 724Q553 712 572 704Q591 697 612 697ZM581 850Q595 850 606 845Q617 840 624 833Q631 825 636 816Q641 807 644 798Q646 788 647 781Q649 775 649 770Q649 750 638 739Q627 728 607 728Q594 728 582 732Q571 737 564 745Q557 752 552 761Q547 770 544 779Q541 789 540 796Q539 802 539 807Q539 827 550 838Q562 850 581 850ZM820 700Q835 700 847 704Q858 707 863 714Q869 720 872 727Q874 733 874 740Q874 749 872 758Q869 767 864 777Q858 787 850 794Q842 802 829 807Q817 812 802 812H753L739 875H700L740 700ZM800 782Q810 782 817 779Q825 776 828 771Q832 765 834 760Q835 754 835 749Q835 740 829 735Q823 730 812 730H772L760 782ZM936 800 926 845H1028L1021 875H880L920 700H1057L1050 730H952L943 769H1033L1027 800ZM1078 762Q1078 734 1101 715Q1124 697 1161 697Q1192 697 1209 708Q1227 719 1227 738Q1227 744 1225 753H1188Q1189 749 1189 748Q1189 728 1155 728Q1137 728 1127 734Q1117 741 1117 753Q1117 759 1123 763Q1130 767 1148 770L1176 775Q1196 779 1206 788Q1217 797 1217 811Q1217 820 1214 829Q1212 837 1206 847Q1200 856 1190 864Q1180 871 1164 876Q1148 881 1128 881Q1108 881 1094 876Q1080 872 1072 864Q1065 857 1062 849Q1059 842 1059 833Q1059 829 1060 823H1097Q1097 827 1097 828Q1097 838 1107 844Q1116 850 1134 850Q1154 850 1166 842Q1178 835 1178 823Q1178 815 1171 810Q1165 806 1147 803L1122 798Q1099 794 1088 785Q1078 776 1078 762ZM1356 840H1285L1264 875H1225L1330 700H1375L1400 875H1360ZM1352 810 1343 742 1303 810Z';
 const LG=(o)=>{return `<svg class="lg${o?' o':''}" viewBox="0 205 1500 690" role="img" aria-label="PROPESA">${LGP.map(([d,c])=>`<path d="${d}" fill="${c}"/>`).join('')}<path class="wm" d="${LGW}" fill="#0a2373" stroke="#0a2373" stroke-width="10" stroke-linejoin="round"/></svg>`};
 const IC={ord:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',warn:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0zM12 9v4M12 17h.01"/></svg>',cam:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v12H3z"/><circle cx="12" cy="13.5" r="3.5"/></svg>',img:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 9"/></svg>',note:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 13h8M8 17h5"/></svg>',inicio:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',recepcion:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 6h12v10h-12zM13.5 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',cajas:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg>',embarques:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13h18l-2 5H5zM6 13V8h12v5M12 8V3M2 21c2 0 2-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1"/></svg>',cierre:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 14l2 2 4-4"/></svg>',temperatura:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 14.8V5a2 2 0 10-4 0v9.8a4 4 0 104 0z"/></svg>',admin:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 4.5a3.5 3.5 0 010 7M19.5 14c1.5.8 2.5 2.6 2.5 6"/></svg>'};
@@ -3046,7 +3031,7 @@ const pwBox=(id,ac)=>`<span class="aupw"><input id="${id}" type="password" autoc
 /* La planta de la vista previa sale del mismo dibujo de «Planta en 3D» (t3Inner: tanques, filtros, barandales, paredes, letreros),
    con canastas de muestra fijas y una cámara quieta (mkMount). No toca el estado de la planta real: se guarda y se regresa. */
 const MKG=17500,MKC=['#FFFFFF','#d93f45','#2a9a63','#F5C518'],MKT={T1:[[[0,16,18,0],6],[[14,0,0,0],2]],T2:[[[14,12,0,10],4]],T3:[[[0,0,15,12],3]],T4:[[[11,8,0,0],1]],T6:[[[0,0,12,0],1]],T5:[]};
-let MKS=null;function mkScene(){if(MKS)return MKS;const out={},K=['D','all','zoom','pick','labs','cs','az'],o={};K.forEach(k=>o[k]=T3[k]);
+let MKS=null;function mkScene(){if(MKS)return MKS;const out={},K=['D','all','zoom','pick','labs','cs','az','M'],o={};K.forEach(k=>o[k]=T3[k]);
  TK.forEach(t=>out[t]=(MKT[t]||[]).map(([c,d])=>({m:{id:0,n:''},l:'',go:'',kz:c.map(n=>n?n*MKG-(n>3?6000:0):0),kb:MKG/1000,d,u:null,nm:[],rg:[],col:MKC,pv:''})));
  let h='',labs=[];try{Object.assign(T3,{D:{out,miss:[]},all:false,zoom:false,pick:null,cs:{},az:35});h=t3Inner();labs=T3.labs}finally{K.forEach(k=>T3[k]=o[k])}
  const kg=TK.reduce((a,t)=>a+out[t].reduce((b,x)=>b+x.kz.reduce((c,g)=>c+g,0),0),0),/* gramos, como f() */n=TK.reduce((a,t)=>a+out[t].reduce((b,x)=>b+x.kz.reduce((c,g)=>c+Math.ceil(g/MKG),0),0),0);
@@ -3079,7 +3064,7 @@ document.addEventListener('focusin',e=>{const t=e.target;if(!AUO&&t&&t.closest&&
 document.addEventListener('keydown',e=>{if(e.key=='Escape'&&AUO&&document.querySelector('.au.op'))auSet(false,true)});
 function authShell(inner,lab,op0){const op=AUO=AUO||!!op0||!!LOGIN_MSG;Promise.resolve().then(mkMount);if(AUH){AUH=false;if(!op)setTimeout(()=>{if(!AUO&&document.querySelector('.au'))auSet(true,true)},220)}return `<div class="au${op?' op':''}" role="main"><section class="aub" aria-label="PROPESA"><div class="aul">${LOGOD}</div><div class="aut"><h2>Cada lote de langosta, de la entrada al embarque.</h2><p>Todo el seguimiento en un solo lugar, con los mismos datos en planta, oficina y celular.</p><p class="auf"><span>Entrada</span><i aria-hidden="true">→</i><span>Órdenes</span><i aria-hidden="true">→</i><span>Empaque</span><i aria-hidden="true">→</i><span>Embarque</span></p><button type="button" class="auo" data-a="auo" aria-expanded="${op}" aria-controls="aup">${lab}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div><div class="aum" aria-hidden="true">${mockView()}</div></section><div class="auscr" data-a="auc" aria-hidden="true"></div>
  <section class="aup" id="aup" aria-label="${lab}"><button type="button" class="auc" data-a="auc" aria-label="Cerrar">✕</button><div class="aui">${inner}</div><p class="auft">Versión ${APPV} · Proveedor del Pescador S.A. de C.V. · Ensenada, B.C.</p></section></div>`}
-function loginView(){return authShell(`<p class="aue">Acceso por rol</p><h1>Iniciar sesión</h1><p class="mut">Bienvenido de nuevo. Escribe tu correo y tu contraseña.</p><div class="aux"><label>Correo<input id="le" type="email" inputmode="email" autocomplete="username" value="${E(LOGIN_EM)}"></label><div class="auw"><label for="lp">Contraseña</label>${pwBox('lp','current-password')}</div><button class="btn" data-a="lg">Entrar</button></div><p class="er" id="lm" aria-live="polite">${E(LOGIN_MSG)}</p><p class="mut auh">¿Olvidaste tu contraseña? Pídele al Administrador que te ponga una nueva en Administración.</p>`,'Iniciar sesión')}
+function loginView(){return authShell(`<p class="aue">Acceso por rol</p><h1>Iniciar sesión</h1><p class="mut">Bienvenido de nuevo. Escribe tu correo y tu contraseña.</p><div class="aux"><label>Correo<input id="le" type="email" inputmode="email" autocomplete="username" value="${E(LOGIN_EM)}"></label><div class="auw"><label for="lp">Contraseña</label>${pwBox('lp','current-password')}</div><button class="btn" data-a="lg">Entrar</button></div><p class="er" id="lm" aria-live="polite">${E(LOGIN_MSG)}</p><p class="mut auh">¿Olvidaste tu contraseña? Pídele al Administrador que te ponga una nueva en Administración.</p>${instOk()?'':`<p class="auin"><button type="button" class="btn s" data-pm="inst">${IC.dl} Instalar la app en este equipo</button></p>`}`,'Iniciar sesión')}
 /* v1.13.0 · Pantalla de la cuenta Cliente: compradores de fuera, en inglés (pedido del usuario, 22/oct/2026). Solo la hoja de
    disponibilidad: kilos por talla que se pueden vender ahora y lo recibido en los últimos 7 días (según el reloj de quien la ve).
    Con la base compartida la baja dispNow; en el modo local de pruebas se calcula aquí mismo. Sin menú ni Ajustes. */
@@ -3856,22 +3841,29 @@ function tanquesGen(){const hoy=dLoc(),TA=tempAll(),ult=t=>TA.find(x=>x.tank===t
   <button type="button" class="tqtp" data-go="temperatura:${sel}" aria-label="Temperatura del tanque ${n}">${tp?`<span${tOut(tp.a)?' class="tqout"':''}><small>Flotante</small>${v(tp.a)}</span><span${tOut(tp.s)?' class="tqout"':''}><small>Superficie</small>${v(tp.s)}</span><span${tOut(tp.p,'p')?' class="tqout"':''}><small>Producto</small>${v(tp.p)}</span><em>${tp.t.slice(0,10)==hoy?'Hoy':fd(tp.t.slice(0,10))} ${E(tp.src=='ent'&&tp.t.endsWith('T00:00')?'':tp.t.slice(11,16))} · Registrar ›</em>`:'<em>Sin lectura de temperatura · Registrar ›</em>'}</button></section>`;
  return `<h2>Tanques · todas las maquilas</h2><div class="tqd tqgen"><div class="tqmap" role="group" aria-label="Mapa de tanques de todas las maquilas"><div class="tqleg"><h2 class="h3">Tanques</h2><span class="mut">${f(tot,1)} kg de ${mqOn().filter(m=>TK.some(t=>I[t].ms.some(x=>x.m.id===m.id))).length} maquilas</span>
   <ul class="tqkey" aria-label="Colores de talla">${SON.map(i=>`<li>${szDot(i)}${E(szT(i))}</li>`).join('')}</ul></div>${TK.map(tank).join('')}</div>${det}</div>`}
-/* v1.31.0 · Tanques en 3D (pedido del usuario, 2/nov/2026; plan y fotos en el proyecto: claude/PLAN_TANQUES_3D.md). Sin librerías:
-   transformaciones 3D de CSS. Va arriba del tablero de tanques en Entrada (maquila abierta) y en Panel general (todas las maquilas).
+/* v1.31.0 · Tanques en 3D (pedido del usuario, 2/nov/2026; plan y fotos en el proyecto: claude/PLAN_TANQUES_3D.md). Sin librerías.
+   Va arriba del tablero de tanques en Entrada (maquila abierta) y en el Centro de operaciones (todas las maquilas).
    - Planta fija (T3P): T1–T4 en una columna con su filtro en el extremo este, T6 y T5 junto a T3 y T4 (T5 con filtro al oeste, T6 sin
      filtro), área de recepción con «Andén de recepción» (pared oeste) y «Selección y lavado» (pared norte).
    - Canastas calculadas: kg de cada talla de cada lote en ese tanque ÷ «kg por caja en tanque» del lote (el del otro tanque si la entrada
      lo trae). Incompleta = borde punteado. Listón = color de la talla de su maquila. Sin kg por caja: no se dibuja y sale aviso rojo.
    - Tocar un tanque elige TQSEL (el mismo del tablero plano de abajo) y acerca la cámara; tocar una canasta enseña su lote.
    - Cámara: un dedo gira e inclina, dos dedos mueven y acercan; rueda y clic derecho con mouse; botones ⟲ ⟳ + − ⌂.
-   - Cada caja dibuja solo arriba y los 2 lados que ve la cámara; al girar a otro cuadrante se vuelve a dibujar. Ninguna pieza cruza a
-     otra (Android y Safari fallan al ordenar piezas que se cruzan). La profundidad crece con el acercamiento (nada se corta).
-   - Los letreros no son 3D: van en una capa plana encima (.t3lab) y su lugar se calcula con la misma cámara (t3Proj). Así no se esconden
-     detrás de otras piezas por errores de orden del navegador y el texto se lee nítido. Por eso la cámara se anima con código, no con CSS. */
+   v1.41.0 (usuario, 7/nov/2026: «el 3D es muy pesado; cuando está abierto rompe todo lo demás en el celular; hazlo más simple, no
+   necesito tanto detalle en cada caja»): antes eran cientos de capas de CSS 3D; en celulares la tarjeta gráfica se quedaba sin memoria
+   y el resto de la página salía en blanco o gris, y la perspectiva del navegador no coincidía con la de los letreros (la planta salía
+   corrida, chiquita o gigante). Ahora es UN solo <canvas> 2D del tamaño del recuadro (máx. 2× de densidad; 1.5× en equipos viejos):
+   - Todo se proyecta con la misma cámara que los letreros (t3Pr), así que dibujo, letreros y toques siempre coinciden.
+   - Orden de dibujo, de lo lejano a lo cercano: piso, zona de recepción, paredes del fondo; luego tanques y plataformas de filtro en el
+     orden que pide la cámara (t3Order). Dentro de un tanque: paredes de atrás por dentro, agua, canastas, paredes de enfrente, borde.
+   - Canastas simples: tapa gris lisa con el listón del color de la talla (sin rayas ni sombras); con capas, caja con 2 lados.
+   - Tocar: se busca la canasta o el agua debajo del dedo en las figuras ya proyectadas (T3.H).
+   - Placas «TANQUE n» van dibujadas (crecen y se achican con la planta); las etiquetas de kg y de lotes siguen en la capa plana (.t3lab).
+   - Solo se vuelve a dibujar cuando se mueve la cámara, un cuadro por movimiento (requestAnimationFrame). */
 const T3P={W:2420,D:1480,TL:800,TW:270,TH:110,ZW:86,CW:40,CD:58,CH:12,NX:19,NY:4,MAX:228,
  TQ:{T1:[1260,70],T2:[1260,410],T3:[1260,750],T4:[1260,1090],T6:[300,750],T5:[300,1090]},FIL:{T1:'e',T2:'e',T3:'e',T4:'e',T5:'w'}};
 IC.cube='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 2.5l8.5 4.8v9.4L12 21.5l-8.5-4.8V7.3z"/><path d="M3.5 7.3L12 12l8.5-4.7M12 12v9.5"/></svg>';
-const T3={labs:[],an:0,az:35,ax:57,s:0,px:0,py:0,ox:0,oy:0,zoom:false,zt:'',pick:null,cs:{},D:null,all:false,pg:'',tf:'',w:0,h:0,on:true,q:0};
+const T3={labs:[],an:0,az:35,ax:57,s:0,px:0,py:0,ox:0,oy:0,zoom:false,zt:'',pick:null,cs:{},D:null,all:false,pg:'',w:0,h:0,on:true,q:0,M:null,H:[],raf:0,sig:''};
 try{const v=localStorage.getItem('propesa-3d');T3.on=v?v!=='0':!document.documentElement.classList.contains('lite')}catch(e){}/* v1.37.0: en un iPad viejo (.lite) la planta 3D empieza apagada; «Ver tanques en 3D» la prende y se recuerda */
 /* Lo que hay en cada tanque: [{m maquila, l lote, go, kz gramos por talla, kb kg por caja, d días, u lotDue, nm/rg/col tallas de su maquila}] */
 function t3Data(all){const out={},miss=[];TK.forEach(t=>out[t]=[]);
@@ -3886,109 +3878,192 @@ function t3Data(all){const out={},miss=[];TK.forEach(t=>out[t]=[]);
 /* Canastas de un tanque: solo se arman las que se dibujan (MAX); n y g cuentan todas */
 function t3Crates(G){const cs=[];let n=0,gt=0;G.forEach(x=>x.kz.forEach((g,i)=>{if(!(g>0))return;const kb=x.kb*1000,q=g/kb,c=Math.ceil(q-1e-9);n+=c;gt+=g;for(let k=0;k<c&&cs.length<T3P.MAX;k++)cs.push({x,i,inc:k+1>q+1e-9,g:Math.min(kb,g-k*kb)})}));cs.n=n;cs.g=gt;return cs}
 const t3Q=()=>{const a=T3.az*Math.PI/180;return{s:Math.cos(a)>=0,e:Math.sin(a)>=0}};
-/* Piezas: caja (arriba + los 2 lados que ve la cámara), paredes, letrero que siempre mira a la cámara */
-function t3Box(x,y,z,w,d,h,c,ex,inner){const q=t3Q(),tf=`transform-origin:0 0;transform:translateZ(${z}px)`;
- return `<div class="t3f ${c}" style="left:${x}px;top:${y}px;width:${w}px;height:${d}px;transform:translateZ(${z+h}px)"${ex||''}>${inner||''}</div><div class="t3f ${c} t3s" style="left:${x}px;top:${q.s?y+d:y}px;width:${w}px;height:${h}px;${tf} rotateX(90deg) scaleY(-1) translateY(-${h}px)"${ex||''}></div><div class="t3f ${c} t3e" style="left:${q.e?x+w:x}px;top:${y}px;width:${h}px;height:${d}px;${tf} rotateY(-90deg)"${ex||''}></div>`}
-const t3WX=(x,y,w,h,c)=>`<div class="t3f ${c}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;transform-origin:0 0;transform:rotateX(90deg) scaleY(-1) translateY(-${h}px)"></div>`,
- t3WY=(x,y,d,h,c)=>`<div class="t3f ${c}" style="left:${x}px;top:${y}px;width:${h}px;height:${d}px;transform-origin:0 0;transform:rotateY(-90deg)"></div>`,
- t3BB=(x,y,z,h,o)=>{T3.labs.push({x,y,z,h,...(o||{})});return''};
+const t3BB=(x,y,z,h,o)=>{T3.labs.push(Object.assign({x,y,z,h},o||{}));return''};
 const t3Pos=(t,k)=>{const P=T3P,[x,y]=P.TQ[t],q=k%(P.NX*P.NY);return{cx:x+12+(q%P.NX)*P.CW,cy:y+12+Math.floor(q/P.NX)*(P.CD+6),lay:Math.floor(k/(P.NX*P.NY))}},
  t3Plat=t=>{const P=T3P,[x,y]=P.TQ[t],f=P.FIL[t];return f?{px:f=='e'?x+P.TL+12:x-262,py:y+10,pw:250,pd:P.TW-20,pz:200}:null};
-function t3Inner(){T3.labs=[];const P=T3P,D=T3.D,all=T3.all,mi=new Map((all?mqOn():[]).map((m,i)=>[m.id,i]));let h=`<div class="t3f t3flr" style="left:0;top:0;width:${P.W}px;height:${P.D}px"></div><div class="t3f t3zone" style="left:40px;top:40px;width:1020px;height:560px;transform:translateZ(1px)">Área de recepción</div>`;
- h+=`<div class="t3g" data-w="n">${t3WX(0,0,P.W,300,'t3wl')}<div class="t3f t3door" style="left:780px;top:5px;width:300px;height:230px;transform-origin:0 0;transform:rotateX(90deg) scaleY(-1) translateY(-230px)"></div><div class="t3f t3dl" style="left:570px;top:-62px;width:200px;height:70px;transform-origin:50% 100%;transform:translateZ(140px) rotateX(-90deg)">SELECCIÓN<br>Y LAVADO</div></div>`;
- h+=`<div class="t3g" data-w="s">${t3WX(0,P.D,P.W,140,'t3wl')}</div><div class="t3g" data-w="w">${t3WY(0,0,P.D,300,'t3wl t3ew')}<div class="t3f t3door t3dv" style="left:5px;top:170px;width:230px;height:300px;transform-origin:0 0;transform:rotateY(-90deg)"></div><div class="t3f t3dl" style="left:-102px;top:530px;width:220px;height:70px;transform-origin:50% 100%;transform:translateZ(140px) rotateZ(-90deg) rotateX(-90deg)">ANDÉN DE<br>RECEPCIÓN</div></div><div class="t3g" data-w="e">${t3WY(P.W,0,P.D,140,'t3wl t3ew')}</div>`;
+/* Modelo de la escena (sin cámara): tanques con sus canastas y plataformas de filtro. También arma T3.labs (letreros) y T3.cs. */
+function t3Inner(){T3.labs=[];const P=T3P,D=T3.D,all=T3.all,mi=new Map((all?mqOn():[]).map((m,i)=>[m.id,i])),O=[];
  const pk=T3.pick&&T3.cs[T3.pick.t]&&T3.cs[T3.pick.t][T3.pick.k],pkk=pk?pk.x.m.id+':'+pk.x.l:'';
  TK.forEach(t=>{const [x,y]=P.TQ[t],n=t.slice(1),G=(D.out[t]||[]).slice().sort((a,b)=>(mi.get(a.m.id)||0)-(mi.get(b.m.id)||0)),cs=t3Crates(G),kg=cs.g,
-  old=G.length?Math.max(...G.map(g=>g.d||0)):0,ov=G.some(g=>g.u&&g.u.st=='v'),sel=T3.zoom&&t===TQSEL;T3.cs[t]=cs;
-  h+=`<div class="t3t${T3.zoom&&!sel?' t3dim':''}${sel?' t3sel':''}">${t3WX(x,y,P.TL,P.TH,'t3tw t3in')}${t3WY(x,y,P.TW,P.TH,'t3tw t3in')}<div class="t3f t3wat" data-t3t="${t}" style="left:${x}px;top:${y}px;width:${P.TL}px;height:${P.TW}px;transform:translateZ(${P.ZW}px)"></div>`;
-  /* Las capas de un mismo lugar van en una sola caja alta (menos piezas); arriba se ve la de hasta arriba */
-  /* v1.31.3: con un lote elegido, las canastas de los demás lotes se guardan (no se dibujan) y las del lote van de otro color */
-  const L1=P.NX*P.NY,kk=c=>c.x.m.id+':'+c.x.l;cs.forEach((c,k)=>{if(k+L1<cs.length)return;let hit=false;for(let j=k;j>=0;j-=L1)if(kk(cs[j])===pkk)hit=true;if(pkk&&!hit)return;
-   const p=t3Pos(t,k),u=c.x.u,cl=(u&&u.st=='v'?' t3old':u&&u.st=='u'?' t3last':'')+(c.inc?' t3inc':'')+(hit?' t3hl':'');
-   const rib=`<i class="t3rib" style="background:${c.x.col[c.i]||'#8A94A6'}"></i>`;/* una sola capa: solo la tapa (flota plana, como en las fotos); con capas: caja con lados */
-   h+=p.lay?t3Box(p.cx,p.cy,P.ZW+1,P.CW-4,P.CD,P.CH*(p.lay+1),'t3c'+cl,` data-t3c="${t}:${k}"`,rib):`<div class="t3f t3c${cl}" style="left:${p.cx}px;top:${p.cy}px;width:${P.CW-4}px;height:${P.CD}px;transform:translateZ(${P.ZW+P.CH}px)" data-t3c="${t}:${k}">${rib}</div>`});
+  old=G.length?Math.max(...G.map(g=>g.d||0)):0,ov=G.some(g=>g.u&&g.u.st=='v'),sel=T3.zoom&&t===TQSEL,dim=T3.zoom&&!sel;T3.cs[t]=cs;
+  /* Las capas de un mismo lugar van en una sola caja alta; arriba se ve la de hasta arriba.
+     v1.31.3: con un lote elegido, las canastas de los demás lotes se guardan (no se dibujan) y las del lote van de otro color */
+  const C=[],L1=P.NX*P.NY,kk=c=>c.x.m.id+':'+c.x.l;cs.forEach((c,k)=>{if(k+L1<cs.length)return;let hit=false;for(let j=k;j>=0;j-=L1)if(kk(cs[j])===pkk)hit=true;if(pkk&&!hit)return;
+   const p=t3Pos(t,k),u=c.x.u;C.push({k,x:p.cx,y:p.cy,lay:p.lay,st:u&&u.st=='v'?'old':u&&u.st=='u'?'last':'',inc:c.inc,hl:hit,rib:c.x.col[c.i]||'#8A94A6'})});
   let lastM=null;cs.forEach((c,k)=>{const p=t3Pos(t,k),u=c.x.u;
    if(pkk&&kk(c)!==pkk)return;
-   if(sel&&c.x.m.id!==lastM){lastM=c.x.m.id;h+=t3BB(p.cx+20,p.cy,P.ZW+70,`<div class="t3mq">${E(c.x.m.n)} · ${t3Crates(G.filter(z=>z.m.id===c.x.m.id)).n}</div>`)}
-   if(sel&&(k===0||cs[k-1].x!==c.x))h+=t3BB(p.cx+20,p.cy+30,P.ZW+38,`<div class="t3lt${u&&u.st=='v'?' t3lv':''}">${E(c.x.l)} · ${c.x.d==null?'—':c.x.d==1?'1 día':c.x.d+' días'}${u&&u.st=='v'?' ⚠':''}</div>`)});
-  h+=t3WX(x,y+P.TW,P.TL,P.TH,'t3tw')+t3WY(x+P.TL,y,P.TW,P.TH,'t3tw t3e')+`<div class="t3f t3rim" style="left:${x-4}px;top:${y-4}px;width:${P.TL+8}px;height:${P.TW+8}px;transform:translateZ(${P.TH}px)"></div>`;
-  const F=t3Plat(t),sg=`<div class="t3sign${T3.zoom&&!sel?' t3hid':''}">TANQUE<b>${n}</b></div>`;
-  if(F){const{px,py,pw,pd,pz}=F;[[px,py],[px+pw-16,py],[px,py+pd-16],[px+pw-16,py+pd-16]].forEach(([a,b])=>h+=t3Box(a,b,0,16,16,pz,'t3leg'));
-   h+=t3Box(px,py,pz,pw,pd,12,'t3plat')+t3Box(px+30,py+20,pz+12,pw-60,pd-40,95,'t3fil')+`<div class="t3g" style="left:0;top:0;transform:translateZ(${pz+12}px)">${t3WX(px,py,pw,70,'t3rail')}${t3WX(px,py+pd,pw,70,'t3rail')}${t3WY(px,py,pd,70,'t3rail')}${t3WY(px+pw,py,pd,70,'t3rail')}</div>`+t3BB(px+pw/2,py+pd+30,pz-90,sg)}
-  else h+=t3BB(x+P.TL/2,y+P.TW+20,P.TH+10,sg);
+   if(sel&&c.x.m.id!==lastM){lastM=c.x.m.id;t3BB(p.cx+20,p.cy,P.ZW+70,`<div class="t3mq">${E(c.x.m.n)} · ${t3Crates(G.filter(z=>z.m.id===c.x.m.id)).n}</div>`)}
+   if(sel&&(k===0||cs[k-1].x!==c.x))t3BB(p.cx+20,p.cy+30,P.ZW+38,`<div class="t3lt${u&&u.st=='v'?' t3lv':''}">${E(c.x.l)} · ${c.x.d==null?'—':c.x.d==1?'1 día':c.x.d+' días'}${u&&u.st=='v'?' ⚠':''}</div>`)});
+  O.push({tk:t,x,y,dim,C,fp:[x-4,y-4,x+P.TL+4,y+P.TW+4]});
+  const F=t3Plat(t),sg={sg:n,hid:dim};
+  if(F){O.push({pl:F,tk:t,dim,fp:[F.px,F.py,F.px+F.pw,F.py+F.pd]});t3BB(F.px+F.pw/2,F.py+F.pd+30,F.pz-90,`<div class="t3sign">TANQUE<b>${n}</b></div>`,sg)}
+  else t3BB(x+P.TL/2,y+P.TW+20,P.TH+10,`<div class="t3sign">TANQUE<b>${n}</b></div>`,sg);
   const more=cs.n>cs.length?` (${cs.length} dibujadas)`:'';
-  /* v1.38.2 (usuario: «quita las etiquetas de los tanques vacíos»): un tanque vacío no lleva etiqueta; lo nombra su letrero «TANQUE n». Así no se enciman (T5 quedaba debajo de T6) */
-  h+=(cs.n?t3BB(x+P.TL/2,y+P.TW/2,150,`<div class="t3tag${T3.zoom?' t3hid':''}">T${n} · ${cs.n?cs.n+(cs.n==1?' canasta':' canastas')+more:'Vacío'}${cs.n?`<small>${f(kg,0)} kg · <span${ov?' class="t3al"':''}>más viejo: ${old<=0?'hoy':old==1?'1 día':old+' días'}${ov?' ⚠':''}</span></small>`:''}</div>`):'')+`</div>`});
- return h}
+  /* v1.38.2 (usuario: «quita las etiquetas de los tanques vacíos»): un tanque vacío no lleva etiqueta; lo nombra su placa «TANQUE n» */
+  if(cs.n)t3BB(x+P.TL/2,y+P.TW/2,150,`<div class="t3tag${T3.zoom?' t3hid':''}">T${n} · ${cs.n+(cs.n==1?' canasta':' canastas')+more}<small>${f(kg,0)} kg · <span${ov?' class="t3al"':''}>más viejo: ${old<=0?'hoy':old==1?'1 día':old+' días'}${ov?' ⚠':''}</span></small></div>`)});
+ return T3.M={O}}
+/* Cámara → pantalla. Misma cuenta para el dibujo, los letreros y los toques. */
+const t3PP=s=>Math.round(9000*s+3000);
+function t3Pr(c,w,h){const PP=t3PP(c.s),a=c.az*Math.PI/180,b=c.ax*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b),S=c.s;
+ return (X,Y,Z)=>{const dx=X-c.px,dy=Y-c.py,x1=dx*ca-dy*sa,y1=dx*sa+dy*ca,y2=y1*cb-Z*sb,z2=y1*sb+Z*cb,Zs=S*z2,k=PP/(PP-Zs);return [w/2+S*(x1+c.ox)*k,h/2+S*(y2+c.oy)*k,Zs<PP*.9]}}
+function t3Proj(x,y,z,w,h){const p=t3Pr(T3,w,h)(x,y,z);return{x:p[0],y:p[1],ok:p[2]}}
+/* Orden de dibujo de tanques y plataformas: si dos no se enciman en el piso, va primero el que está más lejos de la cámara en el eje
+   que los separa; si hay duda, el centro más lejano. */
+function t3Order(O,sa,ca){const dep=o=>(o.fp[0]+o.fp[2])/2*sa+(o.fp[1]+o.fp[3])/2*ca,
+ bf=(A,B)=>{const ox=A.fp[2]<=B.fp[0]?-1:B.fp[2]<=A.fp[0]?1:0,oy=A.fp[3]<=B.fp[1]?-1:B.fp[3]<=A.fp[1]?1:0,rx=ox*sa,ry=oy*ca;
+  if(ox&&!oy)return rx<0;if(oy&&!ox)return ry<0;if(ox&&oy&&(rx<0)===(ry<0)&&rx&&ry)return rx<0;return dep(A)<dep(B)};
+ const L=O.slice(),out=[];while(L.length){let bi=-1;
+  for(let i=0;i<L.length&&bi<0;i++){let ok=true;for(let j=0;j<L.length;j++)if(i!==j&&bf(L[j],L[i])&&!bf(L[i],L[j])){ok=false;break}if(ok)bi=i}
+  if(bi<0){bi=0;L.forEach((o,i)=>{if(dep(o)<dep(L[bi]))bi=i})}out.push(L.splice(bi,1)[0])}
+ return out}
+const t3Hex=s=>{s=String(s||'').trim();if(s[0]=='#'){if(s.length==4)s='#'+s[1]+s[1]+s[2]+s[2]+s[3]+s[3];return [1,3,5].map(i=>parseInt(s.slice(i,i+2),16)||0)}const m=s.match(/[\d.]+/g)||[0,0,0];return [+m[0]||0,+m[1]||0,+m[2]||0]};
+function t3Pal(){const cs=getComputedStyle(document.documentElement),ink=t3Hex(cs.getPropertyValue('--ink')||'#1c2733'),bg=t3Hex(cs.getPropertyValue('--bg')||'#f2f4f6'),
+ mx=p=>'rgb('+[0,1,2].map(i=>Math.round(ink[i]*p+bg[i]*(1-p))).join(',')+')',dk=ink[0]+ink[1]+ink[2]>382;
+ return{flr:mx(.2),zn:mx(.26),wl:mx(.07),wl2:mx(.13),wat:dk?'#2f5c54':'#5f9088',watl:dk?'#3d6d64':'#73a199'}}
+/* Dibuja la escena en el lienzo con la cámara actual. Guarda en T3.H lo que se puede tocar (ya en pantalla). */
+function t3Draw(){const v=document.querySelector('.t3v'),cv=v&&v.querySelector('canvas.t3cv');T3.H=[];if(!cv||!T3.M)return;
+ const w=v.clientWidth,h=v.clientHeight;if(!w||!h)return;
+ const dpr=Math.min(window.devicePixelRatio||1,document.documentElement.classList.contains('lite')?1.5:2),CWp=Math.round(w*dpr),CHp=Math.round(h*dpr);
+ if(cv.width!==CWp||cv.height!==CHp){cv.width=CWp;cv.height=CHp}
+ const g=cv.getContext('2d');if(!g)return;g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);g.lineJoin='round';
+ const P=T3P,C=t3Pal(),S=T3.s,a=T3.az*Math.PI/180,sa=Math.sin(a),ca=Math.cos(a),pr=t3Pr(T3,w,h),SS=ca>=0,EE=sa>=0,
+  lw=(u,m)=>Math.max(m,u*S),
+  path=pts=>{g.beginPath();for(let i=0;i<pts.length;i++){const q=pr(pts[i][0],pts[i][1],pts[i][2]);if(i)g.lineTo(q[0],q[1]);else g.moveTo(q[0],q[1])}g.closePath()},
+  poly=(pts,fill,line,lwp,dash)=>{path(pts);if(fill){g.fillStyle=fill;g.fill()}if(line){g.strokeStyle=line;g.lineWidth=lwp||1;if(dash)g.setLineDash(dash);g.stroke();if(dash)g.setLineDash([])}},
+  top=(x,y,z,W,D)=>[[x,y,z],[x+W,y,z],[x+W,y+D,z],[x,y+D,z]],
+  wx=(x,y,z,W,H)=>[[x,y,z],[x+W,y,z],[x+W,y,z+H],[x,y,z+H]],
+  wy=(x,y,z,D,H)=>[[x,y,z],[x,y+D,z],[x,y+D,z+H],[x,y,z+H]],
+  box=(x,y,z,W,D,H,c,line,lwp,dash)=>{poly(SS?wx(x,y+D,z,W,H):wx(x,y,z,W,H),c[1]);poly(EE?wy(x+W,y,z,D,H):wy(x,y,z,D,H),c[2]);poly(top(x,y,z+H,W,D),c[0],line,lwp,dash)},
+  /* texto pegado a un plano: c centro, u hacia la derecha del texto, d hacia abajo del texto */
+  ptext=(txt,c,u,d,size,color)=>{if(size*S<5)return;const o=pr(c[0],c[1],c[2]),pu=pr(c[0]+u[0],c[1]+u[1],c[2]+u[2]),pd=pr(c[0]+d[0],c[1]+d[1],c[2]+d[2]);
+   g.save();g.setTransform(dpr*(pu[0]-o[0]),dpr*(pu[1]-o[1]),dpr*(pd[0]-o[0]),dpr*(pd[1]-o[1]),dpr*o[0],dpr*o[1]);g.fillStyle=color;g.font=`800 ${size}px system-ui,-apple-system,sans-serif`;g.textAlign='center';g.textBaseline='middle';
+   const ls=txt.split('\n');ls.forEach((l,i)=>g.fillText(l,0,(i-(ls.length-1)/2)*size*1.15));g.restore()};
+ /* piso con cuadrícula de 2 m y zona de recepción */
+ poly(top(0,0,0,P.W,P.D),C.flr);
+ g.beginPath();for(let X=200;X<P.W;X+=200){const p=pr(X,0,0),q=pr(X,P.D,0);g.moveTo(p[0],p[1]);g.lineTo(q[0],q[1])}for(let Y=200;Y<P.D;Y+=200){const p=pr(0,Y,0),q=pr(P.W,Y,0);g.moveTo(p[0],p[1]);g.lineTo(q[0],q[1])}g.strokeStyle='rgba(0,0,0,.07)';g.lineWidth=1;g.stroke();
+ poly(top(40,40,1,1020,560),C.zn,'rgba(0,0,0,.22)',lw(3,1),[6,5]);ptext('Área de recepción',[550,320,1],[1,0,0],[0,1,0],46,'rgba(0,0,0,.4)');
+ /* paredes del fondo (las de enfrente no se dibujan: taparían la planta) */
+ const off=k=>(k=='s'&&ca>.2)||(k=='n'&&ca<-.2)||(k=='e'&&sa>.2)||(k=='w'&&sa<-.2);
+ [['n',ca],['w',sa],['s',-ca],['e',-sa]].sort((A,B)=>B[1]-A[1]).forEach(([k])=>{if(off(k))return;
+  if(k=='n'){poly(wx(0,0,0,P.W,300),C.wl,'rgba(0,0,0,.12)',1);poly(wx(780,0,0,300,230),'#a7adb4','#8a9099',lw(4,1));poly(wx(570,0,140,200,70),'#fff','#333',lw(3,1));ptext('SELECCIÓN\nY LAVADO',[670,0,175],[1,0,0],[0,0,-1],24,'#111')}
+  if(k=='s')poly(wx(0,P.D,0,P.W,140),C.wl,'rgba(0,0,0,.12)',1);
+  if(k=='w'){poly(wy(0,0,0,P.D,300),C.wl2,'rgba(0,0,0,.12)',1);poly(wy(0,170,0,300,230),'#a7adb4','#8a9099',lw(4,1));poly(wy(0,455,140,220,70),'#fff','#333',lw(3,1));ptext('ANDÉN DE\nRECEPCIÓN',[0,565,175],[0,-1,0],[0,0,-1],24,'#111')}
+  if(k=='e')poly(wy(P.W,0,0,P.D,140),C.wl2,'rgba(0,0,0,.12)',1)});
+ /* tanques y plataformas de filtro */
+ const H=[],thin=lw(1.5,.5);
+ t3Order(T3.M.O,sa,ca).forEach(o=>{g.globalAlpha=o.dim?.28:1;
+  if(o.pl){const{px,py,pw,pd,pz}=o.pl,rail=(pts)=>{g.beginPath();pts.forEach((p,i)=>{const q=pr(p[0],p[1],p[2]);if(i)g.lineTo(q[0],q[1]);else g.moveTo(q[0],q[1])});g.strokeStyle='#F2C200';g.lineWidth=lw(5,1);g.stroke()},
+    rX=(y,z)=>rail([[px,y,z],[px,y,z+70],[px+pw,y,z+70],[px+pw,y,z]]),rY=(x,z)=>rail([[x,py,z],[x,py,z+70],[x,py+pd,z+70],[x,py+pd,z]]),z1=pz+12;
+   [[px,py],[px+pw-16,py],[px,py+pd-16],[px+pw-16,py+pd-16]].sort((A,B)=>(A[0]*sa+A[1]*ca)-(B[0]*sa+B[1]*ca)).forEach(([X,Y])=>box(X,Y,0,16,16,pz,['#E8EAED','#DADDE1','#CDD1D6']));
+   box(px,py,pz,pw,pd,12,['#EEF0F2','#D5D9DE','#D5D9DE'],'#cfd3d8',lw(2,.5));
+   if(SS)rX(py,z1);else rX(py+pd,z1);if(EE)rY(px,z1);else rY(px+pw,z1);
+   box(px+30,py+20,z1,pw-60,pd-40,95,['#AEB4BA','#A3A9AF','#9CA2A8']);
+   if(SS)rX(py+pd,z1);else rX(py,z1);if(EE)rY(px+pw,z1);else rY(px,z1);
+   return}
+  const x=o.x,y=o.y,TL=P.TL,TW=P.TW,TH=P.TH,ZW=P.ZW;
+  poly(wx(x,SS?y:y+TW,0,TL,TH),'#565D66');poly(wy(EE?x:x+TL,y,0,TW,TH),'#5c636c');
+  const wpts=top(x,y,ZW,TL,TW);poly(wpts,C.wat);H.push({p:wpts.map(q=>pr(q[0],q[1],q[2])),t:o.tk});
+  o.C.slice().sort((A,B)=>(A.x*sa+A.y*ca)-(B.x*sa+B.y*ca)).forEach(c=>{const W=P.CW-4,Dd=P.CD,z=c.lay?ZW+1+P.CH*(c.lay+1):ZW+P.CH,
+    col=c.hl?['#16A6D1','#1189AE','#0E7595']:['#C3C8CE','#A7ADB4','#959BA2'],
+    line=c.hl?'#0B1D59':c.st=='old'?'#c23a26':c.st=='last'?'#d97706':c.inc?'#2b3038':'#8d939a',lp=c.hl?lw(3,1.5):c.st||c.inc?lw(2.5,1.2):thin,dash=c.inc&&!c.hl&&!c.st?[3,2]:null;
+   if(c.lay)box(c.x,c.y,ZW+1,W,Dd,P.CH*(c.lay+1),col,line,lp,dash);else poly(top(c.x,c.y,z,W,Dd),col[0],line,lp,dash);
+   if(S*12>=1.2)poly(top(c.x+14,c.y+6,z,12,30),c.rib,'rgba(0,0,0,.55)',lw(1.5,.4));
+   H.push({p:top(c.x,c.y,z,W,Dd).map(q=>pr(q[0],q[1],q[2])),t:o.tk,k:c.k})});
+  poly(wx(x,SS?y+TW:y,0,TL,TH),'#7D858F');poly(wy(EE?x+TL:x,y,0,TW,TH),'#6A727C');
+  [top(x-4,y-4,TH,TL+8,9),top(x-4,y+TW-5,TH,TL+8,9),top(x-4,y-4,TH,9,TW+8),top(x+TL-5,y-4,TH,9,TW+8)].forEach(r=>poly(r,'#8E959E'))});
+ g.globalAlpha=1;
+ /* placas «TANQUE n»: crecen y se achican con la planta, siempre de frente y encima */
+ const nb=Math.max(10,Math.min(22,64*S)),sm=Math.max(7,nb*.46);
+ T3.labs.forEach(l=>{if(!l.sg||l.hid)return;const q=pr(l.x,l.y,l.z);if(!q[2])return;
+  g.font=`900 ${sm}px system-ui,-apple-system,sans-serif`;const w1=g.measureText('TANQUE').width;g.font=`900 ${nb}px system-ui,-apple-system,sans-serif`;
+  const bw=Math.max(w1,g.measureText(l.sg).width)+sm*1.2,bh=sm+nb+sm*.8,bx=q[0]-bw/2,by=q[1]-bh;
+  g.fillStyle='#fff';g.fillRect(bx,by,bw,bh);g.strokeStyle='#222';g.lineWidth=Math.max(1,nb/11);g.strokeRect(bx,by,bw,bh);
+  g.fillStyle='#111';g.textAlign='center';g.textBaseline='top';g.font=`900 ${sm}px system-ui,-apple-system,sans-serif`;g.fillText('TANQUE',q[0],by+sm*.35);
+  g.font=`900 ${nb}px system-ui,-apple-system,sans-serif`;g.fillText(l.sg,q[0],by+sm*1.25)});
+ T3.H=H}
+/* ¿Qué hay debajo del dedo? (lo último dibujado gana) */
+const t3In=(p,x,y)=>{let c=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a[1]>y)!==(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])c=!c}return c};
+function t3Hit(x,y){for(let i=T3.H.length-1;i>=0;i--)if(t3In(T3.H[i].p,x,y))return T3.H[i];return null}
+/* Centro en la página de un tanque (agua) o una canasta: lo usan las pruebas para tocar como un dedo */
+function t3Spot(t,k){const cv=document.querySelector('.t3cv');if(!cv)return null;const r=cv.getBoundingClientRect(),H=T3.H.filter(h=>h.t===t&&(k==null?h.k==null:h.k===k)).pop();if(!H)return null;
+ let c=[0,0];if(k==null){const ins=[.5,.35,.65].map(f=>[H.p[0][0]+(H.p[2][0]-H.p[0][0])*f,H.p[0][1]+(H.p[2][1]-H.p[0][1])*f]).find(q=>{const h=t3Hit(q[0],q[1]);return h&&h.t===t&&h.k==null});if(!ins)return null;c=ins}
+ else c=[H.p.reduce((a,q)=>a+q[0],0)/4,H.p.reduce((a,q)=>a+q[1],0)/4];return{x:r.left+c[0],y:r.top+c[1]}}
 function t3View(all){const pg=all?'gen':'rec';if(T3.pg!==pg){T3.pg=pg;T3.zoom=false;T3.pick=null;T3.s=0;T3.zt=''}
  /* v1.39.0 (usuario: «el botón está bien escondido»): el 3D se prende y se apaga con su propio ícono, siempre en el mismo lugar */
  const tg=`<button type="button" class="t3tg" data-t3a="${T3.on?'off':'on'}" aria-pressed="${T3.on}" aria-label="Planta en 3D: ${T3.on?'encendida. Tocar para ocultar':'apagada. Tocar para mostrar'}" title="${T3.on?'Ocultar':'Mostrar'} planta en 3D">${IC.cube}<span>3D</span></button>`;
- if(!T3.on)return `<div class="t3bar"><h2 class="h3">Planta en 3D</h2><span class="mut">Apagada</span><span class="sp"></span>${tg}</div>`;
+ if(!T3.on){T3.node=null;T3.M=null;return `<div class="t3bar"><h2 class="h3">Planta en 3D</h2><span class="mut">Apagada</span><span class="sp"></span>${tg}</div>`}
  T3.D=t3Data(all);T3.all=all;if(T3.pick&&(!T3.zoom||T3.pick.t!==TQSEL))T3.pick=null;
- const inner=t3Inner(),q=t3Q(),pk=T3.pick&&T3.cs[T3.pick.t]&&T3.cs[T3.pick.t][T3.pick.k];
+ const M=t3Inner(),pk=T3.pick&&T3.cs[T3.pick.t]&&T3.cs[T3.pick.t][T3.pick.k],sig=JSON.stringify(M.O.map(o=>[o.tk,o.dim,o.C?o.C.map(c=>c.k+c.st+(c.inc?1:0)+(c.hl?1:0)+c.rib+c.lay).join():0]));
  if(!T3.q){T3.q=1;Promise.resolve().then(t3Mount)}
- /* La escena se arma de nuevo solo si cambió algo (cada render de la página no vuelve a crear miles de piezas): si es igual, se deja
-    un lugar (#t3slot) y t3Mount vuelve a poner la misma escena. */
+ /* La escena se arma de nuevo solo si cambió algo: si es igual, se deja un lugar (#t3slot) y t3Mount vuelve a poner el mismo lienzo. */
  const bar=`<div class="t3bar"><h2 class="h3">Planta en 3D</h2><span class="mut">${window.PointerEvent?'Arrastra para girar':'Usa los botones ⟲ ⟳ para girar'} · toca un tanque</span><span class="sp"></span>${tg}</div>
  ${T3.D.miss.map(x=>`<div class="alb" role="alert"><span class="ai" aria-hidden="true">${IC.warn}</span><div><b>${E(x.l)}${all?' · '+E(x.m.n):''} no tiene kg por caja en tanque</b><p style="margin:4px 0 0">Sin ese dato no se pueden dibujar sus canastas. <button type="button" class="alk" data-go="${E(x.go)}">Completar ›</button></p></div></div>`).join('')}`,
-  V3=`<div class="t3v${T3.zoom?' t3zm':''}" aria-label="Planta en 3D. ${window.PointerEvent?'Arrastra para girar; con dos dedos mueves y acercas.':'Usa los botones para girar y acercar.'} Para elegir un tanque también puedes usar el tablero de abajo."><div class="t3st"><div class="t3w" data-q="${+q.s}${+q.e}" style="width:${T3P.W}px;height:${T3P.D}px;transform:__TF__">${inner}</div></div><div class="t3lab" aria-hidden="true">${T3.labs.map((l,i)=>`<div class="t3l" data-i="${i}"${l.w?` data-w="${l.w}"`:''}>${l.h}</div>`).join('')}</div>
+  V3=`<div class="t3v${T3.zoom?' t3zm':''}" aria-label="Planta en 3D. ${window.PointerEvent?'Arrastra para girar; con dos dedos mueves y acercas.':'Usa los botones para girar y acercar.'} Para elegir un tanque también puedes usar el tablero de abajo."><canvas class="t3cv" aria-hidden="true"></canvas><div class="t3lab" aria-hidden="true">${T3.labs.map((l,i)=>l.sg?'':`<div class="t3l" data-i="${i}">${l.h}</div>`).join('')}</div>
  ${T3.zoom?`<button type="button" class="t3back" data-t3a="back">‹ Ver toda la planta</button>`:''}
  <div class="t3ctl" role="group" aria-label="Cámara"><button type="button" data-t3a="l" aria-label="Girar a la izquierda" title="Girar">⟲</button><button type="button" data-t3a="r" aria-label="Girar a la derecha" title="Girar">⟳</button><button type="button" data-t3a="in" aria-label="Acercar" title="Acercar">+</button><button type="button" data-t3a="out" aria-label="Alejar" title="Alejar">−</button><button type="button" data-t3a="fit" aria-label="Volver a centrar" title="Centrar">⌂</button></div>
  ${pk?`<div class="t3pick" role="status"><button type="button" class="t3x" data-t3a="unpick" aria-label="Cerrar">✕</button><b>${E(pk.x.l)}</b>${all?` · ${E(pk.x.m.n)}`:''}<br><span class="szd" style="background:${pk.x.col[pk.i]}" aria-hidden="true"></span> ${E(pk.x.nm[pk.i]||'')} ${E(pk.x.rg[pk.i]&&pk.x.rg[pk.i]!==pk.x.nm[pk.i]?pk.x.rg[pk.i]:'')} · ${f(pk.g,1)} kg${pk.inc?' (incompleta)':''}<br><span class="mut">${E(pk.x.pv)} · ${pk.x.d==null?'sin fecha':pk.x.d==1?'1 día en tanque':pk.x.d+' días en tanque'}${pk.x.u&&pk.x.u.dm?' · aguanta '+pk.x.u.dm:''}</span><br><button type="button" class="alk" data-go="${E(pk.x.go)}">Abrir lote ›</button> <button type="button" class="alk" data-t3a="unpick">Ver todas las canastas</button></div>`:''}</div>`;
- if(T3.node&&T3.html===V3)return bar+'<div id="t3slot"></div>';
- T3.html=V3;T3.node=null;return bar+V3.replace('__TF__',T3.tf||'none')}
-/* Cámara: fitTo encuadra una caja del piso (proyecta sus esquinas); t3Apply pone la transformación (con o sin animación) */
+ if(T3.node&&T3.html===V3&&T3.sig===sig)return bar+'<div id="t3slot"></div>';
+ T3.html=V3;T3.sig=sig;T3.node=null;return bar+V3}
+/* Cámara: t3Fit encuadra una caja del piso (proyecta sus esquinas, sin perspectiva); lo usa también la vista previa del acceso */
 function t3Fit(x0,y0,x1,y1,z1,pad,r,az,ax){const cx=(x0+x1)/2,cy=(y0+y1)/2,a=az*Math.PI/180,b=ax*Math.PI/180;let m=[1e9,1e9,-1e9,-1e9];
  for(const x of [x0,x1])for(const y of [y0,y1])for(const z of [0,z1]){const dx=x-cx,dy=y-cy,X=dx*Math.cos(a)-dy*Math.sin(a),Y=(dx*Math.sin(a)+dy*Math.cos(a))*Math.cos(b)-z*Math.sin(b);m=[Math.min(m[0],X),Math.min(m[1],Y),Math.max(m[2],X),Math.max(m[3],Y)]}
  return{az,ax,px:cx,py:cy,s:Math.min(r.width/(m[2]-m[0]),r.height/(m[3]-m[1]))*pad,ox:-(m[0]+m[2])/2,oy:-(m[1]+m[3])/2}}
-function t3Frame(anim,az,ax){const v=document.querySelector('.t3v');if(!v)return;const r=v.getBoundingClientRect(),P=T3P,t=T3.zoom&&P.TQ[TQSEL]?TQSEL:'';T3.zt=T3.zoom?TQSEL:'';az=az==null?T3.az:az;ax=ax==null?T3.ax:ax;
- const rr={width:Math.max(160,r.width-68),height:r.height};/* v1.38.1 (auditoría #5): la columna de botones (⟲ ⟳ + − ⌂) no tapa las etiquetas */
- let g;if(t){const [x,y]=P.TQ[t],F=t3Plat(t)||{px:x,pw:P.TL};g=t3Fit(Math.min(x,F.px)-10,y-10,Math.max(x+P.TL,F.px+F.pw)+10,y+P.TW+40,340,.92,rr,az,ax)}else g=t3Fit(0,0,P.W,P.D,300,.97,rr,az,ax);g.ox-=(r.width-rr.width)/2/g.s;t3Go(g,anim)}
+/* Parte del recuadro libre de los botones de la cámara (columna a la derecha; en celular, fila abajo) */
+function t3Area(v){const w=v.clientWidth,h=v.clientHeight,ct=v.querySelector('.t3ctl');if(!ct)return{x0:8,y0:8,x1:w-8,y1:h-8};
+ return ct.offsetWidth>ct.offsetHeight?{x0:8,y0:8,x1:w-8,y1:Math.max(80,ct.offsetTop-6)}:{x0:8,y0:8,x1:Math.max(120,ct.offsetLeft-6),y1:h-8}}
+/* Encuadra (toda la planta o el tanque elegido) con la perspectiva real: se ajusta 3 veces con lo que de verdad sale en pantalla */
+function t3Frame(anim,az,ax){const v=document.querySelector('.t3v');if(!v)return;const P=T3P,t=T3.zoom&&P.TQ[TQSEL]?TQSEL:'',w=v.clientWidth,h=v.clientHeight;T3.zt=T3.zoom?TQSEL:'';az=az==null?T3.az:az;ax=ax==null?T3.ax:ax;
+ const A=t3Area(v),aw=A.x1-A.x0,ah=A.y1-A.y0;let bx,pad;
+ if(t){const [x,y]=P.TQ[t],F=t3Plat(t)||{px:x,pw:P.TL};bx=[Math.min(x,F.px)-10,y-10,Math.max(x+P.TL,F.px+F.pw)+10,y+P.TW+40,340];pad=.92}else{bx=[0,0,P.W,P.D,300];pad=.97}
+ const g=t3Fit(bx[0],bx[1],bx[2],bx[3],bx[4],pad,{width:aw,height:ah},az,ax);
+ for(let it=0;it<4;it++){const pr=t3Pr(g,w,h);let m=[1e9,1e9,-1e9,-1e9];
+  for(const X of [bx[0],bx[2]])for(const Y of [bx[1],bx[3]])for(const Z of [0,bx[4]]){const q=pr(X,Y,Z);m=[Math.min(m[0],q[0]),Math.min(m[1],q[1]),Math.max(m[2],q[0]),Math.max(m[3],q[1])]}
+  const k=Math.min(aw*pad/Math.max(1,m[2]-m[0]),ah*pad/Math.max(1,m[3]-m[1]));g.ox+=((A.x0+A.x1)/2-(m[0]+m[2])/2)/g.s;g.oy+=((A.y0+A.y1)/2-(m[1]+m[3])/2)/g.s;g.s*=k}
+ t3Go(g,anim)}
 /* Mueve la cámara a g: con animación (~0.7 s) o de golpe (movimiento reducido, primera vez, cambio de tamaño) */
-function t3Go(g,anim){const a0={...T3},K=['az','ax','s','px','py','ox','oy'],id=++T3.an;
+function t3Go(g,anim){const a0=Object.assign({},T3),K=['az','ax','s','px','py','ox','oy'],id=++T3.an;
  let red=false;try{red=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
  if(!anim||red||!T3.s){K.forEach(k=>T3[k]=g[k]);return t3Apply()}
  const t0=performance.now(),D=700,step=now=>{if(id!==T3.an)return;const u=Math.min(1,(now-t0)/D),e=1-Math.pow(1-u,3);K.forEach(k=>T3[k]=a0[k]+(g[k]-a0[k])*e);t3Apply();if(u<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
-/* Punto del piso (x, y, altura z) → lugar en la pantalla, con la misma transformación y perspectiva que la escena */
-function t3Proj(x,y,z,w,h,P){const a=T3.az*Math.PI/180,b=T3.ax*Math.PI/180,dx=x-T3.px,dy=y-T3.py,x1=dx*Math.cos(a)-dy*Math.sin(a),y1=dx*Math.sin(a)+dy*Math.cos(a),
- y2=y1*Math.cos(b)-z*Math.sin(b),z2=y1*Math.sin(b)+z*Math.cos(b),X=T3.s*(x1+T3.ox),Y=T3.s*(y2+T3.oy),Z=T3.s*z2,k=P/(P-Z);return{x:w/2+X*k,y:h/2+Y*k,ok:Z<P*.9}}
-function t3Apply(){const v=document.querySelector('.t3v'),w=v&&v.querySelector('.t3w');if(!w)return;const q=t3Q(),qk=`${+q.s}${+q.e}`,r=v.getBoundingClientRect();
- if(w.dataset.q!==qk){w.dataset.q=qk;w.innerHTML=t3Inner()}
- const PP=Math.round(9000*T3.s+3000);v.querySelector('.t3st').style.perspective=PP+'px';
- T3.tf=`translate(${r.width/2}px,${r.height/2}px) scale(${T3.s}) translate(${T3.ox}px,${T3.oy}px) rotateX(${T3.ax}deg) rotateZ(${T3.az}deg) translate(${-T3.px}px,${-T3.py}px)`;
- w.style.transform=T3.tf;
- const vx=Math.sin(T3.az*Math.PI/180),vy=Math.cos(T3.az*Math.PI/180),off=k=>(k=='s'&&vy>.2)||(k=='n'&&vy<-.2)||(k=='e'&&vx>.2)||(k=='w'&&vx<-.2);w.querySelectorAll('.t3g[data-w]').forEach(g=>g.hidden=off(g.dataset.w));
- const ct=v.querySelector('.t3ctl'),cx=ct?ct.offsetLeft-6:1e9,cy=ct?ct.offsetTop+ct.offsetHeight+4:0;/* v1.38.1 (auditoría #5): una etiqueta a la altura de los botones se recorre a la izquierda para no quedar debajo */
- v.querySelectorAll('.t3l').forEach(el=>{const l=T3.labs[+el.dataset.i];if(!l)return;const p=t3Proj(l.x,l.y,l.z,r.width,r.height,PP),hid=!p.ok||(el.dataset.w&&off(el.dataset.w));el.hidden=hid;if(hid)return;
-  if(!el._w){el._w=el.offsetWidth;el._h=el.offsetHeight}let x=p.x;if(p.y-el._h<cy&&x+el._w/2>cx)x=cx-el._w/2;el.style.transform=`translate(${x.toFixed(1)}px,${p.y.toFixed(1)}px) translate(-50%,-100%)`})}
-function t3Mount(){T3.q=0;const sl=document.getElementById('t3slot');if(sl&&T3.node)sl.replaceWith(T3.node);const v=document.querySelector('.t3v');if(!v)return;T3.node=v;const r=v.getBoundingClientRect();
- if(!T3.s||Math.abs(r.width-T3.w)>1||Math.abs(r.height-T3.h)>1){T3.w=r.width;T3.h=r.height;T3.an++;t3Frame(false)}else if((T3.zoom?TQSEL:'')!==T3.zt)t3Frame(true);else t3Apply()}
+/* Dibuja y acomoda los letreros con la cámara actual */
+function t3Apply(){const v=document.querySelector('.t3v');if(!v||!v.querySelector('.t3cv'))return;const w=v.clientWidth,h=v.clientHeight;t3Draw();
+ const ct=v.querySelector('.t3ctl'),hz=ct&&ct.offsetWidth>ct.offsetHeight,cx=ct&&!hz?ct.offsetLeft-6:1e9,cy=ct&&!hz?ct.offsetTop+ct.offsetHeight+4:0,by=ct&&hz?ct.offsetTop-4:1e9;
+ /* v1.38.1 (auditoría #5): una etiqueta a la altura de los botones se recorre para no quedar debajo */
+ const pr=t3Pr(T3,w,h);
+ /* primero se lee todo (medidas), luego se escribe todo: sin recalcular la página a medias (guía de interfaz de Vercel) */
+ const els=[...v.querySelectorAll('.t3l')],cl=ct?ct.offsetLeft:0;els.forEach(el=>{if(!el._w&&!el.hidden){el._w=el.offsetWidth;el._h=el.offsetHeight}});
+ els.forEach(el=>{const l=T3.labs[+el.dataset.i];if(!l)return;const p=pr(l.x,l.y,l.z);el.hidden=!p[2];if(!p[2])return;
+  const ew=el._w||0,eh=el._h||0;let x=p[0],y=p[1];if(y-eh<cy&&x+ew/2>cx)x=cx-ew/2;if(y>by&&x+ew/2>cl)y=by;el.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-100%)`})}
+const t3Req=()=>{if(!T3.raf)T3.raf=requestAnimationFrame(()=>{T3.raf=0;t3Apply()})};
+function t3Mount(){T3.q=0;const sl=document.getElementById('t3slot');if(sl&&T3.node)sl.replaceWith(T3.node);const v=document.querySelector('.t3v');if(!v)return;T3.node=v;const w=v.clientWidth,h=v.clientHeight;
+ if(!T3.s||Math.abs(w-T3.w)>1||Math.abs(h-T3.h)>1){T3.w=w;T3.h=h;T3.an++;t3Frame(false)}else if((T3.zoom?TQSEL:'')!==T3.zt)t3Frame(true);else t3Apply()}
 addEventListener('resize',()=>{if(document.querySelector('.t3v'))t3Mount()});
 /* Arrastrar: un dedo gira e inclina; dos dedos mueven y acercan. Mouse: rueda acerca; clic derecho o Shift mueve. Un toque sin
    arrastrar sigue siendo un toque (abre el tanque o la canasta). */
 const T3PT=new Map();let T3mv=0,T3last=null;
 const t3Mid=()=>{const a=[...T3PT.values()];return{x:a.reduce((s,p)=>s+p.x,0)/a.length,y:a.reduce((s,p)=>s+p.y,0)/a.length,d:a.length>1?Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y):0}},
- t3Zoom=k=>{T3.s=Math.max(.08,Math.min(4,T3.s*k))},
+ t3Zoom=k=>{T3.s=Math.max(.04,Math.min(4,T3.s*k))},
  t3Pan=(dx,dy)=>{const X=dx/T3.s,Y=dy/T3.s/Math.cos(T3.ax*Math.PI/180),a=T3.az*Math.PI/180;T3.px=Math.max(0,Math.min(T3P.W,T3.px-(X*Math.cos(a)+Y*Math.sin(a))));T3.py=Math.max(0,Math.min(T3P.D,T3.py-(-X*Math.sin(a)+Y*Math.cos(a))))};
 document.addEventListener('pointerdown',e=>{const v=e.target.closest&&e.target.closest('.t3v');if(!v||e.target.closest('.t3ctl,.t3back,.t3pick'))return;T3PT.set(e.pointerId,{x:e.clientX,y:e.clientY,b:e.button,sh:e.shiftKey});if(T3PT.size==1)T3mv=0;T3last=t3Mid()});
 document.addEventListener('pointermove',e=>{const p=T3PT.get(e.pointerId);if(!p)return;p.x=e.clientX;p.y=e.clientY;const m=t3Mid(),dx=m.x-T3last.x,dy=m.y-T3last.y,v=document.querySelector('.t3v');
  T3mv+=Math.abs(dx)+Math.abs(dy);if(T3mv<8||!v)return;if(!v.classList.contains('t3drag')){v.classList.add('t3drag');try{v.setPointerCapture(e.pointerId)}catch(z){}}
  if(T3PT.size>1){t3Pan(dx,dy);if(T3last.d&&m.d)t3Zoom(m.d/T3last.d)}else if(p.b==2||p.sh)t3Pan(dx,dy);else{T3.az=(T3.az-dx*.35)%360;T3.ax=Math.max(25,Math.min(80,T3.ax-dy*.25))}
- T3.an++;T3last=m;t3Apply()});
+ T3.an++;T3last=m;t3Req()});
 const t3Up=e=>{if(!T3PT.delete(e.pointerId))return;T3last=T3PT.size?t3Mid():null;if(!T3PT.size)setTimeout(()=>{const v=document.querySelector('.t3v');if(v)v.classList.remove('t3drag')},0)};
 document.addEventListener('pointerup',t3Up);document.addEventListener('pointercancel',t3Up);
 document.addEventListener('click',e=>{if(T3mv>=8&&e.target.closest&&e.target.closest('.t3v')){e.stopPropagation();e.preventDefault();T3mv=0}},true);
-document.addEventListener('wheel',e=>{if(!e.target.closest||!e.target.closest('.t3v'))return;e.preventDefault();T3.an++;t3Zoom(Math.exp(-e.deltaY*.0015));t3Apply()},{passive:false});
+document.addEventListener('wheel',e=>{if(!e.target.closest||!e.target.closest('.t3v'))return;e.preventDefault();T3.an++;t3Zoom(Math.exp(-e.deltaY*.0015));t3Req()},{passive:false});
 ['contextmenu','gesturestart','gesturechange'].forEach(n=>document.addEventListener(n,e=>{if(e.target.closest&&e.target.closest('.t3v'))e.preventDefault()}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&T3.zoom&&document.querySelector('.t3v')&&!e.target.closest('input,select,textarea,[role=dialog],#setp,#pmenu')){T3.zoom=false;T3.pick=null;render()}});
-document.addEventListener('click',e=>{const a=e.target.closest('[data-t3a]'),t=e.target.closest('[data-t3t]'),c=e.target.closest('[data-t3c]');
+document.addEventListener('click',e=>{const a=e.target.closest('[data-t3a]'),cv=e.target.closest('.t3cv');
  if(a){const k=a.dataset.t3a,g={az:T3.az,ax:T3.ax,s:T3.s,px:T3.px,py:T3.py,ox:T3.ox,oy:T3.oy};
-  if(k=='l'||k=='r'){g.az+=k=='l'?-45:45;return t3Go(g,true)}if(k=='in'||k=='out'){g.s=Math.max(.08,Math.min(4,g.s*(k=='in'?1.35:1/1.35)));return t3Go(g,true)}
+  if(k=='l'||k=='r'){g.az+=k=='l'?-45:45;return t3Go(g,true)}if(k=='in'||k=='out'){g.s=Math.max(.04,Math.min(4,g.s*(k=='in'?1.35:1/1.35)));return t3Go(g,true)}
   if(k=='fit')return t3Frame(true,35,57);if(k=='back'){T3.zoom=false;T3.pick=null;return render()}if(k=='unpick'){T3.pick=null;return render()}
   if(k=='on'||k=='off'){T3.on=k=='on';T3.s=0;try{localStorage.setItem('propesa-3d',T3.on?'1':'0')}catch(z){}return render()}
   return}
- if(c){const [tq,k]=c.dataset.t3c.split(':');if(!T3.zoom||TQSEL!==tq){TQSEL=tq;T3.zoom=true;T3.pick=null}else T3.pick={t:tq,k:+k};return render()}
- if(t){TQSEL=t.dataset.t3t;T3.zoom=true;T3.pick=null;render()}});
+ if(!cv)return;const r=cv.getBoundingClientRect(),hit=t3Hit(e.clientX-r.left,e.clientY-r.top);if(!hit)return;
+ if(hit.k!=null){const tq=hit.t;if(!T3.zoom||TQSEL!==tq){TQSEL=tq;T3.zoom=true;T3.pick=null}else T3.pick={t:tq,k:hit.k};return render()}
+ TQSEL=hit.t;T3.zoom=true;T3.pick=null;render()});
 /* v1.19.0 · Administración → Tallas de la maquila abierta (solo el Administrador): nombre, rango, color (el del tape y la categoría
    de la hielera), nombre del color e inglés para compradores; agregar y ocultar. No se borran ni se reordenan (ver SZ0). */
 let SZF=null;
@@ -4136,7 +4211,7 @@ function render0(){const A=document.getElementById('app');if(me)AUO=false;if(!me
  if((V.v=='admin'||V.v=='general')&&me.role!='admin')V={v:'inicio'};if(!mqBy(MQ)||mqBy(MQ).off)mqSet((mqOn()[0]||mqAll()[0]).id);const o=document.querySelector('main'),sc=o?o.scrollTop:0,s=STEP[V.v]||0,T=orderedAll(),PA=packedAll();
  const steps=[['recepcion',1,'Entrada',`${ST.R.length} lotes`],['ordenes',2,'Órdenes',ST.OR.length?`${ST.OR.length} ${ST.OR.length==1?'orden':'órdenes'}`:'Sin órdenes'],['empaque',3,'Empaque',T?`${PA}/${T} hieleras`:'Sin hieleras pedidas',T>PA],['embarques',4,'Embarque',`${ST.P.filter(p=>p.closed).length}/${ST.P.length} cerrados`,ST.P.some(p=>!p.closed)]];
  if(!PISO&&(V.v=='pcer'||V.v=='pcon'))V={v:V.v=='pcer'?'embarques':'cierre',id:null};
- if(PISO)A.innerHTML=pisoShell(topBanners()+PG[V.v](V.id));else A.innerHTML=`<div class="shell"><a class="skip" href="#main">Saltar al contenido</a><aside class="sb${MQ!==1&&V.v!='general'?' mqa':''}" style="--mq:${mqCol(MQ)}" aria-label="Menú principal">${mqLogo('lt lgb')}<button class="fs ${V.v=='inicio'||V.v=='general'?'on':''}" data-go="inicio" ${V.v=='inicio'?'aria-current="page"':''}><i>${IC.inicio}</i><span><b>Centro de operaciones</b></span></button><h4>Operación</h4>${steps.map(([k,n,t,sub,pn])=>`<button class="fs ${s==n?'on':''}${pn?' pn':''}" data-go="${k}" ${s==n?'aria-current="page"':''}><i>${IC[k]}</i><span><b>${t}</b><small>${pn?'⚠ ':''}${sub}</small></span></button>`).join('')}<button class="fs ${V.v=='temperatura'?'on':''}" data-go="temperatura" ${V.v=='temperatura'?'aria-current="page"':''}><i>${IC.temperatura}</i><span><b>Temperatura</b></span></button><h4>Revisión</h4><button class="fs ${V.v=='cierre'?'on':''}" data-go="cierre" ${V.v=='cierre'?'aria-current="page"':''}><i>${IC.cierre}</i><span><b>Mortalidad final</b><small>${ST.R.filter(r=>r.closed).length}/${ST.R.filter(r=>!r.ne).length} lotes cerrados</small></span></button><button class="fs ${V.v=='hojas'?'on':''}" data-go="hojas" ${V.v=='hojas'?'aria-current="page"':''}><i>${IC.pdf}</i><span><b>Hojas para imprimir</b></span></button><h4>Modo</h4><button class="iosrow" role="switch" aria-checked="false" data-mode="piso"><span class="iosic">${IC.cajas}</span><span class="iostx"><b>Modo piso</b><small>Botones grandes</small></span><span class="iossw" aria-hidden="true"><i></i></span></button><div style="height:12px"></div></aside><div class="scr" data-sb="0"></div><div class="ct"><header class="hd${MQ!==1&&V.v!='general'?' mqa':''}" style="--mq:${mqCol(MQ)}">${MQ!==1&&V.v!='general'?`<button class="hmq" data-mq="1" aria-haspopup="menu" aria-expanded="${MQOPEN}" aria-controls="mqmenu" aria-label="Maquila: ${E(mqName(MQ))}. Cambiar de maquila">${mqBadge(MQ)}</button>`:''}${V.v!='inicio'?bkBtn():''}<button class="mb" data-sb="1" aria-label="Menú">☰</button>${hdTitle(steps,s)}<input id="sq" type="search" placeholder="Buscar lote o envío" aria-label="Buscar"><div class="usr">${ntBtn(false)}${setBtn(false)}${avatarBtn(false)}</div></header><main id="main" tabindex="-1">${topBanners()}${PG[V.v](V.id)}</main></div></div>`;
+ if(PISO)A.innerHTML=pisoShell(topBanners()+PG[V.v](V.id));else A.innerHTML=`<div class="shell"><a class="skip" href="#main">Saltar al contenido</a><aside class="sb${MQ!==1&&V.v!='general'?' mqa':''}" style="--mq:${mqCol(MQ)}" aria-label="Menú principal">${mqLogo('lt lgb')}<button class="fs ${V.v=='inicio'||V.v=='general'?'on':''}" data-go="inicio" ${V.v=='inicio'?'aria-current="page"':''}><i>${IC.inicio}</i><span><b>Centro de operaciones</b></span></button><h4>Operación</h4>${steps.map(([k,n,t,sub,pn])=>`<button class="fs ${s==n?'on':''}${pn?' pn':''}" data-go="${k}" ${s==n?'aria-current="page"':''}><i>${IC[k]}</i><span><b>${t}</b><small>${pn?'⚠ ':''}${sub}</small></span></button>`).join('')}<button class="fs ${V.v=='temperatura'?'on':''}" data-go="temperatura" ${V.v=='temperatura'?'aria-current="page"':''}><i>${IC.temperatura}</i><span><b>Temperatura</b></span></button><h4>Revisión</h4><button class="fs ${V.v=='cierre'?'on':''}" data-go="cierre" ${V.v=='cierre'?'aria-current="page"':''}><i>${IC.cierre}</i><span><b>Mortalidad final</b><small>${ST.R.filter(r=>r.closed).length}/${ST.R.filter(r=>!r.ne).length} lotes cerrados</small></span></button><button class="fs ${V.v=='hojas'?'on':''}" data-go="hojas" ${V.v=='hojas'?'aria-current="page"':''}><i>${IC.pdf}</i><span><b>Hojas para imprimir</b></span></button><h4>Modo</h4><button class="iosrow" role="switch" aria-checked="false" data-mode="piso"><span class="iosic">${IC.cajas}</span><span class="iostx"><b>Modo piso</b><small>Botones grandes</small></span><span class="iossw" aria-hidden="true"><i></i></span></button>${instOk()?'':`<button class="fs" data-pm="inst"><i>${IC.dl}</i><span><b>Instalar app</b><small>En tu pantalla de inicio</small></span></button>`}<div style="height:12px"></div></aside><div class="scr" data-sb="0"></div><div class="ct"><header class="hd${MQ!==1&&V.v!='general'?' mqa':''}" style="--mq:${mqCol(MQ)}">${MQ!==1&&V.v!='general'?`<button class="hmq" data-mq="1" aria-haspopup="menu" aria-expanded="${MQOPEN}" aria-controls="mqmenu" aria-label="Maquila: ${E(mqName(MQ))}. Cambiar de maquila">${mqBadge(MQ)}</button>`:''}${V.v!='inicio'?bkBtn():''}<button class="mb" data-sb="1" aria-label="Menú">☰</button>${hdTitle(steps,s)}<input id="sq" type="search" placeholder="Buscar lote o envío" aria-label="Buscar"><div class="usr">${ntBtn(false)}${setBtn(false)}${avatarBtn(false)}</div></header><main id="main" tabindex="-1">${topBanners()}${PG[V.v](V.id)}</main></div></div>`;
  document.querySelector('main').scrollTop=sc;if(V.v=='empacar'||V.v=='pemp'){pkCnt();pkAnim();kpSync();pkFinFx()}const q=document.getElementById('sq');if(q&&V.v=='buscar')q.value=V.id||''}
 function go(s){if(me&&NAVK!=null)snapTake();const[v,...r]=s.split(':');{const x=v==='lote'&&xk(r.join(':'));if(x){if(x.mq!==MQ&&mqBy(x.mq))mqSet(x.mq);return go('lote:'+x.lot)}}/* v1.25.0: lote de otra maquila → entra a esa maquila */if(v!==V.v)HIST={};/* v1.29.0: lo abierto en una orden (editar línea, fecha, borrar) no pasa a otra: escondía el formulario de la orden nueva */if(v!==V.v||r.join(':')!==String(V.id)){OA={};LED=null;MVTY=''}V={v,id:r.join(':')};ND=null;evc=null;msg='';FERR=null;MSGAT='';{const t=document.getElementById('toast');/* v1.36.0: un error de otra pantalla no se queda encima de esta */if(t&&t.className=='bad')t.style.display='none'}form=null;conf=null;uf=null;render();{const m=document.querySelector('main');if(m)m.scrollTop=0}}
 const g=i=>document.getElementById(i).value;

@@ -1,5 +1,17 @@
 # Cambios
 
+## 1.41.0 · 7 de noviembre de 2026 · «3D ligero en celular y app instalable»
+
+Pedido del usuario: «el tanque 3D está roto en escritorio… prueba todo en celular y iPad Safari… quiero poder descargar la app… el tanque 3D es muy grande para dibujarse: cuando está abierto rompe todo lo demás; hazlo más simple, no necesito tanto detalle en cada caja».
+
+- **Planta 3D en un solo lienzo** (antes cientos de capas de CSS 3D que agotaban la memoria gráfica del celular y dejaban la página en blanco o gris, y que salían corridas o gigantes porque la perspectiva del navegador no coincidía con la de los letreros). Ahora es un dibujo plano de una sola capa, del tamaño del recuadro (máx. 2× de densidad), que solo se vuelve a dibujar al mover la cámara.
+- **Canastas más simples:** tapa gris lisa con el listón del color de la talla (sin rayas ni sombras). Se siguen viendo los bordes rojo (pasó los días), naranja (último día), punteado (incompleta) y azul (lote elegido).
+- **Encuadre exacto:** la planta completa queda centrada en la parte libre de botones, con la perspectiva real. Las placas «TANQUE n» crecen y se achican con la planta (antes en el celular tapaban los tanques).
+- **Celular:** los botones de la cámara van en fila abajo (44 px) y la tarjeta del lote sale arriba; etiquetas de kg más chicas.
+- **Todo igual en lo demás:** tocar el agua acerca el tanque y elige el mismo del tablero de abajo; tocar una canasta enseña su lote; arrastrar gira, dos dedos mueven y acercan; ⟲ ⟳ + − ⌂; ocultar 3D se recuerda.
+- **Instalar la app a la vista:** «Instalar app» en el menú (abajo de Modo piso) y «Instalar la app en este equipo» en la pantalla de acceso; en Android/computadora abre la ventana de instalar del navegador y en iPhone/iPad dice los pasos (Compartir → Agregar a inicio). No sale si ya está instalada. El manifiesto lleva `id`, descripción y categorías (Chrome: sin errores de instalación).
+- **Pruebas:** nueva `v141_t.py` (celular 360/390 y iPad 768, claro y oscuro: un solo lienzo, máx. 2×, planta dentro del recuadro, botones en fila, tocar con el dedo, instalar). Actualizadas `tanques3d_t`, `v1381_t` y `rendimiento_t`. Probado además en WebKit (motor de Safari).
+
 ## 1.40.0 · 7 de noviembre de 2026 · «Eliminar en Catálogos, sin Maquilas»
 
 Pedido del usuario: «en admin settings debería de poder eliminar proveedores y también… las especies y las demás cosas también se pueden borrar. No vamos a poder agregar maquilas: eso va a estar fuera del programa; no agregar ni quitar maquilas». Plan aprobado: borrar solo lo que nunca se usó (lo demás sigue igual); tallas y consignatarios también, solo si nunca se usaron; quitar toda la pestaña Maquilas.

@@ -1,13 +1,25 @@
 {
+  "id": "/",
   "name": "PROPESA · Plataforma marítima",
   "short_name": "PROPESA",
+  "description": "Seguimiento de lotes de langosta: entrada, órdenes, empaque y embarque.",
   "lang": "es",
+  "dir": "ltr",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "background_color": "#0B1D59",
   "theme_color": "#0B1D59",
+  "categories": [
+    "business",
+    "productivity"
+  ],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icon-192.png?v=4",

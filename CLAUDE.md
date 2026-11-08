@@ -1,7 +1,7 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.40.0** (7 de noviembre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.41.0** (7 de noviembre de 2026).
 
 ## Qué es
 
