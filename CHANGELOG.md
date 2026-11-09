@@ -1,5 +1,23 @@
 # Cambios
 
+## 1.42.0 · 8 de noviembre de 2026 · «Recepción por tinas»
+
+Pedido del usuario (8/nov, plan aprobado con sus respuestas): «Entrada» se llama **Recepción**; cada tanque tiene **30 tinas numeradas** y en cada tina se escribe su peso exacto y su talla, como las hieleras en Empaque; muerta, débil, rechazo y despatada se pesan aparte; temperaturas con un número cada una; fechas como en Logixx; teclado de números en toda casilla de números; formato de recepción en PDF como el Formato 02 de papel. «La destapada se va a poner aparte. Quítala del keypad».
+
+- **Recepción por tinas** (nueva pantalla, `rtin`): T1 = tinas 1–30, T2 = 31–60 … T6 = 151–180. Se toca una tina, se escribe su peso (kg exactos, por ejemplo 34.95) con el mismo teclado de Empaque y se toca la talla de la maquila: queda ✔ y pasa sola a la siguiente tina libre. **Una tina = un lote y una talla** (no se mezclan). Las tinas ocupadas (de cualquier maquila) salen ocupadas con su lote.
+- **Aparte, sin tina:** langosta **muerta** (se descuenta y se regresa al proveedor), **débil**, **rechazo** y **despatada** (despatada ya no está en el teclado de tallas). Hora inicial y final de la recepción.
+- **Temperaturas:** una por cada tanque usado (°F del agua) y la del producto con **mínima y máxima en casillas separadas** (ya no «59-62»).
+- **Sacar de tinas:** al empacar, la app sugiere de qué tinas salió lo empacado y la persona confirma; una tina que llega a 0 kg queda libre. El lote dice qué tinas tiene y deja **mover una tina** a otra libre.
+- **3D por tinas:** cada tanque dibuja sus 30 tinas; las llenas con el color de su talla. Tocar una tina dice «Tina 140 · T6 · 2 kg · Jumbo · lote · maquila». Letrero por tanque: «T3 · 13 de 30 tinas», kg y días del más viejo. Los lotes de antes salen como «kg sin tina».
+- **Formato de recepción (PDF)** como el Formato 02: datos de la recepción, una tabla por tanque usado con sus 30 tinas (kg y talla), resumen por talla y totales (viva, despatada, débil, rechazo, muerta), notas.
+- **Fechas como en Logixx:** al tocar una fecha sale un calendario (días y selector del mes); también se escriben los números y las diagonales salen solas. Al escoger el día o terminar de escribir la fecha, el calendario se cierra solo; Esc también lo cierra. Librería **flatpickr 4.6.13** (MIT, incluida en `index.html`, sin CDN; licencia en `docs/terceros/`).
+- **Teclado de números** en todas las casillas de números (`inputmode`).
+- **Recepción en todas partes:** menú, títulos, avisos, PDF y «Lote sin recepción». Diccionario nuevo: `docs/DICCIONARIO.md`.
+- **Inventario desde 0 en tinas:** los lotes de antes no tienen tinas; siguen en su tanque como «kg sin tina» y se editan con el formulario de antes. La hoja de varias recepciones de Modo piso solo queda para terminar las que ya estaban empezadas.
+- **Arreglos de esta ronda:** la recepción por tinas a medias sobrevive al recargar; propone el lote (WLR + proveedor + fecha) y lo pasa a mayúsculas; «+ Agregar proveedor…» funciona ahí; «Completar» un lote sin recepción abre la recepción por tinas con el lote fijo y el tanque; un calendario ya no se queda flotando si la pantalla se vuelve a dibujar; en el celular «+ Lote sin recepción» y «Empacar sin lote» caben en una fila.
+- **Revisión con las reglas de rendimiento de Rune** (el proyecto que compartió el usuario): las vistas previas de Hojas y las pantallas guardadas para «Atrás» ya tienen tope (antes crecían toda la jornada); nueva `pruebas/auditoria_rapida.py` que busca ciclos de dibujo sin fin, guardados sin tope, `??`/`?.` y rastros que no deben subirse a GitHub.
+- **Pruebas:** nueva `tinas_t.py` y ayuda `pruebas/recep.py` (recibe un lote por tinas desde la pantalla). Pasadas a la recepción por tinas: e2e, entradas, ajustes, cambio_modo, menu, recarga, proveedores, especies, tallas, piso, hick, titulo, v112, v133, v134, v136, temperatura, correcciones, tanques3d, v1381, acceso, teclado, traslados, v125 y las demás que usaban el formulario viejo.
+
 ## 1.41.0 · 7 de noviembre de 2026 · «3D ligero en celular y app instalable»
 
 Pedido del usuario: «el tanque 3D está roto en escritorio… prueba todo en celular y iPad Safari… quiero poder descargar la app… el tanque 3D es muy grande para dibujarse: cuando está abierto rompe todo lo demás; hazlo más simple, no necesito tanto detalle en cada caja».

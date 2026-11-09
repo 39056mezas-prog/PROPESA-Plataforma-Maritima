@@ -1,14 +1,16 @@
 # CLAUDE.md · Plataforma PROPESA
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.41.0** (7 de noviembre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.42.0** (8 de noviembre de 2026).
 
 ## Qué es
 
 Plataforma web para **PROPESA** (Proveedor del Pescador S.A. de C.V., Ensenada, B.C.), que exporta langosta roja viva a China por avión.
 Sigue cada lote por este flujo, que **no se cambia sin permiso del usuario**:
 
-**Entrada → Órdenes → Empaque → Embarque**
+**Recepción → Órdenes → Empaque → Embarque**
+
+(«Entrada» se llama **Recepción** desde la v1.42.0, y se registra **por tinas**: ver `docs/DICCIONARIO.md`.)
 
 ## Regla principal de trabajo: plan → aprobación → pruebas (v1.39.0, pedido del usuario)
 
@@ -64,6 +66,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 | Archivo | Para qué |
 |---|---|
 | `docs/PRODUCTO.md` | El negocio: flujo, glosario, reglas, roles. **Empieza aquí.** |
+| `docs/DICCIONARIO.md` | Las palabras de la app (Recepción, tanque, tina, talla, muerta, despatada…): úsalas igual en pantallas, PDF y documentos |
 | `docs/UX.md` | Cómo debe sentirse la app: principios, Modo piso, avisos, lo que el usuario pidió y lo que rechazó |
 | `docs/BRAND.md` | Colores, logo, tipografía, íconos, colores de talla y categoría |
 | `docs/ARQUITECTURA.md` | Cómo está hecho el código: rutas, eventos, funciones, rendimiento, PDF |
@@ -83,7 +86,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 2. **Un cambio a la vez**, con su prueba, y avisa qué cambió.
 3. **No inventes reglas de negocio.** Si falta un dato, pregunta (ver `docs/ROADMAP.md` → Preguntas abiertas).
 4. **La app ya usa Supabase** (proyecto `propesa_bc`, ver `docs/SUPABASE.md`): todos los equipos comparten los datos. **No cambies el esquema, las reglas de seguridad ni la función `usuarios` sin preguntar**, y no conectes otras cuentas del usuario (correo, Drive…) sin que lo pida. Las pruebas nunca tocan la base real: usan `pruebas/supabase_falso.py` o el modo local.
-5. **Sin dependencias ni paso de compilación.** Todo vive en `index.html` (HTML + CSS + JS vanilla, la conexión con Supabase está hecha a mano con `fetch`). Las únicas excepciones son `api/despierta.js`, la tarea diaria de Vercel que mantiene despierta la base, y `sw.js`, el service worker mínimo que deja instalar la app (v1.12.0); ninguno usa librerías. Nada de CDN ni fuentes externas; el único dominio externo permitido en la CSP es el de Supabase.
+5. **Sin dependencias ni paso de compilación.** Todo vive en `index.html` (HTML + CSS + JS vanilla, la conexión con Supabase está hecha a mano con `fetch`). Las únicas excepciones son `api/despierta.js`, la tarea diaria de Vercel que mantiene despierta la base, y `sw.js`, el service worker mínimo que deja instalar la app (v1.12.0); ninguno usa librerías. **Única librería: flatpickr 4.6.13 (MIT), pegada dentro de `index.html`** para el calendario de las fechas (v1.42.0, el usuario pidió usar una que ya existiera); su licencia está en `docs/terceros/flatpickr-LICENSE.md`. No agregues otra sin preguntar. Nada de CDN ni fuentes externas; el único dominio externo permitido en la CSP es el de Supabase.
 6. **Escapa todo texto del usuario con `E()`** antes de meterlo en HTML.
 7. **Cualquier cambio a la estructura de `ST` lleva migración**, su limpieza en `cleanST()` **y su lugar en `WN` / `encodeST` / `decodeST`** (lo que no esté ahí no se comparte entre equipos). Los ids nuevos se hacen con `uidN()` / `uidS()`, nunca con contadores ni `max+1`.
 8. **No borres lo que el usuario escribió** cuando hay un error (`renderKeep` / `fail`).
