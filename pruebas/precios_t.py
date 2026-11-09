@@ -5,6 +5,8 @@ se lo deja escribir al Administrador (supabase/migrations/20261026_precios.sql; 
 - Piso cambia el lote y el precio sigue intacto en la base. Otro Administrador sí lo ve. Funciona igual en otra maquila.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/precios_t.py"""
 import os, sys, json, time, subprocess, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,7 +41,7 @@ try:
             q.fill('#le', em); q.fill('#lp', pw); q.click('[data-a=lg]'); until(q, "!!me&&!!document.querySelector('.sb,.pshell,.cli')"); return ctx, q
         ca, A = device('A', 'admin@propesa.mx', 'clave-admin1'); cp, P = device('P', 'piso@propesa.mx', 'clave-piso1'); cc, C = device('C', 'consulta@propesa.mx', 'clave-ver1')
         cb, B = device('B', 'admin2@propesa.mx', 'clave-admin2')
-        A.evaluate("mqSet(1);go('recepcion')"); A.click('[data-a=nf]'); A.fill('#fl', 'WLRCO261026'); A.select_option('#fo', '1'); A.fill('#fkb', '36'); A.fill('#ftt', '58'); A.fill('#ftp', '59'); A.fill('#fdes', '0'); A.fill('#fk0', '500'); A.fill('#fk4', '10'); A.click('[data-a=sv]'); A.wait_for_timeout(200)
+        A.evaluate("mqSet(1)");  recibir(A, 'WLRCO261026', pv='1', kz=['500', 0, 0, 0, '10'], tt='58')
         A.evaluate(ABRIR); A.fill('#pr_u', '43'); A.fill('#pr_d', '25'); A.select_option('#pr_f', 'F'); A.click('[data-a=prs]')
         chk(until(A, "outN()==0"), 'A sube el lote y su precio')
         recs = mock('/__estado')['recs']
@@ -58,7 +60,7 @@ try:
         chk(recs['R/WLRCO261026']['v']['kgbox'] == 38 and recs['$/WLRCO261026']['v']['u'] == 43, 'el cambio de Piso llega y el precio sigue intacto')
         chk(until(A, "R_('WLRCO261026').kgbox==38") and A.evaluate("R_('WLRCO261026').pr.u") == 43, 'en el Administrador el lote cambia y conserva su precio')
         # otra maquila
-        A.evaluate("mqSet(2);render()"); A.evaluate("go('recepcion')"); A.click('[data-a=nf]'); A.fill('#fl', 'WLRCO261026'); A.select_option('#fo', '1'); A.fill('#fkb', '36'); A.fill('#ftt', '58'); A.fill('#ftp', '59'); A.fill('#fdes', '0'); A.fill('#fk0', '200'); A.click('[data-a=sv]'); A.wait_for_timeout(200)
+        A.evaluate("mqSet(2);render()");  recibir(A, 'WLRCO261026', pv='1', kz=['200'], tt='58')
         A.fill('#pr_u', '40'); A.click('[data-a=prs]'); chk(until(A, "outN()==0"), 'precio en Abel')
         recs = mock('/__estado')['recs']
         chk('q2:$/WLRCO261026' in recs and recs['q2:$/WLRCO261026']['v']['u'] == 40, "en Abel el precio va como 'q2:$/WLRCO261026'")

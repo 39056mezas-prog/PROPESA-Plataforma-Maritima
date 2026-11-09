@@ -18,13 +18,15 @@ with sync_playwright() as p:
     b=p.chromium.launch()
     for vw in [(1180,820),(390,844)]:
         w=vw[0]
-        # 1) Administrador: Entrada con el formulario a medias
+        # 1) Administrador: recepción por tinas a medias (v1.42.0)
         pg=fresh(b,vw);login(pg,'admin@propesa.mx','admin123')
-        pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.select_option('#fo','1');pg.fill('#fl','');pg.click('#fl');pg.keyboard.type('wlrco131026');pg.fill('#fk1','55.5')
+        pg.evaluate("RT=null;go('recepcion')");pg.click('[data-a=nf]');pg.select_option('#rt_fo','1');pg.fill('#rt_fl','');pg.click('#rt_fl');pg.keyboard.type('wlrco131026')
+        tn=pg.evaluate('RT.act');pg.fill(f'#tn_k{tn}','55.5');pg.click('#tnpad [data-tnk="z:1"]' if pg.locator('#tnpad').count() else '[data-rt="z:1"]');pg.fill('#rt_tpn','57')
         reload(pg)
         chk(pg.locator('#le').count()==0,f'{w} admin sigue dentro después de recargar')
-        chk(pg.locator('#fo').count()==1 and pg.input_value('#fo')=='1',f'{w} el formulario de Entrada sigue abierto con el proveedor')
-        chk(pg.input_value('#fl')=='WLRCO131026' and pg.input_value('#fk1')=='55.5',f'{w} se conservan lote y kilos')
+        chk(pg.evaluate("V.v")=='rtin' and pg.input_value('#rt_fo')=='1',f'{w} la recepción por tinas sigue abierta con el proveedor')
+        chk(pg.input_value('#rt_fl')=='WLRCO131026' and pg.input_value(f'#tn_k{tn}')=='55.5' and pg.evaluate(f"RT.tn[{tn}].z")==pg.evaluate("S[1]") and pg.input_value('#rt_tpn')=='57',f'{w} se conservan lote, kilos y talla de la tina, y la temperatura')
+        pg.evaluate("RT=null")
         # 2) Orden a medias
         pg.evaluate("go('orden:1')");(pg.locator('[data-oa=add]').count() and pg.click('[data-oa=add]'));pg.fill('#ol_z1','5');pg.fill('#ol_z2','2');reload(pg)
         chk(pg.input_value('#ol_z1')=='5' and pg.input_value('#ol_n')=='7',f'{w} la línea de orden a medias se conserva')

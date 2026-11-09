@@ -5,6 +5,8 @@
    dos Administradores a la vez no se pisan la hoja ni ven avisos de choque.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/disponible_t.py"""
 import os, sys, json, time, subprocess, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
@@ -28,9 +30,7 @@ FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.
 def login(pg, em, pw='x'):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
 def new_lot(pg, code, kgs):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
-    for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, code, pv='1', kz=kgs, tt='58')
 def new_order(pg, etd, n):  # n hieleras, todas chicas (491-610)
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', etd); pg.click('[data-oa=new]')
     pg.select_option('#ol_city', 'PVG'); pg.fill('#ol_n', str(n)); pg.fill('#ol_z0', str(n)); pg.fill('#ol_tar', '0'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(150)

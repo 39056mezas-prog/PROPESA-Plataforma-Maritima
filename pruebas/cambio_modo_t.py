@@ -40,7 +40,7 @@ with sync_playwright() as p:
         chk(pg.locator('.hd [data-back]').count() == 1, f'{vw} en la vista completa la hoja tiene «‹ Atrás» arriba (v1.39.0)')
         # salir a Entrada: aviso con enlace de regreso
         pg.evaluate("go('recepcion')"); tx = pg.inner_text('#app')
-        chk('tienes 2 entradas sin guardar' in tx.lower(), f'{vw} Entrada avisa las 2 entradas sin guardar')
+        chk('tienes 2 recepciones sin guardar' in tx.lower(), f'{vw} Recepción avisa las 2 recepciones sin guardar')
         pg.click('[data-go=pent] >> text=Terminar'); chk(pg.evaluate(V)[0] == 'pent' and pg.input_value('[data-pr="2:lot"]') == 'WLRMODO2', f'{vw} «Terminar de capturarlas» regresa a la hoja con lo escrito')
         # volver a prender Modo piso: misma hoja
         toggle(pg); chk(pg.evaluate(V) == ['pent', '', True] and pg.input_value('[data-pr="1:lot"]') == 'WLRMODO1', f'{vw} prender Modo piso de nuevo → la misma hoja')
@@ -50,13 +50,14 @@ with sync_playwright() as p:
         pg.click('[data-pa=save]'); pg.wait_for_timeout(150)
         r = pg.evaluate("(R_('WLRMODO1')||{})")
         chk(r.get('tank') == 'T2' and r.get('tempT') == 57.5 and r.get('tempP') == '58' and r.get('kgbox') == 18 and r.get('desp') == 0 and pg.evaluate("bal('WLRMODO1')") == 25000, f'{vw} se guarda en la vista completa con todo lo que se escribió en Modo piso')
-        # vista completa → Modo piso con el formulario de Entrada a medio llenar
-        pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.select_option('#fo', '3'); pg.select_option('#ft', 'T5'); pg.fill('#fl', 'wlrmodo3'); pg.fill('#fk2', '40'); pg.fill('#ftt', '59')
+        # v1.42.0 · vista completa → Modo piso con la recepción por tinas a medio llenar: es la misma pantalla y no se pierde nada
+        pg.evaluate("RT=null;go('rtin')"); pg.select_option('#rt_fo', '3'); pg.fill('#rt_fl', 'wlrmodo3'); tn = pg.evaluate('RT.act'); pg.fill(f'#tn_k{tn}', '40')
         toggle(pg)
-        u = pg.evaluate("PEN.cur")
-        chk(pg.evaluate(V)[0] == 'pent' and pg.evaluate("PISO"), f'{vw} prender Modo piso con el formulario a medio llenar → «Registrar entradas»')
-        vals = pg.evaluate(f"['origin','tank','lot','k2','tempT'].map(k=>document.querySelector(`[data-pr=\"{u}:${{k}}\"]`).value)")
-        chk(vals == ['3', 'T5', 'WLRMODO3', '40', '59'], f'{vw} lo escrito pasa como fila de la hoja: {vals}')
+        chk(pg.evaluate(V)[0] == 'rtin' and pg.evaluate("PISO"), f'{vw} prender Modo piso a media recepción → la misma recepción por tinas')
+        vals = [pg.input_value('#rt_fo'), pg.input_value('#rt_fl').upper(), pg.input_value(f'#tn_k{tn}')]
+        chk(vals == ['3', 'WLRMODO3', '40'], f'{vw} lo escrito sigue ahí: {vals}')
+        toggle(pg); chk(pg.evaluate(V)[0] == 'rtin' and not pg.evaluate("PISO") and pg.input_value(f'#tn_k{tn}') == '40', f'{vw} y de regreso a la vista completa, igual')
+        pg.evaluate("RT=null")
         # sin nada escrito en Entrada: Modo piso abre su inicio, como antes
         pg.evaluate("PEN0();setPiso(false);go('recepcion')"); toggle(pg); chk(pg.evaluate(V) == ['piso', '', True], f'{vw} Entrada sin nada escrito → inicio de Modo piso')
         # Empacar ↔ Empacar del mismo cliente

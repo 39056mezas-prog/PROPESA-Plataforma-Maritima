@@ -2,6 +2,8 @@
 Levanta un Supabase de mentira (pruebas/supabase_falso.py) y abre varios navegadores a la vez.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/sincronizacion_t.py"""
 import os, sys, json, time, subprocess, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.34.0: en esta prueba todos los plegables quedan abiertos
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,10 +39,8 @@ def device(b, name, **kw):
 def login(pg, em, pw):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
     ok = until(pg, "!!document.querySelector('.sb,.pshell,[data-avatar],.cli')"); pg.evaluate(PLEG); return ok
-def new_lot(pg, code, kgs=(100, 200, 300, 400)):
-    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
-    for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+def new_lot(pg, code, kgs=(100, 200, 300, 400), tank='T1'):
+    pg.evaluate("FOLD['ent-tq']=true");  recibir(pg, code, pv='1', kz=kgs, tt='58', por=95, tank=tank)
 def new_order(pg, etd, cli, n, city='PVG'):
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', etd); pg.click('[data-oa=new]')
     pg.select_option('#ol_city', city); pg.fill('#ol_n', str(n)); pg.fill('#ol_z0', str(n)); pg.click('[data-oa=ln]'); pg.wait_for_timeout(150)
@@ -83,12 +83,13 @@ try:
         B.evaluate("FOLD['ent-tq']=true;go('recepcion')"); chk('WLRCO141026A' in B.inner_text('#app'), 'B la ve en la pantalla de Entrada')
         chk('En vivo' in B.inner_text('.tqleg') and 'WLRCO141026A' in B.inner_text('.tqd'), 'tablero de tanques en B: «● En vivo» y el lote de A en su tanque')
         new_lot(A, 'WLRCO141026E'); B.evaluate("document.activeElement&&document.activeElement.blur()")
+        until(B, "ST.R.some(r=>r.lot=='WLRCO141026E')"); B.evaluate("TQSEL=R_('WLRCO141026E').tank;render()")  # v1.42.0: con tinas puede caer en otro tanque
         chk(until(B, "V.v=='recepcion'&&document.querySelector('.tqd').textContent.includes('WLRCO141026E')"), 'el tablero de B muestra solo la entrada nueva de A, sin recargar (en vivo)')
         A.evaluate("go('lote:WLRCO141026E')"); A.click('[data-a=dl]'); A.click('[data-a=dl2]')
         chk(until(B, "!document.querySelector('.tqd').textContent.includes('WLRCO141026E')"), 'si A borra ese lote, desaparece del tablero de B')
 
         # --- dos entradas al mismo tiempo en A y en B: no se pisan
-        new_lot(A, 'WLRLE141026C'); new_lot(B, 'WLREM141026B')
+        new_lot(A, 'WLRLE141026C', tank='T4'); new_lot(B, 'WLREM141026B', tank='T5')  # v1.42.0: cada uno en su tanque (si los dos usan la misma tina, el segundo no guarda y lo dice: eso lo prueba tinas_t)
         chk(until(A, "ST.R.length==3") and until(B, "ST.R.length==3"), 'dos entradas al mismo tiempo: los dos equipos tienen las 3')
         chk(until(A, "ST.L.length==12") and until(B, "ST.L.length==12"), 'los 12 movimientos de inventario llegan a los dos (ids que no chocan)')
 

@@ -1,3 +1,4 @@
+import sys
 """v1.19.0 · Precio de compra y «Hojas para imprimir» (pedido del usuario, 26/oct/2026).
 - Precio de compra en el lote (solo el Administrador): USD por kg, USD por kg de despatada, factura y nota; total en dólares
   (kg sin despatada × precio + kg de despatada × precio de despatada). Se comparte y sobrevive a un respaldo.
@@ -5,6 +6,8 @@
   Congelación, Precio de compra —solo el Administrador— y Balance). Todos se arman sin errores. Sin desbordes en 390/820/1440 px.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/hojas_t.py"""
 import os, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
@@ -23,9 +26,7 @@ with sync_playwright() as p:
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
     pg.on('dialog', lambda d: d.accept())
     pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1)")
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', 'WLREM190926'); pg.select_option('#fo', '2'); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0')
-    for i, v in enumerate([1575.65, 527.95, 59.55, 7.6, 6.1]): pg.fill(f'#fk{i}', str(v))
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, 'WLREM190926', pv='2', kz=[1575.65, 527.95, 59.55, 7.6, 6.1], tt='58')
     chk(pg.locator('#prc').count() == 1, 'el Administrador ve «Precio de compra» en el lote')
     pg.evaluate(ABRIR); pg.fill('#pr_u', '-3'); pg.click('[data-a=prs]'); pg.wait_for_timeout(80)
     chk('Revisa el precio' in pg.inner_text('#app .fer') and pg.input_value('#pr_u') == '-3', 'un precio negativo no se guarda y se conserva lo escrito')

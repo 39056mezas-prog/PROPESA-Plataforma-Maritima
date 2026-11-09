@@ -27,7 +27,7 @@ with sync_playwright() as p:
     pg.on('dialog', lambda d: d.accept())
     pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1);FOLD['ent-tq']=true;FOLD['ent-t2']=true;go('recepcion')")
     def entrada(code, t2='', k2='', tt2='', kb2=''):
-        pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '2'); pg.select_option('#ft', 'T1'); pg.fill('#fkb', '34'); pg.fill('#ftt', '57.6'); pg.fill('#ftp', '48-62'); pg.fill('#fdes', '0')
+        pg.evaluate("form={t:'lot'};render()"); pg.fill('#fl', code); pg.select_option('#fo', '2'); pg.select_option('#ft', 'T1'); pg.fill('#fkb', '34'); pg.fill('#ftt', '57.6'); pg.fill('#ftp', '48-62'); pg.fill('#fdes', '0')
         pg.fill('#fk0', '800'); pg.fill('#fk1', '200')
         if t2: pg.select_option('#ft2', t2)
         pg.fill('#fk2z0', k2); pg.fill('#ftt2', tt2); pg.fill('#fkb2', kb2); pg.click('[data-a=sv]'); pg.wait_for_timeout(120)  # v1.25.0: kg por talla
@@ -41,7 +41,7 @@ with sync_playwright() as p:
     chk(pg.evaluate(DIST, 'WLREM190926') == {'T1': 700, 'T2': 300}, 'entrada repartida: T1 700 kg y T2 300 kg')
     pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(100)
     row = pg.locator('table.ent tbody tr', has_text='WLREM190926').inner_text()
-    chk('1/2' in row and '57.6/60.3' in row and '34/36' in row, f'la tabla de Entrada dice tanque 1/2, 57.6/60.3 °F y 34/36 kg por caja: {row!r}')
+    chk('T1/T2' in row and '57.6/60.3' in row, f'la tabla de Recepción dice tanque T1/T2 y 57.6/60.3 °F (v1.42.0: ya no hay columna de kg por caja): {row!r}')
     pg.evaluate("FOLD['ent-tq']=true;render()"); pg.click('[data-tq=T2]'); pg.wait_for_timeout(100)
     t = pg.inner_text('.tqc'); chk('300.0 kg' in t and 'WLREM190926' in t and '300.0 kg aquí' in t, 'el tablero: T2 con 300 kg de ese lote')
     chk(pg.evaluate("[tqZ('WLREM190926','T2','491-610'),tqZ('WLREM190926','T2','611-850')]") == [240000, 60000], 'T2 tiene exactamente lo capturado por talla (240 + 60)')

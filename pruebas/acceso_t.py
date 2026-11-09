@@ -48,7 +48,7 @@ with sync_playwright() as p:
     box = pg.evaluate("(()=>{const i=document.querySelector('.aum .mkimg').getBoundingClientRect(),p=document.querySelector('.aum .mkp').getBoundingClientRect(),s=[...document.querySelectorAll('.aum .t3sign')].map(e=>e.getBoundingClientRect());return {img:i.width>200&&i.left>=p.left-1&&i.top>=p.top-1&&i.bottom<=p.bottom+1,signs:s.every(r=>r.left>=i.left-2&&r.right<=i.right+2&&r.top>=i.top-2&&r.bottom<=i.bottom+2)}})()")
     chk(box['img'] and box['signs'], f'la imagen queda dentro de la tarjeta y las placas caen sobre ella {box}')
     tags = pg.eval_on_selector_all('.aum .t3tag', 'e=>e.map(x=>x.innerText.split("\\n")[0])')
-    chk(len(tags) == 5 and not any('Vacío' in t for t in tags) and 'T1 · 48 canastas' in tags, f'tanques con canastas pero no llenos; el vacío (T5) sin etiqueta, solo su letrero (v1.38.2) {tags}')
+    chk(len(tags) == 5 and not any('Vacío' in t for t in tags) and any(t.startswith('T1 · ') and 'de 30 tinas' in t for t in tags), f'v1.42.0: tanques con tinas; el vacío (T5) sin etiqueta, solo su letrero; el vacío (T5) sin etiqueta, solo su letrero (v1.38.2) {tags}')
     chk(pg.locator('.t3v').count() == 0, 'no se arma la planta real en el acceso (solo el dibujo)')
     inside = pg.evaluate("(()=>{const a=document.querySelector('.aub').getBoundingClientRect();return [...document.querySelectorAll('.aum .t3tag')].every(e=>{const r=e.getBoundingClientRect();return r.right<=a.right+1&&r.left>=a.left})})()")
     chk(inside, 'todos los letreros de los tanques caben en el panel (nada cortado)')

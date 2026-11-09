@@ -9,7 +9,7 @@ for _f in os.listdir(_D):shutil.copy(os.path.join(_D,_f),OUT)
 T=OUT.rstrip('/')+'/'
 S=open(T+'seed.json').read();errs=[]
 def chk(c,m):print(('PASS ' if c else 'FAIL ')+m)
-EXP=[('inicio','Centro',None),('recepcion','Entrada',1),('lote:WLRCO051026A','Entrada',1),('ordenes','Órdenes',2),('orden:1','Órdenes',2),('empaque','Empaque',3),('empacar:1.1','Empaque',3),
+EXP=[('inicio','Centro',None),('recepcion','Recepción',1),('lote:WLRCO051026A','Recepción',1),('ordenes','Órdenes',2),('orden:1','Órdenes',2),('empaque','Empaque',3),('empacar:1.1','Empaque',3),
      ('embarques','Embarque',4),('emb:0','Embarque',4),('cierre','Mortalidad final',5),('temperatura','Temperatura',None),('admin','Administración',None)]
 with sync_playwright() as p:
     b=p.chromium.launch()

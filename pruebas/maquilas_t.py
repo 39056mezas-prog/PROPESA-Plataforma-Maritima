@@ -7,6 +7,8 @@
    sus claves de siempre; los compradores (D/disp) solo cuentan PROPESA.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/maquilas_t.py"""
 import os, sys, json, time, subprocess, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
@@ -30,9 +32,7 @@ FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.
 def login(pg, em, pw='x'):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
 def new_lot(pg, code, kgs=(100, 200, 300, 400)):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
-    for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, code, pv='1', kz=kgs, tt='58')
 def pick(pg, name):  # toca el logo y elige la maquila por nombre
     pg.locator('[data-mq]').first.click(); pg.wait_for_timeout(100)
     pg.locator('#mqmenu [data-mqgo]', has_text=name).first.click(); pg.wait_for_timeout(150)

@@ -1,5 +1,7 @@
 """Flujo completo: entrada → órdenes → empaque → embarque → cierre. Uso: python3 -I pruebas/e2e.py"""
 import json,sys,os
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 FIX="localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:[{id:1,name:'Ana Torres',email:'admin@propesa.mx',pw:'admin123',role:'admin',notify:true},{id:2,name:'Luis Meza',email:'piso@propesa.mx',pw:'piso123',role:'piso',notify:true},{id:3,name:'Dirección',email:'consulta@propesa.mx',pw:'ver123',role:'consulta',notify:false}]}))"  # usuarios SOLO para pruebas
 
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local');OUT=os.environ.get('OUT','/tmp/propesa-pruebas');os.makedirs(OUT,exist_ok=True)  # modo local: nunca toca la base real
@@ -14,13 +16,11 @@ with sync_playwright() as p:
     pg.goto(BASE);pg.evaluate(FIX);pg.reload()
     pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
     pg.click('.sb [data-go=recepcion]')
-    pg.click('[data-a=nf]')
-    chk('Kg por caja en tanque' in pg.inner_text('#app'),'label Kg por caja en tanque')
-    pg.click('#fl');pg.keyboard.type('wlrco051026a',delay=5)
-    chk(pg.input_value('#fl')=='WLRCO051026A','lote en mayusculas en vivo: '+pg.input_value('#fl'))
-    pg.select_option('#fo','1');pg.fill('#fkb','18');pg.fill('#ftt','58');pg.fill('#ftp','59-61');pg.fill('#fdes','0');
-    for i,v in enumerate([100,200,300,400]):pg.fill(f'#fk{i}',str(v))
-    pg.click('[data-a=sv]');pg.wait_for_timeout(200)
+    pg.click('[data-a=nf]')  # v1.42.0: la recepción es por tinas (30 por tanque); ya no hay «kg por caja en tanque»
+    tx=pg.inner_text('#app');chk(pg.evaluate("V.v")=='rtin' and 'Kg por caja en tanque' not in tx and 'tinas' in tx.lower(),'Nueva recepción abre la recepción por tinas')
+    pg.click('#rt_fl');pg.keyboard.type('wlrco051026a',delay=5)
+    chk(pg.input_value('#rt_fl')=='WLRCO051026A','lote en mayusculas en vivo: '+pg.input_value('#rt_fl'))
+    recibir(pg,'WLRCO051026A',pv='1',kz=[100,200,300,400],tank='T1')
     chk('WLRCO051026A' in pg.inner_text('#app'),'lote guardado')
     # icons
     ic=pg.evaluate("[...document.querySelectorAll('.sb .fs')].map(b=>[b.dataset.go,b.querySelector('svg').outerHTML])")

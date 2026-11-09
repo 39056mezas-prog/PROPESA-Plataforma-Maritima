@@ -87,7 +87,7 @@ with sync_playwright() as p:
     # ---------- Vista completa ----------
     for vw,scheme in [((1440,900),'light'),((1180,820),'dark'),((820,1180),'light'),((390,844),'light')]:
         w=vw[0];pg=start(b,vw,'admin@propesa.mx','admin123','empacar:3.1',scheme)
-        pg.click('[data-pk="lot:WLRCO061026B"]')
+        pg.evaluate("document.querySelector('[data-pk=\"lot:WLRCO061026B\"]').click()")  # un toque donde está el botón, sin que Playwright mueva la pantalla antes
         chk(pg.locator('#kpad').count()==1 and inview(pg,'#kpad [data-kp="k:A"]') and inview(pg,'[data-pk=addall]'),f'{w} completa: teclado y «Guardar hieleras» a la vista')
         chk(pg.evaluate('KPT.t')=='row:0' and pg.locator('#pkr0.kpon').count()==1,f'{w} completa: empieza en la primera fila')
         chk(pg.locator('.pklots .pklb').count()>1 and pg.locator('#app .pkrow select').count()==0 and pg.locator('#app .pkrow .pklv').count()==0,f'{w} completa: hay varios lotes y ninguna hielera nueva pide ni repite el lote')

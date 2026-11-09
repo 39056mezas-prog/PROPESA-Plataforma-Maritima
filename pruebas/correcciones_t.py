@@ -1,5 +1,9 @@
+import sys
 """Prueba PROPESA (correcciones_t). Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/correcciones_t.py"""
 import json,datetime
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 import os,shutil,tempfile
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
@@ -23,13 +27,13 @@ with sync_playwright() as p:
     pg.fill('#le','ADMIN@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]');chk(pg.locator('.sb').count()==1,'#2 login works (email case-insensitive)')
     chk('contraseña de prueba' not in pg.inner_text('#app').lower(),'#2 sin aviso de contraseña de prueba')
     # 3 dates at 19:30 local
-    pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');chk(pg.input_value('#fd')=='12/10/2026','#3 reception date local: '+pg.input_value('#fd'))
+    pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');chk(pg.input_value('#rt_fd')=='12/10/2026','#3 reception date local: '+pg.input_value('#rt_fd'))
     pg.evaluate("go('ordenes')");chk(pg.input_value('#no_etd')=='13/10/2026','#3 ETD tomorrow: '+pg.input_value('#no_etd'))
     chk(pg.evaluate("pdfName('Entrada')").endswith('2026-10-12.pdf'),'#3 PDF name date local')
     pg.evaluate("setPiso(true);PEN=null;go('pent')");chk(pg.evaluate("pD(PEN.rows[0].d.rdate)")=='2026-10-12','#3 piso entrada date local');pg.evaluate("setPiso(false);go('inicio')")
     # 6 lot ids unique after delete
     pg.evaluate("ST.R.push({id:'R-0123',lot:'TMP3',origin:'x',tank:'T1',final:null,closed:false});ST.B.TMP3=[];ST.R=ST.R.filter(r=>r.lot!=='WLRCO061026B');delete ST.B.WLRCO061026B;save();go('recepcion')")
-    pg.click('[data-a=nf]');pg.fill('#fl','NUEVO');pg.select_option('#fo','1');pg.fill('#fk0','5');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]')
+    recibir(pg, 'NUEVO', pv='1', kz=['5'], tt='58')
     ids=pg.evaluate("ST.R.map(r=>r.id)");chk(len(ids)==len(set(ids)),'#6 unique lot ids '+str(ids))
     # 5 closed shipment
     pg.evaluate("ST.P[0].z=[2,2,2,1];save();closeP(0);go('orden:1')")
@@ -49,7 +53,7 @@ with sync_playwright() as p:
     pg.evaluate("go('admin:dat')");pg.set_input_files('[data-bk=up]',T+'backup.json');pg.wait_for_timeout(300);chk(pg.evaluate("ST.U.length>0&&ST.U.every(u=>!('pw' in u)&&!('pwh' in u))"),'#4 old backup restores without passwords')
     # 1 storage full
     pg.evaluate("(()=>{let n=0;for(const sz of [1<<20,1<<16,1<<12,256,16]){const s='x'.repeat(sz);while(true){try{localStorage.setItem('pad'+(n++),s)}catch(e){break}}}})()")
-    pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');pg.fill('#fl','PRUEBA');pg.select_option('#fo','1');pg.fill('#fk0','10');pg.fill('#ftt','58');pg.fill('#ftp','59');pg.fill('#fkb','18');pg.fill('#fdes','0');pg.click('[data-a=sv]');pg.wait_for_timeout(100)
+    recibir(pg, 'PRUEBA', pv='1', kz=['10'], tt='58')
     chk('Guardado' not in pg.inner_text('#toast') and 'memoria' in pg.inner_text('#toast'),'#1 no false "Guardado": '+pg.inner_text('#toast'))
     chk('NO SE PUDO GUARDAR' in pg.inner_text('#app'),'#1 persistent red banner')
     pg.screenshot(path=T+'f_full.png')

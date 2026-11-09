@@ -1,9 +1,12 @@
+import sys
 """v1.21.0 · Lotes por envío y paso a paso en Modo piso (respuestas del usuario, 26/oct/2026).
 - Pregunta 6: cada envío dice cuánto lleva de cada lote (hieleras, langostas, kg de producto, tallas), en la pantalla, en el PDF y en el informe por correo.
 - Pregunta 15: en Modo piso, «Cerrar embarque» (3 pasos: hieleras, pendientes, cerrar) y «Conteo final» (2 pasos: kg, confirmar) van paso a paso.
   El piso revisa pero no cierra (solo el Administrador). La hoja de empaque incompleta solo pregunta (pregunta 9). El conteo no acepta más de lo esperado.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/piso_pasos_t.py"""
 import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 fails, errs = [], []
@@ -17,7 +20,7 @@ def login(pg, em):
     pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
 def overflow(pg): return pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth+1")
 def lot(pg, code, kg, d):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fd', d); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0'); pg.fill('#fk0', kg); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, code, pv='1', kz=[kg], fecha=d, tt='58')
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1440, 'height': 900})
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))

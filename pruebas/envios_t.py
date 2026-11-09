@@ -1,3 +1,4 @@
+import sys
 """v1.19.0 · Temperatura de arribo y % de mortalidad del cliente (pedido del usuario, 26/oct/2026).
 - El embarque toma el color de su consignatario (el tape por envío se quitó a pedido del usuario: el color es el del consignatario).
 - En «Langostas vivas al llegar»: % mortalidad que reporta el cliente y temperatura de arribo (también con el embarque cerrado).
@@ -6,6 +7,8 @@
 - Se comparten (WN.P) y sobreviven a un respaldo. Consulta no los cambia.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/envios_t.py"""
 import os, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
@@ -23,7 +26,7 @@ with sync_playwright() as p:
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
     pg.on('dialog', lambda d: d.accept())
     pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1)")
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', 'WLRCO261026'); pg.select_option('#fo', '1'); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0'); pg.fill('#fk0', '200'); pg.click('[data-a=sv]'); pg.wait_for_timeout(120)
+    recibir(pg, 'WLRCO261026', pv='1', kz=['200'], tt='58')
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '26/10/2026'); pg.click('[data-oa=new]'); pg.select_option('#ol_city', 'PVG'); pg.fill('#ol_z0', '2'); pg.fill('#ol_tar', '0'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(120)
     pg.evaluate("ST.CC={0:'#2563eb'};syncShipIdx(0);save();go('emb:0')"); pg.wait_for_timeout(100)
     chk(pg.evaluate("ST.P[0].col") == '#2563eb' and pg.locator('#emb_tp').count() == 0, 'el envío toma el color de su consignatario; ya no hay tape por envío')

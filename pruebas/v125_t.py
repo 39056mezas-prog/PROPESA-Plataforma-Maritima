@@ -21,7 +21,7 @@ def login(pg, em):
     pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
 def overflow(pg): return pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth+1")
 def entrada(pg, lot, kz, tank='T1', t2=None, z2=None, fecha='20/10/2026', prov='1'):
-    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.wait_for_timeout(100)
+    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.evaluate("form={t:'lot'};render()"); pg.wait_for_timeout(100)
     pg.fill('#fd', fecha); pg.fill('#fh', '12:00'); pg.select_option('#fo', prov); pg.select_option('#ft', tank)
     pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fl', lot); pg.fill('#fkb', '36'); pg.fill('#fdes', '0')
     for i, v in enumerate(kz): pg.fill(f'#fk{i}', str(v))

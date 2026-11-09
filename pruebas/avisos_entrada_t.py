@@ -1,3 +1,4 @@
+import sys
 """v1.20.0 · Avisos que pidió el usuario (26/oct/2026) después de la prueba con el Excel de Martha:
 1. Fecha de entrada que no cuadra con la fecha del código del lote (WLR + clave + ddmmyy).
 2. Hora de madrugada (00:00–04:59): «¿fue a las 13:30?».
@@ -7,6 +8,8 @@
    anotado en el embarque, sale como pendiente que lleva al lote, y «Volver a descontar» lo vuelve a intentar.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/avisos_entrada_t.py"""
 import os, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
@@ -43,7 +46,7 @@ with sync_playwright() as p:
     pg.evaluate("R_('WLRCO230926').time='09:15';save()")
     pg.evaluate("go('recepcion')"); pg.wait_for_timeout(100)
     t = pg.inner_text('main')
-    chk('1 entrada con fecha, hora o código por revisar' in t.lower(), 'Entrada avisa en rojo cuántas entradas revisar (v1.25.0: también el código)')
+    chk('1 recepción con fecha, hora o código por revisar' in t.lower(), 'Entrada avisa en rojo cuántas entradas revisar (v1.25.0: también el código)')
     bt = pg.locator('.alk', has_text='WLRCO220926')
     chk(bt.count() == 1 and 'fecha distinta a la del código y hora de madrugada' in bt.inner_text(), 'el aviso dice qué revisar en cada lote')
     pg.screenshot(path=f'{OUT}/avisos_entrada_1440.png', full_page=True)
@@ -64,10 +67,9 @@ with sync_playwright() as p:
     pg.evaluate("go('recepcion')"); pg.wait_for_timeout(80)
     chk('por revisar' not in pg.inner_text('main'), 'y Entrada ya no avisa')
     # al guardar una entrada nueva desde el formulario
-    pg.click('[data-a=nf]'); pg.fill('#fl', 'WLRCO051026'); pg.select_option('#fo', '1'); pg.fill('#fd', '06/10/2026'); pg.fill('#fh', '03:15')
-    pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0'); pg.fill('#fk0', '40'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, 'WLRCO051026', pv='1', kz=['40'], fecha='06/10/2026', hora='03:15', tt='58')
     ts = pg.inner_text('#toast')
-    chk('Guardado ·' in ts and 'no cuadra' in ts, f'al guardar avisa enseguida: {ts}')
+    chk('Recepción guardada' in ts and 'no cuadra' in ts, f'al guardar avisa enseguida: {ts}')
     chk(pg.evaluate("!!R_('WLRCO051026')") and pg.evaluate("lotWarn(R_('WLRCO051026')).length") == 2, 'se guarda igual (el aviso no bloquea)')
     # Modo piso: hoja de entradas
     pg.evaluate("PEN=null;setPiso(true);go('pent')"); pg.wait_for_timeout(100)
@@ -106,7 +108,7 @@ with sync_playwright() as p:
     chk(sorted([x[0] + ':' + x[3] + ':' + str(x[2]) for x in sf]) == ['WLRCO101026:b:12000', 'WLRXX101026:ne:16000'], f'queda anotado lote, gramos y motivo: {sf}')
     chk(pg.evaluate("bal('WLRCO101026')") == 0, 'del lote con poco se descuenta lo que había (sin negativos)')
     iss = pg.evaluate(f"shipIssues({i}).filter(x=>/Salida incompleta/.test(x.t)).map(x=>[x.t,x.go])")
-    chk(len(iss) == 2 and any('no había tantos kg' in x[0] and x[1] == 'lote:WLRCO101026' for x in iss) and any('no tiene entrada' in x[0] for x in iss), f'sale como pendiente del embarque y lleva al lote: {iss}')
+    chk(len(iss) == 2 and any('no había tantos kg' in x[0] and x[1] == 'lote:WLRCO101026' for x in iss) and any('no tiene recepción' in x[0] for x in iss), f'sale como pendiente del embarque y lleva al lote: {iss}')
     pg.evaluate("render()"); pg.wait_for_timeout(80)
     chk(pg.locator('[data-sfa]').count() == 1, 'el embarque ofrece «Volver a descontar del tanque»')
     pg.evaluate("go('embarques')"); pg.wait_for_timeout(80)

@@ -29,7 +29,7 @@ with sync_playwright() as p:
         chk('telephone=no' in (pg.get_attribute('meta[name=format-detection]', 'content') or ''), f'{tag}: sin detección de teléfonos (851-1220 g no es un número para marcar)')
         chk(pg.evaluate('V.v') == 'inicio', f'{tag}: abre en el Centro de operaciones (v1.39.0) ({pg.evaluate("V.v")})')
         t = pg.locator('.sb .fs b').all_inner_texts()
-        chk('Entrada' in t and 'Empaque' in t and 'Hojas para imprimir' in t and pg.locator('main .ctl, main .fmg').count() == 0, f'{tag}: cada sección está en el menú, sin cuadrícula repetida en el Centro {t}')
+        chk('Recepción' in t and 'Empaque' in t and 'Hojas para imprimir' in t and pg.locator('main .ctl, main .fmg').count() == 0, f'{tag}: cada sección está en el menú, sin cuadrícula repetida en el Centro {t}')
         chk(pg.locator('.sb .fs i em').count() == 0 and 'Siguiente paso' not in pg.inner_text('#app'), f'{tag}: menú sin números ni «Siguiente paso»')
         pg.evaluate("document.querySelector('.sb [data-go=empaque]').click()"); pg.wait_for_timeout(150); chk(pg.evaluate('V.v') == 'empaque', f'{tag}: un formato abre directo')
         chk('Paso 3 de 4' not in pg.inner_text('#app'), f'{tag}: Empaque ya no dice «Paso 3 de 4»')

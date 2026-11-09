@@ -42,7 +42,7 @@ with sync_playwright() as p:
         pg.click('[data-fold="ent-tq"] summary'); pg.wait_for_timeout(400)
         chk(abierto(pg, 'ent-tq') and pg.locator('.tqd').count() == 1, f'{W} Entrada: un toque abre los tanques')
         ir(pg, 'ordenes'); ir(pg, 'recepcion'); chk(abierto(pg, 'ent-tq'), f'{W} Entrada: al volver siguen abiertos')
-        pg.click('.pgh [data-a=nf]'); pg.wait_for_timeout(200); chk(pg.locator('#fl').count() == 1, f'{W} Entrada: «+ Nueva entrada» abre el formulario')
+        pg.click('.pgh [data-a=nf]'); pg.wait_for_timeout(200); chk(pg.locator('#rt_fl').count() == 1 and pg.evaluate('V.v') == 'rtin', f'{W} Recepción: «+ Nueva recepción» abre la recepción por tinas')
         # ---------- 4. menú ----------
         if W < 700: pg.click('.mb'); pg.wait_for_timeout(150)
         chk(pg.locator('.sb [data-go=general]').count() == 0 and pg.locator('.sb [data-go=admin]').count() == 0, f'{W} menú: sin Panel general ni Administración')

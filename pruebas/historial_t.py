@@ -2,6 +2,8 @@
 Usa el Supabase de mentira (pruebas/supabase_falso.py), que guarda la versión anterior como el trigger real.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/historial_t.py"""
 import os, sys, json, time, subprocess, urllib.request
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.environ.get('APP', 'http://localhost:8765/index.html')
@@ -25,9 +27,7 @@ def login(pg, em, pw):
     pg.fill('#le', em); pg.fill('#lp', pw); pg.click('[data-a=lg]')
     return until(pg, "!!me&&!!document.querySelector('.sb,.pshell,[data-avatar]')")
 def new_lot(pg, code):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', code); pg.select_option('#fo', '1'); pg.fill('#fkb', '18'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59-61'); pg.fill('#fdes', '0')
-    for i in range(4): pg.fill(f'#fk{i}', '100')
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, code, pv='1', kz=['100']*4, tt='58')
 ROWS = "[...document.querySelectorAll('#hist tbody tr')].map(t=>[...t.cells].map(c=>c.innerText.trim()))"
 
 srv = subprocess.Popen([sys.executable, '-I', os.path.join(ROOT, 'pruebas', 'supabase_falso.py'), '8793'])

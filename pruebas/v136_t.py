@@ -1,9 +1,13 @@
+import sys
 """v1.36.0 · Textos de los formularios (/impeccable clarify, 5/nov/2026). El usuario aprobó los cuatro grupos:
 1. Avisos de error: el error va junto a su campo, se queda hasta corregirlo, se anuncia y no se repite en otros formularios.
 2. Un nombre por talla («Chica · 491-610») y por tanque («T1») en las pantallas.
 3. Sin opciones peligrosas ya elegidas: tipo de movimiento, rol del usuario nuevo, a. m./p. m. de la hoja de empaque.
 4. Detalles: «Ej.» en los ejemplos, ayudas a la vista, confirmaciones que dicen qué se borra, «o hieleras».
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/v136_t.py"""
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 import os
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
@@ -28,17 +32,17 @@ with sync_playwright() as p:
     # ---------- 1. Avisos de error junto al campo ----------
     for W, H in [(1180, 820), (820, 1180), (390, 844), (1440, 900)]:
         pg = b.new_context(viewport={'width': W, 'height': H}).new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
-        entrar(pg); ir(pg, 'recepcion'); pg.click('[data-a=nf]'); pg.click('[data-a=sv]'); pg.wait_for_timeout(200)
+        entrar(pg); ir(pg, 'recepcion'); pg.click('[data-a=nf]'); pg.wait_for_timeout(150); pg.click('[data-rt=sv]'); pg.wait_for_timeout(200)
         f = fer(pg)
-        chk(f == [['fer_fo', 'Elige el proveedor.']], f'{W} Entrada: el error sale junto a Proveedor: {f}')
-        chk(visible(pg, '#fer_fo') and visible(pg, '#fo'), f'{W} Entrada: el campo y su error se ven en la pantalla (antes el texto quedaba abajo del botón, fuera de la vista del iPad)')
-        chk(pg.get_attribute('#fo', 'aria-describedby') == 'fer_fo' and pg.get_attribute('#fer_fo', 'role') == 'alert' and pg.get_attribute('#fo', 'aria-invalid') == 'true', f'{W} Entrada: el error está ligado al campo y se anuncia')
-        chk(avisos(pg).count('Elige el proveedor.') == 1, f'{W} Entrada: el error sale una sola vez (no también abajo del botón)')
-        chk(desborde(pg) <= 0, f'{W} Entrada con error: sin desborde ({desborde(pg)})')
-        pg.select_option('#fo', index=1); pg.wait_for_timeout(100)
-        chk(not fer(pg) and pg.get_attribute('#fo', 'aria-invalid') is None, f'{W} Entrada: al elegir proveedor el error se quita')
-        pg.click('[data-a=sv]'); pg.wait_for_timeout(200)
-        chk(fer(pg) == [['fer_ftt', 'Escribe la temperatura del tanque (°F).']], f'{W} Entrada: el siguiente dato que falta sale junto a su campo: {fer(pg)}')
+        chk(f == [['fer_rt_fo', 'Elige el proveedor.']], f'{W} Recepción: el error sale junto a Proveedor: {f}')
+        chk(visible(pg, '#fer_rt_fo') and visible(pg, '#rt_fo'), f'{W} Recepción: el campo y su error se ven en la pantalla')
+        chk(pg.get_attribute('#rt_fo', 'aria-describedby') == 'fer_rt_fo' and pg.get_attribute('#fer_rt_fo', 'role') == 'alert' and pg.get_attribute('#rt_fo', 'aria-invalid') == 'true', f'{W} Recepción: el error está ligado al campo y se anuncia')
+        chk(avisos(pg).count('Elige el proveedor.') == 1, f'{W} Recepción: el error sale una sola vez (no también abajo del botón)')
+        chk(desborde(pg) <= 0, f'{W} Recepción con error: sin desborde ({desborde(pg)})')
+        pg.select_option('#rt_fo', index=1); pg.wait_for_timeout(100)
+        chk(not fer(pg) and pg.get_attribute('#rt_fo', 'aria-invalid') is None, f'{W} Recepción: al elegir proveedor el error se quita')
+        pg.fill('#rt_fl', 'WLRPRUEBA'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(200)
+        chk(fer(pg) == [['fer_tn_k1', 'Pesa al menos una tina: escribe sus kg y toca su talla.']], f'{W} Recepción: el siguiente dato que falta sale junto a su campo (la primera tina): {fer(pg)}')
         pg.close()
 
     pg = b.new_context(viewport={'width': 1180, 'height': 820}).new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
@@ -66,11 +70,11 @@ with sync_playwright() as p:
 
     # ---------- 2. Un nombre por talla y por tanque ----------
     ir(pg, 'recepcion'); pg.click('[data-a=nf]'); pg.wait_for_timeout(150)
-    lab = pg.evaluate("[0,1,2,3,4].map(i=>(document.querySelector('#fk'+i)||{}).labels?document.querySelector('#fk'+i).labels[0].innerText.replace(/\\s+/g,' ').trim():'')")
-    chk(lab == ['Kg Chica 491-610', 'Kg Mediana 611-850', 'Kg Grande 851-1220', 'Kg Jumbo 1221-UP', 'Kg Despatada'], f'Entrada: las tallas dicen nombre y rango: {lab}')
+    lab = pg.evaluate("[...document.querySelectorAll('[data-rt^=\"z:\"],#tnpad [data-tnk^=\"z:\"]')].map(b=>b.innerText.trim())")
+    chk(lab == ['Chica', 'Mediana', 'Grande', 'Jumbo'], f'Recepción: las tallas de tina dicen su nombre (la despatada va aparte): {lab}')
     t = pg.inner_text('main')
-    chk('0-650' not in t and '851-1250' not in t, 'Entrada: los rangos del papel ya no salen en la pantalla (siguen en el PDF)')
-    chk(pg.evaluate("document.querySelector('[data-fold=ent-t2]').open=true,document.querySelector('#fk2z0').labels[0].innerText.replace(/\\s+/g,' ').trim()") == 'Chica 491-610', 'Entrada: el otro tanque usa el mismo nombre')
+    chk('0-650' not in t and '851-1250' not in t, 'Recepción: los rangos del papel ya no salen en la pantalla (siguen en el PDF)')
+    ir(pg, 'recepcion')
     chk(pg.evaluate("ST.R.length>0") and 'T1' in pg.inner_text('table.ent tbody'), 'Entrada: la tabla dice T1')
     ir(pg, 'lote:WLRCO051026A'); abrir(pg)
     o = pg.evaluate("[...document.querySelectorAll('#sz option')].map(x=>x.text)")
@@ -109,11 +113,11 @@ with sync_playwright() as p:
     ir(pg, 'orden:1')
     t = pg.inner_text('main')
     chk('Editar consignatario o hieleras' in t and 'u hieleras' not in t, '«Editar consignatario o hieleras»')
-    ir(pg, 'recepcion'); pg.click('[data-a=nf]'); pg.wait_for_timeout(100)
-    chk(pg.get_attribute('#ftp', 'placeholder') == 'Ej. 59-62' and pg.get_attribute('#fl', 'placeholder') == 'Ej. WLRCO051026A', 'Entrada: los ejemplos dicen «Ej.» (ya no parecen datos escritos)')
+    ir(pg, 'recepcion'); t0 = pg.inner_text('main'); pg.click('[data-a=nf]'); pg.wait_for_timeout(100)
+    chk(pg.get_attribute('#rt_tpn', 'placeholder') == 'Ej. 57.7' and pg.get_attribute('#rt_fl', 'placeholder') == 'Ej. WLRCO051026A', 'Recepción: los ejemplos dicen «Ej.» y la temperatura es un solo número (ya no «59-62»)')
     t = pg.inner_text('main')
-    chk('Kg de desperdicio (0 si no hubo)' in t and 'Temperatura del tanque (°F)' in t and 'Temp. °F' not in t, 'Entrada: etiquetas sin abreviar y «0 si no hubo» a la vista')
-    chk('fecha distinta a la del código' in t, 'Entrada: el aviso dice qué pasa con la fecha')
+    chk('Langosta muerta (kg)' in t and 'Temperatura del producto mínima (°F)' in t and 'Temp. °F' not in t, 'Recepción: etiquetas sin abreviar')
+    chk('fecha distinta a la del código' in t0, 'Recepción: el aviso dice qué pasa con la fecha')
     ir(pg, 'cierre'); chk('Las gráficas salen' not in pg.inner_text('main'), 'Mortalidad final: sin el texto de «las gráficas salen…»')
     # nota: confirmación que dice qué se borra
     ir(pg, 'temperatura'); abrir(pg); pg.fill('#ntx', 'Prueba de nota'); pg.locator('[data-ev^="save:"]').first.click(); pg.wait_for_timeout(150)

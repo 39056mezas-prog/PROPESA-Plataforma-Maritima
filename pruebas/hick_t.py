@@ -7,6 +7,8 @@ orden con «Empacar lo que falta» · Embarque con la lista primero · Modo piso
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/hick_t.py"""
 import json,os
 from playwright.sync_api import sync_playwright
+import sys as _s, os as _o; _s.path.insert(0, _o.path.dirname(_o.path.abspath(__file__)))
+from recep import recibir
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 S=open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos','backup.json')).read();errs=[];fails=0
 def chk(c,m):
@@ -62,7 +64,7 @@ with sync_playwright() as p:
     chk(ev(pg,"getComputedStyle(document.documentElement).fontSize")=='11px','«Muy chico» = 11 px (75 %)')
     chk(ev(pg,"localStorage.getItem('propesa-fs')")=='11','se guarda en el equipo')
     pg.keyboard.press('Escape');go(pg,'recepcion');pg.click('[data-a=nf]');pg.wait_for_timeout(100)
-    chk(ev(pg,"parseFloat(getComputedStyle(document.getElementById('fl')).fontSize)")>=16,'con texto chico, las casillas siguen en 16 px')
+    chk(ev(pg,"parseFloat(getComputedStyle(document.getElementById('rt_fl')).fontSize)")>=16,'con texto chico, las casillas siguen en 16 px')
     pg.reload();pg.wait_for_timeout(500);chk(ev(pg,"getComputedStyle(document.documentElement).fontSize")=='11px','al recargar se queda en 11 px')
     pg.evaluate("localStorage.setItem('propesa-fs','15')");pg.reload();pg.wait_for_timeout(500)
     # ---------- Panel general y botón 3D
@@ -76,8 +78,8 @@ with sync_playwright() as p:
     go(pg,'recepcion')
     chk(ev(pg,"document.querySelector('table.ent tbody tr td').classList.contains('acts')"),'Entrada: Ver/Editar/Eliminar en la primera columna')
     chk(ev(pg,"getComputedStyle(document.querySelector('table.ent td.acts')).position")=='sticky','esa columna se queda fija al deslizar')
-    pg.click('[data-a=nf]');pg.wait_for_timeout(100)
-    chk(ev(pg,"!document.querySelector('[data-fold=ent-t2]').open"),'«Repartir en otro tanque» empieza plegado')
+    pg.evaluate("RT=null");pg.click('[data-a=nf]');pg.wait_for_timeout(100)
+    chk(ev(pg,"V.v")=='rtin' and ev(pg,"!document.querySelector('[data-fold=ent-t2]')"),'v1.42.0: la recepción por tinas no lleva «otro tanque» (cada tina dice su tanque)')
     go(pg,'pent')
     chk(ev(pg,"!document.querySelector('.pt2').open"),'hoja de entradas: «otro tanque» plegado')
     # ---------- lote sin lote: se arregla desde su tarjeta
@@ -90,9 +92,8 @@ with sync_playwright() as p:
     chk(ev(pg,"!document.querySelector('main [data-a=el]')"),'sin «Editar» que se queda bloqueado')
     chk(ev(pg,"document.querySelector('main .cd.head').nextElementSibling.id")=='nejoin','la tarjeta va justo debajo del encabezado')
     pg.click('[data-a=nfj]');pg.wait_for_timeout(150)
-    pg.evaluate("""(()=>{const v={fh:'09:30',ftt:'58',ftp:'59-61',fl:'WLRCO131026A',fkb:'18',fk0:'10',fk1:'20',fk2:'0',fk3:'0',fdes:'0'};for(const k in v){const e=document.getElementById(k);if(e)e.value=v[k]}
-     const fo=document.getElementById('fo');fo.value=fo.options[1].value;fo.dispatchEvent(new Event('change',{bubbles:true}));document.getElementById('fd').value='13/10/2026';document.getElementById('fl').value='WLRCO131026A'})()""")
-    pg.click('[data-a=sv]');pg.wait_for_timeout(300)
+    chk(ev(pg,'V.v')=='rtin','«+ Crear su recepción» abre la recepción por tinas')
+    recibir(pg,'WLRCO131026A',pv='1',kz=[10,20],fecha='13/10/2026',hora='09:30',nuevo=False)
     chk(ev(pg,"!R_('SIN-LOTE-1310')"),'«+ Crear su entrada»: el lote provisional desaparece ('+ev(pg,"(document.querySelector('.fer,.er')||{}).textContent||''")+')')
     chk(ev(pg,"(ST.B.WLRCO131026A||[]).length")==2,'y sus 2 hieleras pasan a la entrada nueva')
     # ---------- eliminar: discreto, a la vista, y confirma

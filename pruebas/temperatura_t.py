@@ -3,6 +3,9 @@
   editar o eliminar el lote. Las lecturas manuales siguen; filtro por tanque; «Registrar» preselecciona el tanque.
 - Mortalidad final ya no es el paso 5: está en «Revisión», el Panel no manda ahí y Embarque no tiene «Siguiente».
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/temperatura_t.py"""
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 import os, sys
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
@@ -24,17 +27,15 @@ with sync_playwright() as p:
         pg.goto(BASE); pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso","0")}', seed); pg.reload()
         pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
         # --- nueva entrada en T6 con temperaturas
-        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
-        pg.fill('#fl', 'wlrtemp1'); pg.select_option('#fo', '1'); pg.select_option('#ft', 'T6'); pg.fill('#fd', AYER); pg.fill('#fh', '07:40')
-        pg.fill('#ftt', '57.3'); pg.fill('#ftp', '58-60'); pg.fill('#fkb', '18'); pg.fill('#fdes', '0'); pg.fill('#fk1', '200'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+        pg.evaluate("FOLD['ent-tq']=true");  recibir(pg, 'wlrtemp1', pv='1', kz=[0, '200'], tank='T6', fecha=AYER, hora='07:40', tt='57.3')
         chk(pg.evaluate("!!R_('WLRTEMP1')") and pg.evaluate("ST.T.length") == 0, f'{vw} se guarda la entrada (sin copiar nada a las lecturas)')
         # Temperatura la muestra sola
         pg.evaluate("go('temperatura')"); tx = pg.inner_text('#app')
-        chk('Entrada · WLRTEMP1' in tx and '57.3 °F' in tx and '58-60 °F' in tx and AYER_MX in tx and '07:40' in tx, f'{vw} Temperatura muestra la de la entrada (agua, producto, fecha y hora, lote)')
+        chk('Recepción · WLRTEMP1' in tx and '57.3 °F' in tx and 'mín 57 · máx 60 °F' in tx and AYER_MX in tx and '07:40' in tx, f'{vw} Temperatura muestra la de la entrada (agua, producto, fecha y hora, lote)')
         chk(pg.locator('tr.tqent [data-tqdel]').count() == 0, f'{vw} la de la entrada no se elimina desde Temperatura (se corrige en el lote)')
-        pg.click('button.lnk:has-text("Entrada · WLRTEMP1")'); chk(pg.evaluate("V.v") == 'lote' and pg.evaluate("V.id") == 'WLRTEMP1', f'{vw} «Entrada · lote» abre el lote')
+        pg.click('button.lnk:has-text("Recepción · WLRTEMP1")'); chk(pg.evaluate("V.v") == 'lote' and pg.evaluate("V.id") == 'WLRTEMP1', f'{vw} «Entrada · lote» abre el lote')
         # el lote muestra la temperatura de su tanque
-        tx = pg.inner_text('#app'); chk('Temperatura de T6' in tx and 'desde la entrada' in tx and 'Entrada de este lote' in tx, f'{vw} el lote muestra la temperatura de su tanque')
+        tx = pg.inner_text('#app'); chk('Temperatura de T6' in tx and 'desde la recepción' in tx and 'Recepción de este lote' in tx, f'{vw} el lote muestra la temperatura de su tanque')
         # lectura manual desde el lote: el tanque ya viene elegido
         pg.click('[data-go="temperatura:T6"] >> text=Registrar lectura'); chk(pg.evaluate("V.v") == 'temperatura' and pg.input_value('#tq_t') == 'T6', f'{vw} «+ Registrar lectura» abre Temperatura con el tanque 6 elegido')
         chk(pg.evaluate("TFIL") == 'T6' and pg.locator('[data-tqf="T6"][aria-pressed=true]').count() == 1, f'{vw} y la lista filtrada en el tanque 6')
@@ -48,10 +49,10 @@ with sync_playwright() as p:
         pg.evaluate("TQSEL='T6';FOLD['ent-tq']=true;go('recepcion')"); tq = pg.inner_text('.tqd')
         chk('56.1' in tq and '12:10' in tq, f'{vw} el tablero del tanque 6 muestra la última temperatura (lectura 12:10): {tq[-120:]!r}')
         pg.evaluate("ST.T=[];save();render()"); tq = pg.inner_text('.tqd')
-        chk('57.3' in tq and 'entrada WLRTEMP1' in tq, f'{vw} sin lecturas, el tablero muestra la de la entrada')
+        chk('57.3' in tq and 'recepción WLRTEMP1' in tq, f'{vw} sin lecturas, el tablero muestra la de la recepción')
         chk('Flotante 57.3°' in pg.inner_text('[data-tq="T6"]'), f'{vw} y el mapa del tanque 6 también')
         # editar el lote cambia la temperatura sola
-        pg.evaluate("go('lote:WLRTEMP1')"); pg.click('[data-a=el]'); pg.fill('#ftt', '55.5'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
+        pg.evaluate("go('lote:WLRTEMP1')"); pg.click('[data-a=el]'); pg.fill('#rt_ttT6', '55.5'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(100)
         pg.evaluate("go('temperatura')"); chk('55.5 °F' in pg.inner_text('#tq_tbl tbody') and '57.3 °F' not in pg.inner_text('#tq_tbl tbody'), f'{vw} al editar el lote, Temperatura se actualiza sola')
         # eliminar el lote la quita
         pg.evaluate("go('lote:WLRTEMP1')"); pg.click('[data-a=dl]'); pg.click('[data-a=dl2]'); pg.wait_for_timeout(100)

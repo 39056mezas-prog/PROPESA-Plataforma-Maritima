@@ -9,6 +9,8 @@
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/tallas_t.py"""
 import os, json
 from playwright.sync_api import sync_playwright
+import sys as _s, os as _o; _s.path.insert(0, _o.path.dirname(_o.path.abspath(__file__)))
+from recep import recibir
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
 fails, errs = [], []
@@ -27,15 +29,15 @@ with sync_playwright() as p:
     pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx')
     pg.evaluate("mqSet(1);FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(100)
     chk(pg.evaluate("TNM") == ['Chica', 'Mediana', 'Grande', 'Jumbo', 'Despatada'], 'de inicio: Chica, Mediana, Grande, Jumbo y Despatada')
-    # Entrada con despatada
-    pg.click('[data-a=nf]'); chk(pg.locator('#fk4').count() == 1 and 'Despatada' in pg.inner_text('label.sz4'), 'la Entrada pide kg de Despatada')
-    pg.fill('#fl', 'WLRCO261026'); pg.select_option('#fo', '1'); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0')
-    for i, v in enumerate([100, 50, 0, 0, 40]): pg.fill(f'#fk{i}', str(v))
-    chk(pg.inner_text('#ftot').startswith('190'), 'el total suma la despatada (190 kg)')
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
-    chk(pg.evaluate("bal('WLRCO261026','desp')") == 40000, 'la despatada queda en el tanque (40 kg)')
+    # v1.42.0 · Recepción: la despatada se pesa aparte (no va en tinas ni en el teclado de tallas)
+    pg.evaluate("RT=null;KPON=false;go('rtin')"); pg.wait_for_timeout(80)
+    zs = pg.eval_on_selector_all('[data-rt^="z:"]', 'e=>e.map(x=>x.innerText.trim())')
+    chk(pg.locator('#rt_dp').count() == 1 and 'Despatada' not in zs and 'Chica' in zs, f'la Recepción pide la Despatada aparte, no como talla de tina: {zs}')
+    recibir(pg, 'WLRCO261026', pv='1', kz=[100, 50, 0, 0], tank='T1', dp='40')
+    chk(pg.evaluate("bal('WLRCO261026','desp')") == 40000 and pg.evaluate("rcv('WLRCO261026')") == 190000, 'la despatada se guarda aparte (40 kg) y el total suma 190 kg')
+    chk(pg.evaluate("R_('WLRCO261026').tn.every(t=>t[1]!=='desp')"), 'ninguna tina lleva despatada')
     pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.wait_for_timeout(100)
-    chk('Despatada' in pg.inner_text('.tqkey') if pg.locator('.tqkey').count() else False, 'el tablero de tanques muestra la talla Despatada')
+    chk(pg.locator('.tqd').count() == 1, 'el tablero de tanques se muestra con la recepción por tinas')
     # orden con despatada, empaque con su categoría, salida al cerrar
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '26/10/2026'); pg.click('[data-oa=new]'); pg.select_option('#ol_city', 'PVG')
     # v1.25.0 (usuario, 29/oct): la despatada es merma: la orden ya no la pide (en Empaque la Gris se agrega como extra, v1.28.0)
@@ -75,12 +77,14 @@ with sync_playwright() as p:
     pg.click('[data-sza="off:1221-up"]'); pg.wait_for_timeout(80)
     chk(pg.evaluate("SON.length") == 5 and 3 not in pg.evaluate("SON"), 'oculta Jumbo en Abel')
     k = pg.evaluate("ST.SZ[5].k")
-    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
-    chk(pg.locator('#fk3').count() == 0 and pg.locator('#fk5').count() == 1 and '26-32 piezas' in pg.inner_text('label.sz0'), 'la Entrada de Abel: sin Jumbo, con Débil y el rango nuevo')
-    chk(pg.evaluate("getComputedStyle(document.querySelector('label.sz5 input')).borderTopColor") == 'rgb(124, 58, 237)', 'la casilla de Débil lleva su color')
-    pg.fill('#fl', 'WLRCO261026'); pg.select_option('#fo', '1'); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0'); pg.fill('#fk0', '20'); pg.fill('#fk5', '-1'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
-    chk(pg.evaluate("ST.R.length") == 0 and pg.evaluate("document.activeElement.id") == 'fk5', 'un error en la talla nueva lleva a su casilla')
-    pg.fill('#fk5', '12'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
+    pg.evaluate("RT=null;KPON=false;go('rtin')"); pg.wait_for_timeout(80)
+    zs = pg.eval_on_selector_all('[data-rt^="z:"]', 'e=>e.map(x=>x.innerText.trim())')
+    chk('Jumbo' not in zs and 'Débil' in zs and pg.evaluate("TNM[0]") in zs and '26-32 piezas' in pg.evaluate("JSON.stringify(ST.SZ[0])"), f'la Recepción de Abel: sin Jumbo, con Débil y el rango nuevo {zs}')
+    chk(pg.evaluate("getComputedStyle(document.querySelector('[data-rt=\"z:5\"] .dot')).backgroundColor") == 'rgb(124, 58, 237)', 'la talla Débil lleva su color')
+    pg.select_option('#rt_fo', '1'); pg.fill('#rt_fl', 'WLRCO261026'); tn = pg.evaluate('RT.act'); pg.fill(f'#tn_k{tn}', '12')
+    pg.fill('#rt_tpn', '57'); pg.fill('#rt_tpx', '60'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(100)
+    chk(pg.evaluate("ST.R.length") == 0 and pg.evaluate("document.activeElement.id") == f'tn_k{tn}' and 'toca la talla' in pg.inner_text('#app'), 'una tina sin talla no se guarda y lleva a su casilla')
+    pg.click('[data-rt="z:5"]'); pg.fill('#rt_tt' + pg.evaluate(f"tnTk({tn})"), '58'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(100)
     chk(pg.evaluate(f"bal('WLRCO261026','{k}')") == 12000, 'Abel guarda 12 kg de Débil')
     # hoja de Modo piso
     pg.evaluate("setPiso(true);go('pent')"); pg.wait_for_timeout(150)

@@ -1,4 +1,4 @@
-"""Prueba PROPESA (entradas_t): hoja de varias entradas en Modo piso.
+"""Prueba PROPESA (entradas_t): hoja de varias recepciones en Modo piso (desde v1.42.0 solo para las que ya estaban empezadas).
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/entradas_t.py"""
 import json
 from playwright.sync_api import sync_playwright
@@ -15,6 +15,8 @@ def login(pg,vw,sch='light',fs=None):
     pg.goto(BASE);pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s)}',seed)
     if fs:pg.evaluate(f"localStorage.setItem('propesa-fs','{fs}')")
     pg.reload();pg.fill('#le','piso@propesa.mx');pg.fill('#lp','piso123');pg.click('[data-a=lg]');pg.click('.pt.p2')
+    # v1.42.0: «Registrar recepción» abre la recepción por tinas; la hoja de varias recepciones queda solo para terminar las que ya estaban empezadas
+    chk(pg.evaluate("V.v")=='rtin','Modo piso: «Registrar recepción» abre la recepción por tinas');pg.evaluate("go('pent')")
 EXTRA={'tempT':'58','tempP':'59-61','kgbox':'18','desp':'0'}
 def extra(pg,u,vals=EXTRA):
     """v1.8.2: los datos de «Más» son obligatorios: los llena abriendo «Más» y lo deja como estaba."""
@@ -106,26 +108,26 @@ with sync_playwright() as p:
     chk('entre 20 y 110' in pg.inner_text(f'tr.pdet[data-pu="{u}"]'),'temperatura fuera de rango (150 °F) marcada')
     extra(pg,u,{'tempT':'58'})
     if not pg.is_visible(f'[data-pr="{u}:rdate"]'):pg.click(f'[data-pa="more:{u}"]')
-    pg.fill(f'[data-pr="{u}:rdate"]','');pg.click(f'[data-pa="more:{u}"]');pg.click('[data-pa=save]')
+    pg.fill(f'[data-pr="{u}:rdate"]','');pg.keyboard.press('Escape');pg.click(f'[data-pa="more:{u}"]');pg.click('[data-pa=save]')
     chk(pg.is_visible(f'[data-pr="{u}:rdate"]') and pg.evaluate("document.activeElement.dataset.pr")==f'{u}:rdate','fecha faltante abre detalles')
     # talla negativa y sin kg
     pg.fill(f'[data-pr="{u}:rdate"]','2026-10-13');pg.fill(f'[data-pr="{u}:k0"]','-2');pg.click('[data-pa=save]')
     chk('negativo' in pg.inner_text(f'tr.per[data-pu="{u}"]'),'talla negativa marcada')
     pg.fill(f'[data-pr="{u}:k0"]','');pg.click('[data-pa=save]');chk('al menos una talla' in pg.inner_text(f'tr.per[data-pu="{u}"]'),'sin kg marcado')
-    # auditoría #10: la vista completa usa la misma regla y la misma función que Modo piso para crear lotes
-    pg.evaluate("setPiso(false);go('recepcion')");pg.click('[data-a=nf]')
-    pg.fill('#fl','wlrneg151026');pg.select_option('#fo','1');pg.fill('#fk0','-50');pg.fill('#fk1','100');pg.click('[data-a=sv]')
-    chk('Escribe la temperatura del tanque' in pg.inner_text('#app') and pg.evaluate("document.activeElement.id")=='ftt' and pg.input_value('#fk1')=='100','v1.8.2 vista completa: sin temperatura del tanque no guarda, lleva al campo y conserva lo escrito')
-    pg.fill('#ftt','58');pg.click('[data-a=sv]');chk('temperatura del producto' in pg.inner_text('#app'),'vista completa: pide la temperatura del producto')
-    pg.fill('#ftp','59-61');pg.fill('#fkb','18');pg.fill('#fk0','0');pg.click('[data-a=sv]');chk('desperdicio' in pg.inner_text('#app') and pg.evaluate("document.activeElement.id")=='fdes','vista completa: pide el desperdicio (0 si no hubo)')
-    pg.fill('#fk0','-50');pg.fill('#fdes','0');pg.click('[data-a=sv]')
-    chk('No puede ser negativo.' in pg.inner_text('#app') and not pg.evaluate("ST.R.some(r=>r.lot=='WLRNEG151026')"),'vista completa: −50 kg en una talla marca «No puede ser negativo» y no guarda (antes guardaba 100 kg)')
-    chk(pg.input_value('#fk0')=='-50' and pg.input_value('#fk1')=='100','lo escrito se conserva')
-    pg.fill('#fk0','0');pg.click('[data-a=sv]')
+    # v1.42.0 · la vista completa usa la recepción por tinas: valida igual, lleva al campo y conserva lo escrito
+    pg.evaluate("setPiso(false);RT=null;go('rtin')")
+    pg.select_option('#rt_fo','1');pg.fill('#rt_fl','wlrneg151026');tn=pg.evaluate('RT.act');pg.fill(f'#tn_k{tn}','100');pg.click('#tnpad [data-tnk="z:1"]' if pg.locator('#tnpad').count() else '[data-rt="z:1"]')
+    pg.fill('#rt_tpn','');pg.fill('#rt_tpx','');pg.click('[data-rt=sv]')
+    tt='rt_tt'+pg.evaluate(f"tnTk({tn})")
+    chk('Escribe la temperatura de' in pg.inner_text('#app') and pg.evaluate("document.activeElement.id")==tt and pg.input_value(f'#tn_k{tn}')=='100','vista completa: sin temperatura del tanque no guarda, lleva al campo y conserva lo escrito')
+    pg.fill('#'+tt,'58');pg.click('[data-rt=sv]');chk('temperatura mínima del producto' in pg.inner_text('#app') and pg.evaluate("document.activeElement.id")=='rt_tpn','vista completa: pide la temperatura mínima del producto')
+    pg.fill('#rt_tpn','57');pg.click('[data-rt=sv]');chk('temperatura máxima del producto' in pg.inner_text('#app'),'y la máxima, cada una con su número')
+    pg.fill('#rt_tpx','60');pg.fill('#rt_mu','-3');pg.click('[data-rt=sv]')
+    chk('langosta muerta' in pg.inner_text('#app') and not pg.evaluate("ST.R.some(r=>r.lot=='WLRNEG151026')"),'vista completa: kg de muerta negativos se marcan y no guarda')
+    chk(pg.input_value(f'#tn_k{tn}')=='100','lo escrito se conserva')
+    pg.fill('#rt_mu','');pg.click('[data-rt=sv]')
     chk(pg.evaluate("bal('WLRNEG151026')")==100000,'al corregirlo se guarda con 100 kg')
-    ka=pg.evaluate("Object.keys(R_('WLRNEG151026')).join()");kb=pg.evaluate("Object.keys(R_('WLRCO131026A')).join()")
-    chk(ka==kb,'el lote de la vista completa y el de Modo piso tienen los mismos campos')
-    chk(pg.evaluate("typeof addLot=='function'&&!/ST\\.R\\.push/.test(saveLot.toString()+penSave.toString())"),'las dos pantallas crean el lote con addLot')
+    chk(pg.evaluate("typeof addLot=='function'&&!/ST\\.R\\.push/.test(rtSave.toString()+penSave.toString())"),'las dos pantallas crean el lote con addLot')
     pg.close()
     # --- Vistas: celular, tablet vertical, computadora, texto muy grande, tema oscuro ---
     for vw,sch,fs in [((390,844),'light',None),((820,1180),'dark',None),((1440,900),'light',None),((1180,820),'dark',20),((820,1180),'light',20)]:

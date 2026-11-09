@@ -6,6 +6,8 @@
 - Se comparte entre equipos (WN / encodeST / decodeST) y sobrevive a un respaldo (cleanST). Los lotes de antes = Langosta Roja.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/especies_t.py"""
 from playwright.sync_api import sync_playwright
+import sys as _s, os as _o; _s.path.insert(0, _o.path.dirname(_o.path.abspath(__file__)))
+from recep import recibir
 import os, re, json, tempfile
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT = os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-'); os.makedirs(OUT, exist_ok=True)
@@ -24,12 +26,8 @@ def pdf_text(pg, k, arg):
     return ' '.join(re.findall(r'\(((?:[^()\\]|\\.)*)\)\s*Tj', raw)).replace('\\(', '(').replace('\\)', ')')
 def sin_desborde(pg): return not pg.evaluate("document.documentElement.scrollWidth>innerWidth+1")
 def entrada(pg, lot, tank, sp_txt, kgs=(100, 20, 0, 0)):
-    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fd', '23/10/2026'); pg.select_option('#fo', '1'); pg.select_option('#ft', tank)
-    if sp_txt: pg.select_option('#fsp', label=sp_txt)
-    pg.fill('#fl', lot)
-    for k, v in {'#fh': '08:15', '#ftt': '58', '#ftp': '52-60', '#fkb': '34', '#fdes': '0'}.items(): pg.fill(k, v)
-    for i, v in enumerate(kgs): pg.fill(f'#fk{i}', str(v))
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(120)
+    sp = pg.evaluate(f"(esAll().find(e=>e.n=={sp_txt!r})||{{}}).id") if sp_txt else None  # v1.42.0: recepción por tinas
+    recibir(pg, lot, pv='1', kz=kgs, tank=tank, fecha='23/10/2026', hora='08:15', sp=sp)
 R = lambda pg, l: pg.evaluate(f"(R_('{l}')||{{}}).sp")
 
 with sync_playwright() as p:
@@ -56,18 +54,18 @@ with sync_playwright() as p:
         pg.screenshot(path=f'{OUT}/esp_admin_{vw[0]}.png', full_page=True)
 
         # ---------- 2. Entrada en la vista completa ----------
-        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
-        ops = pg.evaluate("[...document.querySelectorAll('#fsp option')].map(o=>o.textContent)")
-        chk(ops == ['Langosta Roja', 'Langosta Azul'] and pg.input_value('#fsp') == '1', f'la entrada pide la especie (Langosta Roja de inicio) {ops}')
-        pg.click('[data-a=nf]')
+        pg.evaluate("RT=null;go('rtin')")
+        ops = pg.evaluate("[...document.querySelectorAll('#rt_sp option')].map(o=>o.textContent)")
+        chk(ops == ['Langosta Roja', 'Langosta Azul'] and pg.input_value('#rt_sp') == '1', f'la entrada pide la especie (Langosta Roja de inicio) {ops}')
+        pg.evaluate("RT=null")
         entrada(pg, 'WLRAZ231026', 'T1', 'Langosta Azul', (40, 10, 0, 0))
         chk(R(pg, 'WLRAZ231026') == az, 'el lote guarda la especie elegida')
         entrada(pg, 'WLRRO231026', 'T2', None)
         chk(R(pg, 'WLRRO231026') == 1, 'sin cambiarla queda Langosta Roja')
         chk(R(pg, 'WLRCO051026A') is None and pg.evaluate("esOf(R_('WLRCO051026A')).n") == 'Langosta Roja', 'los lotes de antes son Langosta Roja')
         pg.evaluate("go('lote:WLRAZ231026')"); chk('Langosta Azul' in pg.inner_text('.cd.head'), 'el lote dice su especie')
-        pg.click('[data-a=el]'); chk(pg.input_value('#fsp') == str(az), 'Editar trae la especie'); pg.select_option('#fsp', '1'); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
-        chk(R(pg, 'WLRAZ231026') == 1, 'se puede corregir la especie'); pg.click('[data-a=el]'); pg.select_option('#fsp', str(az)); pg.click('[data-a=sv]'); pg.wait_for_timeout(100)
+        pg.click('[data-a=el]'); chk(pg.input_value('#rt_sp') == str(az), 'Editar trae la especie'); pg.select_option('#rt_sp', '1'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(100)
+        chk(R(pg, 'WLRAZ231026') == 1, 'se puede corregir la especie'); pg.click('[data-a=el]'); pg.select_option('#rt_sp', str(az)); pg.click('[data-rt=sv]'); pg.wait_for_timeout(100)
         pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); t = pg.inner_text('table.ent')
         chk('Langosta Azul' in t and 'Langosta Roja' in t, 'la tabla de Entrada muestra la especie de cada lote')
 
@@ -132,10 +130,10 @@ with sync_playwright() as p:
 
         # ---------- 8. Ocultar y otros roles ----------
         pg.evaluate("go('admin:cat')"); pg.click(f'[data-esa="off:{az}"]'); pg.wait_for_timeout(80)
-        pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.click('[data-a=nf]')
-        chk(pg.evaluate("[...document.querySelectorAll('#fsp option')].map(o=>o.textContent)") == ['Langosta Roja'], 'una especie oculta ya no se ofrece')
-        pg.click('[data-a=nf]'); pg.evaluate("go('lote:WLRAZ231026')"); pg.click('[data-a=el]')
-        chk(pg.input_value('#fsp') == str(az), 'pero el lote que la tiene la conserva al editar'); pg.click('[data-a=nf]')
+        pg.evaluate("RT=null;go('rtin')")
+        chk(pg.evaluate("[...document.querySelectorAll('#rt_sp option')].map(o=>o.textContent)") == ['Langosta Roja'], 'una especie oculta ya no se ofrece')
+        pg.evaluate("RT=null;go('lote:WLRAZ231026')"); pg.click('[data-a=el]')
+        chk(pg.input_value('#rt_sp') == str(az), 'pero el lote que la tiene la conserva al editar'); pg.evaluate("RT=null;go('recepcion')")
         pg.evaluate("go('admin:cat')"); pg.click(f'[data-esa="off:{az}"]'); pg.wait_for_timeout(80)
         pg.evaluate("signOut()"); pg.fill('#le', 'consulta@propesa.mx'); pg.fill('#lp', 'ver123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
         pg.evaluate("go('admin:cat')")

@@ -1,3 +1,4 @@
+import sys
 """v1.22.0 · PDF a color por talla (pedido del usuario, 26/oct/2026):
 «quiero que en los pdf salga el color respectivo de cada talla y también gramaje… determinado a cada maquila… que toda la tabla sea de cada color».
 - Cada PDF con tallas trae la leyenda: color, nombre, gramaje y nombre del color, de la maquila abierta.
@@ -5,6 +6,8 @@
 - En otra maquila con tallas propias (Abel: Chica café «26-32 piezas», Débil morada) el PDF usa las de Abel; PROPESA no cambia.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/pdf_tallas_t.py"""
 import os, base64
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
@@ -22,8 +25,7 @@ PDFS = [('ent', None), ('ord', None), ('emp', None), ('emb', 0), ('hrec', '01/10
 def pdf(pg, k, a):
     return pg.evaluate("([k,a])=>(async()=>{try{const d=await pdfMake(k,a);let s='';d.u8.forEach(c=>s+=String.fromCharCode(c));return s}catch(e){return 'ERR '+e}})()", [k, a])
 def flow(pg, lot, pfx):
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', lot); pg.select_option('#fo', '1'); pg.fill('#fd', '26/10/2026'); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0')
-    pg.fill('#fk0', '200'); pg.fill('#fk1', '120'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, lot, pv='1', kz=['200', '120'], fecha='26/10/2026', tt='58')
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', '26/10/2026'); pg.click('[data-oa=new]'); pg.select_option('#ol_city', 'PVG'); pg.fill('#ol_z0', '1'); pg.fill('#ol_z1', '1'); pg.fill('#ol_tar', '0'); pg.click('[data-oa=ln]'); pg.wait_for_timeout(150)
     pg.evaluate("go('empaque')"); pg.locator('[data-go^="empacar:"]').first.click(); pg.wait_for_timeout(100)
     k0, k1 = pg.evaluate("TKEY[0]"), pg.evaluate("TKEY[1]")

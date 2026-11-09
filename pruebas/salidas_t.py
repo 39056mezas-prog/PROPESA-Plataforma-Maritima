@@ -1,8 +1,11 @@
+import sys
 """v1.19.0 · Salidas que no son embarque (pedido del usuario, 26/oct/2026): para congelar, basura (descompuesta), a recuperación y
 débil, con nota o folio. Restan del tanque, salen en el lote, en Mortalidad final (totales por tipo y lista) y en su PDF; la
 mortalidad del lote no las cuenta como muertas; se pueden revertir; se comparten (WN/cleanST con nt). Solo el Administrador.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/salidas_t.py"""
 import os, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 ABRIR = "document.querySelectorAll('details.fold').forEach(d=>FOLD[d.dataset.fold]=true);render()"  # v1.34.0: abre los plegables (tanques, notas, precio, movimientos)
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
@@ -23,11 +26,9 @@ with sync_playwright() as p:
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
     pg.on('dialog', lambda d: d.accept())
     pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1)")
-    pg.evaluate("go('recepcion')"); pg.click('[data-a=nf]'); pg.fill('#fl', 'WLRCO191026'); pg.select_option('#fo', '1'); pg.fill('#fkb', '36'); pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fdes', '0')
-    for i, v in enumerate([500, 200, 0, 0, 30]): pg.fill(f'#fk{i}', str(v))
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    recibir(pg, 'WLRCO191026', pv='1', kz=[500, 200, 0, 0, 30], tt='58')
     opts = pg.eval_on_selector_all('#ty option', 'e=>e.map(o=>o.textContent)')
-    chk(opts == ['Elige el tipo', 'Salida a embarque (solo para corregir)', 'Para congelar', 'Basura (descompuesta)', 'A recuperación', 'Débil', 'Entrada'], 'el lote ofrece los tipos de salida del Excel: %s' % opts)
+    chk(opts == ['Elige el tipo', 'Salida a embarque (solo para corregir)', 'Para congelar', 'Basura (descompuesta)', 'A recuperación', 'Débil', 'Recepción'], 'el lote ofrece los tipos de salida del Excel: %s' % opts)
     salida(pg, 'CONGELACION', '491-610', 18.5, 'Folio 0344')
     salida(pg, 'BASURA', '491-610', 3.05)
     salida(pg, 'RECUPERACION', '611-850', 20.6, 'sorteo')
