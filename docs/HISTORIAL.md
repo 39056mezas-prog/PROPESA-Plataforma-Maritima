@@ -992,3 +992,7 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Pruebas:** nueva `v141_t.py`; `tanques3d_t`, `v1381_t` y `rendimiento_t` cuentan las canastas en el modelo y tocan con el dedo en su lugar. También se probó en **WebKit** (el motor de Safari, WebKitGTK) a 390, 768 y 1280 px: dibuja, toca tanque y canasta, sin errores.
 - **Sitio (propesa.org), misma ronda:** se quitaron el avión grande, la lancha con la langosta, el garabato de langosta y los barquitos/langosta pintados en el globo; solo queda el avioncito de la ruta Ensenada → China continental. Los nombres ya no «brincan»: están quietos desde el inicio y toda la capa entra con un desvanecido suave.
 
+## Ronda v1.42.0 · 8/nov/2026 · «Recepción por tinas»
+- **Pedido:** renombrar Entrada → Recepción; tinas numeradas (30 por tanque) llenadas con su peso exacto y su talla como las hieleras; muerta, débil, rechazo y despatada aparte («quítala del keypad»); temperaturas de un número; calendario como Logixx (librería existente); teclado de números; PDF como el Formato 02; diccionario propio. Además en el sitio: nombre completo en la vista previa de Google y en una línea, tallas que no se vuelven teléfono, mapa satelital, globo que se gira y solo correo de contacto.
+- **Plan:** `PLAN_RECEPCION_TINAS_v1.42.0.md` en el proyecto; aprobado con las respuestas del usuario (tina = un lote y una talla; 30 por tanque; kg exactos; inventario desde 0).
+- **Resultado:** ver CHANGELOG 1.42.0. Pruebas pasadas a la recepción por tinas (`pruebas/recep.py`), `tinas_t.py` nueva.

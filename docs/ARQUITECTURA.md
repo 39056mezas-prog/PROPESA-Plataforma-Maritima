@@ -104,6 +104,7 @@ Probado con un año de datos (500 lotes, 37,400 cajas, 250 órdenes y embarques)
 
 - **Índices de dibujo `RX`**: `render()` arma una vez por dibujo `rxLine`, `rxShip`, `rxMov`, `rxLinks`, `rxLot`, `rxRvd`; funciones como `ordAssigned`, `bal`, `calc`, `shipLinks` los usan si existen y, fuera del dibujo, calculan directo (los manejadores siempre ven datos frescos). Si agregas un cálculo que recorre todas las cajas o movimientos, **úsalo dentro de un índice**.
 - **Listas activas** (`histList`, `HIST`): solo lo abierto o reciente; historial de 100 en 100.
+- **Reglas de batería y memoria (v1.42.0, tomadas de las reglas de rendimiento del proyecto Rune que compartió el usuario):** (1) **una pantalla quieta no dibuja nada**: la planta 3D solo pide cuadros mientras se mueve la cámara (`t3Req`, animación de 700 ms) y el globo del sitio deja de pedirlos cuando sale de la pantalla; (2) **todo guardado temporal lleva tope** en cantidad: vistas previas de Hojas (`HJV`, 24, se tiran las que ya no están en pantalla) y pantallas para «Atrás» (`SNAP`, las últimas 60); (3) el trabajo lento va después del primer dibujo. `pruebas/auditoria_rapida.py` busca lo que rompe estas reglas.
 - Pendiente: `save()` reescribe todo (~80 ms en tablet con un año). Las fotos ya no inflan los datos: desde la v1.8.0 viven en el espacio de archivos de Supabase (`SUPABASE.md` §8).
 
 ## 7. Ajustes y preferencias
@@ -285,3 +286,10 @@ Meta: que corra desde un **iPad mini 2/3 con iOS 12 (Safari 12)**. Lo nuevo se p
 - **PDF:** `EMPRESA` (nombre, RFC, dirección, teléfono, correo) en el encabezado (debajo del logo) y en el pie de cada página.
 - **Fitts:** `.btn.thumb` (acción principal fija abajo con `pointer:coarse` hasta 1100 px), `.btn.dq` (eliminar discreto, `margin-left:auto` al final de la fila de acciones), `tr[data-row="pantalla:id"]` (toda la fila se toca; los botones de la fila no).
 - **Ajustes:** `FS_STEPS` con 5 tamaños (11–20 px); `fsSnap` acomoda valores viejos.
+
+## v1.42.0 · Recepción por tinas y calendario
+- **Ruta `rtin` / `rtin:<lote>`** (`recTinas`): borrador en `RT = {key, lot, h (casillas rt_*), tn {tina: {g, z}}, tk, act, fresh, join?, ne?}`; se guarda con la pantalla al recargar (`uiSave`). `rtSave` valida (fecha, horas, proveedor, especie, lote, cada tina con kg y talla y libre, kg aparte, temperaturas) y crea el lote con `addLot` + `tn`, `tts`, `tpn`, `tpx`, `hf`, `mu`, `db`, `rz` (y la despatada como `RECEPCION` de `desp`).
+- **Teclado de tinas** `#tnpad` (acciones `data-tnk`), aparte del de hieleras `#kpad`; «Guardar» se acomoda en `kpdock` cuando el teclado está abierto.
+- **Funciones de tinas:** `tnTk`, `tnOf`, `tnNow`, `tnOcc`, `tnFree`, `tnDistZ` (reparto por tanque y talla para el tablero), `tnPend`/`tnSug` (sugerir de qué tinas sacar), `tnCard` (tarjeta del lote: sacar y mover tinas), `pdfRecepcion` (`pdfMake('rec', lote)`).
+- **3D:** `t3Data()` = `{occ: tnOcc(), sin: kg sin tina por tanque, vis}`; `t3Inner` dibuja 30 tinas por tanque (15 × 2) con número y kg; tocar una tina = `T3.pick = {t, k, n}`.
+- **Fechas:** cada casilla `data-dt="d"` arma un flatpickr al recibir el foco (`FPO()`, `FPI`). Lo escrito se entiende con `pD`; con 8 números completos se cierra solo (`fpDone`); Esc lo cierra; al volver a dibujar la pantalla, los calendarios de casillas que ya no existen se quitan (`fpSweep` en `render`).

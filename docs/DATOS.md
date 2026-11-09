@@ -148,3 +148,13 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - **Consignatario en la posición i:** en todas las maquilas, `lines[].cons > i` baja 1; las llaves `ciudad|n` de `OR[].sh` y `OR[]._sh` también; `ST.CC` se recorre. Los registros `K/<n>` quedan recorridos (el último se borra).
 - **Destino:** se quita de `p` de los consignatarios que lo tenían (no se borra si es el único destino de alguno).
 - **Maquilas:** `ST.MQL` ya no se cambia desde la app (sin pestaña Maquilas); se da de alta a mano (`SUPABASE.md` §10).
+
+## v1.42.0 · Recepción por tinas
+- **Tinas:** `TNT = 30` por tanque; la tina `n` es del tanque `tnTk(n) = 'T' + ceil(n/30)` (T1 = 1–30 … T6 = 151–180). La ocupación se comparte entre maquilas (`tnOcc()` lee `ST` y `STX`).
+- **En el lote (`ST.R[]`), campos nuevos** (los limpia `recX` dentro de `cleanST` y `WN.R`):
+  - `tn: [[tina, tallaId, gramos], …]` — lo que entró a cada tina (una tina = una talla; gramos enteros). Un lote con `tn` es «por tinas»; sin `tn` es de antes («kg sin tina»).
+  - `mu`, `db`, `rz` — kg de langosta muerta, débil y rechazo (aparte, sin tina). La despatada se guarda como movimiento `RECEPCION` de la talla `desp`, como antes.
+  - `tts: {T1: °F, …}` — temperatura del agua de cada tanque usado; `tpn`, `tpx` — temperatura mínima y máxima del producto (°F); `hf` — hora final (`time` sigue siendo la hora inicial).
+- **Movimientos de tinas:** `ST.TS = [{id, t, lot, n, g, a?, by, nt?}]` — `g` gramos que salieron de la tina `n` (al empacar); con `a`, se movieron a la tina `a`. Registro compartido `TS/<id>` (con prefijo `q<id>:` en otra maquila); `tsClean` lo valida. Lo que hay hoy en cada tina = `tnNow(r)` (entrada − salidas ± movimientos); una talla del lote con saldo 0 libera sus tinas.
+- **Renombrar o borrar un lote** cambia o quita también sus `TS`.
+- **Inventario desde 0:** no hay migración: los lotes de antes no tienen `tn` y siguen en su tanque (`tank`, `TQ`).

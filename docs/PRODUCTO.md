@@ -10,13 +10,15 @@
 
 ## 2. El flujo (decidido por el usuario; no se cambia sin permiso)
 
-**Entrada → Órdenes → Empaque → Embarque**
+**Recepción → Órdenes → Empaque → Embarque**
+
+(v1.42.0: «Entrada» se llama **Recepción** y se registra por tinas; palabras en `docs/DICCIONARIO.md`.)
 
 **Mortalidad final va aparte** (decidido por el usuario el 16/oct/2026): no es un paso del flujo; se calcula sola con el conteo final de cada lote y las vivas al llegar de cada envío, y se revisa cuando se necesite (menú → «Revisión»).
 
 | # | Paso | Qué se hace | Quién | Ruta interna |
 |---|---|---|---|---|
-| 1 | **Entrada** | Formato de recepción del lote: fecha, hora, proveedor, especie (v1.18.0), tanque (T1–T6), °F tanque, °F producto (puede ser rango «59-62»), lote (mayúsculas automáticas), kg por caja en tanque, kg por talla, kg total (se calcula), kg desperdicio | Admin y Encargado de piso | `recepcion`, `lote:<lote>` |
+| 1 | **Recepción** | Por tinas (v1.42.0): fecha, hora inicial y final, proveedor, especie, lote (lo propone la app). En cada tina (30 por tanque: T1 = 1–30 … T6 = 151–180) su peso exacto y su talla; una tina = un lote y una talla. Aparte, sin tina: muerta (se regresa al proveedor), débil, rechazo y despatada. Temperatura del agua de cada tanque usado y del producto (mínima y máxima). PDF: formato de recepción | Admin y Encargado de piso | `recepcion`, `rtin`, `lote:<lote>` |
 | 2 | **Órdenes** | Pedido de un empaque: ETD → ciudad destino → consignatario → cliente final → cajas. Una orden sin cajas empacadas se puede eliminar (v1.8.3). Después de crearla se puede cambiar su fecha y, por línea, el cliente final y las cajas (no menos de las ya empacadas; no con el embarque cerrado) (v1.8.8) | Admin | `ordenes`, `orden:<id>` |
 | 3 | **Empaque** | Se cuentan las langostas de cada caja al empacar: lote, piezas vivas, categoría. La caja se numera ahí | Admin y piso | `empaque`, `empacar:<orden>.<línea>` |
 | 4 | **Embarque** | Junta una o varias órdenes con mismo destino y consignatario. Plan de carga del camión, tallas, peso bruto, cierre del empaque e informe | Admin | `embarques`, `emb:<índice>` |

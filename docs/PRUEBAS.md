@@ -95,6 +95,11 @@ Extras (no están en `correr_todo.sh`):
 - `generar_datos.py` — crea datos grandes de prueba.
 - `accesibilidad.mjs` — Lighthouse (accesibilidad) en 14 pantallas; requiere `npm i lighthouse puppeteer-core` y `CHROME_PATH` si Chromium no está en `/opt/pw-browsers/chromium`. Meta: 100 en todas.
 
+### v1.42.0 · recepción por tinas
+- `pruebas/recep.py` → `recibir(pg, lote, pv, kz, tank, …)` registra una recepción **por tinas desde la pantalla**, como una persona (toca la tina, escribe los kg, toca la talla; la despatada va en su casilla aparte). Úsala en cualquier prueba que necesite un lote nuevo; `lote=None` deja el que propone la app y `nuevo=False` sigue en la recepción que ya está abierta («Completar»). Si otro equipo ocupa la tina mientras se captura, pasa a la siguiente libre.
+- `tinas_t.py`: la recepción por tinas completa (teclado, tallas, aparte, temperaturas, PDF, sacar y mover tinas, dos equipos con la misma tina, 3D).
+- Las fechas abren el calendario (flatpickr): en una prueba, `fill` con la fecha completa lo cierra solo; si dejas la casilla vacía o a medias, `pg.keyboard.press('Escape')` antes de tocar otra cosa.
+
 ## 3. Datos de prueba
 
 - La app ya **no trae usuarios**. Cada prueba carga su propio estado con la constante `FIX` (en `localStorage`), con usuarios **solo de prueba**:
@@ -115,3 +120,4 @@ Extras (no están en `correr_todo.sh`):
 2. Revisión de sintaxis (comando en `CLAUDE.md`).
 3. Si tocaste la interfaz: `accesibilidad.mjs` → 100.
 4. Si tocaste cálculos o listas: `rendimiento_t.py` (Panel < 100 ms con CPU 4×).
+5. `python3 -I pruebas/auditoria_rapida.py --estricto` → «Sin hallazgos» (ciclos de cuadros sin fin, guardados temporales sin tope, `??`/`?.` para el iPad viejo, y rutas de la computadora o llaves que no deben subirse a GitHub).
