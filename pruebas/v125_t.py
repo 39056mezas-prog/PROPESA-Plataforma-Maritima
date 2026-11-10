@@ -2,12 +2,14 @@
 1. Una orden puede llevar hieleras de lotes de OTRA maquila en el mismo empaque; al cerrar, los kg salen del tanque de esa maquila,
    y reabrir los regresa. El lote de David enseña en qué orden de PROPESA va.
 2. Panel general: tablero de tanques con todas las maquilas juntas.
-3. Entrada repartida en dos tanques: kg EXACTOS de cada talla en el otro tanque (vista completa y Modo piso).
+3. (v1.43.0: se quitó; ahora cada tina dice su tanque, ver tinas_t.)
 4. Camión compartido: embarques abiertos de varias maquilas en un camión; «Camión nuevo» con un solo embarque ya no «no hace nada».
 5. Arreglos de la prueba con los Excel: fecha en las salidas (el Balance las cuenta), todos los envíos en «vivas al llegar», aviso y
    corrección del código de lote mal escrito, cajas de 15 kg en el PDF de Envíos, «Cambio de talla» para la salida incompleta.
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/v125_t.py"""
-import os, re
+import os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 from playwright.sync_api import sync_playwright
 PLEG = "Object.setPrototypeOf(FOLD,new Proxy({},{get:(t,k)=>typeof k=='string'?true:undefined}));render()"  # v1.34.0: en esta prueba todos los plegables quedan abiertos
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
@@ -20,15 +22,8 @@ FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.
 def login(pg, em):
     pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200); pg.evaluate(PLEG)
 def overflow(pg): return pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth+1")
-def entrada(pg, lot, kz, tank='T1', t2=None, z2=None, fecha='20/10/2026', prov='1'):
-    pg.evaluate("FOLD['ent-tq']=true;go('recepcion')"); pg.evaluate("form={t:'lot'};render()"); pg.wait_for_timeout(100)
-    pg.fill('#fd', fecha); pg.fill('#fh', '12:00'); pg.select_option('#fo', prov); pg.select_option('#ft', tank)
-    pg.fill('#ftt', '58'); pg.fill('#ftp', '59'); pg.fill('#fl', lot); pg.fill('#fkb', '36'); pg.fill('#fdes', '0')
-    for i, v in enumerate(kz): pg.fill(f'#fk{i}', str(v))
-    if t2:
-        pg.select_option('#ft2', t2)
-        for i, v in (z2 or {}).items(): pg.fill(f'#fk2z{i}', str(v))
-    pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+def entrada(pg, lot, kz, tank='T1', fecha='20/10/2026', prov='1'):  # v1.43.0: recepción por tinas
+    recibir(pg, lot, pv=prov, kz=kz, tank=tank, fecha=fecha, hora='12:00')
 def orden(pg, etd, city, z):
     pg.evaluate("go('ordenes')"); pg.fill('#no_etd', etd); pg.click('[data-oa=new]'); pg.wait_for_timeout(100)
     pg.select_option('#ol_city', city)
@@ -47,39 +42,20 @@ with sync_playwright() as p:
     pg.on('dialog', lambda d: d.accept())
     pg.goto(BASE); pg.evaluate(FIX); pg.reload(); login(pg, 'admin@propesa.mx'); pg.evaluate("mqSet(1)")
 
-    # ---------- 3. entrada repartida: kg exactos por talla en el otro tanque
-    entrada(pg, 'WLRCO201026', [100, 50, 20, 10], 'T1', 'T2', {0: 30, 1: 61})
-    chk(pg.locator('.er, .fer', has_text='Mediana: en el otro tanque no puede haber más de lo que entró').count() > 0, 'no deja poner en el otro tanque más de lo que entró de una talla')
-    pg.fill('#fk2z1', '0'); pg.fill('#fk2z2', '20'); pg.fill('#fk2z3', '10'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
-    dz = pg.evaluate("(d=>({t1:[S.map(z=>d[z].T1||0)],t2:[S.map(z=>d[z].T2||0)]}))(tqDistZ('WLRCO201026'))")
-    chk(dz['t2'][0][:4] == [30000, 0, 20000, 10000] and dz['t1'][0][:4] == [70000, 50000, 0, 0], f'T2 tiene exactamente Chica 30 · Grande 20 · Jumbo 10 y T1 lo demás ({dz})')
-    chk(pg.evaluate("(ST.TQ||[]).find(x=>x.lot==='WLRCO201026').z['851-1220']") == 20, 'el traslado de la entrada guarda los kg por talla (z)')
-    pg.evaluate("FOLD['ent-tq']=true;go('recepcion');TQSEL='T2';render()"); t = pg.inner_text('.tqc')
-    chk('60.0 kg' in t and '20.0' in t, 'el tablero de Entrada enseña en T2 lo capturado (60 kg, 20 de Grande)')
-    pg.evaluate("go('lote:WLRCO201026')"); t = pg.inner_text('#tqc')
-    chk('Chica 30.0' in t and 'Grande 20.0' in t and 'Mediana 50.0' in t, 'el lote enseña las tallas de cada tanque')
-    # traslado viejo (solo kg) sigue repartiendo en proporción
-    pg.evaluate("tqAdd('WLRCO201026','T1','T3',12);save()")
-    t3 = pg.evaluate("S.map(z=>(tqDistZ('WLRCO201026')[z].T3||0))")
-    chk(sum(t3) == 12000 and t3[0] > 0 and t3[1] > 0 and t3[2] == 0, f'un traslado sin tallas reparte en la proporción de lo que hay en ese tanque ({t3})')
-    # Modo piso: hoja de entradas con kg por talla del otro tanque
-    pg.evaluate("go('pent')"); pg.wait_for_timeout(150)
-    chk(pg.locator('[data-pr$=":k2z0"]').count() > 0 and pg.locator('[data-pr$=":k2t"]').count() == 0, 'Modo piso: la entrada pide kg de cada talla para el otro tanque')
-    pg.evaluate("go('inicio')")
-
     # ---------- 5. código de lote mal escrito: aviso y se puede corregir
     entrada(pg, 'WLRCOO51026', [40, 10, 0, 0], 'T1', fecha='05/10/2026')
     pg.evaluate("go('lote:WLRCOO51026')"); t = pg.inner_text('main')
     chk('no tiene la forma WLR + clave + fecha' in t and 'letra O' in t, 'avisa del código WLRCOO51026 (letra O en lugar de cero)')
     pg.click('#lotav [data-a=el]'); pg.wait_for_timeout(100)
-    chk(pg.locator('#fl').is_enabled(), 'el código del lote se puede corregir mientras no tenga hieleras')
-    pg.fill('#fl', 'WLRCO051026'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
-    chk(pg.evaluate("!!R_('WLRCO051026')&&!R_('WLRCOO51026')&&bal('WLRCO051026')===50000&&!ST.L.some(x=>x.lot==='WLRCOO51026')"), 'al corregirlo se cambian la entrada y sus movimientos (50 kg en WLRCO051026)')
+    chk(pg.evaluate("V.v") == 'rtin' and pg.locator('#rt_fl').is_enabled(), 'el código del lote se puede corregir mientras no tenga hieleras (en la recepción por tinas)')
+    pg.fill('#rt_fl', 'WLRCO051026'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(150)
+    chk(pg.evaluate("!!R_('WLRCO051026')&&!R_('WLRCOO51026')&&bal('WLRCO051026')===50000&&!ST.L.some(x=>x.lot==='WLRCOO51026')&&V.id==='WLRCO051026'"), 'al corregirlo se cambian la recepción y sus movimientos (50 kg en WLRCO051026)')
     chk(pg.evaluate("lotWarn(R_('WLRCO051026')).length") == 0, 'con el código corregido ya no avisa')
     entrada(pg, 'WLREM051026', [10, 0, 0, 0], 'T1', fecha='05/10/2026')
     chk(pg.evaluate("lotWarn(R_('WLREM051026')).some(w=>/clave del proveedor \\(CO\\)/.test(w.t))"), 'avisa si el código no lleva la clave del proveedor')
 
     # ---------- 1. orden con hieleras de otra maquila
+    entrada(pg, 'WLRCO201026', [100, 50, 20, 10], 'T1')
     pg.evaluate("mqSet(3)")  # David
     entrada(pg, 'WLRDA131026', [200, 100, 0, 0], 'T4')
     chk(pg.evaluate("bal('WLRDA131026')") == 300000, 'David: lote WLRDA131026 con 300 kg')

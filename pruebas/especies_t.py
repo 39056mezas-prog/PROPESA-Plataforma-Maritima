@@ -80,19 +80,12 @@ with sync_playwright() as p:
         chk(hh == ['Langosta Roja'], f'con una sola especie, solo su nombre {hh}')
         chk(sin_desborde(pg), f'{vw} Entrada sin desborde'); pg.evaluate("FOLD['ent-tq']=true;TQSEL='T1';render()"); pg.screenshot(path=f'{OUT}/esp_tanques_{vw[0]}.png', full_page=True)
 
-        # ---------- 4. Hoja de entradas (Modo piso) ----------
-        pg.evaluate("PEN=null;setPiso(true);go('pent')")
-        sel = '[data-pr="1:sp"]'
-        chk(pg.locator(sel).count() == 1 and pg.input_value(sel) == '1', 'la hoja de Modo piso pide la especie (Langosta Roja de inicio)')
-        hs = pg.evaluate(f"document.querySelector('{sel}').getBoundingClientRect().height"); chk(hs >= 44, f'selector de especie de 44 px o más ({hs})')
-        pg.select_option('[data-pr="1:origin"]', '1'); pg.select_option('[data-pr="1:tank"]', 'T3'); pg.select_option(sel, str(az))
-        pg.fill('[data-pr="1:lot"]', 'WLRPISO231026'); pg.fill('[data-pr="1:k0"]', '30')
-        for k, v in {'tempT': '58', 'tempP': '60', 'kgbox': '18', 'desp': '0'}.items(): pg.fill(f'[data-pr="1:{k}"]', v)
-        pg.screenshot(path=f'{OUT}/esp_piso_{vw[0]}.png', full_page=True)
-        chk(sin_desborde(pg), f'{vw} hoja de Modo piso sin desborde')
-        pg.click('[data-pa=save]'); pg.wait_for_timeout(120)
+        # ---------- 4. Modo piso (v1.43.0: la recepción por tinas, la misma pantalla en los dos modos) ----------
+        pg.evaluate("RT=null;setPiso(true);go('rtin')")
+        chk(pg.locator('#rt_sp').count() == 1, 'la recepción en Modo piso pide la especie')
+        hs = pg.evaluate("document.getElementById('rt_sp').getBoundingClientRect().height"); chk(hs >= 44, f'selector de especie de 44 px o más ({hs})')
+        recibir(pg, 'WLRPISO231026', pv='1', kz=[30], tank='T3', sp=str(az), fecha='23/10/2026', nuevo=False)
         chk(R(pg, 'WLRPISO231026') == az, 'Modo piso guarda la especie')
-        chk(pg.evaluate("document.querySelector('[data-pr=\"1:sp\"]').disabled"), 'guardada, la especie ya no se cambia en la hoja')
         pg.evaluate("setPiso(false);FOLD['ent-tq']=true;go('recepcion')")
 
         # ---------- 5. PDF de Entrada y Hoja de empaque ----------
@@ -144,7 +137,7 @@ with sync_playwright() as p:
     entrar(pg); pg.evaluate("localStorage.setItem('propesa-fs','20')"); pg.reload(); pg.wait_for_timeout(200)
     pg.evaluate("ST.ES=[...ES0,{id:2,n:'Langosta Azul',en:'Blue lobster'}];ST.R[1].sp=2;save();FOLD['ent-tq']=true;go('recepcion')")
     chk(sin_desborde(pg), '820 px, oscuro y texto 20 px: Entrada sin desborde'); pg.screenshot(path=f'{OUT}/esp_oscuro_820.png', full_page=True)
-    pg.evaluate("PEN=null;setPiso(true);go('pent')"); chk(sin_desborde(pg), '820 px, oscuro y texto 20 px: hoja de Modo piso sin desborde'); pg.screenshot(path=f'{OUT}/esp_piso_oscuro_820.png', full_page=True)
+    pg.evaluate("RT=null;setPiso(true);go('rtin')"); chk(sin_desborde(pg), '820 px, oscuro y texto 20 px: recepción en Modo piso sin desborde'); pg.screenshot(path=f'{OUT}/esp_piso_oscuro_820.png', full_page=True)
     b.close()
 print('ERRS', errs)
 if errs: print('FAIL errores en la página')

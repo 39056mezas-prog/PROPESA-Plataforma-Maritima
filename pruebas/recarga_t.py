@@ -53,9 +53,9 @@ with sync_playwright() as p:
         pg.click('#pps2 .pbn');pg.click('#kpad [data-kp="k:V"]');pg.wait_for_timeout(150)
         st=json.loads(pg.evaluate("localStorage.getItem('propesa-v4')"))
         chk(sum(1 for x in st['B']['WLRCO061026B'] if x['o']=='3.1')==2,f'{w} después de recargar se puede seguir empacando')
-        # 7) Registrar entradas en piso a medias
-        pg.evaluate("go('pent')");pg.select_option('[data-pr="1:origin"]','2');pg.fill('[data-pr="1:lot"]','');pg.click('[data-pr="1:lot"]');pg.keyboard.type('abc9');reload(pg)
-        chk(pg.input_value('[data-pr="1:origin"]')=='2' and pg.input_value('[data-pr="1:lot"]')=='ABC9',f'{w} la hoja de entradas de piso se conserva')
+        # 7) Recepción por tinas en piso a medias (v1.43.0)
+        pg.evaluate("RT=null;go('rtin')");pg.select_option('#rt_fo','2');pg.fill('#rt_fl','');pg.click('#rt_fl');pg.keyboard.type('abc9');reload(pg)
+        chk(pg.evaluate("V.v")=='rtin' and pg.input_value('#rt_fo')=='2' and pg.input_value('#rt_fl')=='ABC9',f'{w} la recepción de piso a medias se conserva');pg.evaluate("RT=null")
         # 8) Sesión vencida o usuario borrado
         pg.evaluate("LAST_ACT=Date.now()-13*36e5;localStorage.setItem('propesa-ses',JSON.stringify({u:2,exp:Date.now()-1000}))");pg.reload()
         chk(pg.locator('#le').count()==1,f'{w} sesión vencida pide entrar')

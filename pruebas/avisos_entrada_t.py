@@ -9,7 +9,7 @@ import sys
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/avisos_entrada_t.py"""
 import os, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from recep import recibir
+from recep import recibir, TNA_DEF
 from playwright.sync_api import sync_playwright
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 OUT = os.environ.get('OUT', '/tmp/propesa-pruebas'); os.makedirs(OUT, exist_ok=True)
@@ -23,7 +23,7 @@ def login(pg, em):
     pg.fill('#le', em); pg.fill('#lp', 'x'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
 def overflow(pg): return pg.evaluate("document.documentElement.scrollWidth>document.documentElement.clientWidth+1")
 def lot(pg, l, d, h, k0=100, k1=0):
-    pg.evaluate("""([l,d,h,k0,k1])=>{addLot({lot:l,origin:'SCPP Ensenada SCL',pv:1,sp:1,tank:'T1',rdate:d,time:h,tempT:58,tempP:'60',kgbox:36,desp:0,k0,k1,k2:0,k3:0,k4:0});save()}""", [l, d, h, k0, k1])
+    pg.evaluate(TNA_DEF); pg.evaluate("""([l,d,h,k0,k1])=>{TNA(addLot({lot:l,origin:'SCPP Ensenada SCL',pv:1,sp:1,tank:'T1',rdate:d,time:h,k0,k1,k2:0,k3:0,k4:0}));save()}""", [l, d, h, k0, k1])
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1440, 'height': 900})
     pg.on('pageerror', lambda e: errs.append('JS ' + str(e))); pg.on('console', lambda m: m.type == 'error' and errs.append('CONSOLE ' + m.text))
@@ -61,8 +61,8 @@ with sync_playwright() as p:
     pg.evaluate("R_('WLRCO220926').time='02:00';save();render()")
     chk(pg.evaluate("lotWarn(R_('WLRCO220926')).length") == 2, 'si cambian la hora a otra de madrugada, se vuelve a avisar')
     pg.locator('#lotav [data-a=el]').first.click(); pg.wait_for_timeout(100)
-    chk(pg.locator('#fd').count() == 1, '«Corregir ›» abre la edición de la entrada')
-    pg.fill('#fd', '22/09/2026'); pg.fill('#fh', '14:00'); pg.click('[data-a=sv]'); pg.wait_for_timeout(150)
+    chk(pg.evaluate("V.v") == 'rtin' and pg.locator('#rt_fd').count() == 1, '«Corregir ›» abre la edición de la recepción (por tinas)')
+    pg.fill('#rt_fd', '22/09/2026'); pg.keyboard.press('Escape'); pg.fill('#rt_hi', '14:00'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(150)
     chk(pg.evaluate("lotWarn(R_('WLRCO220926')).length") == 0 and pg.locator('#lotav').count() == 0, 'corregida la fecha y la hora, el aviso se quita')
     pg.evaluate("go('recepcion')"); pg.wait_for_timeout(80)
     chk('por revisar' not in pg.inner_text('main'), 'y Entrada ya no avisa')
@@ -71,15 +71,12 @@ with sync_playwright() as p:
     ts = pg.inner_text('#toast')
     chk('Recepción guardada' in ts and 'no cuadra' in ts, f'al guardar avisa enseguida: {ts}')
     chk(pg.evaluate("!!R_('WLRCO051026')") and pg.evaluate("lotWarn(R_('WLRCO051026')).length") == 2, 'se guarda igual (el aviso no bloquea)')
-    # Modo piso: hoja de entradas
-    pg.evaluate("PEN=null;setPiso(true);go('pent')"); pg.wait_for_timeout(100)
-    pg.select_option('[data-pr="1:origin"]', '1'); pg.select_option('[data-pr="1:tank"]', 'T3'); pg.fill('[data-pr="1:lot"]', 'WLRCO071026'); pg.fill('[data-pr="1:k0"]', '30')
-    if pg.locator('[data-pr="1:rdate"]').count(): pg.fill('[data-pr="1:rdate"]', '08/10/2026')
-    for k, v in {'tempT': '58', 'tempP': '60', 'kgbox': '18', 'desp': '0'}.items(): pg.fill(f'[data-pr="1:{k}"]', v)
-    pg.click('[data-pa=save]'); pg.wait_for_timeout(150)
+    # Modo piso: la misma recepción por tinas (v1.43.0)
+    pg.evaluate("RT=null;setPiso(true);go('rtin')"); pg.wait_for_timeout(100)
+    recibir(pg, 'WLRCO071026', pv='1', kz=[30], tank='T3', fecha='08/10/2026', nuevo=False)
     ts = pg.inner_text('#toast')
     if pg.evaluate("!!R_('WLRCO071026')") and pg.evaluate("lotWarn(R_('WLRCO071026')).length"):
-        chk('por revisar' in ts, f'Modo piso: al guardar dice que hay fecha u hora por revisar: {ts}')
+        chk('no cuadra' in ts or 'madrugada' in ts, f'Modo piso: al guardar avisa la fecha u hora por revisar: {ts}')
     else:
         chk(pg.evaluate("!!R_('WLRCO071026')") and 'por revisar' not in ts, f'Modo piso: sin aviso cuando todo cuadra: {ts}')
     pg.evaluate("setPiso(false)")
@@ -128,7 +125,7 @@ with sync_playwright() as p:
     chk(pg.evaluate(f"ST.P[{i}].closed") is False and pg.evaluate(f"ST.P[{i}].sf") is None and pg.evaluate("bal('WLRCO101026')") == 35000, 'reabrir regresa los kg y borra lo pendiente')
     chk(pg.evaluate(f"WN.P({{...ST.P[{i}],sf:[['L','x',5,'b']]}}).sf") is None, 'un embarque abierto no lleva pendiente de salida')
     # un embarque sin faltantes no deja nada anotado
-    pg.evaluate("addLot({lot:'WLRXX101026',origin:'SCPP Ensenada SCL',pv:1,sp:1,tank:'T2',rdate:'2026-10-10',time:'10:00',tempT:58,tempP:'60',kgbox:36,desp:0,k0:50,k1:0,k2:0,k3:0,k4:0});save()")
+    pg.evaluate(TNA_DEF); pg.evaluate("TNA(addLot({lot:'WLRXX101026',origin:'SCPP Ensenada SCL',pv:1,sp:1,tank:'T2',rdate:'2026-10-10',time:'10:00',k0:50,k1:0,k2:0,k3:0,k4:0}));save()")
     pg.evaluate(f"closeP({i})"); pg.wait_for_timeout(100)
     chk(pg.evaluate(f"ST.P[{i}].sf") is None and pg.evaluate(f"shipIssues({i}).some(x=>/Salida incompleta/.test(x.t))") is False, 'con kilos suficientes no queda nada pendiente')
     chk(not errs, 'sin errores de JavaScript: %s' % errs[:3])

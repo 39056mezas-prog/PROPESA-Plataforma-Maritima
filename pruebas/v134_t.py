@@ -54,9 +54,10 @@ with sync_playwright() as p:
         pg.click('[data-avatar]'); chk(pg.locator('[data-pm=users]').count() == 1, f'{W} Administración sigue en el círculo del perfil'); pg.keyboard.press('Escape')
         # ---------- 3. lote ----------
         ir(pg, 'lote:WLRCO051026A')
-        for f in ['lot-tq:WLRCO051026A', 'lot-pr:WLRCO051026A', 'lot-mv:WLRCO051026A', 'ev:lote:WLRCO051026A']:
+        chk(abierto(pg, 'lot-tn:WLRCO051026A') == ('falta decir de qué tinas salió' in pg.inner_text('[data-fold="lot-tn:WLRCO051026A"] summary')), f'{W} lote: «Tinas» se abre solo si falta decir de qué tinas salió lo empacado')
+        for f in ['lot-pr:WLRCO051026A', 'lot-mv:WLRCO051026A', 'ev:lote:WLRCO051026A']:
             chk(pg.locator(f'[data-fold="{f}"]').count() == 1 and not abierto(pg, f), f'{W} lote: «{f.split(":")[0]}» empieza cerrado')
-        chk('T1 (principal) · 925.8 kg' in pg.inner_text('[data-fold="lot-tq:WLRCO051026A"] summary'), f'{W} lote: el tanque se lee sin abrir')
+        chk('12 tinas' in pg.inner_text('[data-fold="lot-tn:WLRCO051026A"] summary'), f'{W} lote: las tinas se leen sin abrir (v1.43.0)')
         chk(pg.locator('[data-fin]').is_visible(), f'{W} lote: el conteo final sigue a la vista')
         pg.click('[data-fold="lot-pr:WLRCO051026A"] summary'); pg.wait_for_timeout(100)
         pg.fill('#pr_u', '-3'); pg.click('[data-a=prs]'); pg.wait_for_timeout(150)

@@ -27,29 +27,7 @@ with sync_playwright() as p:
         pg = b.new_page(viewport={'width': vw[0], 'height': vw[1]}); pg.on('pageerror', lambda e: errs.append(str(e)))
         pg.goto(BASE); pg.evaluate('s=>{localStorage.clear();localStorage.setItem("propesa-v4",s);localStorage.setItem("propesa-piso","1")}', seed); pg.reload()
         pg.fill('#le', 'admin@propesa.mx'); pg.fill('#lp', 'admin123'); pg.click('[data-a=lg]'); pg.wait_for_timeout(200)
-        pg.evaluate("setPiso(true);go('pent')"); pg.wait_for_timeout(150)
-        # dos filas a medio llenar en Modo piso
-        pg.select_option('[data-pr="1:origin"]', '1'); pg.select_option('[data-pr="1:tank"]', 'T2'); pg.fill('[data-pr="1:lot"]', 'wlrmodo1'); pg.fill('[data-pr="1:k0"]', '25')
-        pg.fill('[data-pr="1:tempT"]', '57.5')
-        pg.click('[data-pa=add]'); pg.select_option('[data-pr="2:origin"]', '2'); pg.fill('[data-pr="2:lot"]', 'wlrmodo2')
-        toggle(pg)
-        chk(pg.evaluate(V) == ['pent', '', False] and pg.locator('.sb').count() == 1, f'{vw} apagar Modo piso en «Registrar entradas» → misma hoja en la vista completa')
-        vals = pg.evaluate("[...['1:origin','1:tank','1:lot','1:k0','1:tempT','2:origin','2:lot']].map(k=>document.querySelector(`[data-pr=\"${k}\"]`).value)")
-        chk(vals == ['1', 'T2', 'WLRMODO1', '25', '57.5', '2', 'WLRMODO2'], f'{vw} con las mismas filas y datos: {vals}')
-        chk(pg.is_visible('[data-pr="1:tempT"]'), f'{vw} «Más» de la fila 1 sigue abierto como lo dejaste')
-        chk(pg.locator('.hd [data-back]').count() == 1, f'{vw} en la vista completa la hoja tiene «‹ Atrás» arriba (v1.39.0)')
-        # salir a Entrada: aviso con enlace de regreso
-        pg.evaluate("go('recepcion')"); tx = pg.inner_text('#app')
-        chk('tienes 2 recepciones sin guardar' in tx.lower(), f'{vw} Recepción avisa las 2 recepciones sin guardar')
-        pg.click('[data-go=pent] >> text=Terminar'); chk(pg.evaluate(V)[0] == 'pent' and pg.input_value('[data-pr="2:lot"]') == 'WLRMODO2', f'{vw} «Terminar de capturarlas» regresa a la hoja con lo escrito')
-        # volver a prender Modo piso: misma hoja
-        toggle(pg); chk(pg.evaluate(V) == ['pent', '', True] and pg.input_value('[data-pr="1:lot"]') == 'WLRMODO1', f'{vw} prender Modo piso de nuevo → la misma hoja')
-        # terminar y guardar la fila 1 en la vista completa
-        toggle(pg)
-        pg.fill('[data-pr="1:tempP"]', '58'); pg.fill('[data-pr="1:kgbox"]', '18'); pg.fill('[data-pr="1:desp"]', '0'); pg.click('[data-pa="rm:2"]'); pg.click('[data-pa="rmy:2"]')
-        pg.click('[data-pa=save]'); pg.wait_for_timeout(150)
-        r = pg.evaluate("(R_('WLRMODO1')||{})")
-        chk(r.get('tank') == 'T2' and r.get('tempT') == 57.5 and r.get('tempP') == '58' and r.get('kgbox') == 18 and r.get('desp') == 0 and pg.evaluate("bal('WLRMODO1')") == 25000, f'{vw} se guarda en la vista completa con todo lo que se escribió en Modo piso')
+        pg.evaluate("setPiso(false);go('inicio')"); pg.wait_for_timeout(150)  # v1.43.0: la hoja de varias recepciones ya no existe
         # v1.42.0 · vista completa → Modo piso con la recepción por tinas a medio llenar: es la misma pantalla y no se pierde nada
         pg.evaluate("RT=null;go('rtin')"); pg.select_option('#rt_fo', '3'); pg.fill('#rt_fl', 'wlrmodo3'); tn = pg.evaluate('RT.act'); pg.fill(f'#tn_k{tn}', '40')
         toggle(pg)
@@ -59,7 +37,7 @@ with sync_playwright() as p:
         toggle(pg); chk(pg.evaluate(V)[0] == 'rtin' and not pg.evaluate("PISO") and pg.input_value(f'#tn_k{tn}') == '40', f'{vw} y de regreso a la vista completa, igual')
         pg.evaluate("RT=null")
         # sin nada escrito en Entrada: Modo piso abre su inicio, como antes
-        pg.evaluate("PEN0();setPiso(false);go('recepcion')"); toggle(pg); chk(pg.evaluate(V) == ['piso', '', True], f'{vw} Entrada sin nada escrito → inicio de Modo piso')
+        pg.evaluate("setPiso(false);go('recepcion')"); toggle(pg); chk(pg.evaluate(V) == ['piso', '', True], f'{vw} Entrada sin nada escrito → inicio de Modo piso')
         # Empacar ↔ Empacar del mismo cliente
         k = pg.evaluate("(()=>{const o=ST.OR[0],l=o.lines[0];return o.id+'.'+l.id})()")
         pg.evaluate(f"go('pemp:{k}')"); toggle(pg); chk(pg.evaluate(V) == ['empacar', k, False], f'{vw} Empacar en Modo piso → Empacar del mismo cliente en la vista completa')

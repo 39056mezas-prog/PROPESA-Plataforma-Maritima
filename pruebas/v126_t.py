@@ -85,7 +85,8 @@ with sync_playwright() as p:
         lot = pg.evaluate("(()=>{const r=ST.R[0];r.time='02:10';save();render();return r.lot})()")
         pg.click('[data-ntb]'); pg.wait_for_timeout(50)
         li = pg.locator(f'.nti:not([data-ntk])[data-ntgo="lote:{lot}"]')
-        chk(li.count() >= 1 and 'madrugada' in li.first.inner_text(), f'{vw} la entrada con hora de madrugada sale como pendiente')
+        li = li.filter(has_text='madrugada')  # v1.43.0: el mismo lote también puede tener «Sacar de tinas»
+        chk(li.count() >= 1, f'{vw} la entrada con hora de madrugada sale como pendiente')
         li.first.click(); pg.wait_for_timeout(80)
         chk(pg.evaluate("V.v+':'+V.id") == f'lote:{lot}', f'{vw} y lleva al lote')
         # marcar todo como visto: lo reciente deja de contar; lo que falta sigue

@@ -117,7 +117,7 @@ with sync_playwright() as p:
         ov=pg.evaluate("""(()=>{const c=document.querySelector('.t3ctl').getBoundingClientRect();return [...document.querySelectorAll('.t3l:not([hidden]) .t3tag')].filter(e=>{const r=e.getBoundingClientRect();return r.right>c.left&&r.left<c.right&&r.bottom>c.top&&r.top<c.bottom}).map(e=>e.textContent)})()""")
         chk(ov==[],f'{vw[0]}: ninguna etiqueta de tanque queda detrás de los botones de la cámara {ov}')
         tg=pg.evaluate("[...document.querySelectorAll('.t3v .t3tag')].map(e=>e.textContent)")
-        chk(tg and not any('Vacío' in t for t in tg) and len(tg)==pg.evaluate("(d=>TK.filter(t=>(T3.cs[t]||[]).some(c=>c.o)||d.sin[t]>=50).length)(t3Data())"),f'{vw[0]}: v1.38.2/v1.42.0 · solo los tanques con tinas llenas (o kg de lotes de antes) llevan etiqueta {tg}')
+        chk(tg and not any('Vacío' in t for t in tg) and len(tg)==pg.evaluate("TK.filter(t=>(T3.cs[t]||[]).some(c=>c.o)).length"),f'{vw[0]}: v1.38.2/v1.42.0 · solo los tanques con tinas llenas (o kg de lotes de antes) llevan etiqueta {tg}')
         chk(pg.evaluate("T3.labs.filter(l=>l.sg).length")==6,f'{vw[0]}: los 6 tanques siguen con su letrero «TANQUE n»')
         ctx.close()
     # ---------- 6 · sin pointer events

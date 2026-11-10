@@ -128,8 +128,8 @@ try:
         chk(until(B, "!ST.R.some(r=>r.lot=='WLRCO141026D')&&!ST.L.some(x=>x.lot=='WLRCO141026D')"), 'lote borrado en A desaparece en B (con sus movimientos)')
 
         # --- sesión vencida: se renueva sola y el cambio se sube
-        mock('/__expira', True); A.evaluate("ST.R[0].final=null;R_('WLRCO141026A').desp=7;save()")
-        chk(until(B, "R_('WLRCO141026A').desp==7"), 'con el token vencido la app se renueva sola y el cambio llega')
+        mock('/__expira', True); A.evaluate("ST.R[0].final=null;R_('WLRCO141026A').time='07:07';save()")
+        chk(until(B, "R_('WLRCO141026A').time=='07:07'"), 'con el token vencido la app se renueva sola y el cambio llega')
 
         # --- sin escrituras de ida y vuelta cuando nadie captura
         time.sleep(3); w0 = mock('/__estado')['writes']; time.sleep(9); w1 = mock('/__estado')['writes']
@@ -172,9 +172,9 @@ try:
         # si el navegador no deja guardar la copia: aviso, y lo capturado sí se sube
         ch2, H = device(b, 'H'); H.evaluate("1"); ch2.add_init_script("IDBObjectStore.prototype.put=function(){throw new DOMException('lleno','QuotaExceededError')}")
         H.reload(); chk(login(H, 'admin2@propesa.mx', 'clave-admin2') and until(H, "ST.R.length==3"), 'equipo con la memoria llena entra y baja los datos')
-        H.evaluate("go('inicio');ST.R[0].desp=11;save();cacheST()")
+        H.evaluate("go('inicio');ST.R[0].time='11:11';save();cacheST()")
         chk(until(H, "document.body.innerText.includes('No se pudo guardar la copia de este equipo')"), 'aviso «No se pudo guardar la copia de este equipo»')
-        chk(until(A, "ST.R[0].desp===11"), 'aun así el cambio llega a los demás equipos')
+        chk(until(A, "ST.R[0].time==='11:11'"), 'aun así el cambio llega a los demás equipos')
         ch2.close()
         # --- equipo nuevo descarga todo
         cf, F = device(b, 'F'); chk(login(F, 'admin2@propesa.mx', 'clave-admin2'), 'equipo nuevo entra')
@@ -228,7 +228,7 @@ try:
         # --- v1.4.1: si la base rechaza lo que sube un equipo, ese equipo sigue recibiendo lo de los demás
         mock('/__falla_push', True); D.evaluate("ST.T.push({id:uidN(),t:'2026-10-14T11:00',tank:'T2',a:54,s:null,p:null,by:'Luis Meza'});save()")
         chk(until(D, "!!SYNC_ERR&&SYNC_ERR.status===400&&outN()==1", 15), 'base rechaza lo de piso: queda pendiente con el error')
-        A.evaluate("ST.R[0].desp=8;save()"); chk(until(D, "ST.R[0].desp===8", 15), 'aun así piso recibe los cambios de A')
+        A.evaluate("ST.R[0].time='08:08';save()"); chk(until(D, "ST.R[0].time==='08:08'", 15), 'aun así piso recibe los cambios de A')
         mock('/__falla_push', True); D.evaluate("syncNow(true)"); chk(until(D, "outN()==0&&!SYNC_ERR", 15), 'cuando la base vuelve a aceptar, se sube lo pendiente')
         # --- texto con carácter nulo: se limpia y se sube (antes trababa la cola)
         lot0 = A.evaluate("ST.R[0].lot"); A.evaluate("ST.R[0].origin='SC'+String.fromCharCode(0)+'PP';save()")
@@ -289,7 +289,7 @@ try:
         for r in ['inicio', 'ordenes', 'orden:987655', 'empaque', 'empacar:987655.3', 'embarques', 'cierre', 'temperatura']:
             A.evaluate(f"go('{r}')"); A.wait_for_timeout(80)
         D.evaluate("setPiso(true)")
-        for r in ['piso', 'pemp', 'pemp:987655.3', 'pent']:
+        for r in ['piso', 'pemp', 'pemp:987655.3', 'rtin']:
             D.evaluate(f"go('{r}')"); D.wait_for_timeout(80)
         chk(len(errs) == n0, f'ninguna pantalla falla en A ni en Modo piso {errs[n0:]}')
         A.evaluate("go('inicio');document.getElementById('toast').textContent=''")
@@ -330,13 +330,13 @@ try:
         chk(until(A, "outN()==0") and mock('/__estado')['recs']['P/' + ut]['v']['alive'] == 9, 'la base tiene las vivas en ese embarque')
 
         # --- v1.6.0 (auditoría #8): si la base no encuentra push (404), ya no se sube pisando: queda pendiente con aviso
-        lot = A.evaluate("ST.R[0].lot"); d0 = mock('/__estado')['recs']['R/' + lot]['v']['desp']
+        lot = A.evaluate("ST.R[0].lot"); d0 = mock('/__estado')['recs']['R/' + lot]['v']['time']
         A.route('**/rest/v1/rpc/push', lambda r: r.fulfill(status=404, content_type='application/json', body='{"code":"PGRST202","message":"Could not find the function public.push"}'))
-        A.evaluate("ST.R[0].desp=5;save()")
+        A.evaluate("ST.R[0].time='05:05';save()")
         chk(until(A, "!!SYNC_ERR&&SYNC_ERR.status===404&&outN()==1"), 'sin push en la base: el cambio queda pendiente con el error')
-        time.sleep(2); chk(mock('/__estado')['recs']['R/' + lot]['v']['desp'] == d0, 'y no se sube por otro camino sin revisar choques')
+        time.sleep(2); chk(mock('/__estado')['recs']['R/' + lot]['v']['time'] == d0, 'y no se sube por otro camino sin revisar choques')
         A.unroute('**/rest/v1/rpc/push'); A.evaluate("syncNow(true)")
-        chk(until(A, "outN()==0") and mock('/__estado')['recs']['R/' + lot]['v']['desp'] == 5, 'cuando push vuelve, se sube')
+        chk(until(A, "outN()==0") and mock('/__estado')['recs']['R/' + lot]['v']['time'] == '05:05', 'cuando push vuelve, se sube')
         # --- cerrar sesión
         A.locator('#app [data-avatar]').first.click(); A.click('[data-pm=logout]')
         chk(until(A, "!!document.getElementById('le')") and A.evaluate("localStorage.getItem('propesa-sb')") is None, 'cerrar sesión regresa al acceso y olvida la sesión')

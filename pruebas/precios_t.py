@@ -55,10 +55,10 @@ try:
         st = P.evaluate("""async()=>{const t=JSON.parse(localStorage.getItem('propesa-sb')).at;const r=await fetch(PROPESA_SB.url+'/rest/v1/rpc/push',{method:'POST',headers:{apikey:'k',Authorization:'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify({rows:[{k:'$/WLRCO261026',v:{lot:'WLRCO261026',u:1}}]})});return r.status}""")
         chk(st == 403 and mock('/__estado')['recs']['$/WLRCO261026']['v']['u'] == 43, 'Piso no puede escribir un precio (403) y el precio sigue en 43')
         # Piso cambia el lote: el precio no se toca
-        P.evaluate("R_('WLRCO261026').kgbox=38;save()"); chk(until(P, "outN()==0"), 'Piso sube un cambio del lote')
+        P.evaluate("R_('WLRCO261026').time='09:38';save()"); chk(until(P, "outN()==0"), 'Piso sube un cambio del lote')
         recs = mock('/__estado')['recs']
-        chk(recs['R/WLRCO261026']['v']['kgbox'] == 38 and recs['$/WLRCO261026']['v']['u'] == 43, 'el cambio de Piso llega y el precio sigue intacto')
-        chk(until(A, "R_('WLRCO261026').kgbox==38") and A.evaluate("R_('WLRCO261026').pr.u") == 43, 'en el Administrador el lote cambia y conserva su precio')
+        chk(recs['R/WLRCO261026']['v']['time'] == '09:38' and recs['$/WLRCO261026']['v']['u'] == 43, 'el cambio de Piso llega y el precio sigue intacto')
+        chk(until(A, "R_('WLRCO261026').time=='09:38'") and A.evaluate("R_('WLRCO261026').pr.u") == 43, 'en el Administrador el lote cambia y conserva su precio')
         # otra maquila
         A.evaluate("mqSet(2);render()");  recibir(A, 'WLRCO261026', pv='1', kz=['200'], tt='58')
         A.fill('#pr_u', '40'); A.click('[data-a=prs]'); chk(until(A, "outN()==0"), 'precio en Abel')

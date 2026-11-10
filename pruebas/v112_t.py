@@ -113,16 +113,6 @@ with sync_playwright() as p:
         pg.fill('#np_n', 'SCPP Bahía Tortugas'); pg.fill('#np_k', 'bt'); pg.click('[data-npv=sv]'); pg.wait_for_timeout(100)
         chk(pg.locator('#npv').count() == 0 and pg.evaluate("pvBy(document.getElementById('rt_fo').value)?.k") == 'BT' and pg.input_value('#rt_fl') == 'WLRBT181026' and pg.input_value(f'#tn_k{tn}') == '123', f'{vw} queda elegido, propone su lote y conserva lo escrito')
         pg.evaluate("RT=null;NPV=null")
-        # hoja de entradas: datos extra abiertos, sin «Quitar guardadas»
-        pg.evaluate("PEN=null;go('pent')"); pg.wait_for_timeout(80)
-        chk(pg.is_visible('[data-pr="1:tempT"]') and 'Más datos' in pg.inner_text('[data-pa="more:1"]'), f'{vw} los datos extra se ven desde el principio')
-        pg.select_option('[data-pr="1:origin"]', '__new'); pg.wait_for_timeout(80)
-        pg.fill('#np_n', 'SCPP Isla Cedros'); pg.fill('#np_k', 'IC'); pg.click('[data-npv=sv]'); pg.wait_for_timeout(100)
-        chk(pg.evaluate("pvBy(penR(1).d.origin)?.k") == "IC", f'{vw} en la hoja también se agrega y queda elegido')
-        pg.select_option('[data-pr="1:tank"]', 'T2'); pg.fill('[data-pr="1:k0"]', '50')
-        for k, v in {'tempT': '58', 'tempP': '55', 'kgbox': '34', 'desp': '0'}.items(): pg.fill(f'[data-pr="1:{k}"]', v)
-        pg.click('[data-pa=save]'); pg.wait_for_timeout(100)
-        chk('Guardada' in pg.inner_text('#ps_1') and pg.locator('[data-pa=clear]').count() == 0, f'{vw} después de guardar no está «Quitar guardadas de la lista»')
         # ---------- 7. Empacar sin lote y conectarlo después ----------
         o4 = nueva_orden(pg, 2); pg.evaluate(f"go('empacar:{o4}.1')")
         pg.click('[data-nea=sl]'); pg.wait_for_timeout(100)
@@ -165,7 +155,7 @@ with sync_playwright() as p:
     pg.close()
     # ---------- 11. Encargado de piso: no agrega proveedores; sí empaca sin lote ----------
     pg = b.new_page(); pg.on('pageerror', lambda e: errs.append(str(e))); entrar(pg, 'piso@propesa.mx', 'piso123', '1')
-    pg.evaluate("PEN=null;go('pent')"); chk('Agregar proveedor' not in pg.inner_text('[data-pr="1:origin"]'), 'piso: no ve «+ Agregar proveedor…»')
+    pg.evaluate("RT=null;go('rtin')"); chk('Agregar proveedor' not in pg.inner_text('#rt_fo'), 'piso: no ve «+ Agregar proveedor…»'); pg.evaluate("RT=null")
     o7 = nueva_orden(pg, 2); pg.evaluate(f"PE.lot=null;go('pemp:{o7}.1')"); pg.wait_for_timeout(80)
     chk(pg.locator('[data-nea=sl]').count() == 1, 'piso: puede «Empacar sin lote»')
     pg.close(); b.close()

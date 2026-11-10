@@ -81,7 +81,7 @@ with sync_playwright() as p:
     chk(n >= 1 and pg.locator('[data-led^="dl:"]').count() == n, f'Entrada: cada fila trae Editar y Eliminar ({n})')
     lot = pg.get_attribute('[data-led^="el:"] >> nth=0', 'data-led')[3:]
     pg.click('[data-led^="el:"] >> nth=0'); pg.wait_for_timeout(150)
-    chk(pg.evaluate("V.v+':'+V.id") == 'lote:' + lot and pg.evaluate("form&&form.edit") == lot and pg.locator('#fo').count() == 1, 'Editar abre el lote con su formulario')
+    chk(pg.evaluate("V.v+':'+V.id") == 'rtin:' + lot and pg.locator('#rt_fd').count() == 1, 'Editar abre la recepción por tinas del lote')
     pg.evaluate("go('recepcion')"); pg.click('[data-led^="dl:"] >> nth=0'); pg.wait_for_timeout(150)
     chk(pg.locator('[data-a=dl2]').count() == 1, 'Eliminar abre el lote con «Sí, eliminar lote» a la vista')
     pg.close()

@@ -80,10 +80,8 @@ with sync_playwright() as p:
     chk(ev(pg,"getComputedStyle(document.querySelector('table.ent td.acts')).position")=='sticky','esa columna se queda fija al deslizar')
     pg.evaluate("RT=null");pg.click('[data-a=nf]');pg.wait_for_timeout(100)
     chk(ev(pg,"V.v")=='rtin' and ev(pg,"!document.querySelector('[data-fold=ent-t2]')"),'v1.42.0: la recepción por tinas no lleva «otro tanque» (cada tina dice su tanque)')
-    go(pg,'pent')
-    chk(ev(pg,"!document.querySelector('.pt2').open"),'hoja de entradas: «otro tanque» plegado')
     # ---------- lote sin lote: se arregla desde su tarjeta
-    pg.evaluate("""(()=>{ST.R.push({id:newLotId(),lot:'SIN-LOTE-1310',origin:'',tank:'',rdate:'',time:'',date:'',tempT:null,tempP:'',kgbox:null,desp:null,final:null,closed:false,ne:true,sl:true});
+    pg.evaluate("""(()=>{ST.R.push({id:newLotId(),lot:'SIN-LOTE-1310',origin:'',tank:'',rdate:'',time:'',date:'',final:null,closed:false,ne:true,sl:true});
      ST.B['SIN-LOTE-1310']=ST.B.WLRCO051026A.filter(x=>x.o=='2.1');ST.B.WLRCO051026A=ST.B.WLRCO051026A.filter(x=>x.o!='2.1');save()})()""")
     go(pg,'recepcion')
     chk('Arreglar' in ev(pg,"[...document.querySelectorAll('table.ent tr')].find(r=>r.textContent.includes('SIN-LOTE-1310')).textContent"),'en la tabla, el lote sin lote dice «Arreglar ›»')
@@ -129,7 +127,7 @@ with sync_playwright() as p:
     ctx.close()
     # ---------- Modo piso: «Atrás» en lugar de «Inicio», logo al inicio
     ctx,pg=start(b,user='piso@propesa.mx',pw='piso123')
-    go(pg,'pent');chk(ev(pg,"!!document.querySelector('.phd [data-back]') && !document.querySelector('.phd .ph1')"),'Modo piso: «Atrás» y sin el botón «Inicio» repetido')
+    go(pg,'rtin');chk(ev(pg,"!!document.querySelector('.phd [data-back]') && !document.querySelector('.phd .ph1')"),'Modo piso: «Atrás» y sin el botón «Inicio» repetido')
     hh=ev(pg,"Math.round(document.querySelector('.phd').getBoundingClientRect().height)");chk(hh<=112,f'la barra de Modo piso cabe en un renglón en iPad mini ({hh} px)')
     pg.click('.phd .lgh');pg.wait_for_timeout(150);chk(ev(pg,'V.v')=='piso','Modo piso: el logo lleva a «¿Qué vas a hacer?»')
     ctx.close()

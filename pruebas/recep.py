@@ -77,3 +77,11 @@ def recibir(pg, lot, pv='1', kz=(), tank='T1', fecha=None, hora='09:00', hf='', 
         if pg.evaluate("V.v") != 'lote':
             raise RuntimeError('no se guardó la recepción %s: %s' % (lot, pg.evaluate("msg")))
     return used
+
+
+# v1.43.0 · Para pruebas que arman un lote directo con addLot(...) (sin pasar por la pantalla): TNA(lote) le pone tinas libres
+# en su tanque (hasta 95 kg cada una, una talla por tina), temperatura del tanque y del producto. Se define con pg.evaluate(TNA_DEF)
+# después de cargar la página (al recargar se pierde).
+TNA_DEF = ("void (window.TNA=l=>{const r=ST.R.find(x=>x.lot===l),occ=tnOcc(),tk=TK.includes(r.tank)?r.tank:'T1',i=TK.indexOf(tk),ks=[...TK.slice(i),...TK.slice(0,i)];"
+           "const free=ks.flatMap(t=>tnOf(t)).filter(n=>!occ.has(n)),tn=[];S.forEach(z=>{if(z==='desp')return;let g=Math.max(0,rcv(l,z));"
+           "while(g>0&&free.length){const q=Math.min(95000,g);tn.push([free.shift(),z,q]);g-=q}});r.tn=tn;r.tts={[tk]:58};r.tpn=57;r.tpx=60;return l})")

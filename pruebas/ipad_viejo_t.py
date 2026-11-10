@@ -77,7 +77,7 @@ def dif(a, b):
     d = ImageChops.difference(A, B).convert('L').point(lambda v: 255 if v > 24 else 0)
     return 100 * d.histogram()[255] / (A.width * A.height)
 PANT = ['formatos', 'recepcion', 'lote:WLRCO051026A', 'ordenes', 'orden:1', 'empaque', 'embarques', 'emb:0', 'temperatura', 'general', 'hojas', 'admin', 'admin:usr', 'cierre']
-PISO = ['piso', 'pent', 'pcer', 'pcon']
+PISO = ['piso', 'rtin', 'pcer', 'pcon']
 
 with sync_playwright() as p:
     b = p.chromium.launch()
@@ -85,7 +85,7 @@ with sync_playwright() as p:
     for W, H in [(768, 1024), (1024, 768)]:
         nuevo, viejo = ctx(b, W, H, False), ctx(b, W, H, True)
         for pg in (nuevo, viejo): entrar(pg)
-        chk(viejo.evaluate('CPX.need&&CPX.nogap&&CPX.CQ.length>=8&&CPX.HAS.length>=4'), f'{W} simulación activa: @container ({viejo.evaluate("CPX.CQ.length")}), :has ({viejo.evaluate("CPX.HAS.length")}) y gap reescritos')
+        chk(viejo.evaluate('CPX.need&&CPX.nogap&&CPX.CQ.length>=6&&CPX.HAS.length>=4'), f'{W} simulación activa: @container ({viejo.evaluate("CPX.CQ.length")}), :has ({viejo.evaluate("CPX.HAS.length")}) y gap reescritos')
         chk(nuevo.evaluate('!CPX.need&&CPX.nogap===false&&!document.querySelector("[data-cq],[data-h],.nogap,.lite")'), f'{W} navegador nuevo: la capa de compatibilidad no toca nada')
         for grupo, piso in [(PANT, '0'), (PISO, '1')]:
             if piso == '1':

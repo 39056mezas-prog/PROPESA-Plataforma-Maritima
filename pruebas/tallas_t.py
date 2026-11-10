@@ -86,13 +86,13 @@ with sync_playwright() as p:
     chk(pg.evaluate("ST.R.length") == 0 and pg.evaluate("document.activeElement.id") == f'tn_k{tn}' and 'toca la talla' in pg.inner_text('#app'), 'una tina sin talla no se guarda y lleva a su casilla')
     pg.click('[data-rt="z:5"]'); pg.fill('#rt_tt' + pg.evaluate(f"tnTk({tn})"), '58'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(100)
     chk(pg.evaluate(f"bal('WLRCO261026','{k}')") == 12000, 'Abel guarda 12 kg de Débil')
-    # hoja de Modo piso
-    pg.evaluate("setPiso(true);go('pent')"); pg.wait_for_timeout(150)
-    hs = pg.eval_on_selector_all('.pnt-t thead th', 'e=>e.map(x=>x.innerText)')
-    chk(any('26-32 PIEZAS' in h.upper() for h in hs) and any('DÉBIL' in h.upper() for h in hs) and not any('1221' in h for h in hs), 'la hoja de Modo piso usa las tallas de Abel')
+    # Modo piso: la recepción por tinas (v1.43.0)
+    pg.evaluate("RT=null;setPiso(true);go('rtin')"); pg.wait_for_timeout(150)
+    zs = pg.eval_on_selector_all('[data-rt^="z:"], #tnpad [data-tnk^="z:"]', 'e=>e.map(x=>x.innerText)')
+    chk(any('DÉBIL' in h.upper() for h in zs) and not any('JUMBO' in h.upper() for h in zs), f'la recepción de Modo piso usa las tallas de Abel {zs}')
     for w in (820, 390):
         pg.set_viewport_size({'width': w, 'height': 1000}); pg.wait_for_timeout(150)
-        chk(not overflow(pg), f'hoja de Modo piso sin scroll de lado en {w} px'); pg.screenshot(path=os.path.join(OUT, f'tallas_pent_{w}.png'))
+        chk(not overflow(pg), f'hoja de Modo piso sin scroll de lado en {w} px'); pg.screenshot(path=os.path.join(OUT, f'tallas_piso_{w}.png'))
     pg.set_viewport_size({'width': 1440, 'height': 900}); pg.evaluate("setPiso(false);go('inicio')")
     # cambio de maquila: PROPESA conserva las suyas
     pg.evaluate("mqSet(1);render()"); chk(pg.evaluate("TNM.length") == 5 and pg.evaluate("RC.B[0]") == 'Blanco', 'al volver a PROPESA regresan sus tallas')

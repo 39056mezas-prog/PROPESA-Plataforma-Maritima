@@ -1,9 +1,8 @@
-"""PROPESA · genera acceso-planta.png: la planta 3D de la pantalla de acceso, ya dibujada (v1.38.3).
-En la pantalla de acceso la planta es solo un dibujo de muestra (aria-hidden, no se toca). Dibujada en vivo con CSS 3D
-eran ~300 capas de la tarjeta gráfica: en celulares con poca memoria Chrome no alcanzaba a pintar el resto de la
-pantalla (se veía gris hasta mover la pantalla). Ahora es una sola imagen; las etiquetas «T1 · 48 canastas» siguen
-siendo texto encima (mkMount). Si cambia el dibujo de la planta (t3Inner, T3P, MKT), corre esto otra vez y copia
-la línea MKI que imprime en index.html.
+"""PROPESA · genera acceso-planta.png: la planta 3D de la pantalla de acceso, ya dibujada (v1.38.3; v1.43.0 con tinas).
+En la pantalla de acceso la planta es solo un dibujo de muestra (aria-hidden, no se toca): una sola imagen, para no cargar el
+celular. Se dibuja con el mismo lienzo de la app (t3Inner + t3Draw) y las tinas de ejemplo de mkScene; las etiquetas
+«T1 · 9 tinas» siguen siendo texto encima (mkMount). Si cambia el dibujo de la planta (t3Inner, t3Draw, T3P, MKT),
+corre esto otra vez y copia la línea MKI que imprime en index.html.
 Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/generar_planta_acceso.py"""
 import os, json
 from playwright.sync_api import sync_playwright
@@ -12,26 +11,27 @@ BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 R0 = (1000, 560); DPR = 2
 with sync_playwright() as p:
-    b = p.chromium.launch(executable_path=os.environ.get('CHROME') or None, args=['--use-gl=swiftshader', '--ignore-gpu-blocklist'])
+    b = p.chromium.launch()
     pg = b.new_page(viewport={'width': 1400, 'height': 900}, device_scale_factor=DPR)
-    pg.goto(BASE); pg.wait_for_selector('.mkp .t3w', state='attached'); pg.wait_for_timeout(500)
+    pg.goto(BASE); pg.wait_for_selector('.mkp', state='attached'); pg.wait_for_timeout(300)
     s0 = pg.evaluate("""([W,H])=>{
-      const st=document.querySelector('.mkp .t3st'),w=st.querySelector('.t3w');
-      const mk=document.createElement('div');mk.className='mk';mk.id='cap';
-      mk.style.cssText='position:fixed;left:0;top:0;width:'+W+'px;height:'+H+'px;background:none!important;box-shadow:none!important;border:0!important;font-size:10px;z-index:99999';
-      const v=document.createElement('div');v.className='mkp';v.style.cssText='position:absolute;left:0;top:0;width:'+W+'px;height:'+H+'px;background:none!important;border:0!important;border-radius:0!important';
-      mk.appendChild(v);v.appendChild(st);document.body.appendChild(mk);
       document.getElementById('app').style.display='none';
       document.documentElement.style.background=document.body.style.background='transparent';
-      const r={width:W,height:H},g=t3Fit(0,0,T3P.W,T3P.D,300,.97,r,35,57),PP=Math.round(9000*g.s+3000),A=g.az*Math.PI/180;
-      st.style.perspective=PP+'px';
-      w.style.transform=`translate(${W/2}px,${H/2}px) scale(${g.s}) translate(${g.ox}px,${g.oy}px) rotateX(${g.ax}deg) rotateZ(${g.az}deg) translate(${-g.px}px,${-g.py}px)`;
-      const vx=Math.sin(A),vy=Math.cos(A),off=k=>(k=='s'&&vy>.2)||(k=='n'&&vy<-.2)||(k=='e'&&vx>.2)||(k=='w'&&vx<-.2);
-      w.querySelectorAll('.t3g[data-w]').forEach(e=>e.hidden=off(e.dataset.w));
+      const v=document.createElement('div');v.className='t3v';v.id='cap';
+      v.style.cssText='position:fixed;left:0;top:0;width:'+W+'px;height:'+H+'px;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;z-index:99999';
+      const cv=document.createElement('canvas');cv.className='t3cv';cv.style.cssText='width:100%;height:100%;display:block';v.appendChild(cv);document.body.appendChild(v);
+      MKS=null;const Q=mkScene();
+      const g=t3Fit(0,0,T3P.W,T3P.D,300,.97,{width:W,height:H},35,57);
+      const keep={};['D','all','zoom','pick','M','az','ax','s','px','py','ox','oy'].forEach(k=>keep[k]=T3[k]);
+      const K=['D','all','zoom','pick','labs','cs','az','M'];
+      Object.assign(T3,{all:false,zoom:false,pick:null,cs:{},az:35});
+      // la misma escena de ejemplo de mkScene (tinas de colores)
+      const out={},occ=new Map();TK.forEach(t=>{const ns=tnOf(t);let k=0;(MKT[t]||[]).forEach(([c,d])=>c.forEach((n,i)=>{let left=n?n*MKG-(n>3?6000:0):0;while(left>0&&k<ns.length){const q=Math.min(34000,left),tn=ns[k++];left-=q;occ.set(tn,{n:tn,g:q,d,u:null,mq:0,lot:'',col:MKC[i]||'#fff'})}}))});
+      T3.D={occ,vis:new Set([0])};t3Inner();Object.assign(T3,g);t3Draw();
       return g.s}""", list(R0))
-    pg.wait_for_timeout(800)
+    pg.wait_for_timeout(300)
     tmp = os.path.join(RAIZ, 'pruebas', '_planta_tmp.png')
-    pg.locator('#cap').screenshot(path=tmp, omit_background=True)
+    pg.locator('#cap canvas').screenshot(path=tmp, omit_background=True)
     b.close()
 im = Image.open(tmp).convert('RGBA'); os.remove(tmp)
 x0, y0, x1, y1 = im.getbbox()

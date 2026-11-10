@@ -33,7 +33,7 @@ with sync_playwright() as p:
         cw = pg.evaluate("(()=>{const c=document.querySelector('.t3cv'),v=document.querySelector('.t3v');return [c.width,c.height,v.clientWidth,v.clientHeight]})()")
         chk(cw[0] <= cw[2] * 2 + 1 and cw[1] <= cw[3] * 2 + 1 and cw[0] > 0, f'{tag}: el lienzo no pasa de 2× aunque la pantalla sea 3× ({cw})')
         chk(pg.evaluate("document.documentElement.scrollWidth<=innerWidth"), f'{tag}: sin desbordes')
-        chk(pg.evaluate("T3.H.filter(h=>h.k!=null).length") >= 48 and pg.evaluate("T3.H.filter(h=>h.k==null).length") == 6, f'{tag}: se dibujan los 6 tanques y las canastas')
+        chk(pg.evaluate("T3.H.filter(h=>h.k!=null).length") == pg.evaluate("T3.M.O.filter(o=>o.C).reduce((s,o)=>s+o.C.length,0)") and pg.evaluate("T3.H.filter(h=>h.k==null).length") == 6, f'{tag}: se dibujan los 6 tanques y solo las tinas con langosta (v1.42.1)')
         # la planta completa queda dentro del recuadro libre de botones
         inside = pg.evaluate("""(()=>{const v=document.querySelector('.t3v'),A=t3Area(v),pr=t3Pr(T3,v.clientWidth,v.clientHeight),P=T3P;let ok=true;
           for(const X of [0,P.W])for(const Y of [0,P.D])for(const Z of [0,300]){const q=pr(X,Y,Z);if(q[0]<A.x0-2||q[0]>A.x1+2||q[1]<A.y0-2||q[1]>A.y1+2)ok=false}return ok})()""")

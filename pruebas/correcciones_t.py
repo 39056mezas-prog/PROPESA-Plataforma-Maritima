@@ -30,7 +30,7 @@ with sync_playwright() as p:
     pg.evaluate("go('recepcion')");pg.click('[data-a=nf]');chk(pg.input_value('#rt_fd')=='12/10/2026','#3 reception date local: '+pg.input_value('#rt_fd'))
     pg.evaluate("go('ordenes')");chk(pg.input_value('#no_etd')=='13/10/2026','#3 ETD tomorrow: '+pg.input_value('#no_etd'))
     chk(pg.evaluate("pdfName('Entrada')").endswith('2026-10-12.pdf'),'#3 PDF name date local')
-    pg.evaluate("setPiso(true);PEN=null;go('pent')");chk(pg.evaluate("pD(PEN.rows[0].d.rdate)")=='2026-10-12','#3 piso entrada date local');pg.evaluate("setPiso(false);go('inicio')")
+    pg.evaluate("setPiso(true);RT=null;go('rtin')");chk(pg.input_value('#rt_fd')=='12/10/2026','#3 piso recepción date local');pg.evaluate("RT=null;setPiso(false);go('inicio')")
     # 6 lot ids unique after delete
     pg.evaluate("ST.R.push({id:'R-0123',lot:'TMP3',origin:'x',tank:'T1',final:null,closed:false});ST.B.TMP3=[];ST.R=ST.R.filter(r=>r.lot!=='WLRCO061026B');delete ST.B.WLRCO061026B;save();go('recepcion')")
     recibir(pg, 'NUEVO', pv='1', kz=['5'], tt='58')

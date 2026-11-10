@@ -12,6 +12,8 @@ hojas para imprimir con el resultado de las fórmulas del Excel:
 Uso: python3 -m http.server 8765 (en la carpeta) y luego python3 -I pruebas/excel_reales_t.py"""
 import os, json
 from playwright.sync_api import sync_playwright
+import sys as _s, os as _o; _s.path.insert(0, _o.path.dirname(_o.path.abspath(__file__)))
+from recep import TNA_DEF
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.environ.get('BASE', 'http://localhost:8765/index.html?modo=local')
 X = json.load(open(os.path.join(ROOT, 'pruebas', 'datos', 'excel_reales.json'), encoding='utf-8'))
@@ -23,11 +25,10 @@ def near(a, b, t=0.006): return a is not None and abs(a - b) <= t
 USERS = "[{id:1,name:'Martha',email:'admin@propesa.mx',role:'admin',notify:true}]"
 FIX = "localStorage.clear();localStorage.setItem('propesa-kp','0');localStorage.setItem('propesa-v4',JSON.stringify({PK:1,BN:0,L:[],N:0,R:[],B:{},P:[],O:[],M:{},OR:[],ORc:1,E0:1,T:[],RN:120,U:%s}))" % USERS  # usuario SOLO para pruebas
 PV = {'CO': 1, 'EM': 2, 'LE': 3}
-def lot(pg, code, date, kz, desp=0, prov=1, tank='T1', time='12:00'):
-    d = dict(lot=code, origin=pg.evaluate("id=>pvBy(id)?pvBy(id).n:'Proveedor'", prov), pv=prov, sp=1, tank=tank, rdate=date, time=time or '12:00', tempT='58', tempP='59', kgbox='36', desp='0', **{f'k{i}': v for i, v in enumerate(kz)}, k4=desp)
-    er = pg.evaluate("d=>lotErr(d)", d)
-    if er: raise Exception(f'{code}: {er}')
-    pg.evaluate("d=>{addLot(d);save()}", d)
+def lot(pg, code, date, kz, desp=0, prov=1, tank='T1', time='12:00', tn=False):  # tn=True: con tinas (v1.43.0; la existencia por tanque sale de las tinas)
+    d = dict(lot=code, origin=pg.evaluate("id=>pvBy(id)?pvBy(id).n:'Proveedor'", prov), pv=prov, sp=1, tank=tank, rdate=date, time=time or '12:00', **{f'k{i}': v for i, v in enumerate(kz)}, k4=desp)
+    if tn: pg.evaluate(TNA_DEF); pg.evaluate("d=>{TNA(addLot(d));save()}", d)
+    else: pg.evaluate("d=>{addLot(d);save()}", d)
 # un envío del Excel → orden + hieleras empacadas (de cualquier lote con entrada) + embarque cerrado; regresa el índice del embarque
 ENV = """([etd,city,cons,z,kp])=>{const id=uidN();ST.OR.push({id,etd,lines:[],sh:{}});const o=ST.OR[ST.OR.length-1];
  const l={id:1,city,cons,boxes:z.reduce((a,b)=>a+b,0),z:S.map((_,i)=>z[i]||0),kp,tar:0,cc:0};o.lines.push(l);const i=shipFor(o,city,cons);
@@ -84,7 +85,7 @@ with sync_playwright() as p:
     chk('85.61' in t and '9.07' in t, 'el PDF de congelación suma 85.61 y 9.07 kg (Excel R24 y S24)')
     # ---------- 2) existencia 14 oct · maquila David ----------
     pg.evaluate("mqSet(3)"); E14 = X['exi_14oct']
-    for code, kz in E14['lots']: lot(pg, code if code != 'DAVID' else 'DAVID131026', '2026-10-13', kz)
+    for code, kz in E14['lots']: lot(pg, code if code != 'DAVID' else 'DAVID131026', '2026-10-13', kz, tn=True)
     tot = pg.evaluate("S.slice(0,4).map(z=>ST.R.reduce((a,r)=>a+Math.max(0,bal(r.lot,z)),0)/1000)")
     T = sum(tot)
     chk(near(tot[0], E14['E83']) and near(tot[1], E14['F83']) and near(T, E14['K83']), f"existencia Total, kg = Excel E83/F83/K83: {tot[0]:.2f} · {tot[1]:.2f} · {T:.2f}")
@@ -93,7 +94,7 @@ with sync_playwright() as p:
     chk('2279.80' in t and '142.49' in t and '101.84' in t, 'el PDF de existencia imprime 2279.80 kg y 142.49 / 101.84 cajas de 16')
     # ---------- 3) maquila Abel · cajas de 15 kg y el error del 24/oct ----------
     pg.evaluate("mqSet(2)"); A = X['abel_15']
-    for code, kz in A['lots']: lot(pg, code, '2026-10-05', kz)
+    for code, kz in A['lots']: lot(pg, code, '2026-10-05', kz, tn=True)
     tot = pg.evaluate("S.slice(0,4).map(z=>ST.R.reduce((a,r)=>a+Math.max(0,bal(r.lot,z)),0)/1000)"); T = sum(tot)
     chk(near(T, A['H41']) and near(tot[0], A['D41']), f"Abel: Total, kg {T:.2f} = Excel H41 {A['H41']} (mismos códigos que PROPESA, sin chocar)")
     chk(near(tot[0] / 15, A['D42'], 0.005) and near(T / 15, A['H42'], 0.005), f"Abel: CAJAS DE 15 KG = kg ÷ 15 como el Excel (D42 {A['D42']}, H42 {A['H42']})")

@@ -90,7 +90,7 @@ with sync_playwright() as p:
             pg.evaluate(f"go('{r}')");ov=pg.evaluate("Math.max(document.documentElement.scrollWidth-document.documentElement.clientWidth,(m=>m.scrollWidth-m.clientWidth)(document.querySelector('main')))")
             if ov>2:bad.append((r,ov))
         pg.evaluate("setPiso(true);go('piso')")
-        for r in ['piso','pemp:1.1','pent']:
+        for r in ['piso','pemp:1.1','rtin']:
             pg.evaluate(f"go('{r}')");ov=pg.evaluate("document.documentElement.scrollWidth-document.documentElement.clientWidth")
             if ov>2:bad.append((r,ov))
         chk(not bad,f'{vw[0]}px a 20 px: sin desbordes {bad}')

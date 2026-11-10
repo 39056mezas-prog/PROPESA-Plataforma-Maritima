@@ -47,7 +47,7 @@ with sync_playwright() as p:
     pg.fill('#tn_k3', '2'); pg.press('#tn_k3', 'Enter'); pg.fill('#tn_k4', '36.6'); pg.click('[data-rt="z:1"]'); pg.wait_for_timeout(50)
     pg.fill('#tn_k5', '20'); pg.wait_for_timeout(30)
     s = pg.inner_text('#rtsum')
-    chk('3' in s and '71.65' in s and '36.6' in s and 'T1: 4 de 30 tinas' in s, 'resumen en vivo por talla (tinas y kg) y tinas del tanque')
+    chk('3' in s and '71.65' in s and '36.6' in s and 'T1: 4 tinas' in s and 'de 30' not in s, 'resumen en vivo por talla (tinas y kg) y tinas del tanque')
     # errores junto al campo
     pg.fill('#tn_k5', ''); pg.click('[data-rt=sv]'); pg.wait_for_timeout(80)
     chk('Temperatura de T1' in pg.inner_text('#app') and J(pg, "document.activeElement.id") == 'rt_ttT1', 'falta la temperatura de T1: lo dice y pone el cursor ahí')
@@ -60,7 +60,7 @@ with sync_playwright() as p:
     r = J(pg, "R_('WLRCO081126A')")
     chk(J(pg, "V.v+':'+V.id") == 'lote:WLRCO081126A', 'guardar lleva al lote')
     chk(r and r['tn'] == [[1, J(pg, 'S[0]'), 34950], [2, J(pg, 'S[0]'), 34700], [3, J(pg, 'S[0]'), 2000], [4, J(pg, 'S[1]'), 36600]], f'cada tina con sus gramos exactos y su talla ({r and r.get("tn")})')
-    chk(r['mu'] == 21.45 and r['tts'] == {'T1': 57.6} and r['tpn'] == 57.7 and r['tpx'] == 62.2 and r['tank'] == 'T1' and r['kgbox'] is None, 'muerta, temperatura por tanque y producto mínima/máxima guardadas')
+    chk(r['mu'] == 21.45 and r['tts'] == {'T1': 57.6} and r['tpn'] == 57.7 and r['tpx'] == 62.2 and r['tank'] == 'T1' and 'kgbox' not in r and 'tempT' not in r, 'muerta, temperatura por tanque y producto mínima/máxima guardadas')
     chk(J(pg, "bal('WLRCO081126A')") == 108250 + 8450 and J(pg, "rcv('WLRCO081126A','desp')") == 8450, 'inventario = tinas + despatada aparte')
     chk(J(pg, "JSON.stringify(tqDistZ('WLRCO081126A'))") == json.dumps({J(pg, 'S[0]'): {'T1': 71650}, J(pg, 'S[1]'): {'T1': 36600}, J(pg, 'S[2]'): {}, J(pg, 'S[3]'): {}, 'desp': {}}, separators=(',', ':')), 'el tanque cuenta lo que hay en sus tinas')
     t = pg.inner_text('#app')
@@ -119,7 +119,7 @@ with sync_playwright() as p:
     chk(J(pg, "tnClean([[1,'491-610',100],[1,'491-610',5],[181,'x',3],[2,'<b>',3]])") == [[1, '491-610', 100]], 'tinas repetidas, fuera de 1–180 o con texto raro se descartan')
     # ---------- 5 · 3D y PDF ----------
     J(pg, "go('inicio')"); pg.wait_for_timeout(700)
-    chk(J(pg, "T3.M.O.filter(o=>o.C).every(o=>o.C.length===30)"), '3D: cada tanque tiene sus 30 tinas')
+    chk(J(pg, "T3.M.O.filter(o=>o.C).every(o=>o.C.every(c=>c.o))") and J(pg, "T3.M.O.filter(o=>o.C).reduce((s,o)=>s+o.C.length,0)") == J(pg, "tnOcc().size"), '3D: solo las tinas con langosta (las vacías no se dibujan)')
     chk(J(pg, "T3.M.O.find(o=>o.tk==='T1').C.filter(c=>c.o).length") == 4, '3D: T1 con 4 tinas ocupadas (1, 2, 4 y la 5 del otro lote)')
     pg.locator('.t3v').scroll_into_view_if_needed(); sp = J(pg, "t3Spot('T1')"); pg.mouse.click(sp['x'], sp['y']); pg.wait_for_timeout(900)
     sp = J(pg, "t3Spot('T1',0)"); pg.mouse.click(sp['x'], sp['y']); pg.wait_for_timeout(200)

@@ -10,7 +10,7 @@ fails, errs = [], []
 def chk(c, m):
     print(('PASS ' if c else 'FAIL ') + m)
     if not c: fails.append(m)
-PREP = ("ST.R[1].tank='T3';ST.T=[{id:1,t:dLoc()+'T09:15',tank:'T1',a:60.1,s:59.8,p:58.9,by:'Ana'},"
+PREP = ("ST.R[1].tank='T3';ST.R[1].tn=ST.R[1].tn.map(x=>[x[0]+60,x[1],x[2]]);ST.R[1].tts={T3:58.5};ST.T=[{id:1,t:dLoc()+'T09:15',tank:'T1',a:60.1,s:59.8,p:58.9,by:'Ana'},"
         "{id:2,t:'2026-10-01T07:00',tank:'T1',a:50,s:50,p:50,by:'Ana'},{id:3,t:'2026-10-12T17:40',tank:'T3',a:61,s:null,p:59.5,by:'Luis'}];save();FOLD['ent-tq']=true;go('recepcion')")
 det = lambda pg: pg.inner_text('.tqd .tqc')
 POS = "Object.fromEntries([...document.querySelectorAll('.tqm')].map(b=>{const r=b.getBoundingClientRect();return [b.dataset.tq,[r.left,r.top,r.right]]}))"

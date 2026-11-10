@@ -42,7 +42,7 @@ with sync_playwright() as p:
         pg.select_option('#rt_fo', index=1); pg.wait_for_timeout(100)
         chk(not fer(pg) and pg.get_attribute('#rt_fo', 'aria-invalid') is None, f'{W} Recepción: al elegir proveedor el error se quita')
         pg.fill('#rt_fl', 'WLRPRUEBA'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(200)
-        chk(fer(pg) == [['fer_tn_k1', 'Pesa al menos una tina: escribe sus kg y toca su talla.']], f'{W} Recepción: el siguiente dato que falta sale junto a su campo (la primera tina): {fer(pg)}')
+        chk(fer(pg) == [['fer_tn_k' + str(pg.evaluate('RT.act')), 'Pesa al menos una tina: escribe sus kg y toca su talla.']], f'{W} Recepción: el siguiente dato que falta sale junto a su campo (la primera tina): {fer(pg)}')
         pg.close()
 
     pg = b.new_context(viewport={'width': 1180, 'height': 820}).new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
@@ -52,9 +52,9 @@ with sync_playwright() as p:
     pg.select_option('#ty', 'CONGELACION'); pg.click('[data-a=mv]'); pg.wait_for_timeout(150)
     a = avisos(pg)
     chk(a.count('Ingresa una cantidad mayor a 0.') == 1 and fer(pg)[0][0] == 'fer_kg', f'Lote: el error de Movimientos sale una vez, junto a Kg (antes 3 veces, también bajo «Guardar precio»): {a}')
-    chk(pg.inner_text('#pr_m') == '' and pg.inner_text('#tq_m') == '', 'Lote: Precio y Pasar a otro tanque no muestran el error de Movimientos')
+    chk(pg.inner_text('#pr_m') == '' and pg.locator('#tq_m').count() == 0, 'Lote: Precio y Pasar a otro tanque no muestran el error de Movimientos')
     pg.fill('#kg', '1'); pg.click('[data-a=mv]'); pg.wait_for_timeout(150)
-    chk(pg.inner_text('#pr_m') == '' and pg.inner_text('#tq_m') == '' and any(x.startswith('✔') or 'registrado' in x for x in avisos(pg)), 'Lote: el ✔ del movimiento no sale en rojo bajo Precio ni bajo Pasar a otro tanque')
+    chk(pg.inner_text('#pr_m') == '' and pg.locator('#tq_m').count() == 0 and any(x.startswith('✔') or 'registrado' in x for x in avisos(pg)), 'Lote: el ✔ del movimiento no sale en rojo bajo Precio ni bajo Pasar a otro tanque')
     ir(pg, 'lote:WLRCO051026A'); abrir(pg); pg.fill('#pr_u', '-3'); pg.click('[data-a=prs]'); pg.wait_for_timeout(150)
     chk(fer(pg) == [['fer_pr_u', 'Revisa el precio: un número de 0 o más.']] and avisos(pg).count('Revisa el precio: un número de 0 o más.') == 1, f'Lote: el error del precio sale junto al precio, una vez: {fer(pg)}')
     # Orden: el error de la línea ya no se va a los 4 s
@@ -131,12 +131,10 @@ with sync_playwright() as p:
     # ---------- Modo piso: mismos nombres, sin desbordes ----------
     for W, H in [(390, 844), (820, 1180), (1180, 820)]:
         pg = b.new_context(viewport={'width': W, 'height': H}).new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
-        entrar(pg, 'piso@propesa.mx', '1'); ir(pg, 'pent')
-        chk(pg.evaluate("[...document.querySelectorAll('select')].some(s=>[...s.options].map(o=>o.text).join(',')=='—,T1,T2,T3,T4,T5,T6')"), f'{W} Modo piso: tanques T1…T6')
-        if 'desperdicio' not in pg.inner_text('main'): pg.click('[data-pa^="more:"]'); pg.wait_for_timeout(150)  # «Más datos» puede venir abierto
-        pg.evaluate("document.querySelectorAll('.pt2').forEach(d=>d.open=true)")  # v1.39.0: «otro tanque» va plegado
+        entrar(pg, 'piso@propesa.mx', '1'); ir(pg, 'rtin')  # v1.43.0: la recepción por tinas
+        chk(pg.evaluate("[...document.querySelectorAll('[data-rt^=\"tk:\"]')].map(b=>b.dataset.rt.slice(3)).join(',')") == 'T1,T2,T3,T4,T5,T6', f'{W} Modo piso: tanques T1…T6')
         t = pg.inner_text('main')
-        chk('Kg Chica' in t and 'Kg de desperdicio (0 si no hubo)' in t, f'{W} Modo piso: «Kg Chica» y «0 si no hubo»')
+        chk('Langosta muerta' in t and 'Despatada' in t.replace('despatada', 'Despatada') and 'desperdicio' not in t.lower(), f'{W} Modo piso: muerta y despatada aparte, sin «desperdicio»')
         chk(desborde(pg) <= 0, f'{W} Modo piso: sin desborde ({desborde(pg)})')
         pg.close()
     b.close()

@@ -1,7 +1,9 @@
 """Prueba PROPESA (generar_datos). Uso: python3 -m http.server 8765 en la carpeta del proyecto y luego python3 -I pruebas/generar_datos.py"""
 import json
 from playwright.sync_api import sync_playwright
-import os,shutil,tempfile
+import os,shutil,tempfile,sys
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+from recep import recibir
 BASE=os.environ.get('BASE','http://localhost:8765/index.html?modo=local')  # modo local: nunca toca la base real
 OUT=os.environ.get('OUT') or tempfile.mkdtemp(prefix='propesa-');os.makedirs(OUT,exist_ok=True)
 _D=os.path.join(os.path.dirname(os.path.abspath(__file__)),'datos')
@@ -13,11 +15,9 @@ with sync_playwright() as p:
     b=p.chromium.launch();pg=b.new_page(viewport={'width':1180,'height':820})
     pg.goto(BASE);pg.evaluate(FIX);pg.reload()
     pg.fill('#le','admin@propesa.mx');pg.fill('#lp','admin123');pg.click('[data-a=lg]')
-    for lot,o in [('WLRCO051026A','SCPP Ensenada SCL'),('WLRCO061026B','Pescadores del Sur')]:
-        pg.click('.sb [data-go=recepcion]');pg.click('[data-a=nf]');pg.fill('#fl',lot.lower());pg.select_option('#fo','1' if 'Ensenada' in o else '2')
-        pg.fill('#ftt','58.5');pg.fill('#ftp','59-62');pg.fill('#fkb','18')
-        for i,v in enumerate([120.5,300,410.25,95]):pg.fill(f'#fk{i}',str(v))
-        pg.fill('#fdes','4.2');pg.click('[data-a=sv]')
+    # v1.43.0: recepción por tinas (pruebas/recep.py), como una persona
+    for lot,pv in [('WLRCO051026A','1'),('WLRCO061026B','2')]:
+        recibir(pg,lot,pv=pv,kz=[120.5,300,410.25,95],tank='T1',tt='58.5',tpn='59',tpx='62',por=95)
     for etd,rows in [('2026-10-12',[('HXH',3),('ZSM',2)]),('2026-10-13',[('RSK',2)])]:
         pg.click('.sb [data-go=ordenes]');pg.fill('#no_etd',etd);pg.click('[data-oa=new]')
         for j,(cli,n) in enumerate(rows):

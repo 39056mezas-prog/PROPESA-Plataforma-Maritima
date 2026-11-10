@@ -45,7 +45,7 @@ with sync_playwright() as p:
             back(pg); chk(not pg.evaluate("document.getElementById('app').classList.contains('sbo')") and pg.evaluate(V)[0] == 'cierre', f'{vw} atrás cierra el menú lateral')
         # Modo piso: Inicio de piso → Empacar → atrás → Inicio de piso; y atrás regresa a la vista completa
         pg.evaluate("switchMode(true)"); pg.wait_for_timeout(1000); chk(pg.evaluate(V) == ['pcon', '', True], f'{vw} cambia a Modo piso (desde Mortalidad final abre Conteo final, v1.21.0)')
-        pg.evaluate("go('pent')"); back(pg); chk(pg.evaluate(V) == ['pcon', '', True] and pg.locator('.pshell,.phd').count() >= 1, f'{vw} Modo piso: atrás regresa a la pantalla de piso anterior')
+        pg.evaluate("go('rtin')"); back(pg); chk(pg.evaluate(V) == ['pcon', '', True] and pg.locator('.pshell,.phd').count() >= 1, f'{vw} Modo piso: atrás regresa a la pantalla de piso anterior')
         back(pg); chk(pg.evaluate(V) == ['cierre', '', False] and pg.locator('.sb').count() == 1, f'{vw} atrás desde Modo piso regresa a la vista completa donde estabas')
         # un lote que ya no existe: atrás no truena, va a Entrada
         pg.evaluate(f"go('lote:{lot}')"); pg.evaluate("go('inicio')")
