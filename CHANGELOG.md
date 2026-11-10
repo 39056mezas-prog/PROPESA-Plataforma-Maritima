@@ -1,5 +1,34 @@
 # Cambios
 
+## 1.44.0 · 9 de noviembre de 2026 · «PROPESA — Procesos y Operaciones»
+
+Pedido del usuario: el nombre oficial del producto es **PROPESA — Procesos y Operaciones**; quitar «Plataforma marítima» (y cualquier descripción de PROPESA como plataforma o sistema marítimo) del título, metadatos, manifiesto, documentos, instrucciones para agentes y nombres de archivo. Se conservan las palabras del negocio (langosta, pesca, recepción, embarque…).
+
+- **Título de la pestaña, descripción, `og:*`, `twitter:*`, `application-name` y manifiesto:** «PROPESA — Procesos y Operaciones». En el iPhone, el ícono instalado se llama «PROPESA».
+- **Vista previa al compartir el link:** `og-image.png` nueva con «Procesos y Operaciones» (`?v=2`), generada con `pruebas/generar_og_image.py`.
+- **PDF y correo:** el PDF dice «PROPESA - Procesos y Operaciones» como creador y el correo «Generado desde PROPESA — Procesos y Operaciones».
+- **Archivos que se entregan:** `propesa-procesos-y-operaciones.zip` y `PROPESA_Procesos_y_Operaciones.html` (antes `propesa-plataforma.zip` y `PROPESA_Plataforma_maritima.html`). README, CLAUDE.md y `docs/` con el nombre nuevo.
+
+## 1.43.0 · 9 de noviembre de 2026 · «Sin lo viejo»
+
+Pedido del usuario: «ya borré los datos viejos, la plataforma está en cero; ya quiero quitar todo lo viejo», crear el `.vercelignore`, ver los PDF de recepción nuevos, y que cada tanque diga solo las tinas que tiene. Antes de quitar nada se revisó la base (solo lectura): 0 lotes, 0 hieleras y 0 movimientos vivos.
+
+- **Se quitó la recepción de antes:** el formulario viejo de Entrada (kg por caja, desperdicio, «otro tanque»), la hoja de varias recepciones de Modo piso (`pent`) y los traslados de kg entre tanques (`ST.TQ`). Recepción es solo **por tinas**, en los dos modos. Editar o «Corregir ›» un lote abre la recepción por tinas; ahí también se corrige el código del lote mientras no tenga hieleras.
+- **Datos del lote sin campos viejos:** ya no se guardan `tempT`, `tempP`, `kgbox` ni `desp` (los reemplazan la temperatura de cada tanque, producto mínima/máxima y la despatada aparte). Sin «kg sin tina» en el 3D ni en el tablero.
+- **Tanques:** cada letrero dice solo las tinas que tiene («T3 · 13 tinas»), sin «de 30». Lo mismo en la recepción («T1: 4 tinas»).
+- **PDF:** el **Formato de recepción** cabe en una hoja: datos y totales, resumen por talla en un renglón y solo las tinas usadas, como tarjetas del color de su talla agrupadas por tanque (tanque sin tinas = una línea). **Registro de recepción** y la hoja **Recepción de langosta** ahora traen tanques, tinas, temperatura de cada tanque, producto mínima a máxima, despatada, muerta, débil y rechazo (sin «kg por caja» ni «desperdicio»).
+- **Pantalla de acceso:** la vista previa de la planta 3D ya enseña tinas («76 tinas»), dibujada con el mismo lienzo de la app (`pruebas/generar_planta_acceso.py`).
+- **Seguridad de la página:** nuevo `.vercelignore` (lista de permitidos): Vercel publica solo la app (`index.html`, `sw.js`, íconos, imágenes, manifiesto, `api/`). `docs/`, `pruebas/`, `supabase/` y los .md se quedan en GitHub pero ya no se ven en la página.
+- **Si una tablet tenía guardada una pantalla que ya no existe**, la app abre el inicio en lugar de trabarse.
+- **Archivos quitados:** `SEGUIMIENTO_v1.27.0.md`, `SPEC.md`, `tasks/plan.md`, `docs/PRUEBA_EXCEL_v1.25.0.md` (su contenido sigue en el historial y en el proyecto de Claude), pruebas `entradas_t.py` y `traslados_t.py`.
+- **Pruebas:** datos de prueba (`seed.json`) por tinas; `TNA_DEF` en `pruebas/recep.py` para pruebas que arman lotes directo; 25 pruebas ajustadas a la recepción por tinas.
+
+## 1.42.1 · 9 de noviembre de 2026
+
+Pedido del usuario: «Quita las tinas del 3D. Si no están llenas con algo, quiero que no salgan».
+
+- **3D:** solo se dibujan las tinas que tienen langosta (de cualquier maquila; las de otra maquila en gris). Las tinas vacías ya no salen; el letrero del tanque sigue diciendo cuántas de las 30 están ocupadas.
+
 ## 1.42.0 · 8 de noviembre de 2026 · «Recepción por tinas»
 
 Pedido del usuario (8/nov, plan aprobado con sus respuestas): «Entrada» se llama **Recepción**; cada tanque tiene **30 tinas numeradas** y en cada tina se escribe su peso exacto y su talla, como las hieleras en Empaque; muerta, débil, rechazo y despatada se pesan aparte; temperaturas con un número cada una; fechas como en Logixx; teclado de números en toda casilla de números; formato de recepción en PDF como el Formato 02 de papel. «La destapada se va a poner aparte. Quítala del keypad».
@@ -8,7 +37,7 @@ Pedido del usuario (8/nov, plan aprobado con sus respuestas): «Entrada» se lla
 - **Aparte, sin tina:** langosta **muerta** (se descuenta y se regresa al proveedor), **débil**, **rechazo** y **despatada** (despatada ya no está en el teclado de tallas). Hora inicial y final de la recepción.
 - **Temperaturas:** una por cada tanque usado (°F del agua) y la del producto con **mínima y máxima en casillas separadas** (ya no «59-62»).
 - **Sacar de tinas:** al empacar, la app sugiere de qué tinas salió lo empacado y la persona confirma; una tina que llega a 0 kg queda libre. El lote dice qué tinas tiene y deja **mover una tina** a otra libre.
-- **3D por tinas:** cada tanque dibuja sus 30 tinas; las llenas con el color de su talla. Tocar una tina dice «Tina 140 · T6 · 2 kg · Jumbo · lote · maquila». Letrero por tanque: «T3 · 13 de 30 tinas», kg y días del más viejo. Los lotes de antes salen como «kg sin tina».
+- **3D por tinas:** cada tina llena se dibuja con el color de su talla (desde la 1.42.1 las vacías no salen). Tocar una tina dice «Tina 140 · T6 · 2 kg · Jumbo · lote · maquila». Letrero por tanque: «T3 · 13 de 30 tinas», kg y días del más viejo. Los lotes de antes salen como «kg sin tina».
 - **Formato de recepción (PDF)** como el Formato 02: datos de la recepción, una tabla por tanque usado con sus 30 tinas (kg y talla), resumen por talla y totales (viva, despatada, débil, rechazo, muerta), notas.
 - **Fechas como en Logixx:** al tocar una fecha sale un calendario (días y selector del mes); también se escriben los números y las diagonales salen solas. Al escoger el día o terminar de escribir la fecha, el calendario se cierra solo; Esc también lo cierra. Librería **flatpickr 4.6.13** (MIT, incluida en `index.html`, sin CDN; licencia en `docs/terceros/`).
 - **Teclado de números** en todas las casillas de números (`inputmode`).
@@ -855,7 +884,7 @@ Pedidos del usuario después de usar la app en su celular.
 ## 1.8.6 · 16 de octubre de 2026
 
 ### Nuevo
-- **Al compartir el link sale el logo de PROPESA.** Imagen `og-image.png` (1200×630, logo en blanco sobre azul marino con «Plataforma marítima») y las etiquetas que leen WhatsApp, Facebook, Slack, X, Teams y LinkedIn (`og:*`, `twitter:*`).
+- **Al compartir el link sale el logo de PROPESA.** Imagen `og-image.png` (1200×630, logo en blanco sobre azul marino; desde la v1.44.0 dice «Procesos y Operaciones») y las etiquetas que leen WhatsApp, Facebook, Slack, X, Teams y LinkedIn (`og:*`, `twitter:*`).
 - La descripción del link ya no menciona Mortalidad final como paso: «Seguimiento de cada lote de langosta viva: entrada, órdenes, empaque y embarque.»
 - **Pantalla de carga con el logo de PROPESA.** Al abrir la app aparece el logo en blanco sobre azul marino, con tres puntitos, mientras se cargan los datos del equipo; se desvanece sola en cuanto la app está lista (en la app instalada se ve al menos medio segundo para que no parpadee).
 - **El ícono de la pantalla de inicio de Android ya no se ve pixeleado.** Android dibuja ese ícono más grande que 512 px y estiraba el de 512; ahora hay uno de 1024 px (normal y para íconos redondos). El fondo de esa pantalla es el mismo azul que la pantalla de carga, así que se pasa de una a otra sin cambio de color. Íconos con `?v=4`.

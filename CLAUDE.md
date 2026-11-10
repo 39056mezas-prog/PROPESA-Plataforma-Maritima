@@ -1,11 +1,11 @@
-# CLAUDE.md · Plataforma PROPESA
+# CLAUDE.md · PROPESA — Procesos y Operaciones
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.42.0** (8 de noviembre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.44.0** (9 de noviembre de 2026).
 
 ## Qué es
 
-Plataforma web para **PROPESA** (Proveedor del Pescador S.A. de C.V., Ensenada, B.C.), que exporta langosta roja viva a China por avión.
+**PROPESA — Procesos y Operaciones** es la aplicación web de PROPESA (Proveedor del Pescador S.A. de C.V., Ensenada, B.C.), que exporta langosta roja viva a China por avión. Ese es el nombre oficial del producto: no la llames «plataforma marítima» ni nada parecido en pantallas, metadatos ni documentos.
 Sigue cada lote por este flujo, que **no se cambia sin permiso del usuario**:
 
 **Recepción → Órdenes → Empaque → Embarque**
@@ -126,4 +126,4 @@ Las pruebas usan Python 3 + Playwright con Chromium. Si `correr_todo.sh` ya leva
 ## Entregables de cada ronda
 
 El usuario descarga un zip y lo sube él mismo a GitHub; Vercel publica desde `main`. Entrega siempre:
-`propesa-plataforma.zip` (esta carpeta completa, sin `__pycache__`), `PROPESA_Plataforma_maritima.html` (copia de `index.html`) y, si cambió, el manual de usuario.
+`propesa-procesos-y-operaciones.zip` (esta carpeta completa, sin `__pycache__`), `PROPESA_Procesos_y_Operaciones.html` (copia de `index.html`) y, si cambió, el manual de usuario.

@@ -1,4 +1,4 @@
-# PROPESA · Plataforma marítima · v1.8.9
+# PROPESA — Procesos y Operaciones
 
 Sitio estático de una sola página (HTML + CSS + JavaScript, sin dependencias ni paso de compilación).
 Incluye recepción de lotes, captura de hieleras, hoja de empaque (Formato 06), embarques, cierre y mortalidad, temperatura, y fotos y notas por sección.
@@ -10,6 +10,7 @@ Incluye recepción de lotes, captura de hieleras, hoja de empaque (Formato 06), 
 | `index.html` | Toda la aplicación |
 | `manifest.webmanifest`, `favicon.svg`, `icon-192/512/1024.png`, `apple-touch-icon.png` | Ícono (langosta blanca sobre azul marino, la misma del botón Entrada) y opción "Agregar a pantalla de inicio" en tablet |
 | `og-image.png` | Imagen que sale al compartir el link (logo de PROPESA, 1200×630). Las etiquetas `og:`/`twitter:` de `index.html` llevan la dirección completa `https://app.propesa.org/` (desde la v1.31.4; `propesa.org` es el sitio público): si cambia el dominio, cámbiala ahí y en `pruebas/vista_previa_t.py` |
+| `.vercelignore` | Lista de lo único que Vercel publica (la app). Si agregas una imagen o archivo que la app usa, agrégalo ahí con «!» o no se publica |
 | `vercel.json` | Configuración de Vercel (encabezados de seguridad: CSP, HSTS, Permissions-Policy; caché; y la tarea diaria que mantiene despierta la base) |
 | `api/despierta.js` | La tarea diaria: una consulta pequeña a la base para que el plan gratis de Supabase no la pause (ver *Fin de temporada*) |
 | `supabase/` | Base compartida: `migrations/` (lo que está aplicado en el proyecto `propesa_bc`, incluido el espacio de archivos «fotos»), `functions/usuarios` (alta de usuarios) y `schema.sql` (primer esquema) |
@@ -48,12 +49,12 @@ Para cargar un respaldo `.json`: Administración → **Restaurar respaldo** (ree
 ## Subir a GitHub
 
 ```bash
-cd propesa-plataforma
+cd propesa-procesos-y-operaciones
 git init
 git add .
-git commit -m "PROPESA plataforma marítima"
+git commit -m "PROPESA — Procesos y Operaciones"
 git branch -M main
-git remote add origin https://github.com/TU-USUARIO/propesa-plataforma.git
+git remote add origin https://github.com/TU-USUARIO/propesa-procesos-y-operaciones.git
 git push -u origin main
 ```
 
