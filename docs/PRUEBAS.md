@@ -29,7 +29,6 @@ Para correr una sola: `python3 -m http.server 8765 &` y luego `python3 -I prueba
 | `menu_t.py` | Menú del perfil y botón Ajustes | 36 |
 | `correcciones_t.py` | Correcciones del /review (guardado fallido, acceso sin contraseñas en la app, fechas, respaldo seguro, embarque cerrado, ids de lote) | 19 |
 | `piso_t.py` | Modo piso: empacar, registrar entrada y Temperatura (v1.17.0–1.17.1) | 42 |
-| `entradas_t.py` | Modo piso: hoja de varias entradas (agregar, validar por fila, guardar parcial, sin duplicar, Enter, quitar, borradores, vistas 390/820/1180/1440, texto 20 px, tema oscuro) | 58 |
 | `cajas_auto_t.py` | Cajas que se guardan solas, quedan grises y se editan | 24 |
 | `interruptor_t.py` | Interruptor iOS, logo → inicio, admin no entra a piso | 16 |
 | `avisos_t.py` | Avisos rojos que llevan a donde se resuelven | 26 |
@@ -78,7 +77,6 @@ Para correr una sola: `python3 -m http.server 8765 &` y luego `python3 -I prueba
 | `hojas_t.py` | Precio de compra y Hojas para imprimir (los 6 PDF, periodo, permisos) | 21 |
 | `excel_reales_t.py` | **El Excel de Martha como referencia**: carga sus datos reales (`pruebas/datos/excel_reales.json`) y compara recepciones, envíos, existencia (÷16 y ÷15), peso bruto, balance y temporada con sus fórmulas | 25 |
 | `precios_t.py` | Precios solo para el Administrador con el Supabase de mentira (puerto 8795): registro `$/<lote>`, Piso y Consulta no lo reciben ni lo escriben, otra maquila, borrar el lote borra su precio | 16 |
-| `traslados_t.py` | Otro tanque en la entrada (vista completa y Modo piso), validaciones, tablero, Temperatura, «Pasar a otro tanque», «Deshacer», salidas del principal, Panel general, hoja de existencia, registros, respaldo, otra maquila, vistas | 30 |
 | `avisos_entrada_t.py` | Fecha contra el código del lote y hora de madrugada (lote, Entrada, al guardar, Modo piso, «Corregir ›», «Está bien así», Piso sin botones); salida incompleta al cerrar (motivos, pendiente del embarque, «Volver a descontar», reabrir), registros, respaldo, sin desbordes | 45 |
 | `especie_orden_t.py` | Especie en cada orden: selector solo con más de una especie, empaque (vista completa y Modo piso) solo de esa especie, lotes sin entrada con la especie de la orden, cambiar especie sin hieleras, compradores por especie, PDF, hoja de empaque, registros, respaldo, sin desbordes | 34 |
 | `historial_t.py` | Historial de cambios (v1.16.0) con el Supabase de mentira (puerto 8793): Piso crea, el Administrador cambia y borra; la lista dice quién, qué y «58 → 60», sin `D/disp`; Piso no recibe filas; sin internet; 1440/820/390 px con 20 px, tema oscuro, botón de 44 px; oculto en modo local |
@@ -98,6 +96,7 @@ Extras (no están en `correr_todo.sh`):
 ### v1.42.0 · recepción por tinas
 - `pruebas/recep.py` → `recibir(pg, lote, pv, kz, tank, …)` registra una recepción **por tinas desde la pantalla**, como una persona (toca la tina, escribe los kg, toca la talla; la despatada va en su casilla aparte). Úsala en cualquier prueba que necesite un lote nuevo; `lote=None` deja el que propone la app y `nuevo=False` sigue en la recepción que ya está abierta («Completar»). Si otro equipo ocupa la tina mientras se captura, pasa a la siguiente libre.
 - `tinas_t.py`: la recepción por tinas completa (teclado, tallas, aparte, temperaturas, PDF, sacar y mover tinas, dos equipos con la misma tina, 3D).
+- `TNA_DEF` (en `pruebas/recep.py`): para pruebas que arman un lote directo con `addLot(...)`: `pg.evaluate(TNA_DEF)` y luego `TNA(addLot({...}))` le pone tinas libres de su tanque. Desde la v1.43.0 todo lote lleva tinas (la existencia por tanque sale de ellas).
 - Las fechas abren el calendario (flatpickr): en una prueba, `fill` con la fecha completa lo cierra solo; si dejas la casilla vacía o a medias, `pg.keyboard.press('Escape')` antes de tocar otra cosa.
 
 ## 3. Datos de prueba

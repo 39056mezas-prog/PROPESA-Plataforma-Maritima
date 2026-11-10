@@ -5,7 +5,7 @@
 1. Abre Claude Code (o Claude con este repositorio/zip adjunto). Claude Code lee `CLAUDE.md` solo.
 2. Primer mensaje sugerido:
 
-   > Lee `CLAUDE.md` y los archivos de `docs/`. Vamos a seguir con la plataforma PROPESA. Antes de cambiar nada, dime en 5 líneas qué entendiste del proceso y qué vamos a atacar. No cambies el flujo ni los textos sin confirmármelo.
+   > Lee `CLAUDE.md` y los archivos de `docs/`. Vamos a seguir con PROPESA — Procesos y Operaciones. Antes de cambiar nada, dime en 5 líneas qué entendiste del proceso y qué vamos a atacar. No cambies el flujo ni los textos sin confirmármelo.
 
 3. Pide **un cambio a la vez**. Al final de cada cambio: pruebas, `CHANGELOG.md`, `docs/HISTORIAL.md` y zip nuevo.
 
@@ -29,8 +29,8 @@ El usuario instaló **[addyosmani/agent-skills](https://github.com/addyosmani/ag
 
 | Comando | Para qué | Cómo se usó en PROPESA |
 |---|---|---|
-| `/spec` | Especificación antes de programar (supuestos, alcance, criterios, límites) | Panel de Ajustes y menú del perfil → `SPEC.md` (aprobado por el usuario) |
-| `/planning` | Plan en tareas pequeñas verificables | `tasks/plan.md` |
+| `/spec` | Especificación antes de programar (supuestos, alcance, criterios, límites) | Ej.: panel de Ajustes y menú del perfil (v1.4; ya hecho, ver `docs/HISTORIAL.md`) |
+| `/planning` | Plan en tareas pequeñas verificables | en el proyecto de Claude (`PLAN_…md`) |
 | `/build` | Implementar en pasos chicos con pruebas | Menú del perfil |
 | `/test` | Pruebas primero / cobertura | Pruebas en `pruebas/` |
 | `/review` | Revisión de código en 5 ejes (correctitud, legibilidad, arquitectura, seguridad, rendimiento) | 6 correcciones (guardado fallido, contraseñas, fechas, XSS en respaldo, embarque cerrado, ids) |
@@ -48,16 +48,16 @@ Si los comandos no están disponibles en la sesión, sigue el método leyendo `c
 - [ ] Sin textos de demo, usuarios o datos de ejemplo en `index.html`.
 - [ ] Versión subida en dos lugares de `index.html` (menú del perfil `pmver` y Administración) + `CHANGELOG.md`.
 - [ ] README, `docs/` y manual de usuario al día.
-- [ ] Zip sin `__pycache__` ni `.pyc`; copia `PROPESA_Plataforma_maritima.html`.
+- [ ] Zip sin `__pycache__` ni `.pyc`; copia `PROPESA_Procesos_y_Operaciones.html`.
 - [ ] Plan de vuelta atrás: respaldo `.json` antes de actualizar; en Vercel → Deployments → versión anterior → **Promote to Production**.
 
 ## 5. Entregables y dónde viven
 
 | Entregable | Dónde |
 |---|---|
-| Código y documentación | Esta carpeta → `propesa-plataforma.zip`. El usuario lo sube a GitHub; Vercel publica desde `main`. |
-| App en un archivo | `PROPESA_Plataforma_maritima.html` |
-| Manual de usuario | Documento de Claude (Docs) «Manual de usuario · Plataforma PROPESA»; actualízalo si cambia algo que ve el usuario |
+| Código y documentación | Esta carpeta → `propesa-procesos-y-operaciones.zip`. El usuario lo sube a GitHub; Vercel publica desde `main`. |
+| App en un archivo | `PROPESA_Procesos_y_Operaciones.html` |
+| Manual de usuario | Documento de Claude (Docs) «Manual de usuario · PROPESA — Procesos y Operaciones»; actualízalo si cambia algo que ve el usuario |
 | Bitácora | `docs/HISTORIAL.md` (y `PROYECTO_PROPESA.md` en el proyecto de Claude «Propesa») |
 
 ## 6. Cómo comunicar

@@ -10,7 +10,6 @@ Pedido del usuario (8/nov/2026, v1.42.0): «estructura nuestro propio diccionari
 | **Tanque** | T1 a T6. Cada uno tiene 30 tinas. | — |
 | **Tina** | Recipiente numerado dentro de un tanque. T1 = tinas 1–30, T2 = 31–60, T3 = 61–90, T4 = 91–120, T5 = 121–150, T6 = 151–180. **Una tina = un lote y una talla.** Se dice «tanque 6, tina 140». | Canasta, caja (en el tanque) |
 | **Kg en tina** | El peso exacto que se escribió para esa tina (ej. 34.95 kg). Baja cuando se saca para empacar; en 0 kg la tina queda libre. | Kg por caja |
-| **Kg sin tina** | Kilos de lotes de antes de la v1.42.0, que no tienen tinas. Siguen en su tanque. | — |
 | **Talla** | La categoría por peso de cada maquila (nombre, rango y color propios). Ej. Chica 491-610 g. | — |
 | **Langosta viva** | Lo que va en tinas. | — |
 | **Langosta muerta** | Se pesa aparte; se descuenta y se regresa al proveedor. No va en tinas. | — |
@@ -28,8 +27,6 @@ Pedido del usuario (8/nov/2026, v1.42.0): «estructura nuestro propio diccionari
 | Pantalla | Ruta | Palabras clave |
 |---|---|---|
 | Recepción (lista y tablero de tanques) | `recepcion` | — |
-| Recepción por tinas (nueva o editar) | `rtin`, `rtin:<lote>` | `RT` (borrador), `R.tn`, `ST.TS` |
-| Formulario de antes (solo lotes sin tinas) | `recepcion` con `form={t:'lot'}` | `kgbox`, `tank`, `TQ` |
-| Hoja de varias recepciones (Modo piso, solo las ya empezadas) | `pent` | `PEN` |
+| Recepción por tinas (nueva o editar; la misma en Modo piso) | `rtin`, `rtin:<lote>` | `RT` (borrador), `R.tn`, `ST.TS` |
 
 Las claves internas viejas (`ent`, `nt:'Entrada'`, `entrada` en nombres de funciones) se quedan como están: cambiarlas rompería los datos guardados. Lo que se ve en pantalla sí dice «Recepción».

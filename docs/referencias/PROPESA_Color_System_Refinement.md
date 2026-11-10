@@ -2,7 +2,7 @@
 
 ## Objective
 
-Refine the existing PROPESA maritime operations platform so its colors match the official company logo while preserving the current interface design.
+Refine the existing PROPESA — Procesos y Operaciones web app so its colors match the official company logo while preserving the current interface design.
 
 The platform is already working and its current layout is preferred. This is a **color-system refinement, not a redesign**.
 

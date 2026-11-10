@@ -18,6 +18,6 @@ Todo lo necesario para seguir construyendo la plataforma con el mismo contexto. 
 | [HISTORIAL.md](HISTORIAL.md) | Bitácora completa, ronda por ronda |
 | [referencias/](referencias/README.md) | Formatos en papel y documentos que compartió el usuario |
 
-En la raíz: `README.md` (instalar, publicar, primer uso), `CHANGELOG.md`, `SPEC.md` + `tasks/plan.md` (Ajustes y menú del perfil).
+En la raíz: `README.md` (instalar, publicar, primer uso), `CHANGELOG.md`, `.vercelignore` (lo único que se publica en Vercel).
 
 **Mantenlos al día:** cada cambio actualiza el archivo que corresponda, `CHANGELOG.md` y `HISTORIAL.md`.

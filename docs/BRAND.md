@@ -32,8 +32,8 @@ Todos los valores viven como variables CSS en `:root` al inicio de `index.html`.
 - El logo PROPESA del menú lateral y del acceso **no cambió** (sigue la recreación en SVG, `LG`).
 
 ### Vista previa al compartir el link · desde la v1.8.6
-- `og-image.png` (1200×630, ~175 KB): el logo PROPESA en blanco (el mismo `LG` de la app, versión `LOGOD`) y «Plataforma marítima», sobre azul marino `#0B1D59` con un degradado suave. Se genera con Chromium desde el logo de la app; menos de 300 KB por el límite de WhatsApp.
-- Etiquetas `og:*` y `twitter:*` en `index.html` con la dirección completa `https://app.propesa.org/og-image.png?v=1` (desde la v1.31.4; antes `propesa.org`, v1.13.2, y `propesa.vercel.app`). Si cambia la imagen, sube `?v=`: WhatsApp, Facebook y Slack guardan la vista previa vieja varios días.
+- `og-image.png` (1200×630, ~175 KB): el logo PROPESA en blanco (el mismo `LG` de la app, versión `LOGOD`) y «Procesos y Operaciones» (desde la v1.44.0), sobre azul marino `#0B1D59` con un degradado suave. Se genera con `pruebas/generar_og_image.py`; menos de 300 KB por el límite de WhatsApp.
+- Etiquetas `og:*` y `twitter:*` en `index.html` con la dirección completa `https://app.propesa.org/og-image.png?v=2` (desde la v1.31.4; antes `propesa.org`, v1.13.2, y `propesa.vercel.app`). Si cambia la imagen, sube `?v=`: WhatsApp, Facebook y Slack guardan la vista previa vieja varios días.
 
 ### PDF a color por talla · desde la v1.22.0
 - Los PDF con tallas llevan arriba la leyenda de la maquila: una tarjeta por talla del color de esa talla (nombre, gramaje y nombre del color; las claras con borde gris).

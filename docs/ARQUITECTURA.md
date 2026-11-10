@@ -8,7 +8,7 @@
 | Datos | **Base compartida en Supabase** (v1.4.0): todos los equipos ven lo mismo. Copia en el navegador (IndexedDB, `propesa-c1`, desde la v1.6.0) para trabajar sin internet. Modo local de pruebas: `propesa-v4`. |
 | Despliegue | GitHub → Vercel (Framework *Other*, sin build, se sirve la raíz). `vercel.json` pone cabeceras de seguridad y caché. |
 | PWA ligera | `manifest.webmanifest` + íconos para «Agregar a pantalla de inicio». Sin service worker todavía. |
-| Copia suelta | `PROPESA_Plataforma_maritima.html` = el mismo `index.html`. |
+| Copia suelta | `PROPESA_Procesos_y_Operaciones.html` = el mismo `index.html`. |
 
 **Mantener todo en un archivo** hasta que haya backend. Si algún día se divide, que sea junto con la migración a Supabase.
 
@@ -29,7 +29,7 @@ load() ─► ST (estado global) ─► render() ─► render0() escribe #app.i
 ## 3. Rutas (`PG`) y paso del menú (`STEP`)
 
 ```js
-PG = { piso, pemp, pent, inicio, recepcion, lote, empaque, empacar, embarques, emb, ordenes, orden, cierre, temperatura, admin, buscar }
+PG = { rtin, piso, pemp, pcer, pcon, inicio, recepcion, lote, empaque, empacar, embarques, emb, ordenes, orden, cierre, temperatura, admin, buscar }
 STEP = { recepcion:1, lote:1, ordenes:2, orden:2, empaque:3, empacar:3, embarques:4, emb:4, cierre:5 }
 ```
 
@@ -42,7 +42,7 @@ STEP = { recepcion:1, lote:1, ordenes:2, orden:2, empaque:3, empacar:3, embarque
 | `embarques` · `emb:<i>` | índice en `ST.P` | Embarque · consignación |
 | `cierre` | — (sección «Revisión», no es paso) | Mortalidad final |
 | `temperatura`, `admin`, `buscar:<texto>` | | |
-| `piso` · `pemp[:o.l]` · `pent` | | Modo piso: inicio, empacar, entrada |
+| `piso` · `pemp[:o.l]` · `rtin` | | Modo piso: inicio, empacar, recepción por tinas (la misma de la vista completa) |
 
 Los nombres internos (`recepcion`, `cierre`) **no se renombran**; solo los textos visibles.
 
@@ -140,11 +140,11 @@ Escritor propio `PdfRep` (sin librerías): Helvetica con codificación WinAnsi y
 ## 10. Archivos del repositorio
 
 ```
-propesa-plataforma/
+propesa-procesos-y-operaciones/
 ├── index.html              ← toda la app
 ├── CLAUDE.md · AGENTS.md   ← instrucciones para asistentes de IA
 ├── README.md · CHANGELOG.md
-├── SPEC.md · tasks/plan.md ← especificación y plan del panel de Ajustes y menú del perfil
+├── .vercelignore ← lista de lo único que Vercel publica (la app); docs, pruebas y supabase NO se publican
 ├── docs/                   ← contexto del proyecto (este archivo y los demás)
 │   └── referencias/        ← formatos en papel y documentos del usuario
 ├── pruebas/                ← pruebas automáticas (Playwright/Python) y datos de prueba
@@ -291,5 +291,5 @@ Meta: que corra desde un **iPad mini 2/3 con iOS 12 (Safari 12)**. Lo nuevo se p
 - **Ruta `rtin` / `rtin:<lote>`** (`recTinas`): borrador en `RT = {key, lot, h (casillas rt_*), tn {tina: {g, z}}, tk, act, fresh, join?, ne?}`; se guarda con la pantalla al recargar (`uiSave`). `rtSave` valida (fecha, horas, proveedor, especie, lote, cada tina con kg y talla y libre, kg aparte, temperaturas) y crea el lote con `addLot` + `tn`, `tts`, `tpn`, `tpx`, `hf`, `mu`, `db`, `rz` (y la despatada como `RECEPCION` de `desp`).
 - **Teclado de tinas** `#tnpad` (acciones `data-tnk`), aparte del de hieleras `#kpad`; «Guardar» se acomoda en `kpdock` cuando el teclado está abierto.
 - **Funciones de tinas:** `tnTk`, `tnOf`, `tnNow`, `tnOcc`, `tnFree`, `tnDistZ` (reparto por tanque y talla para el tablero), `tnPend`/`tnSug` (sugerir de qué tinas sacar), `tnCard` (tarjeta del lote: sacar y mover tinas), `pdfRecepcion` (`pdfMake('rec', lote)`).
-- **3D:** `t3Data()` = `{occ: tnOcc(), sin: kg sin tina por tanque, vis}`; `t3Inner` dibuja 30 tinas por tanque (15 × 2) con número y kg; tocar una tina = `T3.pick = {t, k, n}`.
+- **3D:** `t3Data()` = `{occ: tnOcc(), vis}`; `t3Inner` acomoda 30 lugares por tanque (15 × 2) y dibuja solo las tinas con langosta (v1.42.1), con número y kg; tocar una tina = `T3.pick = {t, k, n}`.
 - **Fechas:** cada casilla `data-dt="d"` arma un flatpickr al recibir el foco (`FPO()`, `FPI`). Lo escrito se entiende con `pD`; con 8 números completos se cierra solo (`fpDone`); Esc lo cierra; al volver a dibujar la pantalla, los calendarios de casillas que ya no existen se quitan (`fpSweep` en `render`).

@@ -24,7 +24,7 @@
 | 4 | **Embarque** | Junta una o varias órdenes con mismo destino y consignatario. Plan de carga del camión, tallas, peso bruto, cierre del empaque e informe | Admin | `embarques`, `emb:<índice>` |
 | — | **Mortalidad final** (aparte, no es paso) | Se calcula sola con el conteo final por lote (kg) y las langostas vivas al llegar; se revisa cuando se necesite | Captura admin y piso; cierra admin | `cierre` |
 
-Además: **Panel** (`inicio`), **Temperatura** (`temperatura`), **Administración** (`admin`), **Buscar** (`buscar:<texto>`) y **Modo piso** (`piso`, `pemp`, `pent`).
+Además: **Panel** (`inicio`), **Temperatura** (`temperatura`), **Administración** (`admin`), **Buscar** (`buscar:<texto>`) y **Modo piso** (`piso`, `pemp`, `rtin`).
 
 > **Hecho clave (corregido por el usuario):** en los tanques las cajas **no se numeran ni se cuentan**. Del lote solo se conocen los **kilos por talla**. Las piezas por caja se cuentan **al empacar cada pedido**.
 

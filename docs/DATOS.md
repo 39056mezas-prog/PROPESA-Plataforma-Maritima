@@ -14,8 +14,8 @@ ST = {
 
   R: [{ id /* 'R-0mw5a9pn2wxv5wl' (v1.38.0; antes 'R-0121') */, lot /* 'WLRCO061026B' */, origin /* proveedor */, tank /* 'T1'..'T6' */,
         rdate /* 'YYYY-MM-DD' */, time /* 'HH:MM' */, date /* 'dd/mm/aaaa' */,
-        tempT /* °F tanque */, tempP /* °F producto, texto o rango '59-62' */,
-        kgbox /* kg por caja en tanque */, desp /* kg desperdicio */,
+        tn /* [[tina, talla, gramos]] (v1.42.0) */, tts /* {T1: °F} agua de cada tanque */, tpn, tpx /* °F producto mín/máx */,
+        hf /* hora final */, mu, db, rz /* kg muerta, débil, rechazo (aparte) */,
         final /* kg conteo final | null */, closed }],
 
   L: [{ id, t, type /* 'RECEPCION'|'SALIDA_EMBARQUE'|'REVERSA' */, lot,
@@ -124,7 +124,7 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - **Lote:** `R.pr = {u, d, f, nt}` (USD/kg, USD/kg de despatada, `F`/`S`, nota).
 - **Compradores:** `D/disp.n = [[inglés, rango, color]]` de las tallas de PROPESA.
 - **Precio en la base:** `R.pr` no viaja dentro de `R/<lote>`: va en su propio registro `$/<lote>` (`{lot, u, d, f, nt}`; `q<id>:$/<lote>` en otra maquila). `decodeST` lo vuelve a poner en su lote. La base solo se lo da al Administrador.
-- **Traslados entre tanques:** `ST.TQ = [{id, t, lot, de, a, kg, by, nt, tt, kb}]` por maquila, registros `TQ/<id>`. `nt:'Entrada'` = el otro tanque capturado en la entrada (`tt`, `kb`: su temperatura y kg por caja; salen en Temperatura y en la tabla de Entrada como «1/2», «57.6/60.3», «34/36»). `tqDist(lote)` = kg de hoy por tanque (todo empieza en `r.tank` y cada traslado pasa sus kg sin pasar de lo que hay); `tqShare(lote, tanque)` = proporción para repartir las tallas.
+- **(Quitado en v1.43.0)** Traslados entre tanques: `ST.TQ = [{id, t, lot, de, a, kg, by, nt, tt, kb}]` por maquila, registros `TQ/<id>`. `nt:'Entrada'` = el otro tanque capturado en la entrada (`tt`, `kb`: su temperatura y kg por caja; salen en Temperatura y en la tabla de Entrada como «1/2», «57.6/60.3», «34/36»). `tqDist(lote)` = kg de hoy por tanque (todo empieza en `r.tank` y cada traslado pasa sus kg sin pasar de lo que hay); `tqShare(lote, tanque)` = proporción para repartir las tallas.
 
 ## v1.20.0 · avisos y especie de la orden
 - **Lote:** `R.av` = avisos aceptados con «Está bien así»: `'f:<aaaa-mm-dd>'` (fecha que no cuadra con el código) y `'h:<HH:MM>'` (hora de madrugada); se guardan con el valor aceptado para que un cambio vuelva a avisar (`avClean`, `lotWarn`, `lotDt`).
@@ -134,7 +134,7 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 
 ## v1.25.0 · varias maquilas en una orden, tanques por talla, salidas con fecha
 - **Hieleras de otra maquila:** en `ST.B` de la maquila de la orden, con clave `LOTE@idMaquila` (`XLR`, `xk`). `R_`/`bal` la resuelven en `STX[id]` (`xR`, `xBal`; la talla por posición). Viaja en `B/<seq>` con `lot:'LOTE@id'`; `decodeST` y `cleanST` la conservan aunque el lote no exista en esta maquila. `salidaAuto` descuenta del `L` de esa maquila (`rc:'E/<u>'`, nota con maquila y embarque) y marca `ENC_X[id]` para subirla; `salidaOff(u)` la quita de todas.
-- **Traslado de la entrada por talla:** `TQ.z = {talla: kg}` (`tqZc` en `cleanST` y `WN.TQ`). `tqDistZ(l)` = {talla: {tanque: g}}; `tqDist(l)` suma tallas; `tqZ(l,t,z)`. Traslados sin `z` (de antes o «Pasar a otro tanque») reparten en la proporción del tanque de origen.
+- **(Quitado en v1.43.0)** Traslado de la entrada por talla: `TQ.z = {talla: kg}` (`tqZc` en `cleanST` y `WN.TQ`). `tqDistZ(l)` = {talla: {tanque: g}}; `tqDist(l)` suma tallas; `tqZ(l,t,z)`. Traslados sin `z` (de antes o «Pasar a otro tanque») reparten en la proporción del tanque de origen.
 - **Movimientos:** tipo `RECLASIFICACION` («Cambio de talla», en pares − / +; no es salida). Las salidas manuales pueden llevar fecha pasada: `L.t` = «dd/mm/aa, 12:00».
 - **Lote:** `R.av` acepta `c:<lote>` (aviso de código aceptado). Corregir el código (`lotRename`) cambia `R`, `L`, `TQ`, `B` y notas; solo sin hieleras.
 - **Camiones:** `tOpen()` = embarques abiertos de todas las maquilas; `P.tk` y `P.ly` se guardan en la maquila de cada embarque (`tDirty`).
@@ -157,4 +157,10 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
   - `tts: {T1: °F, …}` — temperatura del agua de cada tanque usado; `tpn`, `tpx` — temperatura mínima y máxima del producto (°F); `hf` — hora final (`time` sigue siendo la hora inicial).
 - **Movimientos de tinas:** `ST.TS = [{id, t, lot, n, g, a?, by, nt?}]` — `g` gramos que salieron de la tina `n` (al empacar); con `a`, se movieron a la tina `a`. Registro compartido `TS/<id>` (con prefijo `q<id>:` en otra maquila); `tsClean` lo valida. Lo que hay hoy en cada tina = `tnNow(r)` (entrada − salidas ± movimientos); una talla del lote con saldo 0 libera sus tinas.
 - **Renombrar o borrar un lote** cambia o quita también sus `TS`.
-- **Inventario desde 0:** no hay migración: los lotes de antes no tienen `tn` y siguen en su tanque (`tank`, `TQ`).
+- **Inventario desde 0:** no hay migración: la base se vació antes de la v1.43.0.
+
+## v1.43.0 · Sin lo viejo (la base ya está en cero)
+- **Se quitó del lote:** `tempT`, `tempP`, `kgbox`, `desp` (los reemplazan `tts`, `tpn`/`tpx` y la talla `desp`). `cleanST` y `WN.R` ya no los guardan.
+- **Se quitó `ST.TQ`** (traslados de kg entre tanques): cada tina dice su tanque y una tina se mueve con `TS` (`a` = tina nueva). Registros viejos `TQ/<id>` que sigan en la base se dejan como están (no se leen ni se borran).
+- **Tanques de un lote:** `tqDistZ(l)` = `tnDistZ(r)` (solo tinas); un lote sin recepción (`ne`) no tiene tanque.
+- **Historial (HCN):** etiquetas nuevas `tts`, `tpn`, `tpx`, `tn`, `mu`, `db`, `rz`, `hf`.

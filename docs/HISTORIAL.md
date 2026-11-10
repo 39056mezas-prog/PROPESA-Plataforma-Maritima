@@ -7,10 +7,10 @@
 
 ## 0. Cómo usar este archivo
 
-1. Abre una conversación nueva (o un proyecto de Claude) y sube **este .md** y **`index.html`** (el código es la fuente de verdad; está dentro de `propesa-plataforma.zip`).
+1. Abre una conversación nueva (o un proyecto de Claude) y sube **este .md** y **`index.html`** (el código es la fuente de verdad; está dentro de `propesa-procesos-y-operaciones.zip`).
 2. Pega un primer mensaje como este:
 
-   > Lee `PROYECTO_PROPESA.md` e `index.html`. Vamos a seguir con la plataforma PROPESA. Antes de cambiar nada, dime en 5 líneas qué entendiste del proceso y qué tarea del To-do vamos a atacar. No cambies el flujo ni los textos sin confirmármelo.
+   > Lee `PROYECTO_PROPESA.md` e `index.html`. Vamos a seguir con PROPESA — Procesos y Operaciones. Antes de cambiar nada, dime en 5 líneas qué entendiste del proceso y qué tarea del To-do vamos a atacar. No cambies el flujo ni los textos sin confirmármelo.
 
 3. Pide **un cambio a la vez**, con una prueba al final. Los cambios grandes se validan primero con el equipo de piso (ver sección 9).
 4. Después de cada sesión actualiza las secciones **4 (Estado)**, **12 (Decisiones abiertas)** y **13 (To-do)** de este archivo.
@@ -70,7 +70,7 @@ Los nombres chinos de los clientes vienen ocultos (■■■) en los PDFs.
 ## 3. Estructura del proyecto
 
 ```
-propesa-plataforma/
+propesa-procesos-y-operaciones/
 ├── index.html              ← TODA la aplicación (HTML + CSS + JS, ~100 KB, sin dependencias)
 ├── manifest.webmanifest    ← "Agregar a pantalla de inicio" en tablet
 ├── favicon.svg · icon-192.png · icon-512.png · apple-touch-icon.png
@@ -82,7 +82,7 @@ propesa-plataforma/
 
 - **Sin build, sin npm.** Se abre con doble clic o con `python3 -m http.server`.
 - **Despliegue:** GitHub + Vercel (Framework Preset: *Other*, sin comando de compilación ni carpeta de salida).
-- **Archivo suelto:** `PROPESA_Plataforma_maritima.html` es la misma app en un solo archivo.
+- **Archivo suelto:** `PROPESA_Procesos_y_Operaciones.html` es la misma app en un solo archivo.
 
 ---
 
@@ -240,10 +240,10 @@ Pendiente: convertir esas pruebas en un archivo `tests/` dentro del repositorio 
 ## 11. Despliegue
 
 ```bash
-cd propesa-plataforma
+cd propesa-procesos-y-operaciones
 git init && git add . && git commit -m "PROPESA plataforma"
 git branch -M main
-git remote add origin https://github.com/TU-USUARIO/propesa-plataforma.git
+git remote add origin https://github.com/TU-USUARIO/propesa-procesos-y-operaciones.git
 git push -u origin main
 ```
 
@@ -996,3 +996,9 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Pedido:** renombrar Entrada → Recepción; tinas numeradas (30 por tanque) llenadas con su peso exacto y su talla como las hieleras; muerta, débil, rechazo y despatada aparte («quítala del keypad»); temperaturas de un número; calendario como Logixx (librería existente); teclado de números; PDF como el Formato 02; diccionario propio. Además en el sitio: nombre completo en la vista previa de Google y en una línea, tallas que no se vuelven teléfono, mapa satelital, globo que se gira y solo correo de contacto.
 - **Plan:** `PLAN_RECEPCION_TINAS_v1.42.0.md` en el proyecto; aprobado con las respuestas del usuario (tina = un lote y una talla; 30 por tanque; kg exactos; inventario desde 0).
 - **Resultado:** ver CHANGELOG 1.42.0. Pruebas pasadas a la recepción por tinas (`pruebas/recep.py`), `tinas_t.py` nueva.
+
+## Ronda v1.42.1 – v1.43.0 · 9/nov/2026 · «Sin lo viejo»
+- **Pedidos:** quitar del 3D las tinas vacías (1.42.1); revisar el repositorio y quitar lo viejo; crear el `.vercelignore`; ver los PDF de recepción; que cada tanque diga solo sus tinas; el PDF con solo las tinas usadas, que se lea fácil y no gaste papel.
+- **Antes de borrar:** consulta de solo lectura a la base: 0 lotes, 0 hieleras y 0 movimientos vivos; quedaban 6 registros `TQ/…` de lotes ya borrados (la app ya no los lee).
+- **PDF de recepción:** se probaron una cuadrícula como el papel y una rejilla con líneas gruesas; el usuario eligió las tarjetas por tanque.
+- **Resultado:** ver CHANGELOG 1.43.0.
