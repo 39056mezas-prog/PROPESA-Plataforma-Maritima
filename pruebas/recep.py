@@ -65,6 +65,8 @@ def recibir(pg, lot, pv='1', kz=(), tank='T1', fecha=None, hora='09:00', hf='', 
         pg.click(f'#tnpad [data-tnk="z:{zi}"]' if pad else f'[data-rt="z:{zi}"]')
         pg.wait_for_timeout(30)
         used.append((n, zi, kg))
+    if any(v != '' for v in (mu, db, rz, dp)):  # v1.43.1: «Lo que no entra a tinas» va plegado; hay que abrirlo para escribir
+        pg.evaluate("document.querySelector('details.rtlno') && (document.querySelector('details.rtlno').open=true)")
     for k, v in (('rt_mu', mu), ('rt_db', db), ('rt_rz', rz), ('rt_dp', dp)):
         if v != '' and pg.locator('#' + k).count():
             pg.fill('#' + k, str(v))

@@ -53,7 +53,7 @@ with sync_playwright() as p:
     chk('Temperatura de T1' in pg.inner_text('#app') and J(pg, "document.activeElement.id") == 'rt_ttT1', 'falta la temperatura de T1: lo dice y pone el cursor ahí')
     pg.fill('#rt_ttT1', '57.6'); pg.fill('#rt_tpn', '62.2'); pg.fill('#rt_tpx', '57.7'); pg.click('[data-rt=sv]'); pg.wait_for_timeout(80)
     chk('mínima no puede ser mayor' in pg.inner_text('#app'), 'temperatura del producto: mínima y máxima, cada una un número')
-    pg.fill('#rt_tpn', '57.7'); pg.fill('#rt_tpx', '62.2'); pg.fill('#rt_mu', '21.45'); pg.fill('#rt_dp', '8.45'); pg.fill('#rt_rz', 'diez')
+    pg.evaluate("document.querySelector('details.rtlno').open=true"); pg.fill('#rt_tpn', '57.7'); pg.fill('#rt_tpx', '62.2'); pg.fill('#rt_mu', '21.45'); pg.fill('#rt_dp', '8.45'); pg.fill('#rt_rz', 'diez')
     pg.click('[data-rt=sv]'); pg.wait_for_timeout(80)
     chk('rechazo' in pg.inner_text('#app') and J(pg, "document.activeElement.id") == 'rt_rz', 'rechazo con letras: avisa junto al campo')
     pg.fill('#rt_rz', ''); pg.click('[data-rt=sv]'); pg.wait_for_timeout(250)

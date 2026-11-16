@@ -60,7 +60,7 @@ with sync_playwright() as p:
         # --- Mortalidad final aparte
         side = pg.evaluate("[...document.querySelectorAll('.sb .fs em')].map(e=>e.textContent).join(',')")
         chk(side == '', f'{vw} el menú ya no lleva números (v1.33.0, la app no obliga un orden): {side!r}')
-        chk(pg.locator('.sb h4:has-text("Revisión") + [data-go=cierre]').count() == 1 and 'calcula sola' not in pg.inner_text('.sb [data-go=cierre]').lower(), f'{vw} Mortalidad final está aparte, en «Revisión», y dice que se calcula sola')
+        chk(pg.locator('.sb h4:has-text("Control") ~ [data-go=cierre]').count() == 1 and 'calcula sola' not in pg.inner_text('.sb [data-go=cierre]').lower(), f'{vw} Mortalidad final está aparte, en «Revisión», y dice que se calcula sola')
         pg.evaluate("go('cierre')"); chk('Revisión aparte' not in pg.inner_text('.pgh') and 'No es un paso' not in pg.inner_text('.pgh') and pg.locator('.pgh [data-go]').count() == 0, f'{vw} su pantalla dice «Revisión aparte» y no empuja a otro paso')
         chk(pg.locator('[data-fin]').count() >= 1, f'{vw} ahí se sigue pudiendo capturar el conteo final')
         pg.evaluate("go('embarques')"); chk('mortalidad' not in pg.inner_text('.pgh').lower(), f'{vw} Embarque ya no tiene «Siguiente: mortalidad final»')

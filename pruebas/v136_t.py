@@ -115,6 +115,7 @@ with sync_playwright() as p:
     chk('Editar consignatario o hieleras' in t and 'u hieleras' not in t, '«Editar consignatario o hieleras»')
     ir(pg, 'recepcion'); t0 = pg.inner_text('main'); pg.click('[data-a=nf]'); pg.wait_for_timeout(100)
     chk(pg.get_attribute('#rt_tpn', 'placeholder') == 'Ej. 57.7' and pg.get_attribute('#rt_fl', 'placeholder') == 'Ej. WLRCO051026A', 'Recepción: los ejemplos dicen «Ej.» y la temperatura es un solo número (ya no «59-62»)')
+    pg.evaluate("document.querySelectorAll('details.rtlno').forEach(d=>d.open=true)")  # v1.43.1: la pestaña va plegada; su texto cuenta solo abierta
     t = pg.inner_text('main')
     chk('Langosta muerta (kg)' in t and 'Temperatura del producto mínima (°F)' in t and 'Temp. °F' not in t, 'Recepción: etiquetas sin abreviar')
     chk('fecha distinta a la del código' in t0, 'Recepción: el aviso dice qué pasa con la fecha')
@@ -133,6 +134,7 @@ with sync_playwright() as p:
         pg = b.new_context(viewport={'width': W, 'height': H}).new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
         entrar(pg, 'piso@propesa.mx', '1'); ir(pg, 'rtin')  # v1.43.0: la recepción por tinas
         chk(pg.evaluate("[...document.querySelectorAll('[data-rt^=\"tk:\"]')].map(b=>b.dataset.rt.slice(3)).join(',')") == 'T1,T2,T3,T4,T5,T6', f'{W} Modo piso: tanques T1…T6')
+        pg.evaluate("document.querySelectorAll('details.rtlno').forEach(d=>d.open=true)")  # v1.43.1: la pestaña va plegada; su texto cuenta solo abierta
         t = pg.inner_text('main')
         chk('Langosta muerta' in t and 'Despatada' in t.replace('despatada', 'Despatada') and 'desperdicio' not in t.lower(), f'{W} Modo piso: muerta y despatada aparte, sin «desperdicio»')
         chk(desborde(pg) <= 0, f'{W} Modo piso: sin desborde ({desborde(pg)})')

@@ -45,8 +45,8 @@ with sync_playwright() as p:
         pg.click('.pgh [data-a=nf]'); pg.wait_for_timeout(200); chk(pg.locator('#rt_fl').count() == 1 and pg.evaluate('V.v') == 'rtin', f'{W} Recepción: «+ Nueva recepción» abre la recepción por tinas')
         # ---------- 4. menú ----------
         if W < 700: pg.click('.mb'); pg.wait_for_timeout(150)
-        chk(pg.locator('.sb [data-go=general]').count() == 0 and pg.locator('.sb [data-go=admin]').count() == 0, f'{W} menú: sin Panel general ni Administración')
-        chk(pg.locator('.sb .fs[data-go]').count() == 8, f'{W} menú: 8 secciones (v1.39.0: Formatos y Panel = Centro de operaciones; v1.41.0: «Instalar app» aparte) ({pg.locator(".sb .fs[data-go]").count()})')
+        chk(pg.locator('.sb [data-go=general]').count() == 0 and pg.locator('.sb [data-go=admin]').count() == 1, f'{W} menú: sin Panel general; Administración solo en el grupo Control (v1.44.1)')
+        chk(pg.locator('.sb .fs[data-go]').count() == 10, f'{W} menú: 10 opciones en 3 grupos (v1.44.2: Centro · 4 de Operación · Temperatura, Inventario, Mortalidad, Hojas, Administración) ({pg.locator(".sb .fs[data-go]").count()})')
         chk('Elige qué llenar' not in pg.inner_text('.sb') and 'Resumen' not in pg.inner_text('.sb') and '7/7 hieleras' in pg.inner_text('.sb'), f'{W} menú: sin subtítulos de relleno, con los conteos')
         pg.click('.sb [data-mq]'); pg.click('#mqmenu [data-mqgo="general"]'); pg.wait_for_timeout(250)
         chk(pg.evaluate('V.v') == 'general', f'{W} el Panel general se abre desde el selector de maquila')

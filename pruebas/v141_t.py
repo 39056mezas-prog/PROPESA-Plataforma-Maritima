@@ -48,8 +48,9 @@ with sync_playwright() as p:
         chk(pg.evaluate("T3.zoom&&TQSEL==='T1'"), f'{tag}: tocar con el dedo el agua de T1 lo acerca')
         chk(pg.locator('.tqd').count() == 1 and pg.evaluate("document.querySelector('.tqd').getBoundingClientRect().height") > 50, f'{tag}: el resto de la página (tablero de tanques) sigue ahí')
         if vw < 700: pg.click('.mb'); pg.wait_for_timeout(300)
-        chk(pg.locator('.sb [data-pm=inst]').count() == 1, f'{tag}: «Instalar app» en el menú')
-        pg.locator('.sb [data-pm=inst]').click(); pg.wait_for_timeout(300)
+        pg.evaluate("document.querySelector('.avb').click()"); pg.wait_for_timeout(200)  # abre el menú del usuario (el lateral en celular puede taparlo)  # v1.43.1: «Instalar app» ahora está en el menú del usuario (círculo), no en el lateral
+        chk(pg.locator('.sb [data-pm=inst]').count() == 0 and pg.locator('#pmenu [data-pm=inst]').count() == 1, f'{tag}: «Instalar app» fuera del menú lateral; sí en el menú del usuario')
+        pg.evaluate("document.querySelector('#pmenu [data-pm=inst]').click()"); pg.wait_for_timeout(300)
         chk(pg.locator('#inst').count() == 1 and 'Instala la app PROPESA' in pg.inner_text('#inst'), f'{tag}: «Instalar app» abre la ventana con los pasos')
         c.close()
     # ya instalada: no se ofrece

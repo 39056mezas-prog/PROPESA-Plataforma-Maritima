@@ -85,7 +85,7 @@ with sync_playwright() as p:
     chk(pg.locator('main [data-alive],main [data-mc],main [data-tar]').count() == 0 and 'Langostas vivas al llegar al destino' not in pg.inner_text('main'), 'el embarque ya no tiene la captura de la llegada')
     pg.evaluate("go('cierre')"); pg.wait_for_timeout(120)
     chk(pg.locator('#envcli [data-alive]').count() >= 1 and 'Langostas vivas al llegar al destino' in pg.inner_text('#envcli') and '(enviadas − vivas)' in pg.text_content('[data-fold=mort-calc]'), 'Mortalidad final (Revisión) captura las vivas al llegar de cada envío')
-    chk(pg.evaluate("document.querySelector('.sb [data-go=cierre]').previousElementSibling.textContent") == 'Revisión', 'Mortalidad final está en el grupo «Revisión» del menú')
+    chk(pg.evaluate("document.querySelector('.sb [data-go=cierre]').previousElementSibling.textContent") == 'Inventario', 'Mortalidad final está en el grupo «Control» del menú (v1.45.0: después de Inventario)')
 
     # --- 1. logotipo de cada maquila
     pg.evaluate("go('inicio')"); pg.wait_for_timeout(100)

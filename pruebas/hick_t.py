@@ -29,7 +29,7 @@ with sync_playwright() as p:
     chk(ev(pg,'V.v')=='inicio','al entrar abre el Centro de operaciones')
     chk(pg.inner_text('main h1')=='Centro de operaciones','título «Centro de operaciones»')
     order=ev(pg,"[...document.querySelectorAll('main .ctg4, main .t3bar')].map(x=>x.className.split(' ')[0])")
-    chk(order[:2]==['g4','t3bar'],f'orden: 4 números → planta 3D ({order})')
+    chk(order[:2]==['t3bar','g4'],f'orden: planta 3D primero, después los 4 números (v1.44.2 fase 2) ({order})')
     chk(ev(pg,"document.querySelectorAll('.ctg4 .ctk').length")==4,'4 números que se tocan')
     chk(ev(pg,"!document.querySelector('main .ctstrip,main .ctl,main .pt,main .fmg')"),'centro de mando, no otro menú: sin cuadrícula de accesos a los módulos')
     chk(ev(pg,"!document.querySelector('main .nti')"),'sin lista de avisos en el Centro (van en la campana)')
