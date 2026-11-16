@@ -1,5 +1,35 @@
 # Cambios
 
+## 1.45.0 · 13 de noviembre de 2026 · Centro de operaciones con tanques 3D
+
+Plan aprobado el 13/nov (ver la conversación): los tanques 3D son lo primero al entrar, en todos los roles.
+
+- **Menú en tres grupos:** General (Centro de operaciones) · Operación (Recepción, Órdenes, Empaque, Embarque) · Control (Temperatura, Inventario, Mortalidad final, Hojas para imprimir y, solo para el Administrador, Administración).
+- **Centro de operaciones:** la planta 3D va arriba, antes de los cuatro números. En Modo piso también aparece arriba de «¿Qué vas a hacer?», como referencia visual.
+- **Ficha del tanque:** bloque «Necesita atención» con lotes que pasaron sus días o están en su último día, y temperaturas (flotante, superficie, producto) fuera de rango. Cada aviso lleva a donde se resuelve.
+- **Campana de notificaciones:** avisa de temperatura fuera de rango por tanque, con su última lectura.
+- **Inventario (todos los roles):** disponible por talla y por tanque (T1…T6), con los mismos cálculos del 3D.
+- Pruebas nuevas: `v1441_t.py` (menú), `v1442_t.py` (3D primero), `v1443_t.py` (avisos y campana), `v1444_t.py` (Inventario). Actualizadas: `v134_t`, `v124_t`, `temperatura_t`.
+
+Pendiente:
+- Lote vencido en la ficha del tanque: la lógica existe, pero no hay prueba con datos de días máximos.
+- Tanque con lotes sin cerrar: no está implementado; hay que decidir cómo se muestra.
+- Solo inventario: su pantalla de inicio no abre con el 3D (decidir si debe).
+
+## 1.44.1 · 13 de noviembre de 2026 · Recepción: borrador, teclado de letras y calendario
+
+Pedidos del usuario (aprobados el 13/nov): el orden de la recepción, el teclado con letras, el bug de los números, el borrador que no se pierde y el calendario que dejaba la página en gris.
+
+- **Lo que no entra a tinas** (muerta, débil, rechazo, despatada): debajo de Temperaturas y en una pestaña plegable. Se abre sola si ya hay kilos.
+- **Teclado con letras de color:** escribes los kg y pulsas B (Chica/Blanca), R (Mediana/Roja), V (Grande/Verde) o A (Jumbo/Amarilla). Enter pasa a la siguiente tina. Mismos colores que en Empaque.
+- **Números que se cambiaban solos:** cada tecla redibujaba la tina completa, incluido el campo. Ahora solo se actualizan el estado y el resumen; el campo conserva lo escrito y el foco.
+- **Borrador de recepción:** «+ Nueva recepción» crea un borrador (`ST.RB`, registro `RB/<id>` en la base). Se guarda solo mientras se escribe. Aparece en Recepción como «Recepciones sin terminar»: Seguir ›, Cancelar (no lo borra) o Descartar (pide confirmación). Guardar la recepción lo quita.
+- **Calendario:** si la página se desplaza con el calendario abierto, el calendario se cierra (antes flotaba sobre el contenido). Tocar la fecha lo vuelve a abrir.
+- **«Instalar app»** sale del menú lateral; sigue en el menú del usuario.
+- Pruebas nuevas: `v1431_t.py` (teclado, pestaña, foco, calendario) y `v1432_t.py` (borrador). Pruebas actualizadas porque la pestaña plegada ocultaba sus campos: `recep.py`, `tinas_t.py`, `tallas_t.py`, `v136_t.py`, `v141_t.py`.
+
+Pendiente: probar en el iPad la sincronización del borrador entre dos equipos; el botón «Registrar recepción» del Centro de operaciones todavía no crea el borrador al tocarlo (se crea al escribir el primer dato).
+
 ## 1.44.0 · 9 de noviembre de 2026 · «PROPESA — Procesos y Operaciones»
 
 Pedido del usuario: el nombre oficial del producto es **PROPESA — Procesos y Operaciones**; quitar «Plataforma marítima» (y cualquier descripción de PROPESA como plataforma o sistema marítimo) del título, metadatos, manifiesto, documentos, instrucciones para agentes y nombres de archivo. Se conservan las palabras del negocio (langosta, pesca, recepción, embarque…).
