@@ -290,6 +290,10 @@ Meta: que corra desde un **iPad mini 2/3 con iOS 12 (Safari 12)**. Lo nuevo se p
 ## v1.42.0 · Recepción por tinas y calendario
 - **Ruta `rtin` / `rtin:<lote>`** (`recTinas`): borrador en `RT = {key, lot, h (casillas rt_*), tn {tina: {g, z}}, tk, act, fresh, join?, ne?}`; se guarda con la pantalla al recargar (`uiSave`). `rtSave` valida (fecha, horas, proveedor, especie, lote, cada tina con kg y talla y libre, kg aparte, temperaturas) y crea el lote con `addLot` + `tn`, `tts`, `tpn`, `tpx`, `hf`, `mu`, `db`, `rz` (y la despatada como `RECEPCION` de `desp`).
 - **Teclado de tinas** `#tnpad` (acciones `data-tnk`), aparte del de hieleras `#kpad`; «Guardar» se acomoda en `kpdock` cuando el teclado está abierto.
-- **Funciones de tinas:** `tnTk`, `tnOf`, `tnNow`, `tnOcc`, `tnFree`, `tnDistZ` (reparto por tanque y talla para el tablero), `tnPend`/`tnSug` (sugerir de qué tinas sacar), `tnCard` (tarjeta del lote: sacar y mover tinas), `pdfRecepcion` (`pdfMake('rec', lote)`).
+- **Funciones de tinas:** `tnTk`, `tnOf`, `tnRaw` (lo apuntado), `tnAuto`/`tnNow` (v1.47.0: lo empacado sale solo de las tinas sugeridas), `tnFix`, `tnOcc`, `tnFree`, `tnDistZ` (reparto por tanque y talla para el tablero), `tnPend`/`tnSug` (sugerir de qué tinas sacar), `tnCard` (tarjeta del lote: sacar y mover tinas), `pdfRecepcion` (`pdfMake('rec', lote)`).
 - **3D:** `t3Data()` = `{occ: tnOcc(), vis}`; `t3Inner` acomoda 30 lugares por tanque (15 × 2) y dibuja solo las tinas con langosta (v1.42.1), con número y kg; tocar una tina = `T3.pick = {t, k, n}`.
 - **Fechas:** cada casilla `data-dt="d"` arma un flatpickr al recibir el foco (`FPO()`, `FPI`). Lo escrito se entiende con `pD`; con 8 números completos se cierra solo (`fpDone`); Esc lo cierra; al volver a dibujar la pantalla, los calendarios de casillas que ya no existen se quitan (`fpSweep` en `render`).
+
+
+## Semanas (v1.51.0)
+Ruta `semanas` → `semanas()`. Se arma al vuelo, sin datos propios: `wkAll()` agrupa por lunes (`wkMon`) recepciones (`rdate`), órdenes (`etd`), embarques (ETD más nueva de sus órdenes, `wkPD`) y correos de `ST.O` (`wkOT`, de `o.t`). Cada semana es un `fold('wk:<lunes>', …, lazy)`; abierta si es la actual o tiene pendientes (`wkPend`). Gmail: `mlGmail('l:|o:|e:')` por fila y `wkGmail(lunes)` para la semana. `data-wkhj` pone `HJ.d0/d1` y abre `hojas`.

@@ -1002,3 +1002,135 @@ Pedido del cliente: «un teclado numérico siempre visible para capturar las lan
 - **Antes de borrar:** consulta de solo lectura a la base: 0 lotes, 0 hieleras y 0 movimientos vivos; quedaban 6 registros `TQ/…` de lotes ya borrados (la app ya no los lee).
 - **PDF de recepción:** se probaron una cuadrícula como el papel y una rejilla con líneas gruesas; el usuario eligió las tarjetas por tanque.
 - **Resultado:** ver CHANGELOG 1.43.0.
+
+
+## 1.45.2 · 13/nov/2026
+Solo inventario con el 3D en su pantalla (`D/disp.t`), pendientes cerrados (lote vencido con prueba, campana con lotes sin cerrar) y logo en la vista previa de los PDF (1.45.1). Plan aprobado: Centro de operaciones con tanques 3D primero, en todos los roles.
+
+
+## 1.46.5 · 18/nov/2026
+Pedido del usuario (captura del Centro con T1/T2 marcados): abrir y cerrar la ficha del tanque tocando la misma tarjeta, con animación en lugar de un corte. `TQCL` guarda «cerrada» (por maquila, en `DRX`); `tqShow` / `tqHide` animan el alto de `.tqcw` con transiciones de CSS (sin `element.animate`, por iOS 12). De paso se arregló un brinco de la pantalla en cada redibujo: `#t3slot` no tenía alto y la página se encogía un instante. Ver CHANGELOG 1.46.5.
+
+## 1.46.6 · 18/nov/2026
+Pedido del usuario: Guardar de la recepción «no hace nada» (se quedaba en las tinas) y que no pase en Empaque; mismas entradas y reglas de teclado en las dos; tarima 3D en las hieleras que faltan. Causa: `rtSave` rechazaba una tina con kg y sin talla con `fail(…,'tn_k'+n)`, que redibujaba y llevaba el cursor a esa tina (de solo lectura con el teclado de la app), aunque la tina prometía «Enter = talla». Decisiones del usuario (preguntadas): «no guardar y avisar claro» y «la letra guarda y pasa». Nuevo: `nztCard` / `nztShow` (aviso compartido), `rtNoZ` / `rtNzCard` / `rtNzSync` (`RT.nz`), `pkNoK` / `pkNzCard` (`PKD.nz`), `kpEnter` / `kpLastK` (`KPT.zl`), `rtLetI` (letras de `kpLet`), `zPal` / `zPalSvg` / `zHex` (`ZPP` = empacadas en el último dibujo, para la caída). Ver CHANGELOG 1.46.6.
+
+## 1.48.0 · 18/nov/2026
+Empaque enfocado en llenar hieleras (tres diseños del usuario en la misma ronda; queda el último, ajustado con /impeccable layout). `empacar()`: encabezado `.pkhd` (título + PDF a la derecha); avisos (cerrado, `#pkfin`) arriba; `.pklc` (contenedor `pklay`) → `.pklay` con `.pkL` (Tarima actual: `zTable(o,l,1)` = resumen `.zsum` + tarima, la tarima primero por CSS; etiqueta `.pkbdg`; conteo por color `.pkcc`) y `.pkR`; `.pkF` (hoja de empaque y notas) fuera de la cuadrícula. Desde 46rem: `1fr 3fr`; en una columna la tarima va arriba en chico (3D | conteo). `pkGrid`: `.pkwhd` (título + avance), lotes `.pklws` en una franja con `nebar`; teclado con `KPON` como antes: al abrirse va a un lado (contenedor `kpw` ≥ 34rem) o abajo, en su lugar (no encima); sin teclado, `.kpoff`. Barra `.pkbot` (`#pkb`) con «Abrir teclado» (`data-kpo=1`), ayuda `.pkbi` (se oculta si no cabe) y «Guardar hieleras». Hieleras en columnas de 10: `vCols(items,nos,hd)` pone `tr.pkcolh` cada 10; `tbody.pkv10` con `grid-auto-flow:column`. `pkSeg` lleva `.pksn` (nombre) y `.pksl` (letra, para tarjetas chicas). Barra de corregir `edBar`/`.pkeab` arriba de las columnas. `pkWsSee` deja a la vista la hielera activa si su caja se desliza. Solo para ver: `pkVList`. PDF: `pdfHie(R,items)` («Detalle por hielera» en columnas de 10 × 4, grupos por cliente y lote, total) y `pdfTin(R,lotes)` («Tinas de origen»: cada tina de cada lote, en columnas de 10) en `pdfEmpaque` (orden sola) y `pdfEmbarque`. Los plegables «Tina por tina» y «Salidas y pases» del lote ya no son perezosos (abrir varios plegables a la vez redibujaba y cerraba los demás). Primero se probó un teclado flotante fijo encima de las hieleras: tapaba hieleras y notas (lo encontraron las pruebas), por eso se abre en su lugar. Prueba `v148_t.py`.
+
+## 1.47.0 · 18/nov/2026
+Avisos con significado (el usuario: «como el foco de check engine»). **Tinas:** `tnNow` se partió en `tnRaw` (lo apuntado: recepción − salidas ± pases) y `tnNow` = `tnRaw` − `tnAuto(r)`, que reparte lo que ya no está en el saldo del lote (`tnLeft`: tinas − `bal`, sin contar lo empacado: los kilos salen del tanque al cerrar el embarque) con `tnSug(r,z,g,m)`. Una primera versión restaba también lo empacado (`tnPend`) y descuadraba el mapa contra «En tanques» (`tanques_t`, `ordenes_t`): se cambió. `tnPend` queda solo para precargar «Sacar de tinas» a mano. No se guarda nada nuevo; «Corregir» escribe `ST.TS` como antes, y `tnFix(r)` deja escrito lo automático antes de un pase de tina. Se quitaron el aviso de campana «Sacar de tinas», `#tnpend` y el aviso de Empaque. `tnCard`: resumen `.tnres` + plegables `lot-tnl:<lote>` y `lot-tnh:<lote>` (perezosos). **Campana:** cada item lleva `bt` (verbo), `fo` (plegable que abre) y `jump`; `ntRel` (hace N días); temperatura solo con lectura de hoy o ayer; `f6Falta` nombra los datos (solo en la campana: `shipIssues` lleva `tn`; el embarque sigue con el renglón corto de la v1.35.0); se arregló `jt` → `jump`. **Rangos de temperatura:** `ST.W.tz = {a:[4], p:[4]}` dentro de `W/pesos` (`tzClean` en `cleanST`/`WN.W`; los pesos conservan `tz` al guardar). `tzSync()` en cada `render()` pone los límites en `TZS` y `TRNG`. Tarjeta `tzAdm()` en Administración → Catálogos (`data-tzs`). Prueba `v147_t.py`.
+
+## 1.46.7 · 18/nov/2026
+El usuario pidió quitar las tarjetas por talla (`.zrows`, `zCells`) y dejar la tarima 3D en su lugar. `zTable` ya no las dibuja; `zPal` lleva debajo la leyenda `.zpleg` (una línea por talla con `zbdg`, «N de M» y `zst`) y `zPalSvg` recibe el tamaño (50 / 42 / 36 según 1, 2 o más tarimas). `zCells` y su CSS quedan sin uso. Ver CHANGELOG 1.46.7. Además: `<title>`, `application-name`, `og:title` y `manifest.webmanifest` (`name`) dicen «PROPESA APP — Procesos y Operaciones» (pedido del usuario); `short_name` sigue «PROPESA».
+
+## 1.49.0 · 19/nov/2026
+- Pedido: estructurar las preguntas para Martha (qué archivos se mandan y a quién en cada paso). Respuestas del usuario: PDF en cada correo a administración y ventas; también encargado de piso, patrón, contaduría y a veces el dueño de una maquila; perfiles y correos a mano en el mismo sistema, con grupos; primero revisar como en Gmail y después mandarlo solo; temperatura solo con botón; configura solo Administración.
+- Hecho: Administración → Correos (pasos, contactos con maquila, grupos), borrador con fichas y sugerencias, disparadores al guardar una recepción nueva, al terminar el empaque de una orden y al cerrar un embarque; `api/send-email.js` con sesión, CC y Responder a quien envía.
+- Revisado en navegador (modo local): contactos, grupos, editar paso, borrador en computadora y celular, los tres modos (botón, revisar, solo), aviso cuando no sale, ida y vuelta de los datos (encode/decode/respaldo).
+- Pendiente: probar el envío real en Vercel con la llave de Resend y el dominio verificado; el candado de «solo Administrador» está en la app (la base deja escribir a piso, como los catálogos).
+
+## Ronda 19/nov/2026 (tarde) · v1.50.0 · Un correo por paso con varios PDF, y Gmail como archivo
+- Pedido: que los PDF de cada lote no se amontonen en la base ni en la pantalla; el archivo es Gmail (el correo que se mandó, con los PDF); ver en la app el grupo de PDF enviados por lote y orden. Respuestas: archivo = conectandoensenada@gmail.com (editable en la app); varios PDF por correo y elegir por paso qué se manda, prender y apagar; dominio propesa.org todavía sin verificar en Resend; sí al rojo con «Reintentar».
+- Se planeó con ponytail ultra (`PLAN_CORREOS_PDF_v1.50.0.md`): sin API de Gmail (copia oculta en su lugar), sin guardar PDF en Supabase, sin visor de PDF en la app.
+- Hecho: archivo en Gmail con copia oculta, casillas de PDF por paso, modo Apagado, borrador con varios PDF, registro de cada correo en `ST.O`, «Correos enviados» en lote y orden con «Ver en Gmail ›», rojo + Reintentar + campana, servidor con varios PDF. Se quitó la lista «Informes de cierre».
+- Pruebas: `correo_t.py` (TODO BIEN) y `correo_servidor_t.js` (TODO BIEN). El zip no traía `pruebas/`: no se corrió la batería completa.
+- Pendiente: verificar propesa.org en Resend (DNS en Cloudflare) y poner `EMAIL_FROM`; hasta entonces Resend solo manda al dueño de la cuenta.
+
+## Ronda del 19/nov/2026 · v1.51.0 · Semanas
+
+- **Pedido:** cómo empezar una semana nueva y tener un catálogo para ver lo de antes o ir al correo que se mandó con los detalles finales. Respuesta: no se reinicia nada (la langosta en tanques pasa de una semana a otra); lo cerrado sale solo de las listas de trabajo. Faltaba la vista por semana: «FIX THIS».
+- **Hecho:** ruta `semanas` (menú → Control → «Semanas»): `wkAll` agrupa por lunes `ST.R` (rdate), `ST.OR` (etd), `ST.P` (ETD más nueva de sus órdenes, `wkPD`) y `ST.O` (fecha del correo, `wkOT`); `wkCard` = plegable por semana (lazy); `wkPend` = embarques abiertos, órdenes incompletas o sin destino y correos que no salieron, cada uno con su destino; `wkMl` = correos por lote/orden/embarque con «Ver en Gmail ›» (`mlGmail`); `wkGmail` = búsqueda `PROPESA after:… before:…` en el archivo; `data-wkhj` = Hojas para imprimir con las fechas de la semana. 6 semanas a la vista (`histList('sem')`).
+- **Sin cambios** en `ST`, la base ni el servidor.
+- **Pruebas:** `semanas_t.py` TODO BIEN (390/768/820/1440 px, letra 20 px, tema oscuro); `correo_t.py` TODO BIEN. El zip no trae la batería completa: correr `sh pruebas/correr_todo.sh` en el repo antes de publicar (sobre todo `ipad_viejo_t.py` y `menu_t.py`).
+
+## Ronda del 19/nov/2026 · v1.52.0 · Empaque en tablet: hieleras una junto a otra
+
+- **Pedido:** captura de Empaque a ~1160 px con un dibujo: las hieleras como tarjetas angostas lado a lado en tablet y pantallas chicas-medianas (antes la columna de 10 llenaba todo el ancho con pocas hieleras).
+- **Hecho:** solo CSS. `@media (min-width:641px) and (max-width:1280px)`: `tbody.pkv10` pasa a `grid-auto-flow:row` con `repeat(auto-fill,minmax(12.5rem,1fr))` (8.5rem con el teclado abierto, `.kpo`); `tr.pkcolh` a todo lo ancho; igual `.pkvl` (solo para ver). Fuera de ese rango, las columnas de 10 de la v1.48.0.
+- **Pruebas:** `v152_t.py` TODO BIEN; revisado con letra «Muy grande». El zip no trae la batería completa: correr `sh pruebas/correr_todo.sh` (sobre todo `v148_t`, `estados_caja_t`, `ipad_viejo_t`).
+
+## Ronda del 19/nov/2026 · v1.53.0 · Planta 3D fuera del inicio de Modo piso
+
+- **Pedido:** quitar la planta 3D del inicio de Modo piso; ponerla en su propio botón debajo de Temperatura; la sección de planta plegable; en Modo piso solo los accesos rápidos.
+- **Hecho:** `pisoHome` sin `tanques()`; `ptile('ptq',IC.tq,'Tanques',…)` al final; ruta `ptq` → `pisoTq()` (PTIT «Tanques»; sin Modo piso manda a `inicio`); `tqFold(id,def)` = `fold(…, lazy)` con «Planta y tanques · kg · lotes», usado en `inicio()` (`ct-planta`) y en `pisoTq` (`ptq-planta`).
+- **Pruebas:** `v153_t.py` TODO BIEN. Correr la batería completa en el repo (sobre todo las del Centro, Modo piso, `tanques_t`, `tanques3d_t`, `piso_t`, `ipad_viejo_t`).
+
+## Ronda del 19/nov/2026 · v1.54.0 · Inventario dentro del Centro
+
+- **Pedido:** quitar «Inventario» del menú lateral y ponerlo en el Centro de operaciones.
+- **Hecho:** sin botón en el menú; `invPage(bare)` devuelve la tabla; plegable `ct-inv` en `inicio()` después de «Planta y tanques» (cerrado); `PG.inventario` abre el Centro con `FOLD['ct-inv']=true`.
+- **Pruebas:** `v154_t.py` y `v153_t.py` TODO BIEN. Correr la batería completa (sobre todo `menu_t`, `inicio_t`, `ipad_viejo_t`).
+
+## Ronda del 19/nov/2026 · v1.55.0 · «Tanques» en Modo piso = Centro de operaciones
+
+- **Pedido:** «Tanques en Modo piso debe ser como el Centro de operaciones».
+- **Hecho:** `inicio(pz)`; `pisoTq()` = `inicio(1)`: título «Tanques», sin «Todas las maquilas», números a `rtin` / `pemp` / `pcer`. Mismos plegables (`ct-planta`, `ct-inv`, `ct-ord`, `ct-lot`, `ct-act`).
+- **Pruebas:** `v153_t.py` (actualizada) y `v154_t.py` TODO BIEN.
+
+## Ronda del 19/nov/2026 · v1.55.1 · Probar el HTML en la computadora
+
+- **Pedido:** «no puedo probar mi HTML en mi computadora».
+- **Causa:** el modo local solo se prendía con `localhost?modo=local`; abierto como archivo (`file://`), la app iba a la base real (Supabase) y se quedaba en la entrada.
+- **Hecho:** `FILEMODE=location.protocol==='file:'` también prende `LOCAL`; aviso «Copia de prueba en esta computadora» en `topBanners()` y en la Configuración inicial. Sin cambios en la versión publicada.
+- **Pruebas:** `archivo_t.py` TODO BIEN; las de la ronda siguen en TODO BIEN.
+
+
+---
+
+## Ronda 19/nov/2026 (2) · v1.55.2 · Arreglos de la auditoría de seguridad
+
+**Pedido:** «security audit this codebase» (con la skill `security-audit`) y después «fix all of them». Informe: `claude/AUDITORIA_SEGURIDAD_v1.55.1.md` en el proyecto.
+
+**Hallazgo F1 (alto):** las claves de `app_records` se leían distinto en tres lugares. La regla de precios de la base y `mqSplit` reconocen una sola marca de maquila; `wnorm` elegía la revisión `WN` quitando una marca y, si no encontraba columna, devolvía el registro **sin limpiar**; `mqParts` + `decodeST` quitaban una segunda marca y lo armaban como envío o precio. Con `q1:q1:P/…` una cuenta de piso metía `<img onerror>` en el nombre de un envío (se pinta sin `E()`) y corría en la sesión del Administrador; con `q1:q1:$/<lote>` inventaba el precio de compra. Probado en local (Postgres 16 con las reglas de las migraciones + Chromium en modo archivo) y confirmado por un revisor independiente.
+
+**Arreglos:**
+- `index.html`: `KEYOK` (una marca `q<N>:` como máximo, N≥1 sin ceros a la izquierda, columna en mayúsculas) en `applyRows`, `applyRows0` y `wnorm`; `wnorm` devuelve `null` (se ignora) si la columna no tiene revisión en `WN`. `APPV` 1.55.2.
+- `supabase/migrations/20261120_clave_canonica.sql`: borra claves con dos marcas y agrega `app_records_k_forma` (`NOT VALID`). Probada en Postgres 16 local. **No aplicada: espera permiso del usuario.**
+- `vercel.json`: `script-src 'self'` + huellas sha256 de los 4 `<script>` (sin `'unsafe-inline'`); `pruebas/csp_hashes.py` las revisa o las escribe (`--escribir`). Probado: la app arranca y recorre 11 pantallas sin violaciones; un `onerror` metido a mano ya no corre.
+- `api/send-email.js`: nombre del adjunto siempre `.pdf`, tope de 40 correos/10 min por persona (en memoria de cada copia de la función), registro de cada envío.
+- `api/despierta.js`: `CRON_SECRET` obligatoria.
+- `supabase/functions/usuarios/index.ts`: «setup» vuelve a contar después de crear y deshace la cuenta si otra llegó antes; error 500 sin detalle (va al registro). **No publicada: espera permiso del usuario.**
+
+**Se quedó igual (decisión del usuario, v1.2.5):** la sesión sigue abierta hasta 12 h en el equipo.
+
+**Después, el mismo día («sí aplica y continúa con lo pendiente»):**
+- Base `propesa_bc`: 0 claves mal formadas (ni en el historial); aplicada `20261120_clave_canonica` (restricción validada). Probado como cuenta de piso en la base real, dentro de una transacción que se deshizo: dobles marcas rechazadas, claves normales aceptadas. Avisos de Supabase: los mismos de antes.
+- Se descubrió que la base y la función publicada iban **adelante** del repositorio: la migración `20261117_reglas_por_registro` (v1.46.0, `push()` security definer + `puede_escribir()`) y la función `usuarios` versión 5 (rol obligatorio, `cerrar_sesiones`) no estaban en el zip. Con la `push()` real el ataque F1 también funcionaba (`puede_escribir('piso','q1:q1:$/LT1',…)` = true; igual con catálogos `q1:q1:K/…`). Se agregó el archivo de la migración al repositorio y los arreglos de la v1.55.2 se pusieron **encima** de la función publicada (versión 6), para no perder lo de la v1.46.0.
+- Vercel: para poner `CRON_SECRET` hace falta que el usuario autorice el acceso del conector a su equipo.
+- GitHub: el conector no ve el repositorio; el usuario sube el zip como siempre.
+- Vercel: el usuario no tiene acceso hoy («skip that and leave it pending»). Para que el zip se pueda subir sin riesgo, `api/despierta.js` se regresó a como estaba (`CRON_SECRET` opcional). Pendiente: ponerla en Vercel.
+
+
+---
+
+## Ronda 19/nov/2026 (3) · v1.56.0 · «Cerrar sesiones» de una cuenta
+
+**Pedido:** «fix next round with vercel pending» (el pendiente 4 de la v1.55.2).
+**Hecho:** Administración → Usuarios, en cada fila que no es la tuya: «Cerrar sesiones» (`data-cs`) → confirma «Sí, cerrar sesiones» (`data-cs2`, `.btn.d`, `conf='s'+id`) → `fnUsers('cerrar_sesiones',{id})` → aviso con el nombre. Solo con la base compartida (`CLOUD`). La función `usuarios` publicada (versión 6) ya lo acepta y borra sus sesiones en Supabase Auth; su acceso dura máximo una hora y luego `sbToken` no puede renovarlo y la app le pide entrar.
+**Probado:** `cerrar_sesiones_t.py` (12 ✔, base simulada), sin desbordes en 390/768/1440 px (botón de confirmar 44 px), CSP sin violaciones, y las pruebas de la v1.55.2 otra vez en TODO BIEN.
+**Pendiente:** `CRON_SECRET` en Vercel.
+
+---
+
+## Ronda 19/nov/2026 (4) · v1.57.0 · Tinas y hieleras en un recuadro que se desliza
+
+**Pedido:** a media auditoría UI/UX (skill ui-ux-pro-max), el usuario mandó captura del iPad vertical con las tinas aplastadas: «si pasa esto, quiero verlo en un recuadro donde pueda deslizar para ver los tanques que faltan»; luego «también con las hieleras».
+**Hecho:** recuadro genérico `.scbox` > `.hsc` (estados `sc-ov`, `sc-l`, `sc-r`; ojo: `.scr`, `.cl` y `.ov` ya existían en la app). Tinas: `.tngrid`/`.tngrid-hd` con `minmax(7.5rem,1fr)` (antes `minmax(0,1fr)`), dentro de `#tnscr`. Hieleras: `.pktw` dentro de `#hlbox`, ahora `#hlscr`. `scShow(id,key,el)` recuerda el desplazamiento (`SCL`) por pantalla, lo restaura en cada `render()` (`scAll`) y se mueve lo justo para enseñar la tina activa (o la columna del tanque elegido) y la hielera activa (`kpGo` → `hlScrShow`). Flechitas ‹ › y desvanecido con `mask-image` (con `-webkit-`, iPad viejo). Sin cambios en tablet 641–1280 px para hieleras (tarjetas de la v1.52.0).
+**Probado:** 390, 768, 1024, 1280, 1440 px; claro/oscuro; texto 20 px; tocar T6 lleva el recuadro a T6; escribir kg + talla se queda en T6; hielera 45 por teclado se ve; sin desbordes de página ni errores.
+**Después (mismo día):** el usuario dibujó un recuadro amarillo en Empaque: «quiero que se llene la pantalla». La columna `.pkL` (tarima, ¼) quedaba vacía bajo la tarjeta. Ahora, con hieleras para empacar (`ab`), `.pklay.pkfull` es de una columna y la tarjeta de la tarima (`tar`) entra a `pkGrid(…,tar)` arriba: `.pktopg` = `.pktar` (¼, línea divisoria) | `.pktopr` (encabezado, avance y lotes, ¾); en el contenedor angosto (<46rem) va una debajo de otra. Las hieleras quedan a todo lo ancho hasta el teclado: 1440 px → 726 px de hieleras (antes 456; caben 60 sin deslizar), 1024 → 431 (antes 305). La vista de hieleras de una línea cerrada (sin `ab`) no cambia.
+**Después (2):** «acomoda esto bien» (dibujo: tarima → arriba del teclado): `.pktopw{container:pktop/inline-size}` y `.pktopg` con la misma medida que `.kpw` (`minmax(0,1fr) min(26rem,max(14rem,44cqw))`, gap 16px): `.pktopr` (encabezado, avance, lotes) a la izquierda y `.pktar` (tarima, tarjeta con fondo `--in`) a la derecha, alineada con el teclado; angosto: tarima primero. «Esta zona se ve muy amontonada»: lotes `.pklb` en 2 líneas, `.nebar` como enlaces (`order:1`, a la derecha de «Lote»), sin `border-bottom`. Barra de abajo: `.pkkpb` círculo 52 px solo ícono (`aria-label`/`title` «Abrir teclado»), `.pkgo` 52 px. Luego «sin texto aquí»: se quitó la instrucción `.pkbi` de la barra (se probó en 3 pasos numerados y el usuario la quitó: no volver a ponerla).
+
+
+---
+
+## Ronda 19/nov/2026 (5) · v1.58.0 · Arreglos de la auditoría UI/UX y encabezado de Modo piso
+
+**Pedido:** «fix everything, approved» (A1–A7, T1–T6, L1–L8, Y1–Y3, S1 de `claude/AUDITORIA_UIUX_v1.56.0.md`). A media ronda: imagen del encabezado de Modo piso («make it look like this»), «it's breaking» (la curva de la franja se descuadraba; se rehízo con SVG) y «make the curve more like this» (pestaña de fólder: escalón corto e inclinado de 18 px, `.psx svg`).
+**Hecho:** ver CHANGELOG 1.58.0. Detalles técnicos:
+- L8: «}» suelta tras `@container pklay (max-width:64rem){…}` → `parse()` de CPX regresaba en el nivel superior y tiraba ~70 KB de CSS en iOS < 16 (en Chrome solo se perdía `.tqd`). `pruebas/css_llaves_t.py` revisa las llaves; ya atrapó otra «}» que dejé al quitar reglas.
+- Y2: `iconize()` (MutationObserver) ya cambiaba ⚠ ✔ ✕ ☰ ● por SVG; la auditoría los contó de más. Solo faltaban los botones de la cámara 3D.
+- A4/L3: `tbEdge`/`tbAll` (en `scAll` y al abrir un `details`): `tabindex=0`, `role=region`, `aria-label` único con el título anterior; `.tbl.sc-r` desvanece a la derecha. `.srt` (texto oculto) va con `left:0;top:0`: sin eso estiraba la página de lado.
+- L1: `.sqb` + `.hbr` + `SQO`; con `≤700px` el título va en el renglón 2 y `#sq` solo con `.sqo`.
+- L7: `@container pklay (min-width:36.3rem){.pkx.pkws.kpo>.pkbot{margin-right:…}}`.
+- Modo piso: `pisoShell` nuevo (`.phx`, `.phr`, `.phtt`, `.phmq`, `.phs`, `.pst`, `.psx`, `.p3d`); `ptile` con `.ptl`, `.ptx` y la flecha `.ptc`.
+**Probado:** revisión completa con axe-core: 0 errores, sin botones <44 px (fuera de los interruptores, con área de 44), sin desbordes, sin errores de JS. Simulador de iPad viejo: el CSS se lee completo (176 KB). Todas las pruebas del zip en TODO BIEN.

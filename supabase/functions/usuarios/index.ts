@@ -1,7 +1,7 @@
 // PROPESA · función "usuarios": alta, cambios y baja de usuarios (solo el Administrador).
 // También crea el primer Administrador cuando la base todavía no tiene ninguna cuenta ("setup").
 // Usa la llave de servicio, que solo existe aquí (nunca en la app).
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.119.0"; // v1.46.0: versión fija (auditoría técnica R14)
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -25,7 +25,7 @@ Deno.serve(async (req) => {
     const b = await req.json().catch(() => ({}));
     const action = String(b.action || "");
     const name = txt(b.name, 80), email = txt(b.email, 120).toLowerCase(), pw = String(b.password ?? "");
-    const role = ROLES.includes(b.role) ? b.role : "consulta", notify = !!b.notify;
+    const role = ROLES.includes(b.role) ? b.role : "", notify = !!b.notify;   // v1.46.0: un rol desconocido ya no se vuelve «consulta» (R14/T9)
 
     const checkPw = () => pw.length < 8 ? "La contraseña debe tener al menos 8 caracteres."
       : WEAK.includes(pw.toLowerCase()) ? "Esa contraseña es muy fácil de adivinar. Elige otra." : null;
@@ -66,7 +66,15 @@ Deno.serve(async (req) => {
       if (!/.+@.+\..+/.test(email)) return out(400, { error: "Escribe un correo válido." });
       const bad = checkPw(); if (bad) return out(400, { error: bad });
       const r = await upsertUser("admin", true);
-      return r.error ? out(400, r) : out(200, { ok: true, id: r.id });
+      if (r.error) return out(400, r);
+      // v1.55.2 (auditoría de seguridad): si dos personas abren la Configuración inicial al mismo tiempo, las dos pasan la revisión de
+      // arriba. Después de crear, se vuelve a contar: si ya hay otro perfil, se deshace esta cuenta y gana la que se creó primero.
+      const { data: firsts } = await adm.from("profiles").select("id,created_at").order("created_at", { ascending: true }).order("id").limit(2);
+      if ((firsts || []).length > 1 && firsts![0].id !== r.id) {
+        await adm.auth.admin.deleteUser(r.id as string);
+        return out(403, { error: "Ya hay cuentas en la base. Entra con tu correo y contraseña." });
+      }
+      return out(200, { ok: true, id: r.id });
     }
 
     // Todo lo demás: solo un Administrador con sesión.
@@ -76,6 +84,7 @@ Deno.serve(async (req) => {
     const { data: me } = await adm.from("profiles").select("role").eq("id", who.user.id).maybeSingle();
     if (me?.role !== "admin") return out(403, { error: "Solo el Administrador gestiona usuarios." });
 
+    if ((action === "create" || action === "update") && !role) return out(400, { error: "Elige el rol de la cuenta." });
     if (action === "create") {
       if (!name) return out(400, { error: "Escribe el nombre." });
       if (!/.+@.+\..+/.test(email)) return out(400, { error: "Escribe un correo válido." });
@@ -104,9 +113,18 @@ Deno.serve(async (req) => {
       if (u.error) return out(400, { error: u.error.message });
       const p = await adm.from("profiles").update({ name, email, role, notify }).eq("id", id);
       if (p.error) return out(400, { error: p.error.message });
+      if (pw && id !== who.user.id) await adm.rpc("cerrar_sesiones", { uid: id });   // v1.46.0: contraseña nueva = fuera de sus equipos
       return out(200, { ok: true });
     }
 
+    // v1.46.0 (auditoría técnica R8): cerrar la sesión de una cuenta en todos sus equipos (tablet perdida, alguien que ya no
+    // trabaja ahí). Borra sus sesiones en Supabase Auth: al vencer su acceso (máximo una hora) la app le pide entrar otra vez.
+    if (action === "cerrar_sesiones") {
+      if (id === who.user.id) return out(400, { error: "Para cerrar tu propia sesión usa «Salir»." });
+      const { data: n, error } = await adm.rpc("cerrar_sesiones", { uid: id });
+      if (error) return out(400, { error: error.message });
+      return out(200, { ok: true, sesiones: n || 0 });
+    }
     if (action === "delete") {
       if (id === who.user.id) return out(400, { error: "No puedes eliminar tu propio usuario." });
       if (cur.role === "admin" && (await admins()) < 2) return out(400, { error: "Debe quedar al menos un Administrador." });
@@ -116,6 +134,8 @@ Deno.serve(async (req) => {
     }
     return out(400, { error: "Acción desconocida." });
   } catch (e) {
-    return out(500, { error: String((e as Error)?.message || e) });
+    // v1.55.2 (auditoría de seguridad): el detalle va al registro de la función (Supabase → Edge Functions → Logs), no a la pantalla.
+    console.error("usuarios:", e);
+    return out(500, { error: "No se pudo completar. Intenta de nuevo en un momento." });
   }
 });

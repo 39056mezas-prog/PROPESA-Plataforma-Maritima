@@ -135,3 +135,8 @@ Decisiones ya tomadas con el usuario. **No las deshagas sin preguntarle.** Agreg
 - **Eliminar una orden con hieleras empacadas se permite** (usuario: «debería poder borrar si yo quiero»), con confirmación que dice cuántas; si el embarque está cerrado, primero se reabre. Cambia la regla de la v1.8.3. Eliminar un lote con hieleras sigue bloqueado.
 - **Corregir una hielera de un embarque cerrado:** «Reabrir para corregir» en Empaque (solo Administrador, con confirmación).
 - **Sitio sin teléfono** (usuario): solo correo.
+
+## 18/nov/2026 (v1.46.6)
+- **Guardar con una tina u hielera que tiene número y no talla: no se guarda y se avisa claro** junto al botón Guardar, con las tallas para arreglarla ahí (el usuario eligió esto en vez de usar la última talla sola).
+- **Recepción y Empaque usan las mismas reglas de teclado:** la letra guarda y pasa; Enter usa la última talla; Enter en vacía no hace nada. Cambia la regla de la v1.29.0 en Empaque («la letra solo elige; Enter guarda»).
+- **Tarima 3D:** cuántas tarimas = el campo «Tarimas» de la línea de la orden; no se inventa cuántas hieleras caben por tarima (se reparten parejo).

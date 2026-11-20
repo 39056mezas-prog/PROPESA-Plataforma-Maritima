@@ -123,6 +123,7 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - **Embarque:** `P.ta` (temperatura de arribo, texto 30), `P.mc` (% de mortalidad que reporta el cliente, 0–100).
 - **Lote:** `R.pr = {u, d, f, nt}` (USD/kg, USD/kg de despatada, `F`/`S`, nota).
 - **Compradores:** `D/disp.n = [[inglés, rango, color]]` de las tallas de PROPESA.
+- **Solo inventario (v1.45.2):** `D/disp.t = {T1…T6: [gramos por talla]}` es el disponible por tanque. Lo pedido (órdenes sin salir) se quita del lote más viejo al más nuevo, por talla. El 3D de esa pantalla arma tinas solo con tanque, talla y kilos (`dispOcc()`), sin lote, maquila, días ni proveedor.
 - **Precio en la base:** `R.pr` no viaja dentro de `R/<lote>`: va en su propio registro `$/<lote>` (`{lot, u, d, f, nt}`; `q<id>:$/<lote>` en otra maquila). `decodeST` lo vuelve a poner en su lote. La base solo se lo da al Administrador.
 - **(Quitado en v1.43.0)** Traslados entre tanques: `ST.TQ = [{id, t, lot, de, a, kg, by, nt, tt, kb}]` por maquila, registros `TQ/<id>`. `nt:'Entrada'` = el otro tanque capturado en la entrada (`tt`, `kb`: su temperatura y kg por caja; salen en Temperatura y en la tabla de Entrada como «1/2», «57.6/60.3», «34/36»). `tqDist(lote)` = kg de hoy por tanque (todo empieza en `r.tank` y cada traslado pasa sus kg sin pasar de lo que hay); `tqShare(lote, tanque)` = proporción para repartir las tallas.
 
@@ -164,3 +165,17 @@ Con un año de datos sin fotos: ~2.2 MB. **Desde la v1.6.0 la copia de cada equi
 - **Se quitó `ST.TQ`** (traslados de kg entre tanques): cada tina dice su tanque y una tina se mueve con `TS` (`a` = tina nueva). Registros viejos `TQ/<id>` que sigan en la base se dejan como están (no se leen ni se borran).
 - **Tanques de un lote:** `tqDistZ(l)` = `tnDistZ(r)` (solo tinas); un lote sin recepción (`ne`) no tiene tanque.
 - **Historial (HCN):** etiquetas nuevas `tts`, `tpn`, `tpx`, `tn`, `mu`, `db`, `rz`, `hf`.
+
+## v1.49.0 · Correos (compartido, como proveedores y consignatarios)
+- `ST.NC = [{id, n nombre, e correo, a área, mq?}]` → registros `NC/<id>`. `mq` = solo recibe lo de esa maquila (sin `mq` = todas).
+- `ST.NG = [{id, n, m:[fichas]}]` → `NG/<id>`. Fichas: `c:<id>` contacto, `u:<id>` usuario, o un correo.
+- `ST.NE = {rec|ord|emp|emb|temp|otro: {m:'btn'|'rev'|'auto', to:[fichas], cc:[fichas], s asunto, b mensaje}}` → `NE/<paso>` (el registro lleva `ev`). En `to`/`cc` también va `g:<id>` (grupo). Sin `NE` de un paso = lo de siempre (`mlDef`: usuarios con «Recibe el informe», borrador para revisar en rec/emp/emb).
+- Limpieza: `ncClean`, `ngClean`, `neClean` (en `WN` y `cleanST` → `mlCleanAll`). Al borrar un contacto o grupo, `mlDrop` lo quita de los pasos y grupos.
+
+## v1.50.0 · Varios PDF por correo, archivo en Gmail y «Correos enviados»
+- `ST.NE[paso].p = ['rec','temp',…]` — los PDF marcados del paso (tipos de `MLPK`; sin `p` = `MLPD`). `m` acepta también `'off'` (Apagado).
+- `ST.NE.arch = {e correo, on}` → registro `NE/arch`: el archivo en Gmail (copia oculta de cada correo). Sin él = `conectandoensenada@gmail.com` prendido (`MLARCH0`).
+- **Registro de correos en `ST.O`** (la misma lista de los informes de cierre, por maquila; registros `O/<u>`). Un renglón por correo, sin el mensaje ni los PDF (viven en Gmail):
+  `{u, ev /* paso */, t, by, subject, to:[correos], cc:[correos], body:'', ar /* copia al archivo */, fs:[nombres de los PDF], pk:['k|arg' para volver a hacer los PDF], rf:['l:<lote>','o:<orden>','e:<P.u>'], ok:1|0, er?, mm? /* se mandó desde el correo propio */, x? /* «ya no hace falta» */}`.
+  `rf` decide en qué lote y orden sale («Correos enviados»). Los informes de cierre (sin `ev`) no cambian.
+- Limpieza: `mlOX` (en `WN.O` y `cleanST`); `cleanST` guarda hasta 2000 renglones de `O` (antes 200). Sin cambios en la base: Encargado de piso ya podía escribir `O/`.

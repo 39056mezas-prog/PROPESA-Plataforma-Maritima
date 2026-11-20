@@ -96,7 +96,7 @@ Pantalla de botones grandes para el Encargado de piso (entra directo); el admin 
 | **Conteo final** | Paso a paso (v1.21.0): elegir el lote (solo los que faltan por contar, con lo esperado) → 1. kg contados en una casilla grande (Enter avanza; no acepta más de lo esperado y conserva lo escrito) → 2. confirmar con la mortalidad calculada → «✔ Conteo guardado» con «Contar otro lote» y «Corregir» (el Administrador también «Cerrar lote»). |
 | **Temperatura** (v1.17.0) | Abre la pantalla normal de Temperatura sin menú. Dice cuántas lecturas van hoy (incluye las de las entradas). Es el quinto botón: en tablet y computadora va a todo lo ancho. En Modo piso las casillas y botones de «Nueva lectura» miden 60 px (v1.17.1). |
 
-Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con degradado, cuadros de ícono, buena vista en tema oscuro.
+Estilo iOS: tarjetas con degradado, cuadros de ícono y flecha ›, buena vista en tema oscuro. **Encabezado (v1.58.0, imagen del usuario):** azul marino con logo | título y maquila ▾ | campana, Ajustes y perfil; debajo una franja clara como pestaña de fólder con «Modo piso» y «Vista 3D». En celular las tarjetas van en renglón (ícono | texto | flecha).
 
 ## 5. Vista completa
 
@@ -131,7 +131,9 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - **La orden dice arriba lo que falta por empacar, por talla** (v1.24.0).
 - **Cada camión en su pestaña, con su propio PDF**, cuando hay dos o más (v1.26.0). Con uno, como antes.
 - **Lo más viejo primero**: en Empaque los lotes salen ordenados y el más viejo ya elegido, con «usar primero»; los que pasaron los días de su proveedor, en rojo y antes que todos (v1.27.0).
-- **Llenar hieleras solo con el teclado** (v1.29.0): número → letra del color (R, V, B, A) → Enter guarda y pasa a la siguiente. La letra solo elige; Enter guarda.
+- **Llenar hieleras y tinas solo con el teclado** (v1.29.0; **igual en Recepción y Empaque desde la v1.46.6**, usuario: «la letra guarda y pasa»): número → letra del color (B, R, V, A) guarda y pasa a la siguiente. Enter con número y sin talla usa la última talla; Enter en una vacía no hace nada; «Siguiente ›» del teclado de la app es como Enter (en una vacía pasa).
+- **Guardar con una tina u hielera sin talla (v1.46.6, usuario: «no guardar y avisar claro»):** no se guarda; aviso rojo junto al botón Guardar que dice cuál, con sus tallas para tocar ahí y «Borrar». Nunca brincar a la tina sin decir nada.
+- **Tarima 3D (v1.46.6; desde la v1.46.7 reemplaza las tarjetas por talla con cuadritos, pedido del usuario):** en «Hieleras por talla», las tarimas de la línea con las hieleras empacadas de color y las que faltan punteadas; debajo, una línea por talla (N de M · Faltan / ✔ Lista / De más).
 - **La hoja de empaque se cierra al completarla** (v1.29.0): queda una tarjeta corta con «Ver o corregir hoja». Horas en 12 h con a. m./p. m.; placas en mayúsculas; tanques de origen se tocan.
 - **El aviso (toast) sale debajo de la barra de arriba**, nunca encima (v1.29.0).
 - **Mover hieleras en el camión mismo** (v1.29.0), no en otra cuadrícula abajo.
@@ -144,6 +146,7 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - En Entrada (plegado), en el Centro de operaciones (debajo de los 4 números) y en Panel general (**debajo de los 4 totales**, v1.39.0). Se prende y se apaga con **su propio ícono (cubo «3D»)**, siempre en el mismo lugar, y el equipo lo recuerda. El tablero plano sigue abajo y es el que se usa con teclado o lector de pantalla.
 - Color de la canasta: **solo la talla** (listón), con los colores de la maquila de esa canasta. La maquila se dice con texto (letrero de cerca, tarjeta de la canasta), nunca con color.
 - Un toque elige; arrastrar gira (no abre nada). Botones de cámara de 48 px para guantes.
+- **Ficha del tanque (v1.46.5):** tocar un tanque del tablero abre su ficha; tocar el mismo otra vez la cierra. Abre, cambia y cierra con animación (nunca de golpe) y se lleva a la vista sin esconder la tarjeta tocada.
 
 ## 8. Lo que el usuario rechazó (no repetir sin preguntar)
 
@@ -163,3 +166,11 @@ Estilo iOS: encabezado translúcido con desenfoque, título grande, tarjetas con
 - ~~Teclado numérico propio en Modo piso (se quitó el 12/oct).~~ **Regresó el 13/oct a pedido del cliente**, distinto: fijo en pantalla (no aparece y desaparece), en todas las vistas de Empaque. Ver §4 y `HISTORIAL.md` (v1.3.0).
 - Cambiar muchas cosas sin validarlas: el equipo sintió que se trabajaba «sin rumbo».
 - **Textos que suenan a app sin terminar o a información que falta** (17/oct): «Todavía no hay…», «Aún no hay…», «Sin datos todavía», «(de una versión anterior)», «escrito a mano, de antes», explicaciones largas de lo que falta. Los vacíos se dicen corto («Sin lotes», «Sin lecturas») y los avisos de pendientes solo con lo necesario («Lote X · sin entrada» + botón). Los mensajes de conexión («cambios que todavía no se suben») sí se quedan.
+
+## Avisos de la campana (v1.47.0, pedido del usuario)
+
+«Errores sin significado, como el foco de check engine»: cada aviso dice **qué pasó** (título), **qué hacer** (una línea) y el botón lleva **el verbo** («Empacar ›», «Completar hoja ›», «Ver tanque ›»), nunca «Ir». Al tocarlo, lleva a la parte exacta de la pantalla, con su plegable abierto. Lo que la app puede resolver sola no se avisa (ej. de qué tinas salió lo empacado: se saca solo y se puede corregir). Una lectura vieja no es una alarma de hoy.
+
+## Empaque: la pantalla es para llenar hieleras (v1.48.0, diseño del usuario)
+
+Arriba: avance y lotes a la izquierda y la tarima actual chica a la derecha, **encima del teclado y de su mismo ancho** (3D, estado, conteo por color, «Ver detalle»; v1.57.0, dibujo del usuario); los lotes como tarjetitas de 2 líneas y «+ Lote sin recepción» / «Empacar sin lote» como enlaces discretos junto a «Lote»; **debajo, todas las hieleras a todo lo ancho hasta el teclado** (v1.57.0, dibujo del usuario: «quiero que se llene la pantalla»). Antes las hieleras iban solo en la columna de la derecha (¾) y la de la tarima quedaba vacía. Las hieleras van en columnas fijas de 10 numeradas de arriba abajo (pantalla y PDF, como las tinas). Si las columnas no caben (celular, o muchas hieleras), van en un recuadro que se desliza de lado con flechitas ‹ › en la orilla y se mueve solo a la hielera activa; lo mismo las tinas de Recepción (v1.57.0). El teclado es una herramienta: se abre a un lado de las hieleras (en celular, abajo) sin tapar nada y se cierra con ✕; «Guardar hieleras» en la barra fija de abajo, con el teclado como botón redondo solo con ícono y sin texto de instrucción (v1.57.0, el usuario lo pidió). La barra lateral es la misma en toda la app: no se cambia por pantalla.

@@ -23,6 +23,9 @@ Para correr una sola: `python3 -m http.server 8765 &` y luego `python3 -I prueba
 | Archivo | Cubre | Verif. |
 |---|---|---|
 | `inicio_t.py` | Configuración inicial, ningún rastro de demo en pantalla, versión, temperatura, Informes de cierre, borrar datos | 20 |
+| `csp_hashes.py` | v1.55.2: `vercel.json` trae las huellas sha256 de los 4 `<script>` de `index.html`, sin `'unsafe-inline'`, y no hay `onclick=` en etiquetas (`--escribir` las actualiza) | 4 |
+| `cerrar_sesiones_t.py` | v1.56.0: «Cerrar sesiones» en Usuarios con la base simulada (sin internet): no sale en tu cuenta, orden Editar · Cerrar sesiones · Eliminar, pide confirmar, llama a la función con la cuenta correcta, avisa, y dice si falla | 12 |
+| `clave_canonica_t.py` | v1.55.2 (auditoría F1): claves con dos marcas de maquila, ceros a la izquierda o minúsculas se ignoran (no crean envío ni precio, no corre código); las normales sí llegan | 12 |
 | `csp_t.py` | Cabeceras de `vercel.json` aplicadas: la app funciona sin violaciones de CSP (fotos, PDF, respaldo, Ajustes) | 13 |
 | `e2e.py` | Flujo completo Entrada → Órdenes → Empaque → Embarque → Mortalidad | 30 |
 | `ajustes_t.py` | Panel de Ajustes (tema, 3 tamaños, foco, sin desbordes a 390/820/1440 px, sin almacenamiento) | 101 |
@@ -96,6 +99,8 @@ Extras (no están en `correr_todo.sh`):
 ### v1.42.0 · recepción por tinas
 - `pruebas/recep.py` → `recibir(pg, lote, pv, kz, tank, …)` registra una recepción **por tinas desde la pantalla**, como una persona (toca la tina, escribe los kg, toca la talla; la despatada va en su casilla aparte). Úsala en cualquier prueba que necesite un lote nuevo; `lote=None` deja el que propone la app y `nuevo=False` sigue en la recepción que ya está abierta («Completar»). Si otro equipo ocupa la tina mientras se captura, pasa a la siguiente libre.
 - `tinas_t.py`: la recepción por tinas completa (teclado, tallas, aparte, temperaturas, PDF, sacar y mover tinas, dos equipos con la misma tina, 3D).
+- `v148_t.py` (v1.48.0): Empaque en dos columnas (tarima ¼ con lo que falta y conteo por color, hieleras ¾) en 1280, 1440 y 1024 con y sin teclado, y en una columna en celular; teclado a un lado con ✕ o «Abrir teclado»; 60 hieleras en 6 columnas de 10 con encabezados; corregir pone los botones arriba; packing list con detalle vertical y total; solo para ver en columnas de 10 con el lote.
+- `v147_t.py` (v1.47.0): campana con verbo en cada aviso y sin «Sacar de tinas»; temperatura vieja no avisa; hoja de empaque nombra los datos; tinas del lote con resumen y «Tina por tina» plegado; rangos de temperatura en Administración (validación, efecto en avisos, compartidos en `W/pesos`, «los de siempre», solo Administrador). En 1440 y 390 px.
 - `TNA_DEF` (en `pruebas/recep.py`): para pruebas que arman un lote directo con `addLot(...)`: `pg.evaluate(TNA_DEF)` y luego `TNA(addLot({...}))` le pone tinas libres de su tanque. Desde la v1.43.0 todo lote lleva tinas (la existencia por tanque sale de ellas).
 - Las fechas abren el calendario (flatpickr): en una prueba, `fill` con la fecha completa lo cierra solo; si dejas la casilla vacía o a medias, `pg.keyboard.press('Escape')` antes de tocar otra cosa.
 
@@ -120,3 +125,7 @@ Extras (no están en `correr_todo.sh`):
 3. Si tocaste la interfaz: `accesibilidad.mjs` → 100.
 4. Si tocaste cálculos o listas: `rendimiento_t.py` (Panel < 100 ms con CPU 4×).
 5. `python3 -I pruebas/auditoria_rapida.py --estricto` → «Sin hallazgos» (ciclos de cuadros sin fin, guardados temporales sin tope, `??`/`?.` para el iPad viejo, y rutas de la computadora o llaves que no deben subirse a GitHub).
+
+## css_llaves_t.py (v1.58.0)
+
+Revisa que las llaves del `<style>` de `index.html` cuadren. Una «}» de más pasa desapercibida en Chrome, pero hace que la capa CPX del iPad viejo deje de leer el resto del CSS. Correr después de tocar el CSS: `python3 -I pruebas/css_llaves_t.py`.
