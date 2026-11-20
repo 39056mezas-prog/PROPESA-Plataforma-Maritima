@@ -1,7 +1,7 @@
 # CLAUDE.md · PROPESA — Procesos y Operaciones
 
 Instrucciones para cualquier asistente de IA (Claude Code, Claude, Codex, Cursor…) que trabaje en este repositorio.
-Léelo completo antes de tocar código. Versión actual de la app: **1.44.0** (9 de noviembre de 2026).
+Léelo completo antes de tocar código. Versión actual de la app: **1.58.0** (19 de noviembre de 2026).
 
 ## Qué es
 
@@ -47,6 +47,22 @@ Lo que el usuario quiere evitar: pantallas llenas, no poder regresar, quedar blo
 
 **iPad viejo (v1.37.0, pedido del usuario):** se usa sobre todo en un iPad mini viejo; tiene que correr desde **iOS 12 (Safari 12)**. En el JavaScript **no uses `??` ni `?.`** (deja la app en blanco en iOS 12–13; usa `(a!=null?a:b)`) ni `.at()`, `replaceAll`, `structuredClone`, `dateStyle`; las descargas van con `saveBlob()`. En el CSS, **cada `color-mix()` lleva antes un color fijo `var(--cm-…)`**, nada de `inset:` y `position:sticky` con `-webkit-sticky`. `@container`, `:has`, `:is`, `:focus-visible`, `clamp()` y `gap` sí se pueden usar: la capa `CPX` los resuelve en el iPad viejo (ver `docs/ARQUITECTURA.md` → «iPad viejo»). `pruebas/ipad_viejo_t.py` lo revisa.
 
+**Empaque = llenar hieleras (v1.48.0, diseño del usuario; v1.57.0: las hieleras llenan la pantalla):** arriba, avance y lotes | tarima actual chica **encima del teclado y de su ancho**, en la misma tarjeta; debajo, todas las hieleras **a todo lo ancho hasta el teclado** (el usuario dibujó el recuadro; antes la columna de la tarima quedaba vacía a la izquierda) en columnas fijas de 10 numeradas de arriba abajo (pantalla y PDF, como las tinas); el teclado se abre a un lado de las hieleras (en celular, abajo) sin taparlas y se cierra con ✕; «Guardar hieleras» en la barra fija de abajo. No vuelvas a poner la tarima grande arriba de las hieleras. **Recuadro que se desliza (v1.57.0, pedido del usuario):** si las columnas de tinas (Recepción) o de hieleras no caben junto al teclado, van en un recuadro (`.scbox` > `.hsc`, `scShow`) que se desliza de lado, con flechitas en la orilla y que se mueve solo a la tina u hielera activa; nunca se aplastan (tinas mínimo 7.5rem por columna). **En tablet y pantallas medianas (641–1280 px, v1.52.0, dibujo del usuario)** las hieleras van como tarjetas angostas una junto a otra (1 2 / 3 4), con el encabezado de cada 10 a todo lo ancho; no vuelvas a dejar que una hielera ocupe todo el ancho ahí.
+
+**Correos (v1.49.0, pedido del usuario):** Administración → Correos (solo Administrador) decide qué PDF se manda en cada paso, a quién (contactos, grupos, usuarios o correos escritos a mano), con qué asunto y mensaje, y cuándo (solo con el botón / abrir el borrador para revisar / enviar solo). «Enviar por correo» siempre abre el borrador (`mlCompose`) para revisarlo como en Gmail. Temperatura no se manda sola (el usuario lo pidió). Un contacto con maquila solo recibe lo de esa maquila. `api/send-email.js` solo manda con sesión de Administrador o piso.
+
+**Un correo por paso con varios PDF, y Gmail como archivo (v1.50.0, pedido del usuario):** cada paso tiene sus PDF marcados (`MLPK`/`MLPD`, casillas en Administración → Correos) y el modo «Apagado» (sin borrador ni botón de correo). Todo correo lleva copia oculta al archivo (`mlArch`, por ahora conectandoensenada@gmail.com, editable). Los PDF no se guardan en la base: viven en Gmail. La app solo anota un renglón por correo en `ST.O` y lo enseña en el plegable «Correos enviados» del lote y de la orden, con «Ver en Gmail ›»; si no salió, queda en rojo con «Reintentar» y avisa la campana. No vuelvas a guardar PDF ni el texto de los correos en la base.
+
+**Planta 3D (v1.53.0, pedido del usuario):** el inicio de Modo piso lleva **solo los accesos rápidos**; la planta 3D y la info de tanques van en el botón «Tanques» (ruta `ptq`, `pisoTq` = `inicio(1)`: el mismo Centro de operaciones, con los números llevando a las pantallas de piso; v1.55.0), después de Temperatura. La planta siempre va en su plegable (`tqFold`), en el Centro y en ese panel. No vuelvas a poner la planta ni info de tanques en el inicio de Modo piso.
+
+**Modo piso, encabezado (v1.58.0, diseño del usuario con imagen):** barra azul marino: logo | título de la pantalla y debajo la maquila («PROPESA ▾», la cambia) | campana, Ajustes, perfil. Debajo, una franja clara en forma de **pestaña de fólder** (otro dibujo del usuario: escalón corto e inclinado, no curva larga) con «Modo piso» y «Vista 3D» (lleva a `ptq`). En celular, en las subpantallas va «‹» en lugar del logo. Las tarjetas del inicio (`ptile`, clase `ptl`) llevan flecha › a la derecha; en celular van en renglón (ícono | texto | flecha). No toques las tarjetas de clientes de Empacar (`.pt.pk2`) con reglas de `.pt` sueltas.
+
+**Auditoría UI/UX (v1.58.0):** el CSS tiene que tener las llaves cuadradas: una «}» de más hacía que la capa CPX del iPad viejo dejara de leer el resto de la hoja (`pruebas/css_llaves_t.py`). En celular la barra de arriba lleva lupa (`.sqb`, `SQO`) y el nombre de la sección en su propio renglón. Las tablas que no caben se pueden enfocar y se desvanecen a la derecha (`tbAll`). Botones de 44 px también en computadora. El aviso flotante sale siempre arriba.
+
+**Inventario (v1.54.0, pedido del usuario):** no va en el menú lateral; es el plegable `ct-inv` del Centro de operaciones (`invPage(true)` da la tabla). La ruta `inventario` solo queda para equipos viejos y abre el Centro con ese plegable abierto.
+
+**Semanas (v1.51.0, pedido del usuario):** menú → Control → «Semanas» (`semanas()`, `wkAll`): una tarjeta plegable por semana (lunes a domingo) con recepciones, órdenes, embarques, correos y «Ver en Gmail ›», y los pendientes que llevan a donde se resuelven. Empezar una semana **no borra nada**: no agregues un botón de «reiniciar» ni borres datos por semana. No guarda datos propios.
+
 **Maquilas (v1.19.0):** cada maquila (PROPESA, Abel, David, Luis Arce) guarda aparte sus datos; `ST` es la maquila abierta y `STX` las demás (ver `docs/DATOS.md`). Todo lo nuevo que sea de la operación va dentro de la maquila; lo de la empresa o lo físico (usuarios, proveedores, consignatarios, tanques) se comparte en `SHF`. **Desde la v1.40.0 las maquilas están fuera del programa** (usuario: «no agregar ni quitar maquilas»): no hay pestaña Maquilas ni botones para agregarlas, ocultarlas o renombrarlas; se dan de alta a mano en la base (`docs/SUPABASE.md` §10). No los vuelvas a poner.
 
 **Eliminar en Catálogos (v1.40.0, aprobado por el usuario):** tallas, proveedores, especies, consignatarios y destinos se pueden eliminar **solo si nunca se usaron en ninguna maquila** (`cdUse`); si ya se usaron, la confirmación dice en qué y ofrece «Ocultar». Tallas y consignatarios van por posición: al borrar uno, `cdDel` recorre lo guardado detrás (z de líneas y embarques; `cons`, `sh`, `_sh` y `ST.CC` en todas las maquilas). Si agregas otro dato guardado por posición de talla o consignatario, agrégalo también a `cdUse` y `cdDel`.
@@ -87,7 +103,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 3. **No inventes reglas de negocio.** Si falta un dato, pregunta (ver `docs/ROADMAP.md` → Preguntas abiertas).
 4. **La app ya usa Supabase** (proyecto `propesa_bc`, ver `docs/SUPABASE.md`): todos los equipos comparten los datos. **No cambies el esquema, las reglas de seguridad ni la función `usuarios` sin preguntar**, y no conectes otras cuentas del usuario (correo, Drive…) sin que lo pida. Las pruebas nunca tocan la base real: usan `pruebas/supabase_falso.py` o el modo local.
 5. **Sin dependencias ni paso de compilación.** Todo vive en `index.html` (HTML + CSS + JS vanilla, la conexión con Supabase está hecha a mano con `fetch`). Las únicas excepciones son `api/despierta.js`, la tarea diaria de Vercel que mantiene despierta la base, y `sw.js`, el service worker mínimo que deja instalar la app (v1.12.0); ninguno usa librerías. **Única librería: flatpickr 4.6.13 (MIT), pegada dentro de `index.html`** para el calendario de las fechas (v1.42.0, el usuario pidió usar una que ya existiera); su licencia está en `docs/terceros/flatpickr-LICENSE.md`. No agregues otra sin preguntar. Nada de CDN ni fuentes externas; el único dominio externo permitido en la CSP es el de Supabase.
-6. **Escapa todo texto del usuario con `E()`** antes de meterlo en HTML.
+6. **Escapa todo texto del usuario con `E()`** antes de meterlo en HTML. **Después de cambiar `index.html`, corre `python3 -I pruebas/csp_hashes.py --escribir`** (v1.55.2: la CSP solo deja correr los `<script>` cuya huella está en `vercel.json`; si no, en Vercel la app queda en blanco). Nada de `onclick=`/`onload=` en etiquetas. Toda columna nueva de la base lleva su revisión en `WN` (si no, la app la ignora: `KEYOK`/`wnorm`).
 7. **Cualquier cambio a la estructura de `ST` lleva migración**, su limpieza en `cleanST()` **y su lugar en `WN` / `encodeST` / `decodeST`** (lo que no esté ahí no se comparte entre equipos). Los ids nuevos se hacen con `uidN()` / `uidS()`, nunca con contadores ni `max+1`.
 8. **No borres lo que el usuario escribió** cuando hay un error (`renderKeep` / `fail`).
 9. **Los avisos rojos siempre llevan a donde se resuelven** (botón o chip con destino).
@@ -99,6 +115,7 @@ La usan en tablet personas de piso con poca experiencia técnica (manos mojadas,
 
 ```bash
 python3 -m http.server 8765                 # servir en http://localhost:8765
+# (o doble clic al .html: desde la v1.55.1, abierto como archivo es una copia de prueba en modo local, FILEMODE)
 sh pruebas/correr_todo.sh                   # TODAS las pruebas (*_t.py + e2e), en paralelo; debe terminar en «TODO BIEN». Solo al final de la ronda
 sh pruebas/correr_todo.sh hick_t menu_t     # solo las de lo que tocaste (lo normal mientras construyes)
 J=1 sh pruebas/correr_todo.sh               # una por una (si el equipo es lento)
@@ -120,7 +137,7 @@ Las pruebas usan Python 3 + Playwright con Chromium. Si `correr_todo.sh` ya leva
 - [ ] Revisado en 390, 768 (iPad mini), 820 y 1440 px, y con texto «Muy grande» (20 px): sin desbordes.
 - [ ] `ipad_viejo_t.py` en TODO BIEN (se ve y funciona igual en el iPad viejo).
 - [ ] Tema claro y oscuro.
-- [ ] Sin errores en consola; sin violaciones de la CSP.
+- [ ] Sin errores en consola; sin violaciones de la CSP; `python3 -I pruebas/csp_hashes.py --escribir` corrido y `csp_hashes.py` en TODO BIEN.
 - [ ] Documentación y `CHANGELOG.md` al día; versión subida si aplica (constante `APPV` en `index.html`: la usan el menú del perfil y Administración).
 
 ## Entregables de cada ronda

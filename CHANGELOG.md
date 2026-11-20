@@ -1,5 +1,253 @@
 # Cambios
 
+## 1.58.0 · 19 de noviembre de 2026 · Arreglos de la auditoría UI/UX y nuevo encabezado de Modo piso
+
+Pedido del usuario: «fix everything, approved» (todos los pendientes de `claude/AUDITORIA_UIUX_v1.56.0.md`), y durante la ronda el diseño de Modo piso con imagen.
+
+- **Modo piso, encabezado nuevo** (imagen del usuario): azul marino con logo | título y maquila («PROPESA ▾» la cambia) | campana, Ajustes y perfil. Debajo, una franja clara como **pestaña de fólder** con «Modo piso» y **«Vista 3D»** (abre Tanques). En celular mide un renglón (antes ~150 px). Las tarjetas del inicio llevan **flecha ›**; en celular van en renglón: ícono, texto y flecha.
+- **iPad viejo (grave, L8):** una «}» de más en el CSS hacía que el iPad viejo dejara de leer todo el CSS que seguía: tanques, tinas de Recepción y más salían sin estilo. Ya se lee completo (prueba nueva `css_llaves_t.py`).
+- **Celular, barra de arriba:** el nombre de la sección ya se lee completo («Órdenes», no «Ór…»). El buscador es una lupa que lo abre.
+- **Botones de 44 px** en todas partes: «Ver», «Editar», «Eliminar» y «Ocultar» de las tablas, «PROPESA ▾», los filtros T1–T6 de Temperatura y Ajustes en celular. Los interruptores tienen área de toque de 44 px.
+- **El aviso flotante sale siempre arriba**, debajo de la barra (abajo tapaba el botón azul). En tema oscuro ahora se distingue.
+- **Tablas anchas en celular:** se desvanecen a la derecha mientras haya más columnas y se pueden recorrer con teclado.
+- **Contraste:** la etiqueta «Alerta» (naranja más oscuro) y «‹ Anterior / Siguiente ›» del teclado de tinas en tema oscuro.
+- **Teclado de tinas en iPad vertical:** «Mediana» y «Grande» ya no se cortan (el punto va arriba del nombre).
+- **Empaque con el teclado abierto:** la barra de abajo deja libre la columna del teclado («Guardar» ya no se esconde).
+- **Administración en celular:** las 4 pestañas en 2 × 2.
+- **Letra mínima de 12 px** en el menú, la campana, «Vacía» en las tinas, las fichas de tanque y la evaluación de la hoja de empaque.
+- **Cámara 3D:** botones con íconos dibujados (antes ⟲ ⟳ + − ⌂ de texto).
+- **La flecha «›» ya no se queda sola** en otro renglón.
+- **Títulos en orden** (Empaque, Semanas, Catálogos) y encabezados «Acciones» con texto para el lector de pantalla. En celular, el menú cerrado ya no recibe el foco del teclado.
+- **Pantalla de acceso:** la vista previa enseña el menú actual (Centro de operaciones · Operación · Control).
+- Revisión completa otra vez (21 pantallas × 3 tamaños × 2 temas): axe-core sin errores (antes 136), sin botones menores de 44 px, sin desbordes.
+
+## 1.57.0 · 19 de noviembre de 2026 · Tinas y hieleras en un recuadro que se desliza
+
+Pedido del usuario (con captura del iPad): «si pasa esto, quiero verlo en un recuadro donde pueda deslizar para ver los tanques que faltan» y «también con las hieleras».
+
+- **Recepción → Tinas:** en iPad vertical las 6 columnas de tanques se aplastaban junto al teclado (se leía «Tina», «Sin tal», el campo de kg medía 23 px). Ahora cada columna tiene su ancho normal y, si no caben, van **dentro de un recuadro que se desliza de lado**.
+  - Una flechita en la orilla (‹ ›) y un desvanecido dicen que hay más tanques de ese lado.
+  - Al tocar un tanque arriba (T1…T6) o al pasar a la siguiente tina con el teclado, el recuadro se mueve solo para enseñarla.
+  - Guardar o tocar una talla no lo regresa al inicio: se queda donde estabas.
+  - Si todo cabe (computadora), no se ve el recuadro y todo queda como antes.
+- **Empaque → Hieleras:** lo mismo. En computadora y celular, con muchas hieleras, las columnas de 10 que no cabían quedaban cortadas o escondidas sin aviso; ahora van en el mismo recuadro, con sus flechitas, y se mueve solo a la hielera activa. En tablet (641–1280 px) siguen como tarjetas de 2 en 2 (v1.52.0), sin recuadro.
+- **Empaque: las hieleras llenan la pantalla** (pedido del usuario con dibujo: «quiero que se llene la pantalla»). La columna de la izquierda era solo para «Tarima actual» y debajo quedaba vacía. Ahora **las hieleras van de orilla a orilla hasta el teclado**, y la tarima chica pasó arriba a la derecha, **encima del teclado** y del mismo ancho (otro dibujo del usuario: «acomoda esto bien»). En computadora caben las 60 hieleras (6 columnas de 10) sin deslizar; en iPad horizontal van de 3 en 3; en iPad vertical siguen de 2 en 2; en celular la tarima va arriba como antes.
+- **Empaque, zona de arriba menos amontonada** (usuario: «se ve muy amontonada»): los lotes son tarjetitas de 2 líneas (código; tanque y kg; «Más viejo · usar primero» abajo) en una fila; «+ Lote sin recepción» y «Empacar sin lote» pasaron a enlaces discretos a la derecha de «Lote»; sin la raya ni el hueco grande antes de las hieleras.
+- **Empaque, barra de abajo** (usuario: «más estética», «abrir teclado: un círculo solo con el ícono», «sin texto aquí»): queda solo el teclado como botón redondo con su ícono (el lector de pantalla dice «Abrir teclado») y «Guardar hieleras» del mismo alto. Se quitó la instrucción «Toca una hielera, escribe las piezas y toca el color: pasa sola a la siguiente».
+- Probado en 390, 768, 1024, 1280 y 1440 px, tema claro y oscuro, y texto «Muy grande».
+
+## 1.56.0 · 19 de noviembre de 2026 · «Cerrar sesiones» de una cuenta
+
+Pedido del usuario: «fix next round» (pendiente de la v1.55.2: la función `usuarios` ya lo aceptaba desde la v1.46.0, pero la app no tenía el botón).
+
+- **Administración → Usuarios:** cada cuenta, menos la tuya, trae **«Cerrar sesiones»** entre «Editar» y «Eliminar». Sirve si se pierde una tablet o alguien deja de trabajar ahí.
+  - Primero pide confirmar: **«Sí, cerrar sesiones»** (rojo, como «Eliminar»).
+  - Después avisa: «✔ Martha tendrá que entrar otra vez en todos sus equipos (a más tardar en una hora)». Lo que ya guardó no se pierde.
+  - Solo sale con la base compartida (en la copia de prueba no hay sesiones que cerrar).
+- La cuenta no se borra ni cambia: con su contraseña puede volver a entrar. Para que ya no entre, cambia su contraseña (eso también cierra sus sesiones) o elimínala.
+- `CRON_SECRET` en Vercel sigue pendiente (el usuario no tiene acceso hoy).
+- Prueba nueva: `cerrar_sesiones_t.py` (simula la base, sin internet).
+
+## 1.55.2 · 19 de noviembre de 2026 · Arreglos de la auditoría de seguridad
+
+Pedido del usuario: «fix all of them» (auditoría `claude/AUDITORIA_SEGURIDAD_v1.55.1.md`). En pantalla no cambia nada.
+
+- **Arreglado (grave): una cuenta de piso podía meter código que corría en la pantalla del Administrador e inventar precios de compra.** Lo hacía guardando en la base un registro con dos marcas de maquila (`q1:q1:P/…`, `q1:q1:$/…`): la revisión de lo que llega de la base no lo reconocía y lo dejaba pasar sin limpiar. Ahora:
+  - la app ignora cualquier registro cuya clave no tenga la forma correcta (`KEYOK`) o que no tenga su revisión en `WN`;
+  - `supabase/migrations/20261120_clave_canonica.sql` hace que la base tampoco los guarde. **Aplicada el 19/nov** (antes había 0 claves mal formadas: nadie lo había intentado); probada como cuenta de piso en la base real.
+- **La CSP ya no permite cualquier código en línea.** Solo corren los 4 bloques `<script>` de `index.html`, por su huella (sha256) en `vercel.json`. Si alguien llegara a meter código en una pantalla, el navegador no lo corre. **Al cambiar `index.html` hay que correr `python3 -I pruebas/csp_hashes.py --escribir`**; la prueba `csp_hashes.py` avisa si se olvida.
+- **Correo (`api/send-email.js`):** el adjunto siempre termina en `.pdf`; máximo 40 correos en 10 minutos por persona; cada envío queda anotado en Vercel → Logs (quién y a cuántos).
+- **`api/despierta.js`:** sin cambios por ahora (pendiente: poner `CRON_SECRET` en Vercel; el usuario no tiene acceso a Vercel hoy). Mientras no esté, la dirección sigue abierta, pero solo responde si ya hay Administrador.
+- **Función `usuarios`** (publicada el 19/nov, versión 6 en Supabase): si dos personas hacen la Configuración inicial al mismo tiempo, solo queda la primera; los errores inesperados ya no enseñan el detalle técnico en pantalla.
+- Pruebas nuevas: `clave_canonica_t.py`, `csp_hashes.py`; `correo_servidor_t.js` actualizada.
+- **El repositorio ya coincide con la base:** faltaban `20261117_reglas_por_registro.sql` (aplicada en la base desde el 17/nov, v1.46.0) y la versión publicada de la función `usuarios` (con «cerrar sesiones» y rol obligatorio). Se copiaron de Supabase.
+
+## 1.55.1 · 19 de noviembre de 2026 · Probar el HTML en tu computadora
+
+Pedido del usuario: «no puedo probar mi HTML en mi computadora».
+
+- **Abrir el `.html` con doble clic ahora funciona como copia de prueba.** Antes, abierto como archivo, la app intentaba conectarse a la base real y se quedaba en la entrada. Ahora:
+  - pide crear un Administrador de prueba (nombre, correo y contraseña inventados);
+  - guarda todo solo en ese navegador; **nunca toca la base real** ni lo que ven las tablets;
+  - arriba de cada pantalla dice «Copia de prueba en esta computadora»;
+  - los correos no salen.
+- En propesa.vercel.app no cambia nada.
+- Prueba nueva: `archivo_t.py`.
+
+## 1.55.0 · 19 de noviembre de 2026 · «Tanques» en Modo piso es como el Centro de operaciones
+
+Pedido del usuario: «Tanques en Modo piso debe ser como el Centro de operaciones».
+
+- El botón **«Tanques»** de Modo piso abre lo mismo que el Centro de operaciones: los 4 números (En tanques, Recibido en 7 días, Hieleras empacadas, Embarques abiertos), «Planta y tanques», «Inventario», «Órdenes de empaque», «Tablero de lotes» y «Actividad reciente», todo plegable igual.
+- En Modo piso los números llevan a sus pantallas de piso: En tanques y Recibido → Registrar recepción, Hieleras empacadas → Empacar hieleras, Embarques abiertos → Cerrar embarque. Sin «Todas las maquilas».
+- Lo que se pliega o se abre se comparte con el Centro (mismos plegables).
+- El inicio de Modo piso sigue solo con los accesos rápidos (v1.53.0).
+- `v153_t.py` actualizada.
+
+## 1.54.0 · 19 de noviembre de 2026 · Inventario dentro del Centro de operaciones
+
+Pedido del usuario: «quita Inventario del menú lateral; debe estar en el Centro de operaciones».
+
+- **Menú lateral:** ya no trae «Inventario».
+- **Centro de operaciones:** plegable **«Inventario · Disponible en tanques · N kg»**, debajo de «Planta y tanques». Viene cerrado; al abrirlo, la misma tabla de siempre (kg por talla, total y por tanque T1–T6).
+- Si una tablet tenía guardada la pantalla vieja de Inventario, abre el Centro con «Inventario» ya abierto.
+- Prueba nueva: `v154_t.py` (1280, 768 y 390 px).
+
+## 1.53.0 · 19 de noviembre de 2026 · Modo piso sin planta 3D en el inicio; «Tanques» con su propio panel
+
+Pedido del usuario: «quita la planta 3D del Modo piso; sí quiero que sea accesible pero en su propio botón, debajo de Temperatura y los demás» · «toda la sección de planta plegable» · «en Modo piso solo los accesos rápidos como antes; nada de info de tanques a menos que toquen el botón de Tanques, y ahí su propio panelito».
+
+- **Inicio de Modo piso:** solo los accesos rápidos (Empacar hieleras, Registrar recepción, Cerrar embarque, Conteo final, Temperatura) y, al final, el botón nuevo **«Tanques»** (dice cuántos lotes hay). Ya no sale la planta 3D ni el tablero de tanques arriba.
+- **Panel «Tanques»** (Modo piso): la planta 3D y el tablero de tanques, con «‹ Atrás» al inicio. Si se apaga Modo piso desde ahí, va al Centro de operaciones.
+- **La planta es plegable** («Planta y tanques · kg en tanques · lotes») en el Centro de operaciones y en el panel «Tanques». Viene abierta; si se pliega, se queda plegada mientras dure la sesión y el 3D no se arma (más ligero en la tablet).
+- Prueba nueva: `v153_t.py` (390, 768 y 1024 px).
+
+## 1.52.0 · 19 de noviembre de 2026 · Empaque en tablet: hieleras una junto a otra
+
+Pedido del usuario (con un dibujo sobre la pantalla de Empaque): «en tablet y en pantallas chicas-medianas, que las hieleras se vean así»: tarjetas angostas lado a lado, no una barra a todo lo ancho.
+
+- **Tablet y pantallas medianas (641 a 1280 px de ancho):** cada hielera es una tarjeta angosta y van una junto a otra: 1 2 / 3 4 / … (2 o 3 por renglón según el lugar; con el teclado abierto, 2). Cada grupo de 10 sigue con su encabezado («1–10», «11–20»…) a todo lo ancho. Antes, con pocas hieleras, la columna de 10 ocupaba todo el ancho y cada hielera salía como una barra larga.
+- **Celular y computadora grande:** sin cambio (columnas de 10 de arriba abajo, v1.48.0).
+- Lo mismo en la vista «solo para ver» (embarque cerrado o sin permiso de empacar).
+- Solo cambia el acomodo: el teclado, «Siguiente», guardar y los PDF siguen igual.
+- Prueba nueva: `v152_t.py` (768, 820, 1024, 1160, 1280, 390 y 1440 px; teclado abierto con 60 hieleras; el teclado llena la 1 y luego la 2).
+
+## 1.51.0 · 19 de noviembre de 2026 · Semanas: lo de cada semana y sus correos
+
+Pedido del usuario: «¿cómo empiezo una semana nueva y tengo un catálogo para ver lo de antes, o ir al correo que mandamos con los detalles finales?» · «FIX THIS» (hacer la vista por semana).
+
+- **Menú → Control → «Semanas»** (pantalla nueva, solo consulta): una tarjeta plegable por semana, de lunes a domingo, la más nueva arriba. El resumen dice el número de semana, las fechas, cuántas recepciones, órdenes, embarques y correos tuvo, y si quedó algo pendiente.
+- **Dentro de cada semana:** sus recepciones (por fecha), órdenes (por ETD), embarques (por la ETD de sus órdenes) y «Otros correos» (temperatura, hojas). Cada fila dice cuántos correos salieron o no salieron, con **«Ver en Gmail ›»** que abre el archivo buscando ese lote, orden o embarque. Tocar la fila abre el lote, la orden o el embarque.
+- **«Correos de la semana en Gmail ›»**: abre el archivo buscando todo lo de PROPESA de lunes a domingo. **«Hojas de esta semana ›»**: abre Hojas para imprimir con esas fechas ya puestas.
+- **Pendientes de la semana** en rojo, cada uno lleva a donde se resuelve: embarque abierto («Cerrar embarque ›»), orden con hieleras faltantes o sin destino, correo que no salió («Reintentar ›»). Sin pendientes dice «✔ Sin pendientes».
+- Esta semana viene abierta; las demás cerradas (salvo si tienen pendientes). Se ven las últimas 6 semanas; las de antes con «Ver historial».
+- **No se borra nada al empezar una semana:** lo cerrado sale solo de las listas de trabajo y queda en Semanas. No guarda datos nuevos (se arma con lo que ya hay): sin cambios en la base.
+- Prueba nueva: `semanas_t.py`.
+
+## 1.50.0 · 19 de noviembre de 2026 · Un correo por paso con varios PDF, y Gmail como archivo
+
+Pedido del usuario: «planear qué pasa con la información y los PDF de cada lote; que no se amontonen en la base ni en la pantalla; que el archivo sea Gmail, el mismo correo que mandamos con los PDF; ver en la app el grupo de PDF que mandamos en los lotes y las órdenes» · «varios PDF por correo, no queremos llenar de correos a nadie; elegir qué pasos, qué PDF, prenderlos y apagarlos» · «el archivo por ahora conectandoensenada@gmail.com y que se pueda cambiar en la app» · «sí» al rojo con «Reintentar». Plan: `PLAN_CORREOS_PDF_v1.50.0.md` (aprobado).
+
+- **Archivo en Gmail** (Administración → Correos, solo Administrador): correo del archivo (de inicio conectandoensenada@gmail.com) y un interruptor. Todo correo que sale de la app lleva una **copia oculta** a ese correo: ahí queda el correo con sus PDF. El borrador lo dice abajo («Copia oculta al archivo: …» o «⚠ Este correo no quedará en el archivo»).
+- **Varios PDF en un correo:** cada paso tiene casillas con los PDF que se adjuntan. De inicio: Recepción terminada → Formato 02; Orden → orden; Empaque terminado → packing list; **Embarque cerrado → informe + packing list**; Temperatura → monitoreo. Se pueden sumar: el monitoreo de temperatura (recepción), la orden y el Formato 02 de los lotes usados (empaque), la orden y el PDF del camión (embarque).
+- **Borrador:** los PDF salen como fichas con «Ver» y ✕; «+ Agregar PDF» enseña los demás de ese lote, orden o embarque. Abajo, cuánto pesan. Arriba de 3 MB dice «Muy pesado: quita un PDF» y no deja enviar (Vercel no acepta más de 4.5 MB por envío).
+- **«Apagado»** en cada paso: no se abre borrador al terminarlo y su botón «Enviar por correo» no sale (el PDF se sigue descargando).
+- **«Correos enviados»** al final del **lote** y de la **orden** (plegable): un renglón por correo con fecha, paso, quién, a cuántas personas y las fichas de todos sus PDF; «Ver en Gmail ›» abre el archivo buscando ese lote u orden. La orden junta los correos de la orden, el empaque y su embarque. Al final de cada correo va «Para buscarlo en Gmail: PROPESA lote …».
+- **Si un correo no sale:** queda **en rojo** («⚠ No se envió», con el motivo) y el plegable abre solo; «Reintentar» lo vuelve a abrir con los mismos PDF y personas; «Ya no hace falta» lo quita de los avisos. La **campana** avisa «No se envió el correo · …» hasta resolverlo. Si se manda «desde mi correo», queda anotado sin copia al archivo.
+- **Nada se amontona:** los PDF y el texto de los correos no se guardan en la base; solo un renglón chico por correo. Se quitó la lista «Informes de cierre» de Administración (la pestaña ahora es «Historial y respaldo»). «Embarque cerrado · informe listo para mandar» se apaga en la campana cuando su correo ya salió.
+- `api/send-email.js`: varios PDF por correo (máximo 10), copia oculta, solo PDF y máximo ~3 MB. Sigue pidiendo sesión de Administrador o Encargado de piso.
+- Contactos y grupos sin nombres de ejemplo (pedido del usuario: «quita nombres como el patrón + contaduría»): se quitó «ej. Administración = el patrón + contaduría», «ej. el dueño de la maquila» y los ejemplos «Contaduría» / «Administración» de las casillas.
+- Sin cambios en la base (Supabase). Datos: `ST.NE[paso].p`, `ST.NE.arch` y el registro de correos en `ST.O` (ver `docs/DATOS.md`).
+- Pruebas nuevas: `correo_t.py` (49 revisiones: borrador con varios PDF, archivo, rojo y reintento, campana, embarque en la orden, muy pesado, Administración, Apagado, enviar solo que falla, respaldo y sincronización, 390 y 768 px) y `correo_servidor_t.js`.
+
+## 1.49.0 · 19 de noviembre de 2026 · Correos: a quién se manda cada PDF, con borrador para revisar
+
+Pedido del usuario: «una ventana dentro de la app donde pueda editar qué y a quién se envía; escribir el correo ahí mismo, o crear perfiles con nombre y correo y al enviar nomás poner el nombre, o ambos en el mismo sistema» · «sí, agrega grupos» · «se manda al encargado de piso, al patrón, a administración, a contaduría y a veces al dueño de una maquila» · «en un punto se mandará solo, pero primero quiero revisarlo, como si mandaras un correo en Gmail» · «temperaturas: solo el botón listo para enviar y elegir a quién» · «solo Administración».
+
+- **Administración → Correos** (pestaña nueva, solo Administrador):
+  - **Qué se manda y a quién:** una fila por paso (Recepción terminada, Orden de empaque, Empaque terminado, Embarque cerrado, Temperatura de tanques, Otros PDF) con el PDF que se adjunta, cuándo se manda y a quién. «Editar» abre Para, CC, asunto y mensaje (con datos que se llenan solos: `{lote}`, `{kg}`, `{embarque}`…) y «Regresar al texto de siempre».
+  - **Cuándo se manda** (Recepción, Empaque terminado y Embarque cerrado): «Solo con el botón», «Abrir el borrador para revisar» (lo de siempre) o «Enviar solo». La orden (se arma por partes), Temperatura y los demás PDF solo con el botón.
+  - **Contactos:** nombre, correo, área y «Recibe lo de» (todas las maquilas o solo una: para el dueño de una maquila). Los usuarios de la app también se pueden elegir.
+  - **Grupos:** un nombre para varios correos (ej. Administración = patrón + contaduría). Si alguien entra o sale se cambia en el grupo.
+- **Borrador como en Gmail:** «Enviar por correo» (en cualquier pantalla) abre Para, CC, Asunto, Mensaje y el PDF adjunto («Ver PDF»). En Para y CC se escribe un nombre, un grupo o un correo; salen sugerencias y queda como ficha (✕ la quita). Un correo escrito a mano se acepta tal cual, y el Administrador puede tocar «Guardar» en su ficha para volverlo contacto. Abajo dice a cuántos correos se va a mandar. Se puede agregar o quitar a alguien solo para ese correo.
+- **Al terminar un paso** se abre el borrador (o se manda solo, según el ajuste): al guardar una recepción nueva, al empacar la última hielera de una orden y al cerrar un embarque. Si mandarlo solo falla, se abre el borrador con el aviso para no perderlo.
+- Si no sale (sin internet, sesión vencida, servicio de correo), el borrador dice por qué y ofrece «Descargar el PDF y abrir mi correo».
+- **Envío más seguro (`api/send-email.js`):** solo manda correos alguien con sesión en la app (Administrador o Encargado de piso); antes cualquiera que conociera el enlace podía usarlo. Ahora acepta CC, máximo 50 destinatarios, y «Responder» le llega a quien lo envió.
+- Datos nuevos (compartidos por todas las maquilas y equipos): `ST.NC` contactos, `ST.NG` grupos, `ST.NE` ajustes por paso (registros `NC/`, `NG/`, `NE/`). Sin cambios en la base.
+
+## 1.48.0 · 18 de noviembre de 2026 · Empaque: la pantalla es para llenar hieleras
+
+Pedido del usuario: «más tablet friendly» · «la captura de hieleras, la vista y el PDF en vertical, igual que la Recepción» → «columnas fijas de 10 hieleras» · su diseño: «la pantalla debe enfocarse en llenar hieleras: una vista previa chica (¼) con la tarima 3D y el resto para todas las hieleras; el teclado es una herramienta que se abre» · «el celular tiene que verse mejor» · y el ajuste de layout con /impeccable layout.
+
+- **Arriba:** «Empacando: cliente», sus datos y «Cambiar consignatario…»; a la derecha, Descargar PDF y Enviar por correo.
+- **¼ · Tarima actual:** la tarima 3D chica, una etiqueta (Sin empezar / En proceso / ✔ Completo / ⚠ De más), lo que falta por talla y cuántas hieleras van de cada color con el total.
+- **¾ · Hieleras para empacar:** en una fila el título y el avance; abajo el lote en una franja (el elegido en azul marino) con «+ Lote sin recepción» y «Empacar sin lote»; luego **todas las hieleras en columnas fijas de 10**, numeradas de arriba abajo con su encabezado («1–10», «11–20»…), como las tinas de la Recepción. Tarjetas más chicas: en pantalla ancha caben las 60. Sin el teclado, cada tarjeta trae los 4 colores con su letra (R, V, B, A).
+- **El teclado es una herramienta que se abre y se cierra:** «Abrir teclado» en la barra de abajo (o tocar una hielera en tablet); se abre a un lado de las hieleras (en celular, abajo) sin tapar nada y se cierra con ✕.
+- **Barra de abajo fija:** «Abrir teclado», una ayuda corta (solo si cabe) y «Guardar hieleras».
+- **Celular:** encabezado compacto, la tarima chica con el conteo por color al lado, el lote en una franja y «Guardar hieleras» a todo lo ancho.
+- Al corregir una hielera, «Actualizar / Cancelar / Quitar» salen arriba de las columnas.
+- **Solo para ver** (embarque cerrado o sin permiso de empacar): las hieleras también en columnas de 10, con número, piezas, color y, si hay más de un lote, el lote.
+- **PDF finales (packing list e informe de embarque): la lista de cada hielera y de cada tina** (pedido del usuario). «Detalle por hielera» es una tabla vertical como el Formato 02: columnas de 10 hieleras (número, piezas, color), 4 por bloque; arriba qué hieleras van a cada cliente y de qué lote, abajo el total. «Tinas de origen»: por cada lote, cada tina con su tanque, talla y kg recibidos, también en columnas de 10.
+- La barra lateral es la misma en todas las pantallas (no cambió).
+- Arreglo: en celular con letra «Muy grande», los botones de PDF de Empaque ya no se salen de la pantalla.
+- Prueba nueva: `v148_t.py`. Actualizadas: `estados_caja_t.py`, `ordenes_t.py`, `v1271_t.py`, `v147_t.py`, `tinas_t.py`.
+
+## 1.47.0 · 18 de noviembre de 2026 · Avisos que se entienden, tinas más cortas y rangos de temperatura ajustables
+
+Pedido del usuario: «los avisos son como el foco de check engine: errores sin significado» · «la pantalla de tinas es muy larga, solo números; que vaya en su propia caja plegable» · «que los avisos de temperatura sean ajustables en Administración».
+
+- **«Sacar de tinas» ya no se pregunta** (opción A, elegida por el usuario): cuando los kilos salen del tanque (al cerrar el embarque, igual que siempre en la app), salen solos de las tinas sugeridas (primero las que tienen menos, así se vacían y quedan libres). Así las tinas cuadran siempre con «En tanques», el mapa de tanques y lo disponible. En el lote queda una línea: «✔ Lo que ya salió del tanque (30.5 kg) se sacó solo de las tinas 2 y 3 · Corregir». «Corregir» abre «Sacar de tinas» para escribir las tinas de verdad. Se quitaron el aviso de la campana, el aviso rojo del lote y el de Empaque («Di de qué tinas sacaste lo empacado»).
+- **Tinas en el lote:** viene cerrado. Al abrirlo, un resumen corto (una fila por tanque y talla: tinas y kg). «Tina por tina» y «Salidas y pases de tina» van cada uno en su propio plegable.
+- **Campana:** cada aviso dice qué pasó y qué hacer. El botón dice el verbo en lugar de «Ir»: «Empacar ›», «Completar hoja ›», «Ver tanque ›», «Cerrar lote ›», «Cerrar embarque ›»… y lleva justo a la parte donde se resuelve, ya abierta.
+  - Temperatura: solo avisa si la lectura es de hoy o de ayer (una de hace semanas ya no es una alarma) y dice el rango normal: «flotante 63.5 °F (normal hasta 60 °F) · hoy 08:15».
+  - Hoja de empaque: dice qué falta («falta no. de placas, nombre del chofer y teléfono del chofer») y abre la hoja. En la pantalla del embarque sigue el renglón corto («faltan 4 datos»), como se decidió en la v1.35.0.
+  - Órdenes: «Orden del 16/11 · hace 2 días · Faltan 58 de 60 hieleras por empacar».
+  - Arreglo: el aviso de la hoja de empaque dejaba al usuario arriba de la orden en lugar de en la hoja.
+- **Rangos de temperatura en Administración → Catálogos** (solo Administrador): el «hasta» de Óptimo, Normal, Advertencia y Alerta, para el agua del tanque y para el producto. Arriba de Alerta es Crítico. Valida que cada uno sea más alto que el anterior. «Regresar a los de siempre». Aplica a todas las maquilas y equipos (va en el registro compartido de pesos). La pantalla de Temperatura tiene «Cambiar los rangos ›».
+- Prueba nueva: `v147_t.py`. Actualizadas: `tinas_t.py`, `v134_t.py`, `v1443_t.py`.
+
+## 1.46.7 · 18 de noviembre de 2026 · La tarima 3D reemplaza las tarjetas por talla
+
+Pedido del usuario (captura con las tarjetas Chica/Mediana/Grande/Jumbo marcadas): «reemplaza lo que seleccioné con la tarima 3D».
+
+- **Hieleras por talla (Empaque y Orden):** ya no salen las tarjetas por talla con un cuadrito por hielera. En su lugar queda la tarima 3D, más grande (crece si hay una o dos tarimas), y debajo una línea por talla: «Chica · 1 de 20 · Faltan 19», «✔ Lista» o «⚠ De más». Las tallas que no se piden ni se empacaron (p. ej. «Jumbo 0 de 0») ya no salen.
+- **Nombre en la pestaña del navegador:** «PROPESA APP — Procesos y Operaciones» (pedido del usuario). También en el nombre de la app instalada y al compartir el enlace.
+- Prueba actualizada: `v1271_t.py`.
+
+## 1.46.6 · 18 de noviembre de 2026 · Guardar ya no se traba, mismo teclado en Recepción y Empaque, tarima 3D
+
+Pedido del usuario: «al terminar una recepción y tocar Guardar no pasa nada, se queda trabada llenando tinas; no quiero que pase en Empaque. Que funcionen igual las entradas y las reglas del teclado» · «en la sección de las hieleras que faltan, un diseño 3D de un pallet».
+
+- **Recepción · Guardar con una tina sin talla:** antes la pantalla brincaba a esa tina y parecía que no pasaba nada (la tina decía «Enter = Mediana», pero Guardar no la tomaba). Ahora no se guarda (respuesta del usuario: «no guardar y avisar claro») y sale un aviso rojo junto al botón Guardar: «No se guardó: la tina 28 tiene 5 kg pero le falta la talla», con las tallas para tocar ahí mismo y «Borrar los 5 kg». Con el teclado de la app, el aviso sale arriba de su Guardar. Si hay más tinas así, dice cuántas y pasa a la siguiente.
+- **Empaque · «Guardar hieleras» con una hielera sin categoría:** el mismo aviso, junto al botón. Tocar la categoría en el aviso guarda esa hielera.
+- **Mismas reglas de teclado en las dos pantallas** (respuesta del usuario: «la letra guarda y pasa»):
+  - número → letra del color (B, R, V, A): **guarda y pasa** a la siguiente. En Empaque ya no hace falta el Enter (si alguien lo aprieta de más, no pasa nada).
+  - **Enter** con número y sin talla usa la última talla usada (en Empaque, o la de la última hielera empacada de ese cliente). El teclado lo dice: «Enter o «Siguiente» usa Rojo».
+  - **Enter en una vacía no hace nada** (antes en la Recepción brincaba una tina).
+  - **«Siguiente ›»** del teclado de la app hace lo mismo que Enter; en una vacía pasa a la siguiente.
+  - Las letras salen de los mismos colores en las dos pantallas, y el teclado de la Recepción las enseña en cada talla, como el de Empaque.
+  - Empaque sin el teclado de la app (computadora): la letra y Enter también funcionan en la casilla de piezas. Más de 35 piezas con la letra: avisa y se queda en esa hielera.
+- **Tarima 3D en «Hieleras por talla»** (Empaque y Orden): debajo del aviso de lo que falta, las tarimas de la línea (las «Tarimas» de la orden; 0 = se apilan en el piso). Las hieleras empacadas van del color de su talla, punteadas las que faltan con el color de la talla que falta. Cada capa se llena de enfrente hacia atrás; la hielera recién empacada cae a su lugar (sin animación con «reducir movimiento»). Abajo de cada tarima: «Tarima 1 · 3 de 15». SVG hecho a mano, sin librerías: funciona en el iPad viejo.
+- Prueba nueva: `v1466_t.py`.
+
+## 1.46.5 · 18 de noviembre de 2026 · La ficha del tanque se abre y se cierra con animación
+
+Pedido del usuario: «tocar el tanque 1 y ver sus datos, tocarlo otra vez y que se cierre; que no brinque de golpe, con animaciones bonitas».
+
+- **Tablero de tanques (Centro, Modo piso, Recepción y Panel general):** tocar un tanque abre su ficha y tocarlo otra vez la cierra. La ficha crece desde cero y su contenido entra escalonado (la barra de tallas se llena de izquierda a derecha y los kilos se cuentan hasta el total); al cerrar se encoge. Cambiar de un tanque a otro pasa de una ficha a otra sin cerrar. La tarjeta tocada hace un pequeño «pop» y lleva una flechita que gira (abierta ↑ / cerrada ↓).
+- **La ficha se lleva a la vista** mientras crece, sin sacar de la vista la tarjeta que se tocó.
+- **Tocar un tanque en el 3D** vuelve a abrir la ficha si estaba cerrada.
+- **Arreglo: la pantalla ya no brinca al redibujarse.** El 3D dejaba un hueco sin alto por un instante y la página se recorría (por eso al tocar un tanque la pantalla saltaba).
+- Con «reducir movimiento» del equipo, abre y cierra al instante. Solo transiciones de CSS: funciona igual en el iPad viejo.
+- Prueba nueva: `v1465_t.py`.
+
+## 1.45.5 · 18 de noviembre de 2026 · Decimales en «En tanques»
+
+- **En tanques (Centro):** muestra un decimal, igual que la hoja (1893.1 kg).
+
+## 1.45.4 · 18 de noviembre de 2026 · «En tanques» cuadra con la hoja
+
+- **En tanques (Centro):** ya no cuenta la langosta despatada. Va aparte, sin tina (regla de «Lo que no entra a tinas»). Antes sumaba la despatada: 1893.1 kg de la hoja salían como 1902 kg en la app.
+- Prueba nueva: `v1454_t.py`.
+
+## 1.45.3 · 18 de noviembre de 2026 · Centro con los números arriba
+
+- **Centro de operaciones:** los cuatro números (En tanques, Recibido en 7 días, Hieleras empacadas, Embarques abiertos) vuelven arriba; la planta 3D queda debajo. Modo piso no cambia.
+- Pruebas actualizadas: `v1442_t.py` y `hick_t.py` (orden nuevo).
+
+## 1.45.2 · 13 de noviembre de 2026 · Solo inventario con el 3D, avisos completos
+
+- **Solo inventario:** su pantalla abre con el 3D (tanque, talla y kilos; sin lote, maquila, días ni proveedor). Sale de la hoja de disponible, que ahora guarda `D/disp.t` (kg por tanque y talla). Lo pedido se quita del lote más viejo.
+- **Lote vencido:** prueba con datos de días máximos (ficha del tanque y campana).
+- **Documentación:** `docs/DATOS.md` (`D/disp.t`) e `docs/HISTORIAL.md`.
+
+## 1.45.1 · 13 de noviembre de 2026 · Logo en la vista previa y avisos de lotes
+
+- **Vista previa de los PDF:** dibuja el logo de PROPESA como imagen, igual que el PDF descargado. Antes ponía el texto «PROPESA» en su lugar. Prueba `v1445_t.py`.
+- **Campana:** avisa de lotes sin kilos en ningún tanque y todavía sin cerrar («Ciérralo en Mortalidad final»). Prueba en `v1443_t.py`.
+
+Pendiente: lote vencido sin prueba con datos de días máximos; Solo inventario con 3D (requiere guardar el desglose por tanque en la hoja de disponible, cambio de sincronización que hay que aprobar).
+
 ## 1.45.0 · 13 de noviembre de 2026 · Centro de operaciones con tanques 3D
 
 Plan aprobado el 13/nov (ver la conversación): los tanques 3D son lo primero al entrar, en todos los roles.

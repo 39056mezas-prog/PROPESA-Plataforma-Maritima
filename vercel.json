@@ -12,7 +12,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://lktqwmfmdhusscudgflo.supabase.co; media-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'sha256-UGeGwU4YSTESwd5kKdgzcQMnAKVZCi8XVd4e3yCISkY=' 'sha256-V5J6agOARZMSzlMyqkMJ8M/BC26WihstvJcWGoLzaIU=' 'sha256-tBLqEXJy0VFRcW69+moEgVXEDaHP1F5tFs07DFq88Jk=' 'sha256-VR7o4THtXZdPej0iKBqheSoBzSSNZKlfMrA+ew/bh4E='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://lktqwmfmdhusscudgflo.supabase.co; media-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests"
         },
         {
           "key": "Strict-Transport-Security",
